@@ -160,7 +160,7 @@ public class Config {
 				e.printStackTrace();
 			}
 			FileOutputStream fiout = new FileOutputStream(config);
-			fiout.write(("# The " + config.getName().split("\\.")[config.getName().split("\\.").length - 2]
+			fiout.write(("# The " + config.getAbsolutePath().split("\\.")[config.getName().split("\\.").length - 2]
 					+ " Configuration for " + config.getName()).getBytes());
 			fiout.write(System.lineSeparator().getBytes());
 			fiout.flush();

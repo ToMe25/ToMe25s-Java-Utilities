@@ -1,12 +1,12 @@
 package com.tome25.utils.logging;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.time.LocalTime;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Formatter;
-import java.util.List;
 import java.util.Locale;
 
 import com.tome25.utils.config.Config;
@@ -32,7 +32,6 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	private int traceStartDepth = 4;
 	private Config cfg;
 	private boolean endLineSeperator = true;
-	private List<OutputStream> outs = new ArrayList<OutputStream>();
 	/**
 	 * The Classes to Skip for getTrace.
 	 */
@@ -53,333 +52,165 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	public TracingMultiPrintStream(File configFile, OutputStream... outs) {
 		super(outs);
 		cfg = new Config(configFile.getParentFile(), false);
-		for (OutputStream out : outs) {
-			this.outs.add(out);
-		}
 		readConfig(configFile);
-	}
-
-	/**
-	 * Adds the given OutputStream to the List of Output Streams that is being used
-	 * as Output.
-	 * 
-	 * @param out the OutputStream to add.
-	 */
-	public void addOutputStream(OutputStream out) {
-		super.addOutputStream(out);
-		outs.add(out);
-	}
-
-	@Override
-	public void println(String x) {
-		for (OutputStream out : outs) {
-			if (x != null && out != null) {
-				try {
-					out.write(Finish(x, true));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void println(Object x) {
-		for (OutputStream out : outs) {
-			if (x != null && out != null) {
-				try {
-					out.write(Finish(x, true));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void println(char[] x) {
-		for (OutputStream out : outs) {
-			if (x != null && out != null) {
-				try {
-					out.write(Finish(x, true));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void println(boolean x) {
-		for (OutputStream out : outs) {
-			if (out != null) {
-				try {
-					out.write(Finish(x, true));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void println(char x) {
-		for (OutputStream out : outs) {
-			if (out != null) {
-				try {
-					out.write(Finish(x, true));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void println(double x) {
-		for (OutputStream out : outs) {
-			if (out != null) {
-				try {
-					out.write(Finish(x, true));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void println(float x) {
-		for (OutputStream out : outs) {
-			if (out != null) {
-				try {
-					out.write(Finish(x, true));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void println(int x) {
-		for (OutputStream out : outs) {
-			if (out != null) {
-				try {
-					out.write(Finish(x, true));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void println(long x) {
-		for (OutputStream out : outs) {
-			if (out != null) {
-				try {
-					out.write(Finish(x, true));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void println() {
-		for (OutputStream out : outs) {
-			try {
-				out.write(Finish(lineSeparator, false));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	@Override
-	public void print(String x) {
-		for (OutputStream out : outs) {
-			if (x != null && out != null) {
-				try {
-					out.write(Finish(x, false));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void print(Object x) {
-		for (OutputStream out : outs) {
-			if (x != null && out != null) {
-				try {
-					out.write(Finish(x, false));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void print(char[] x) {
-		for (OutputStream out : outs) {
-			if (x != null && out != null) {
-				try {
-					out.write(Finish(x, false));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void print(boolean x) {
-		for (OutputStream out : outs) {
-			if (out != null) {
-				try {
-					out.write(Finish(x, false));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void print(char x) {
-		for (OutputStream out : outs) {
-			if (out != null) {
-				try {
-					out.write(Finish(x, false));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void print(double x) {
-		for (OutputStream out : outs) {
-			if (out != null) {
-				try {
-					out.write(Finish(x, false));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void print(float x) {
-		for (OutputStream out : outs) {
-			if (out != null) {
-				try {
-					out.write(Finish(x, false));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void print(int x) {
-		for (OutputStream out : outs) {
-			if (out != null) {
-				try {
-					out.write(Finish(x, false));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public void print(long x) {
-		for (OutputStream out : outs) {
-			if (out != null) {
-				try {
-					out.write(Finish(x, false));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	@Override
-	public PrintStream printf(String format, Object... args) {
-		return format(format, args);
-	}
-
-	@Override
-	public PrintStream printf(Locale l, String format, Object... args) {
-		return format(l, format, args);
-	}
-
-	@Override
-	public PrintStream format(String format, Object... args) {
-		return format(Locale.getDefault(), format, args);
-	}
-
-	@Override
-	public PrintStream format(Locale l, String format, Object... args) {
-		Formatter form = new Formatter(l);
-		form.format(format, args);
-		print(form.toString());
-		form.close();
-		return this;
-	}
-
-	@Override
-	public void write(int b) {
-		print(b);
-	}
-
-	@Override
-	public void write(byte[] b) {
-		print(b);
-	}
-
-	@Override
-	public void write(byte[] buf, int off, int len) {
-		print(new String(buf).substring(off, len));
 	}
 
 	@Override
 	public PrintStream append(char c) {
-		print(c);
-		return this;
+		if(endLineSeperator) {
+			try {
+				super.write(FinishBArr("", false));
+			} catch (IOException e) {
+			}
+		}
+		return super.append(c);
 	}
 
 	@Override
 	public PrintStream append(CharSequence csq) {
-		print(csq.toString());
-		return this;
+		return super.append(FinishStr(csq, false));
 	}
 
 	@Override
 	public PrintStream append(CharSequence csq, int start, int end) {
-		print(csq.toString().substring(start, end));
-		return this;
+		return super.append(FinishStr(csq.subSequence(start, end), false));
 	}
 
 	@Override
-	public void close() {
-		super.close();
-		for (OutputStream out : outs) {
-			try {
-				out.close();
-			} catch (Exception e) {
-			}
+	public void println(String x) {
+		super.println(FinishStr(x, true));
+	}
+
+	@Override
+	public void println(Object x) {
+		super.println(FinishStr(x, true));
+	}
+
+	@Override
+	public void println(char[] x) {
+		super.println(FinishStr(x, true));
+	}
+
+	@Override
+	public void println(boolean x) {
+		super.println(FinishStr(x, true));
+	}
+
+	@Override
+	public void println(char x) {
+		super.println(FinishStr(x, true));
+	}
+
+	@Override
+	public void println(double x) {
+		super.println(FinishStr(x, true));
+	}
+
+	@Override
+	public void println(float x) {
+		super.println(FinishStr(x, true));
+	}
+
+	@Override
+	public void println(int x) {
+		super.println(FinishStr(x, true));
+	}
+
+	@Override
+	public void println(long x) {
+		super.println(FinishStr(x, true));
+	}
+
+	@Override
+	public void println() {
+		super.println(FinishStr("", true));
+	}
+
+	@Override
+	public void print(String x) {
+		super.print(FinishStr(x, false));
+	}
+
+	@Override
+	public void print(Object x) {
+		super.print(FinishStr(x, false));
+	}
+
+	@Override
+	public void print(char[] x) {
+		super.print(FinishStr(x, false));
+	}
+
+	@Override
+	public void print(boolean x) {
+		super.print(FinishStr(x, false));
+	}
+
+	@Override
+	public void print(char x) {
+		super.print(FinishStr(x, false));
+	}
+
+	@Override
+	public void print(double x) {
+		super.print(FinishStr(x, false));
+	}
+
+	@Override
+	public void print(float x) {
+		super.print(FinishStr(x, false));
+	}
+
+	@Override
+	public void print(int x) {
+		super.print(FinishStr(x, false));
+	}
+
+	@Override
+	public void print(long x) {
+		super.print(FinishStr(x, false));
+	}
+
+	@Override
+	public PrintStream printf(String format, Object... args) {
+		return super.printf(FinishStr(String.format(format, args), false));
+	}
+
+	@Override
+	public PrintStream printf(Locale l, String format, Object... args) {
+		return super.printf(FinishStr(String.format(l, format, args), false));
+	}
+
+	@Override
+	public PrintStream format(String format, Object... args) {
+		return super.format(FinishStr(String.format(format, args), false));
+	}
+
+	@Override
+	public PrintStream format(Locale l, String format, Object... args) {
+		return super.format(FinishStr(String.format(l, format, args), false));
+	}
+
+	@Override
+	public void write(int b) {
+		try {
+			super.write(FinishBArr(b, false));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void write(byte[] b) throws IOException {
+		super.write(FinishBArr(b, false));
+	}
+
+	@Override
+	public void write(byte[] buf, int off, int len) {
+		try {
+			super.write(FinishBArr(Arrays.copyOfRange(buf, off, off + len), false));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -474,14 +305,13 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	}
 
 	/**
-	 * Creates a byte[] from the given Object and the Trace.
+	 * Creates a String from the given Object and the Trace.
 	 * 
 	 * @param x
-	 * @param println
+	 * @param println whether to end the String with a lineSeperator
 	 * @return
 	 */
-	private byte[] Finish(Object x, boolean println) {
-		byte[] ret;
+	private String FinishStr(Object x, boolean println) {
 		String s = String.valueOf(x);
 		if (x instanceof String) {
 			s = (String) x;
@@ -509,8 +339,18 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 		if (s.replaceAll(" ", "").endsWith(lineSeparator)) {
 			endLineSeperator = true;
 		}
-		ret = s.getBytes();
-		return ret;
+		return s;
+	}
+	
+	/**
+	 * Creates a byte[] from the given Object and the Trace.
+	 * 
+	 * @param x
+	 * @param println whether to end the byte[] with a lineSeperator
+	 * @return
+	 */
+	private byte[] FinishBArr(Object x, boolean println) {
+		return FinishStr(x, println).getBytes();
 	}
 
 	/**

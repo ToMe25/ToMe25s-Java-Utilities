@@ -20,7 +20,7 @@ public class MultiPrintStream extends PrintStream {
 
 	public MultiPrintStream(OutputStream... outputStreams) {
 		super(outputStreams.length > 0 ? outputStreams[0] : null);
-		streams = new PrintStream[outputStreams.length + 1];
+		streams = new PrintStream[outputStreams.length];
 		int i = 0;
 		while (i < outputStreams.length) {
 			if (outputStreams[i] instanceof PrintStream) {
@@ -37,14 +37,16 @@ public class MultiPrintStream extends PrintStream {
 	 * as Output.
 	 * 
 	 * @param out the OutputStream to add.
+	 * @return this
 	 */
-	public void addOutputStream(OutputStream out) {
+	public MultiPrintStream addOutputStream(OutputStream out) {
 		streams = Arrays.copyOf(streams, streams.length + 1);
 		if (out instanceof PrintStream) {
 			streams[streams.length - 1] = (PrintStream) out;
 		} else {
 			streams[streams.length - 1] = new PrintStream(out);
 		}
+		return this;
 	}
 
 	/**

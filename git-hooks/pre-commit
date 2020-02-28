@@ -1,0 +1,13 @@
+#!/bin/bash
+# build the software from the modified sources
+if [ ! -d "bin/" ]
+then
+    mkdir "bin"
+fi
+javac -d bin/ $(find src/ -name "*.java")
+cd src/
+find . ! -name '*.java' -type f | cpio -updm ../bin/
+cd ../
+jar -cf ToMe25s-Java-Utilities.jar -C bin .
+
+git add ToMe25s-Java-Utilities.jar

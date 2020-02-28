@@ -160,9 +160,10 @@ public class Config {
 				e.printStackTrace();
 			}
 			FileOutputStream fiout = new FileOutputStream(config);
-			fiout.write(("# The " + config.getAbsolutePath().split("\\.")[config.getName().split("\\.").length - 2]
-					+ " Configuration for " + config.getName()).getBytes());
-			fiout.write(System.lineSeparator().getBytes());
+			fiout.write(String.format("# The %s Configuration for %s.%n",
+					config.getName().substring(0, config.getName().lastIndexOf('.')),
+					new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getName())
+					.getBytes());
 			fiout.flush();
 			for (ConfigValue<?> c : sortedConfig.get(config)) {
 				c.writeToConfig(fiout);

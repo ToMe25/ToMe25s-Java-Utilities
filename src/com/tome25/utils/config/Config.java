@@ -10,9 +10,9 @@ import java.util.Scanner;
 
 public class Config {
 
-	private static Map<String, ConfigValue<?>> cfg = new HashMap<String, ConfigValue<?>>();
-	private static Map<File, List<ConfigValue<?>>> sortedConfig = new HashMap<File, List<ConfigValue<?>>>();
-	private static File cfgDir;
+	private Map<String, ConfigValue<?>> cfg = new HashMap<String, ConfigValue<?>>();
+	private Map<File, List<ConfigValue<?>>> sortedConfig = new HashMap<File, List<ConfigValue<?>>>();
+	private File cfgDir;
 
 	public Config(boolean read) {
 		this(new File(Config.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParentFile(),
@@ -143,7 +143,7 @@ public class Config {
 		}
 	}
 
-	private static void createConfig(File config) {
+	private void createConfig(File config) {
 		try {
 			File dir = config.getParentFile();
 			if (!dir.exists() || !dir.isDirectory()) {

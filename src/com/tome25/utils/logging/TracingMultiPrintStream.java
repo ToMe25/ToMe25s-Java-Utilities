@@ -29,6 +29,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	private boolean traceSimpleClassName = true;
 	private boolean traceOutputtingMethod = true;
 	private boolean traceSystemClassMethods = false;
+	private boolean traceLineNumber = false;
 	private int traceStartDepth = 4;
 	private Config cfg;
 	private boolean endLineSeperator = true;
@@ -57,7 +58,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 
 	@Override
 	public PrintStream append(char c) {
-		if(endLineSeperator) {
+		if (endLineSeperator) {
 			try {
 				super.write(FinishBArr("", false));
 			} catch (IOException e) {
@@ -238,11 +239,17 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 					ret += String.format("[%s]",
 							traceSimpleClassName ? classNameToSimpleClassName(element.getClassName())
 									: element.getClassName());
+					if (traceLineNumber) {
+						ret = ret.substring(0, ret.length() - 1) + String.format(":%s]", element.getLineNumber());
+					}
 					firstClass = true;
 				} else if (!ArrayContains(systemClasses, element.getClassName(), true)) {
 					ret += String.format("[%s]",
 							traceSimpleClassName ? classNameToSimpleClassName(element.getClassName())
 									: element.getClassName());
+					if (traceLineNumber) {
+						ret = ret.substring(0, ret.length() - 1) + String.format(":%s]", element.getLineNumber());
+					}
 					firstClass = true;
 				}
 				int i = 0;
@@ -262,6 +269,9 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 					ret += String.format("[%s]",
 							traceSimpleClassName ? classNameToSimpleClassName(element.getClassName())
 									: element.getClassName());
+					if (traceLineNumber) {
+						ret = ret.substring(0, ret.length() - 1) + String.format(":%s]", element.getLineNumber());
+					}
 				}
 			}
 		}
@@ -341,7 +351,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 		}
 		return s;
 	}
-	
+
 	/**
 	 * Creates a byte[] from the given Object and the Trace.
 	 * 
@@ -383,22 +393,24 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	private void readConfig(File cfgFile) {
 		// init config
 		cfg.addConfig(cfgFile, "traceTimestamp", traceTimestamp,
-				"Whether the begin of every line of output should contain a timestamp.");
+				"Whether the beginning of every line of output should contain a timestamp.");
 		cfg.addConfig(cfgFile, "traceThread", traceThread,
-				"Whether the begin of every line of output should contain the name of the Thread writing it.");
+				"Whether the beginning of every line of output should contain the name of the Thread writing it.");
 		cfg.addConfig(cfgFile, "traceOutputtingClass", traceOutputtingClass,
-				"Whether the begin of every line of output should contain the name of the class writing it.");
+				"Whether the beginning of every line of output should contain the name of the class writing it.");
 		cfg.addConfig(cfgFile, "traceSystemClasses", traceSystemClasses,
-				"Whether the begin of every line of output should contain the name of the class writing it "
+				"Whether the beginning of every line of output should contain the name of the class writing it "
 						+ "even if its a system class.");
 		cfg.addConfig(cfgFile, "traceSimpleClassName", traceSimpleClassName,
-				"Whether the begin of every line of output should contain simple class names(without package) "
+				"Whether the beginning of every line of output should contain simple class names(without package) "
 						+ "or full class names(with package).");
 		cfg.addConfig(cfgFile, "traceOutputtingMethod", traceOutputtingMethod,
-				"Whether the begin of every line of output should contain the name of the method writing it.");
+				"Whether the beginning of every line of output should contain the name of the method writing it.");
 		cfg.addConfig(cfgFile, "traceSystemClassMethods", traceSystemClassMethods,
-				"Whether the begin of every line of output should contain the name of the method writing it "
+				"Whether the beginning of every line of output should contain the name of the method writing it "
 						+ "even if it is from a system class.");
+		cfg.addConfig(cfgFile, "traceLineNumber", traceLineNumber,
+				"Whether the beginning of every line of output should contain the number of th line writing it.");
 		cfg.addConfig(cfgFile, "traceStartDepth", traceStartDepth,
 				"How deep into the Stacktrace the tracer should start looking for informations.");
 		// read config
@@ -410,6 +422,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 		traceSimpleClassName = (boolean) cfg.getConfig("traceSimpleClassName");
 		traceOutputtingMethod = (boolean) cfg.getConfig("traceOutputtingMethod");
 		traceSystemClassMethods = (boolean) cfg.getConfig("traceSystemClassMethods");
+		traceLineNumber = (boolean) cfg.getConfig("traceLineNumber");
 		traceStartDepth = (int) cfg.getConfig("traceStartDepth");
 	}
 

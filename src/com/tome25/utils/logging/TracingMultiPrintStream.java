@@ -78,52 +78,52 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 
 	@Override
 	public void println(String x) {
-		super.println(FinishStr(x, true));
+		super.print(FinishStr(x, true));
 	}
 
 	@Override
 	public void println(Object x) {
-		super.println(FinishStr(x, true));
+		super.print(FinishStr(x, true));
 	}
 
 	@Override
 	public void println(char[] x) {
-		super.println(FinishStr(x, true));
+		super.print(FinishStr(x, true));
 	}
 
 	@Override
 	public void println(boolean x) {
-		super.println(FinishStr(x, true));
+		super.print(FinishStr(x, true));
 	}
 
 	@Override
 	public void println(char x) {
-		super.println(FinishStr(x, true));
+		super.print(FinishStr(x, true));
 	}
 
 	@Override
 	public void println(double x) {
-		super.println(FinishStr(x, true));
+		super.print(FinishStr(x, true));
 	}
 
 	@Override
 	public void println(float x) {
-		super.println(FinishStr(x, true));
+		super.print(FinishStr(x, true));
 	}
 
 	@Override
 	public void println(int x) {
-		super.println(FinishStr(x, true));
+		super.print(FinishStr(x, true));
 	}
 
 	@Override
 	public void println(long x) {
-		super.println(FinishStr(x, true));
+		super.print(FinishStr(x, true));
 	}
 
 	@Override
 	public void println() {
-		super.println(FinishStr("", true));
+		super.print(FinishStr("", true));
 	}
 
 	@Override

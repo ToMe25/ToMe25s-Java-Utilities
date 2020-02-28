@@ -6,9 +6,10 @@ import java.text.ParseException;
 public class JsonParser {
 
 	/**
-	 * parses the given String to a JsonObject. faster but can only parse String and
-	 * Integer Objects inside of JSON's no booleans no Other Json's etc. Not as
+	 * This method parses the given String to a JsonObject. Faster but not as
 	 * reliable as the slower one.
+	 * 
+	 * Supported object types inside the Json: Integer and String.
 	 * 
 	 * WARNING: This method is not safe, over the time i worked on it before adding
 	 * it to this library there were multiple character that could make it crash or
@@ -44,7 +45,10 @@ public class JsonParser {
 	}
 
 	/**
-	 * parses the given String to a JsonObject.
+	 * This method parses the given String to a JsonObject.
+	 * 
+	 * Supported object types inside the Json: Integer, Boolean, String and Json
+	 * Objects(no Json Lists/Arrays).
 	 * 
 	 * WARNING: This method is not safe, over the time i worked on it before adding
 	 * it to this library there were multiple character that could make it crash or

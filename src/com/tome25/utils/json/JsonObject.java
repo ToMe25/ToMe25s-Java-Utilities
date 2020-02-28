@@ -75,6 +75,8 @@ public class JsonObject {
 			if (obj instanceof Boolean || obj instanceof Integer) {
 				ret += obj;
 				ret += ",";
+			} else if(obj instanceof JsonObject) {
+				ret += obj.toString();
 			} else {
 				ret += "\"";
 				ret += obj.toString().replaceAll("\\\\", "\\\\\\\\").replaceAll("\\\"", "\\\\\"");
@@ -106,6 +108,23 @@ public class JsonObject {
 			}
 		}
 		return clone;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof JsonObject) {
+			JsonObject json = (JsonObject) obj;
+			if (content.size() != json.content.size()) {
+				return false;
+			}
+			for (String key : content.keySet()) {
+				if (!json.contains(key) || !get(key).equals(json.get(key))) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 
 }

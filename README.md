@@ -9,4 +9,4 @@ This Library Currently contains:
 
 To add the git-hooks to your active git hooks(at least on Linux as they are Shell Scripts and wont work on Windows) just execute the post-merge file in git-hooks.
 
-In case you are looking for a build: the ToMe25-Java-Utilities.jar file gets build on commit, so it should always be up to date.
+In case you are looking for a build: the ToMe25-Java-Utilities.jar file gets build automatically on commit, so it should always be up to date.

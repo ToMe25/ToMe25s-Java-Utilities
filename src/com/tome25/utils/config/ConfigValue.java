@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import com.tome25.utils.config.exception.InvalidTypeException;
+
 /**
  * 
  * @author ToMe25
@@ -11,14 +13,14 @@ import java.io.IOException;
  *         a utility class that stores config values
  *
  */
-public class ConfigValue {
+public class ConfigValue<T> {
 
 	private final File cfg;
 	private final String key;
-	private final String[] validTypes = { "string", "integer", "int", "boolean", "bool" };
+	private static final String[] validTypes = { "string", "integer", "int", "boolean", "float" };
 	private final String type;
-	private Object value;
-	private final Object defaultValue;
+	private T value;
+	private final T defaultValue;
 	private final String description;
 
 	/**
@@ -26,17 +28,17 @@ public class ConfigValue {
 	 * 
 	 * @param cfg          the Configuration File
 	 * @param key          the Configuration Key
-	 * @param type         the Type of this Config Object
 	 * @param defaultValue the default Value
 	 * @param description  the Description for this Config Object
 	 * @throws NullPointerException if key is null
 	 * @throws InvalidTypeException if the given type is invalid
 	 */
-	public ConfigValue(File cfg, String key, String type, Object defaultValue, String description)
+	public ConfigValue(File cfg, String key, T defaultValue, String description)
 			throws NullPointerException, InvalidTypeException {
 		if (key == null) {
 			throw new NullPointerException("Configuration Key can't be null!");
 		}
+		String type = defaultValue.getClass().getSimpleName().toLowerCase();
 		if (!validType(type)) {
 			throw new InvalidTypeException("Type " + type + " isn't valid.");
 		}
@@ -63,43 +65,57 @@ public class ConfigValue {
 	}
 
 	/**
+	 * gets this values type as a String
+	 * 
 	 * @return the type
 	 */
-	public String getType() {
+	public String getTypeString() {
 		return type;
+	}
+
+	/**
+	 * gets this values type as a Class
+	 * 
+	 * @return the type
+	 */
+	public Class<?> getTypeClass() {
+		return defaultValue.getClass();
 	}
 
 	/**
 	 * @return the value
 	 */
-	public Object getValue() {
+	public T getValue() {
 		return value;
 	}
 
 	/**
 	 * @param value the value to set
 	 */
-	public void setValue(Object value) {
+	public void setValue(T value) {
 		this.value = value;
 	}
 
 	/**
 	 * @param value the value to set(will be parsed to the type you have selected)
 	 */
+	@SuppressWarnings("unchecked")
 	public void setValue(String value) {
 		if (type.equalsIgnoreCase("string")) {
-			this.value = value;
+			((ConfigValue<String>) this).value = value;
 		} else if (type.equalsIgnoreCase("integer") || type.equalsIgnoreCase("int")) {
-			this.value = Integer.parseInt(value);
+			((ConfigValue<Integer>) this).value = Integer.parseInt(value);
 		} else if (type.equalsIgnoreCase("boolean")) {
-			this.value = Boolean.parseBoolean(value);
+			((ConfigValue<Boolean>) this).value = Boolean.parseBoolean(value);
+		} else if (type.equalsIgnoreCase("float")) {
+			((ConfigValue<Float>) this).value = Float.parseFloat(value);
 		}
 	}
 
 	/**
 	 * @return the default Value
 	 */
-	public Object getDefaultValue() {
+	public T getDefaultValue() {
 		return defaultValue;
 	}
 
@@ -130,7 +146,7 @@ public class ConfigValue {
 	 * @param type the type to check
 	 * @return is type valid?
 	 */
-	private boolean validType(String type) {
+	public static boolean validType(String type) {
 		return validType(type, true);
 	}
 
@@ -141,7 +157,7 @@ public class ConfigValue {
 	 * @param ignoreCase ingnore case while checking?
 	 * @return is type valid?
 	 */
-	private boolean validType(String type, boolean ignoreCase) {
+	public static boolean validType(String type, boolean ignoreCase) {
 		for (String t : validTypes) {
 			if (ignoreCase ? t.equalsIgnoreCase(type) : t.equals(type)) {
 				return true;
@@ -151,32 +167,19 @@ public class ConfigValue {
 	}
 
 	/**
+	 * Checks if the given Type is valid
 	 * 
-	 * @author ToMe25
-	 * 
-	 *         Just a simple Exception for Invalid types
+	 * @param type the type to check
+	 * @return is type valid?
 	 */
-	public class InvalidTypeException extends Exception {
-
-		/**
-		 * useless or not?
-		 */
-		private static final long serialVersionUID = 123L;
-		private String message;
-
-		public InvalidTypeException() {
-
+	public static boolean validType(Class<?> type) {
+		String typ = type.getSimpleName();
+		for (String t : validTypes) {
+			if (t.equalsIgnoreCase(typ)) {
+				return true;
+			}
 		}
-
-		public InvalidTypeException(String msg) {
-			message = msg;
-		}
-
-		@Override
-		public String getMessage() {
-			return message == null ? "" : message;
-		}
-
+		return false;
 	}
 
 }

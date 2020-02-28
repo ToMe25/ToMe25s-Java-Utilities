@@ -36,7 +36,7 @@ public class Config {
 		if (cfg.containsKey(name)) {
 			return cfg.get(name).getValue();
 		} else {
-			System.err.println("Couldn't find requested Config Value!");
+			System.err.printf("Couldn't find Config Value %s!%n", name);
 			return null;
 		}
 	}
@@ -68,7 +68,7 @@ public class Config {
 	public <T> void addConfig(File config, String name, T defaultValue, String comment) {
 		try {
 			if (cfg.containsKey(name)) {
-				System.err.println("There is already a Config Option with this Name!");
+				System.err.printf("There is already a Config Option with name %s!%n", name);
 			} else {
 				cfg.put(name, new ConfigValue<T>(config, name, defaultValue, comment));
 			}
@@ -90,11 +90,11 @@ public class Config {
 				((ConfigValue<T>) cfg.get(name)).setValue(value);
 				createConfig(cfg.get(name).getCfg());
 			} else {
-				System.err.format("The config value with name %s is of type %s not %s!", name,
+				System.err.printf("The config value with name %s is of type %s not %s!%n", name,
 						cfg.get(name).getTypeClass().getName(), value.getClass().getName());
 			}
 		} else {
-			System.err.println("Couldn't find requested Config Value!");
+			System.err.printf("Couldn't find Config Value %s!%n", name);
 		}
 	}
 

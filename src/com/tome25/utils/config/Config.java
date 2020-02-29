@@ -124,8 +124,7 @@ public class Config {
 					if (!line.startsWith("#")) {
 						for (ConfigValue<?> c : sortedConfig.get(f)) {
 							if (line.startsWith(c.getKey())) {
-								c.setValue(line.toLowerCase().replaceFirst(c.getKey().toLowerCase(), "")
-										.replaceFirst(":", "").replaceAll(" ", ""));
+								c.setValue(line.replaceFirst(c.getKey(), "").replaceFirst(":", "").replaceAll(" ", ""));
 								missing.remove(c);
 							}
 						}

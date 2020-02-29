@@ -17,8 +17,9 @@ public class ConfigValue<T> {
 
 	private final File cfg;
 	private final String key;
-	private static final String[] validTypes = { "string", "integer", "int", "boolean", "float" };
-	private final String type;
+	private static final Class<?>[] validTypes = { String.class, Integer.class, Short.class, Byte.class, Boolean.class,
+			Double.class, Float.class };
+	private final Class<?> type;
 	private T value;
 	private final T defaultValue;
 	private final String description;
@@ -38,13 +39,12 @@ public class ConfigValue<T> {
 		if (key == null) {
 			throw new NullPointerException("Configuration Key can't be null!");
 		}
-		String type = defaultValue.getClass().getSimpleName().toLowerCase();
+		type = defaultValue.getClass();
 		if (!validType(type)) {
-			throw new InvalidTypeException("Type " + type + " isn't valid.");
+			throw new InvalidTypeException("Type " + type.getName() + " isn't valid.");
 		}
 		this.cfg = cfg;
 		this.key = key;
-		this.type = type;
 		this.defaultValue = defaultValue;
 		this.value = defaultValue;
 		this.description = description;
@@ -70,7 +70,7 @@ public class ConfigValue<T> {
 	 * @return the type
 	 */
 	public String getTypeString() {
-		return type;
+		return type.getSimpleName();
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class ConfigValue<T> {
 	 * @return the type
 	 */
 	public Class<?> getTypeClass() {
-		return defaultValue.getClass();
+		return type;
 	}
 
 	/**
@@ -101,13 +101,19 @@ public class ConfigValue<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	public void setValue(String value) {
-		if (type.equalsIgnoreCase("string")) {
+		if (String.class.isAssignableFrom(type)) {
 			((ConfigValue<String>) this).value = value;
-		} else if (type.equalsIgnoreCase("integer") || type.equalsIgnoreCase("int")) {
+		} else if (Integer.class.isAssignableFrom(type)) {
 			((ConfigValue<Integer>) this).value = Integer.parseInt(value);
-		} else if (type.equalsIgnoreCase("boolean")) {
+		} else if (Short.class.isAssignableFrom(type)) {
+			((ConfigValue<Short>) this).value = Short.parseShort(value);
+		} else if (Byte.class.isAssignableFrom(type)) {
+			((ConfigValue<Byte>) this).value = Byte.parseByte(value);
+		} else if (Boolean.class.isAssignableFrom(type)) {
 			((ConfigValue<Boolean>) this).value = Boolean.parseBoolean(value);
-		} else if (type.equalsIgnoreCase("float")) {
+		} else if (Double.class.isAssignableFrom(type)) {
+			((ConfigValue<Double>) this).value = Double.parseDouble(value);
+		} else if (Float.class.isAssignableFrom(type)) {
 			((ConfigValue<Float>) this).value = Float.parseFloat(value);
 		}
 	}
@@ -151,15 +157,16 @@ public class ConfigValue<T> {
 	}
 
 	/**
-	 * Checks if the given Type is valid
+	 * Checks if the given Type is valid. A type is valid if it is the simple name
+	 * of a class in the validTypes array.
 	 * 
 	 * @param type       the type to check
 	 * @param ignoreCase ingnore case while checking?
 	 * @return is type valid?
 	 */
 	public static boolean validType(String type, boolean ignoreCase) {
-		for (String t : validTypes) {
-			if (ignoreCase ? t.equalsIgnoreCase(type) : t.equals(type)) {
+		for (Class<?> cls : validTypes) {
+			if (ignoreCase ? cls.getSimpleName().equalsIgnoreCase(type) : cls.getSimpleName().equals(type)) {
 				return true;
 			}
 		}
@@ -167,15 +174,15 @@ public class ConfigValue<T> {
 	}
 
 	/**
-	 * Checks if the given Type is valid
+	 * Checks if the given Type is valid. A type is valid if it is a class in the
+	 * validTypes array or a subclass of one of those.
 	 * 
 	 * @param type the type to check
 	 * @return is type valid?
 	 */
 	public static boolean validType(Class<?> type) {
-		String typ = type.getSimpleName();
-		for (String t : validTypes) {
-			if (t.equalsIgnoreCase(typ)) {
+		for (Class<?> cls : validTypes) {
+			if (cls.isAssignableFrom(type)) {
 				return true;
 			}
 		}

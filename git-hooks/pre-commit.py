@@ -1,5 +1,6 @@
 import os
 import shutil
+import fileinput
 
 def main():
     # move to the repository root directory.
@@ -32,8 +33,17 @@ def main():
     # copy LICENSE to tmp.
     shutil.copyfile(os.path.join(os.getcwd(), "LICENSE"), os.path.join(tmpdir, "LICENSE"))
     
+    # update version number
+    file = open("MANIFEST.MF", "rwt+")
+    for line in fileinput.input("MANIFEST.MF", inplace=True):
+        #line = line[:-1]
+        if(line.startswith("Version")):
+            index = line.index('.') + 1
+            line = line[:index] + str(int(line[index:]) + 1)
+        print(line)
+    
     # pack tmp into a jar.
-    os.system("jar -cf ToMe25s-Java-Utilities.jar -C tmp .")
+    os.system("jar -cfm ToMe25s-Java-Utilities.jar MANIFEST.MF -C tmp .")
     
     # remove the tmp directory.
     shutil.rmtree(tmpdir)

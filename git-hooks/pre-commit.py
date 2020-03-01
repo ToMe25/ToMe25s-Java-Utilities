@@ -38,6 +38,9 @@ def main():
     # remove the tmp directory.
     shutil.rmtree(tmpdir)
     
+    # add the compiled file to the commit.
+    os.system("git add ToMe25s-Java-Utilities.jar")
+    
     # print a secess message.
     print("Successfully compiled ToMe25s-Java-Utilities.")
 

@@ -1,11 +1,2 @@
-#!/bin/bash
-# link all the hooks and make them executeable
-cd git-hooks/
-for file in *
-do
-	rm ../.git/hooks/$file
-    cp $file ../.git/hooks/$file
-    chmod 755 $file
-    chmod 755 ../.git/hooks/$file
-done
-echo installed all the git hooks.
+#!/bin/sh
+python git-hooks/post-merge.py

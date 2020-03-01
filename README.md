@@ -7,6 +7,6 @@ This Library Currently contains:
  * A Print Stream That can write to multiple Output Streams
  * A Print Stream That can write to multiple Output Streams and has some logging/tracing capabilities
 
-To add the git-hooks to your active git hooks(at least on Linux as they are Shell Scripts and wont work on Windows) just execute the post-merge file in git-hooks.
+To add the git-hooks to your active git hooks just execute git-hooks/post-merge.py(`python git-hooks/post-merge.py`).(they are not tested on Windows, but according to the internet they should work.)
 
 In case you are looking for a build: the ToMe25-Java-Utilities.jar file gets build automatically on commit, so it should always be up to date.

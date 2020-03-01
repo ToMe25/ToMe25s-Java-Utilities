@@ -37,7 +37,7 @@ def main():
     file = open("MANIFEST.MF", "rwt+")
     for line in fileinput.input("MANIFEST.MF", inplace=True):
         #line = line[:-1]
-        if(line.startswith("Version")):
+        if(line.startswith("ToMe25s-Java-Utilities-Version:")):
             index = line.index('.') + 1
             line = line[:index] + str(int(line[index:]) + 1)
         print(line)

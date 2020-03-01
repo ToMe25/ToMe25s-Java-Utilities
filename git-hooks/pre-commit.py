@@ -43,7 +43,7 @@ def main():
         print(line)
     
     # add the modified MANIFEST.MF file to the commit.
-    os.system("git add ToMe25s-Java-Utilities.jar")
+    os.system("git add MANIFEST.MF")
     
     # pack tmp into a jar.
     os.system("jar -cfm ToMe25s-Java-Utilities.jar MANIFEST.MF -C tmp .")

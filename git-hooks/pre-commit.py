@@ -34,7 +34,6 @@ def main():
     shutil.copyfile(os.path.join(os.getcwd(), "LICENSE"), os.path.join(tmpdir, "LICENSE"))
     
     # update the version number.
-    file = open("MANIFEST.MF", "rwt+")
     for line in fileinput.input("MANIFEST.MF", inplace=True):
         #line = line[:-1]
         if(line.startswith("ToMe25s-Java-Utilities-Version:")):
@@ -51,10 +50,12 @@ def main():
     # remove the tmp directory.
     shutil.rmtree(tmpdir)
     
+    # read the keystore password.
+    file = open(".KeysPWD", "rt")
+    password = file.readline()
+    
     # sign the new jar.
-    # also i know you shouldn't publish passwords, but this one is only used for a Keystore that is only used to sign this jar,
-    # and i don't know how else i can reasonably automate jar signing, so its here.
-    os.system("jarsigner -keystore .Keys.jks -storepass NotASecurePassword ToMe25s-Java-Utilities.jar Utilities")
+    os.system("jarsigner -keystore .Keys.jks -storepass " + password + " ToMe25s-Java-Utilities.jar Utilities")
     
     # add the compiled file to the commit.
     os.system("git add ToMe25s-Java-Utilities.jar")

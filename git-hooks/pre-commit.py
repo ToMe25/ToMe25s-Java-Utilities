@@ -33,7 +33,7 @@ def main():
     # copy LICENSE to tmp.
     shutil.copyfile(os.path.join(os.getcwd(), "LICENSE"), os.path.join(tmpdir, "LICENSE"))
     
-    # update version number
+    # update the version number.
     file = open("MANIFEST.MF", "rwt+")
     for line in fileinput.input("MANIFEST.MF", inplace=True):
         #line = line[:-1]
@@ -41,6 +41,9 @@ def main():
             index = line.index('.') + 1
             line = line[:index] + str(int(line[index:]) + 1)
         print(line)
+    
+    # add the modified MANIFEST.MF file to the commit.
+    os.system("git add ToMe25s-Java-Utilities.jar")
     
     # pack tmp into a jar.
     os.system("jar -cfm ToMe25s-Java-Utilities.jar MANIFEST.MF -C tmp .")

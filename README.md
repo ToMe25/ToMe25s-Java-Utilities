@@ -6,6 +6,8 @@ This Library Currently contains:
  * A simple Config Handler
  * A Print Stream That can write to multiple Output Streams
  * A Print Stream That can write to multiple Output Streams and has some logging/tracing capabilities
+ * A Versio Control class that can give you the currently used version of this library as long as the ToMe25s-Java-Utilities-Version attribute is in the MANIFEST.MF file inside its Jar
+ * A very simple Jar Extraction tool
 
 To add the git-hooks to your active git hooks just execute git-hooks/post-merge.py(`python git-hooks/post-merge.py`).(they are not tested on Windows, but according to the internet they should work.)
 

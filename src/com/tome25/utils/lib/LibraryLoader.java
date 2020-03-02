@@ -55,26 +55,26 @@ public class LibraryLoader {
 			if (jar.getManifest().getMainAttributes().get(new Attributes.Name("Premain-Class")) == null) {
 				jar.getManifest().getMainAttributes().put(new Attributes.Name("Premain-Class"),
 						this.getClass().getName());
-			}
-			File tempFile = new File(file.getParent(), "tmp.jar");
-			JarOutputStream jarOut = new JarOutputStream(new FileOutputStream(tempFile), jar.getManifest());
-			Enumeration<JarEntry> entries = jar.entries();
-			while (entries.hasMoreElements()) {
-				JarEntry entry = entries.nextElement();
-				if (entry.getName().equals("META-INF/MANIFEST.MF")) {
-					continue;
+				File tempFile = new File(file.getParent(), "tmp.jar");
+				JarOutputStream jarOut = new JarOutputStream(new FileOutputStream(tempFile), jar.getManifest());
+				Enumeration<JarEntry> entries = jar.entries();
+				while (entries.hasMoreElements()) {
+					JarEntry entry = entries.nextElement();
+					if (entry.getName().equals("META-INF/MANIFEST.MF")) {
+						continue;
+					}
+					jarOut.putNextEntry(entry);
+					InputStream jarIn = jar.getInputStream(entry);
+					while (jarIn.available() > 0) {
+						jarOut.write(jarIn.read());
+					}
+					jarIn.close();
 				}
-				jarOut.putNextEntry(entry);
-				InputStream jarIn = jar.getInputStream(entry);
-				while (jarIn.available() > 0) {
-					jarOut.write(jarIn.read());
-				}
-				jarIn.close();
+				jarOut.close();
+				jar.close();
+				Files.copy(tempFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				tempFile.delete();
 			}
-			jarOut.close();
-			jar.close();
-			Files.copy(tempFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			tempFile.delete();
 			Runtime.getRuntime()
 					.exec(String.format("java %s -jar %s %s %s", "-javaagent:" + file.getAbsolutePath(),
 							file.getAbsolutePath(),

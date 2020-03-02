@@ -1,0 +1,527 @@
+package com.tome25.utils.lib;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
+
+/**
+ * 
+ * This class can download files from web servers. You will need to copy this
+ * class and <link>LibraryLoader</link> into your project in order to add this
+ * library to the classpath if you want to download it at the start of your
+ * software.
+ * 
+ * @author ToMe25
+ * 
+ */
+public class LibraryDownloader {
+
+	/**
+	 * The content types that could be a jar archive.
+	 */
+	private static final String[] JAR_CONTENT_TYPES = { "application/jar", "application/java-archive",
+			"application/octet-stream", "application/download", "application/force-download" };
+	private static final Predicate<String> JAR_CONTENT_TYPE_CHECKER = (s) -> Arrays.asList(JAR_CONTENT_TYPES)
+			.contains(s);
+	private static final String TOME25S_JAVA_UTILITIES_URL = "https://github.com/ToMe25/ToMe25s-Java-Utilities/raw/master/ToMe25s-Java-Utilities.jar";
+
+	private List<URL> urls;
+	private File target;
+	private Predicate<String> typeCheck;
+	private boolean override;
+	/**
+	 * whether the target file should get set to executable after the download
+	 * finished.
+	 */
+	private boolean executable;
+	/**
+	 * whether target is a directory and the file should be put in it, or the file
+	 * where the download should be saved.
+	 */
+	private boolean targetDir;
+	private int size;
+	private int downloaded;
+	private URL downloadedFrom;
+
+	/**
+	 * Creates a new Library Downloader that reads all URLs from urlStorage, and
+	 * tries them until one is valid, as long as they are separated by a ',' or a
+	 * ';'. This ignores lines starting with a '#'. If the file doesn't exists it
+	 * creates it with defaultUrlStorage as its content. If defaultUrlStorage is
+	 * null or empty it wont create a file, and therefore can't download anything.
+	 * 
+	 * Valid content types are application/jar, application/java-archive,
+	 * application/octet-stream, application/download and
+	 * application/force-download.
+	 * 
+	 * @param urlStorage        the file to read the URLs from.
+	 * @param defaultUrlStorage the default content for urlStorage.
+	 * @param overrideTarget    whether the target file should get overridden if it
+	 *                          already exists.
+	 * @param makeExecuteable   whether the target file should get made executable.
+	 */
+	public LibraryDownloader(File urlStorage, String defaultUrlStorage, boolean overrideTarget,
+			boolean makeExecutable) {
+		this(readUrlStorage(urlStorage, defaultUrlStorage), null, JAR_CONTENT_TYPE_CHECKER, overrideTarget,
+				makeExecutable);
+	}
+
+	/**
+	 * Creates a new Library Downloader that reads all URLs from urlStorage, and
+	 * tries them until one is valid, as long as they are separated by a ',' or a
+	 * ';'. This ignores lines starting with a '#'. If the file doesn't exists it
+	 * creates it with defaultUrlStorage as its content. If defaultUrlStorage is
+	 * null or empty it wont create a file, and therefore can't download anything.
+	 * 
+	 * @param urlStorage        the file to read the URLs from.
+	 * @param defaultUrlStorage the default content for urlStorage.
+	 * @param contentTypeCheck  a Predicate that checks the content type of the
+	 *                          response from the URL.
+	 * @param overrideTarget    whether the target file should get overridden if it
+	 *                          already exists.
+	 * @param makeExecuteable   whether the target file should get made executable.
+	 */
+	public LibraryDownloader(File urlStorage, String defaultUrlStorage, Predicate<String> contentTypeCheck,
+			boolean overrideTarget, boolean makeExecutable) {
+		this(readUrlStorage(urlStorage, defaultUrlStorage), null, contentTypeCheck, overrideTarget, makeExecutable);
+	}
+
+	/**
+	 * Creates a new Library Downloader that reads all URLs from urlStorage, and
+	 * tries them until one is valid, as long as they are separated by a ',' or a
+	 * ';'. This ignores lines starting with a '#'. If the file doesn't exists it
+	 * creates it with defaultUrlStorage as its content. If defaultUrlStorage is
+	 * null or empty it wont create a file, and therefore can't download anything.
+	 * 
+	 * Valid content types are application/jar, application/java-archive,
+	 * application/octet-stream, application/download and
+	 * application/force-download.
+	 * 
+	 * @param urlStorage        the file to read the URLs from.
+	 * @param defaultUrlStorage the default content for urlStorage.
+	 * @param target            the target location for the File. If it is a
+	 *                          directory the download will get saved into that
+	 *                          directory with the name it has on the server. If
+	 *                          this is null the file will be saved into the libs
+	 *                          directory next to this jar.
+	 * @param contentTypeCheck  a Predicate that checks the content type of the
+	 *                          response from the URL.
+	 * @param overrideTarget    whether the target file should get overridden if it
+	 *                          already exists.
+	 * @param makeExecuteable   whether the target file should get made executable.
+	 */
+	public LibraryDownloader(File urlStorage, String defaultUrlStorage, File target, boolean overrideTarget,
+			boolean makeExecuteable) {
+		this(readUrlStorage(urlStorage, defaultUrlStorage), target, JAR_CONTENT_TYPE_CHECKER, overrideTarget,
+				makeExecuteable);
+	}
+
+	/**
+	 * Creates a new Library Downloader that reads all URLs from urlStorage, and
+	 * tries them until one is valid, as long as they are separated by a ',' or a
+	 * ';'. This ignores lines starting with a '#'. If the file doesn't exists it
+	 * creates it with defaultUrlStorage as its content. If defaultUrlStorage is
+	 * null or empty it wont create a file, and therefore can't download anything.
+	 * 
+	 * @param urlStorage        the file to read the URLs from.
+	 * @param defaultUrlStorage the default content for urlStorage.
+	 * @param target            the target location for the File. If it is a
+	 *                          directory the download will get saved into that
+	 *                          directory with the name it has on the server. If
+	 *                          this is null the file will be saved into the libs
+	 *                          directory next to this jar.
+	 * @param contentTypeCheck  a Predicate that checks the content type of the
+	 *                          response from the URL.
+	 * @param overrideTarget    whether the target file should get overridden if it
+	 *                          already exists.
+	 * @param makeExecuteable   whether the target file should get made executable.
+	 */
+	public LibraryDownloader(File urlStorage, String defaultUrlStorage, File target, Predicate<String> contentTypeCheck,
+			boolean overrideTarget, boolean makeExecuteable) {
+		this(readUrlStorage(urlStorage, defaultUrlStorage), target, contentTypeCheck, overrideTarget, makeExecuteable);
+	}
+
+	/**
+	 * Creates a new Library Downloader downloading a jar file from a single URL,
+	 * this will download the file into a directory named libs in the same directory
+	 * where the file containing this class is, and give it the name of the file on
+	 * from the URL.
+	 * 
+	 * Valid content types are application/jar, application/java-archive,
+	 * application/octet-stream, application/download and
+	 * application/force-download.
+	 * 
+	 * @param url             the URL to download a file from.
+	 * @param overrideTarget  whether the target file should get overridden if it
+	 *                        already exists.
+	 * @param makeExecuteable whether the target file should get made executable.
+	 */
+	public LibraryDownloader(URL url, boolean overrideTarget, boolean makeExecutable) {
+		this(url, null, JAR_CONTENT_TYPE_CHECKER, overrideTarget, makeExecutable);
+	}
+
+	/**
+	 * Creates a new Library Downloader downloading a jar file from a single URL,
+	 * this will download the file into a directory named libs in the same directory
+	 * where the file containing this class is, and give it the name of the file on
+	 * from the URL.
+	 * 
+	 * @param url              the URL to download a file from.
+	 * @param contentTypeCheck a Predicate that checks the content type of the
+	 *                         response from the URL.
+	 * @param overrideTarget   whether the target file should get overridden if it
+	 *                         already exists.
+	 * @param makeExecuteable  whether the target file should get made executable.
+	 */
+	public LibraryDownloader(URL url, Predicate<String> contentTypeCheck, boolean overrideTarget,
+			boolean makeExecutable) {
+		this(url, null, contentTypeCheck, overrideTarget, makeExecutable);
+	}
+
+	/**
+	 * Creates a new Library Downloader downloading a jar file from a single URL.
+	 * 
+	 * @param url              the URL to download a file from.
+	 * @param target           the target location for the File. If it is a
+	 *                         directory the download will get saved into that
+	 *                         directory with the name it has on the server. If this
+	 *                         is null the file will be saved into the libs
+	 *                         directory next to this jar.
+	 * @param contentTypeCheck a Predicate that checks the content type of the
+	 *                         response from the URL.
+	 * @param overrideTarget   whether the target file should get overridden if it
+	 *                         already exists.
+	 * @param makeExecuteable  whether the target file should get made executable.
+	 */
+	public LibraryDownloader(URL url, File target, boolean overrideTarget, boolean makeExecuteable) {
+		this(url, target, JAR_CONTENT_TYPE_CHECKER, overrideTarget, makeExecuteable);
+	}
+
+	/**
+	 * Creates a new Library Downloader downloading from a single URL if the content
+	 * type of that web site is accepted by contentTypeCheck.
+	 * 
+	 * @param url              the URL to download a file from.
+	 * @param target           the target location for the File. If it is a
+	 *                         directory the download will get saved into that
+	 *                         directory with the name it has on the server. If this
+	 *                         is null the file will be saved into the libs
+	 *                         directory next to this jar.
+	 * @param contentTypeCheck a Predicate that checks the content type of the
+	 *                         response from the URL.
+	 * @param overrideTarget   whether the target file should get overridden if it
+	 *                         already exists.
+	 * @param makeExecuteable  whether the target file should get made executable.
+	 */
+	public LibraryDownloader(URL url, File target, Predicate<String> contentTypeCheck, boolean overrideTarget,
+			boolean makeExecuteable) {
+		this(toList(url), target, contentTypeCheck, overrideTarget, makeExecuteable);
+	}
+
+	/**
+	 * Creates a new Library Downloader downloading a Jar file from the first valid
+	 * of a list of URLs, this will download the file into a directory named libs in
+	 * the same directory where the file containing this class is, and give it the
+	 * name of the file on from the URL.
+	 * 
+	 * Valid content types are application/jar, application/java-archive,
+	 * application/octet-stream, application/download and
+	 * application/force-download.
+	 * 
+	 * @param urls            the List of URLs to download a file from.
+	 * @param overrideTarget  whether the target file should get overridden if it
+	 *                        already exists.
+	 * @param makeExecuteable whether the target file should get made executable.
+	 */
+	public LibraryDownloader(List<URL> urls, boolean overrideTarget, boolean makeExecutable) {
+		this(urls, null, JAR_CONTENT_TYPE_CHECKER, overrideTarget, makeExecutable);
+	}
+
+	/**
+	 * Creates a new Library Downloader downloading from the first url of a list
+	 * that is accepted by contentTypeCheck and responds without errors, this will
+	 * download the file into a directory named libs in the same directory where the
+	 * file containing this class is, and give it the name of the file on from the
+	 * URL.
+	 * 
+	 * @param urls             the List of URLs to download a file from.
+	 * @param contentTypeCheck a Predicate that checks the content type of the
+	 *                         response from the URL.
+	 * @param overrideTarget   whether the target file should get overridden if it
+	 *                         already exists.
+	 * @param makeExecuteable  whether the target file should get made executable.
+	 */
+	public LibraryDownloader(List<URL> urls, Predicate<String> contentTypeCheck, boolean overrideTarget,
+			boolean makeExecutable) {
+		this(urls, null, contentTypeCheck, overrideTarget, makeExecutable);
+	}
+
+	/**
+	 * Creates a new Library Downloader downloading a Jar file from the first valid
+	 * of a list of URLs.
+	 * 
+	 * Valid content types are application/jar, application/java-archive,
+	 * application/octet-stream, application/download and
+	 * application/force-download.
+	 * 
+	 * @param urls            the List of URLs to download a file from.
+	 * @param target          the target location for the File. If it is a directory
+	 *                        the download will get saved into that directory with
+	 *                        the name it has on the server. If this is null the
+	 *                        file will be saved into the libs directory next to
+	 *                        this jar.
+	 * @param overrideTarget  whether the target file should get overridden if it
+	 *                        already exists.
+	 * @param makeExecuteable whether the target file should get made executable.
+	 */
+	public LibraryDownloader(List<URL> urls, File target, boolean overrideTarget, boolean makeExecutable) {
+		this(urls, target, JAR_CONTENT_TYPE_CHECKER, overrideTarget, makeExecutable);
+	}
+
+	/**
+	 * Creates a new Library Downloader downloading from the first url of a list
+	 * that is accepted by contentTypeCheck and responds without errors.
+	 * 
+	 * @param urls             the List of URLs to download a file from.
+	 * @param target           the target location for the File. If it is a
+	 *                         directory the download will get saved into that
+	 *                         directory with the name it has on the server. If this
+	 *                         is null the file will be saved into the libs
+	 *                         directory next to this jar.
+	 * @param contentTypeCheck a Predicate that checks the content type of the
+	 *                         response from the URL.
+	 * @param overrideTarget   whether the target file should get overridden if it
+	 *                         already exists.
+	 * @param makeExecuteable  whether the target file should get made executable.
+	 */
+	public LibraryDownloader(List<URL> urls, File target, Predicate<String> contentTypeCheck, boolean overrideTarget,
+			boolean makeExecutable) {
+		this.urls = urls;
+		if (target == null) {
+			target = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+			target = new File(target.getParent(), "libs");
+			targetDir = true;
+		}
+		this.target = target;
+		if (target.isDirectory()) {
+			targetDir = true;
+		}
+		this.typeCheck = contentTypeCheck;
+		this.override = overrideTarget;
+		this.executable = makeExecutable;
+	}
+
+	/**
+	 * downloads the file from the first working url from the urls set in the
+	 * constructor.
+	 * 
+	 * @return whether the download was successful.
+	 * @throws IOException
+	 */
+	public boolean downloadFile() {
+		for (URL url : urls) {
+			try {
+				if (downloadFile(url)) {
+					return true;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * downloads the file from the given url.
+	 * 
+	 * @param url the file to download.
+	 * @return whether the download was successful.
+	 * @throws IOException
+	 */
+	public boolean downloadFile(URL url) throws IOException {
+		URLConnection connection = url.openConnection();
+		if (connection instanceof HttpURLConnection) {
+			((HttpURLConnection) connection).setInstanceFollowRedirects(false);// handle redirects below.
+		}
+		while (connection.getHeaderField("Location") != null) {
+			String location = connection.getHeaderField("Location");
+			if (location.contains("://")) {
+				url = new URL(location);
+			} else if (location.startsWith("/")) {
+				url = new URL(String.format("%s://%s:%s%s", url.getProtocol(), url.getHost(),
+						url.getPort() == -1 ? url.getDefaultPort() : url.getPort(), location));
+			} else {
+				url = new URL(String.format("%s://%s:%s%s/%s", url.getProtocol(), url.getHost(),
+						url.getPort() == -1 ? url.getDefaultPort() : url.getPort(),
+						url.getPath().substring(0, url.getPath().lastIndexOf('/')), location));
+			}
+			connection = url.openConnection();
+			if (connection instanceof HttpURLConnection) {
+				((HttpURLConnection) connection).setInstanceFollowRedirects(false);
+			}
+		}
+		if (typeCheck.test(connection.getContentType())) {
+			if (targetDir) {
+				if (url.getFile().contains("?")) {
+					target = new File(target,
+							url.getFile().substring(url.getFile().lastIndexOf('/') + 1, url.getFile().indexOf('?')));
+				} else {
+					target = new File(target, url.getFile().substring(url.getFile().lastIndexOf('/') + 1));
+				}
+			}
+			if (target.exists()) {
+				if (override) {
+					target.delete();
+				} else {
+					return false;
+				}
+			}
+			if (!target.getParentFile().exists()) {
+				target.getParentFile().mkdirs();
+			} else if (!target.getParentFile().isDirectory()) {
+				System.err.println(target.getParent()
+						+ " is not a directory, but needs to be one in order for the download to be saved there.");
+				return false;
+			}
+			downloadedFrom = url;
+			size = connection.getContentLength();
+			BufferedInputStream bin = new BufferedInputStream(connection.getInputStream());
+			BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(target));
+			byte[] buffer = new byte[1024];
+			int buffered;
+			while ((buffered = bin.read(buffer)) >= 0) {
+				downloaded += buffered;
+				bout.write(buffer, 0, buffered);
+			}
+			bin.close();
+			bout.close();
+			if (executable) {
+				target.setExecutable(true);
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Downloads ToMe25s-Java-Utilities from github.
+	 * 
+	 * @return whether the download was successful.
+	 */
+	public static boolean downloadThis() {
+		LibraryDownloader downloader = new LibraryDownloader(new File("ToMe25s-Java-Utilites-Download-Url.txt"),
+				TOME25S_JAVA_UTILITIES_URL, true, true);
+		return downloader.downloadFile();
+	}
+
+	/**
+	 * returns the size of the file to download in bytes.
+	 * 
+	 * @return
+	 */
+	public int getDownloadSize() {
+		return size;
+	}
+
+	/**
+	 * returns the amount of bytes that are downloaded.
+	 * 
+	 * @return
+	 */
+	public int getBytesDownloaded() {
+		return downloaded;
+	}
+
+	/**
+	 * returns the percentage of the file that is already downloaded.
+	 * 
+	 * @return
+	 */
+	public double getPercentDownloaded() {
+		return downloaded / (size / 100D);
+	}
+
+	/**
+	 * returns the URL that got used for the download, after all redirects.
+	 * 
+	 * @return
+	 */
+	public URL getDownloadUrl() {
+		return downloadedFrom;
+	}
+
+	/**
+	 * creates a new ArrayList and adds all the given objects to it.
+	 * 
+	 * @param <T>
+	 * @param objects
+	 * @return
+	 */
+	@SafeVarargs
+	private static <T> List<T> toList(T... objects) {
+		List<T> list = new ArrayList<T>();
+		for (T obj : objects) {
+			list.add(obj);
+		}
+		return list;
+	}
+
+	/**
+	 * reads all URLs from the given file, as long as they are separated by a ',' or
+	 * a ';'. This ignores lines starting with a '#'. If the file doesn't exists it
+	 * creates it with defaultUrlStorage as its content. If defaultUrlStorage is
+	 * null or empty it wont create a file, and will return an empty list.
+	 * 
+	 * @param urlStorage        the file to read the URLs from.
+	 * @param defaultUrlStorage the default content for urlStorage.
+	 * @return
+	 */
+	private static List<URL> readUrlStorage(File urlStorage, String defaultUrlStorage) {
+		List<URL> urls = new ArrayList<URL>();
+		if (!urlStorage.exists() && defaultUrlStorage != null && !defaultUrlStorage.isEmpty()) {
+			if (!urlStorage.getAbsoluteFile().getParentFile().exists()) {
+				urlStorage.getParentFile().mkdirs();
+			}
+			try {
+				FileOutputStream fiout = new FileOutputStream(urlStorage);
+				fiout.write(defaultUrlStorage.getBytes());
+				fiout.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		if (urlStorage.exists()) {
+			try {
+				String file = "";
+				List<String> lines = Files.readAllLines(urlStorage.toPath());
+				for (String line : lines) {
+					if (!line.startsWith("#")) {
+						file += line;
+					}
+				}
+				for (String url : file.split(",|;")) {
+					try {
+						urls.add(new URL(url));
+					} catch (MalformedURLException e) {
+						e.printStackTrace();
+					}
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return urls;
+	}
+
+}

@@ -13,6 +13,13 @@ import com.tome25.utils.config.Config;
 
 import java.lang.Throwable;
 
+/**
+ * 
+ * A Tracing Print Stream that can print to multiple Output Streams.
+ * 
+ * @author ToMe25
+ *
+ */
 public class TracingMultiPrintStream extends MultiPrintStream {
 
 	private boolean traceTimestamp = true;

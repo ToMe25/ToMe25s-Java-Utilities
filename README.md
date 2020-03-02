@@ -1,14 +1,46 @@
 # ToMe25s-Java-Utilities
 A collection of common Utilities i use in a lot of Projects, moved into a library to simplify keeping them up to date everywhere.
 
-This Library Currently contains:
+The ToMe25s-Java-Utilities.jar file should always be the latest build, as it gets build on commit by the git hooks.
+
+### This Library Currently contains:
  * A simple Json Handler
  * A simple Config Handler
  * A Print Stream That can write to multiple Output Streams
  * A Print Stream That can write to multiple Output Streams and has some logging/tracing capabilities
  * A Version Control class that can give you the currently used version of this library as long as the ToMe25s-Java-Utilities-Version attribute is in the MANIFEST.MF file inside its Jar
  * A simple Jar Extraction tool
+ * A simple File/Library downloader
+ * A tool to add Libraries to the classpath
 
 To add the git-hooks to your active git hooks just execute git-hooks/post-merge.py(`python git-hooks/post-merge.py`).(they are not tested on Windows, but according to the internet they should work.)
 
-In case you are looking for a build: the ToMe25-Java-Utilities.jar file gets build automatically on commit, so it should always be up to date.
+### How to add this library to your Jar file:
+If you want it to get downloaded on startup: <details><summary>click here to see</summary>
+
+ 1. copy the LibraryDownloader class and the LibraryLoader class into your project.
+ 2. add something like
+ ```java
+ LibraryLoader loader = new LibraryLoader(args);
+ LibraryDownloader.downloadThis();
+ loader.addThisToClasspath();
+ ```
+ to the start of your main method.
+ 
+Note that you can't import any of this libraries classes in your main class if you do this, or else java will crash on startup,
+also the LibraryLoader will probably restart your software once to add an Attribute to the MANIFEST.MF.
+</details>
+
+If you want it to be packaged into your main jar and get extracted on startup: <details><summary>click here to see</summary>
+
+ 1. copy the JarExtractor class and the LibraryLoader class into your project.
+ 2. add something like
+ ```java
+ JarExtractor.extractThis(new File(MainClass.class.getProtectionDomain().getCodeSource().getLocation().getPath()));
+ loader.addThisToClasspath();
+ ```
+ to the start of your main method.
+ 
+Note that you can't import any of this libraries classes in your main class if you do this, or else java will crash on startup,
+also the LibraryLoader will probably restart your software once to add an Attribute to the MANIFEST.MF.
+</details>

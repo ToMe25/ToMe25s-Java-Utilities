@@ -10,9 +10,10 @@ import java.util.Locale;
 
 /**
  * 
+ * A Standard PrintStream except it can write to multiple OutputStreams.
+ * 
  * @author ToMe25
  *
- *         A Standard PrintStream except it can write to multiple OutputStreams.
  */
 public class MultiPrintStream extends PrintStream {
 

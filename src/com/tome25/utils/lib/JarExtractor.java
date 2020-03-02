@@ -74,6 +74,15 @@ public class JarExtractor {
 			}
 			if (extract.test(entry.getName())) {
 				File output = new File(outputDir, entry.getName());
+				if (!output.getParentFile().exists()) {
+					output.getParentFile().mkdirs();
+				}
+				if (!output.getParentFile().isDirectory()) {
+					jar.close();
+					throw new IOException(
+							String.format("File %s is not a directory, but would need to be one for the unpacking "
+									+ "of this jar archive to work.", output.getParent()));
+				}
 				FileOutputStream fiout = new FileOutputStream(output);
 				InputStream jarin = jar.getInputStream(entry);
 				while (jarin.available() > 0) {

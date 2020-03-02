@@ -42,7 +42,7 @@ public class LibraryLoader {
 			File file = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
 			if (!file.exists()) {
 				throw new FileNotFoundException(
-						"This programs CodeSource doesn't exists, most likely it got deleted while running!");
+						"This programs Code Source doesn't exists, most likely it got deleted while running!");
 			} else if (!file.isFile()) {
 				throw new FileNotFoundException(
 						"This programs Code Source isn't a file, most likely this is run before being packaged "

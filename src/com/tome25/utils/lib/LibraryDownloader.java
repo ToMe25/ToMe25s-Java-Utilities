@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -330,13 +331,25 @@ public class LibraryDownloader {
 	 * @throws IOException
 	 */
 	public boolean downloadFile() {
+		return downloadFile((e) -> e.printStackTrace());
+	}
+
+	/**
+	 * downloads the file from the first working url from the urls set in the
+	 * constructor.
+	 * 
+	 * @param exceptionHandler a consumer that handles exceptions if any occur.
+	 * @return whether the download was successful.
+	 * @throws IOException
+	 */
+	public boolean downloadFile(Consumer<Exception> exceptionHandler) {
 		for (URL url : urls) {
 			try {
 				if (downloadFile(url)) {
 					return true;
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				exceptionHandler.accept(e);
 			}
 		}
 		return false;
@@ -415,13 +428,53 @@ public class LibraryDownloader {
 	}
 
 	/**
-	 * Downloads ToMe25s-Java-Utilities from github.
+	 * Downloads ToMe25s-Java-Utilities from the first valid URL in the file
+	 * ToMe25s-Java-Utilities-Download-Url.txt.
+	 * 
+	 * The default for this file is the github download URL for
+	 * ToMe25s-Java-Utilities.
 	 * 
 	 * @return whether the download was successful.
 	 */
 	public static boolean downloadThis() {
-		LibraryDownloader downloader = new LibraryDownloader(new File("ToMe25s-Java-Utilites-Download-Url.txt"),
-				TOME25S_JAVA_UTILITIES_URL, true, true);
+		return downloadThis(TOME25S_JAVA_UTILITIES_URL);
+	}
+
+	/**
+	 * Downloads ToMe25s-Java-Utilities from the first valid URL in the file
+	 * ToMe25s-Java-Utilities-Download-Url.txt.
+	 * 
+	 * @param defaultUrls the default content for
+	 *                    ToMe25s-Java-Utilities-Download-Url.txt.
+	 * @return whether the download was successful.
+	 */
+	public static boolean downloadThis(String defaultUrls) {
+		return downloadThis(defaultUrls, (e) -> e.printStackTrace());
+	}
+
+	/**
+	 * Downloads ToMe25s-Java-Utilities from the first valid URL in the file
+	 * ToMe25s-Java-Utilities-Download-Url.txt.
+	 * 
+	 * @param exceptionHandler a consumer that handles exceptions if any occur.
+	 * @return whether the download was successful.
+	 */
+	public static boolean downloadThis(Consumer<Exception> exceptionHandler) {
+		return downloadThis(TOME25S_JAVA_UTILITIES_URL, exceptionHandler);
+	}
+
+	/**
+	 * Downloads ToMe25s-Java-Utilities from the first valid URL in the file
+	 * ToMe25s-Java-Utilities-Download-Url.txt.
+	 * 
+	 * @param defaultUrls      the default content for
+	 *                         ToMe25s-Java-Utilities-Download-Url.txt.
+	 * @param exceptionHandler a consumer that handles exceptions if any occur.
+	 * @return whether the download was successful.
+	 */
+	public static boolean downloadThis(String defaultUrls, Consumer<Exception> exceptionHandler) {
+		LibraryDownloader downloader = new LibraryDownloader(new File("ToMe25s-Java-Utilities-Download-Url.txt"),
+				defaultUrls, true, true);
 		return downloader.downloadFile();
 	}
 

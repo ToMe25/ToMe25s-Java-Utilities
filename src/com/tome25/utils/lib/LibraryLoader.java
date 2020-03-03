@@ -1,10 +1,12 @@
 package com.tome25.utils.lib;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.lang.instrument.Instrumentation;
 import java.lang.management.ManagementFactory;
 import java.nio.file.Files;
@@ -26,7 +28,95 @@ import java.util.jar.JarOutputStream;
  */
 public class LibraryLoader {
 
+	private static final String DEFAULT_TOME25S_JAVA_UTILITIES_URL_STORAGE = String
+			.format("# The URL'S to try and download ToMe25's-Java-Utilites from.%n"
+					+ "# separate entries with a ',', they will be tried from start to end.%n"
+					+ "https://github.com/ToMe25/ToMe25s-Java-Utilities/raw/master/ToMe25s-Java-Utilities.jar%n");
+
 	private static Instrumentation instrumentation;
+
+	/**
+	 * Initializes a library loader, restarts your jvm if necessary, tries to
+	 * download ToMe25s-Java-Utilites, if that doesn't work it tries to extract it
+	 * from this Jar, adds it to the classpath, and sets the System Outputs to
+	 * TracingMultiPrintStreams printing to the log files and the previous output
+	 * streams.
+	 * 
+	 * @param args    the program arguments.
+	 * @param logFile the log file for System.out and System.err.
+	 */
+	public static void init(String[] args, File logFile) {
+		init(args, logFile, DEFAULT_TOME25S_JAVA_UTILITIES_URL_STORAGE);
+	}
+
+	/**
+	 * Initializes a library loader, restarts your jvm if necessary, tries to
+	 * download ToMe25s-Java-Utilites, if that doesn't work it tries to extract it
+	 * from this Jar, adds it to the classpath, and sets the System Outputs to
+	 * TracingMultiPrintStreams printing to the log file and the previous output
+	 * streams.
+	 * 
+	 * @param args              the program arguments.
+	 * @param logFile           the log file for System.out and System.err.
+	 * @param defaultUrlStorage the default contents for the URL storage file that
+	 *                          lists the urls to try and download
+	 *                          ToMe25s-Java-Utilites from.
+	 */
+	public static void init(String[] args, File logFile, String defaultUrlStorage) {
+		init(args, logFile, logFile, defaultUrlStorage);
+	}
+
+	/**
+	 * Initializes a library loader, restarts your jvm if necessary, tries to
+	 * download ToMe25s-Java-Utilites, if that doesn't work it tries to extract it
+	 * from this Jar, adds it to the classpath, and sets the System Outputs to
+	 * TracingMultiPrintStreams printing to the log files and the previous output
+	 * streams.
+	 * 
+	 * @param args              the program arguments.
+	 * @param outputLogFile     the log file for System.out.
+	 * @param errorLogFile      the log file for System.err.
+	 * @param defaultUrlStorage the default contents for the URL storage file that
+	 *                          lists the urls to try and download
+	 *                          ToMe25s-Java-Utilites from.
+	 */
+	public static void init(String[] args, File outputLogFile, File errorLogFile, String defaultUrlStorage) {
+		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+		PrintStream pb = new PrintStream(buffer);
+		try {
+			LibraryLoader loader = new LibraryLoader(args);
+			File codeSource = new File(loader.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+			LibraryDownloader downloader = new LibraryDownloader(
+					new File(codeSource.getParent(), "ToMe25s-Java-Utilities-Download-Url.txt"), defaultUrlStorage,
+					true, true);
+			if (downloader.downloadFile()) {
+				pb.format("Successfully downloaded ToMe25s-Java-Utilites from %s.%n",
+						downloader.getDownloadUrl().toString());
+			} else {
+				JarExtractor.extractThis(codeSource);
+			}
+			loader.addThisToClasspath();
+		} catch (FileNotFoundException e) {
+			if (!e.getMessage().contains("isn't a file")) {
+				e.printStackTrace();
+				e.printStackTrace(pb);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			e.printStackTrace(pb);
+		}
+		try {
+			com.tome25.utils.logging.LogTracer.traceOutputs(outputLogFile, errorLogFile);// importing this would cause
+																							// it to crash on loading.
+			pb.close();
+			if (buffer.size() > 0) {
+				System.out.print(buffer.toString());
+			}
+			buffer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Creates a new LibraryLoader, it is recommended to do this at the start of
@@ -75,12 +165,13 @@ public class LibraryLoader {
 				Files.copy(tempFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 				tempFile.delete();
 			}
-			Runtime.getRuntime()
-					.exec(String.format("java %s -jar %s %s %s", "-javaagent:" + file.getAbsolutePath(),
-							file.getAbsolutePath(),
-							stringArrayToString(
-									ManagementFactory.getRuntimeMXBean().getInputArguments().toArray(new String[0])),
-							stringArrayToString(mainArgs)));
+			ProcessBuilder pb = new ProcessBuilder("java", "-javaagent:" + file.getAbsolutePath(), "-jar",
+					file.getAbsolutePath(),
+					stringArrayToString(
+							ManagementFactory.getRuntimeMXBean().getInputArguments().toArray(new String[0])),
+					stringArrayToString(mainArgs));
+			pb.inheritIO();
+			pb.start();
 			System.exit(0);
 		}
 	}

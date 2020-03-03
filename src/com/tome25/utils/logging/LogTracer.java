@@ -54,6 +54,8 @@ public class LogTracer {
 	 * @param outputLog the file to log the System Output Stream to.
 	 */
 	public static void traceOutputs(File errorLog, File outputLog) {
+		errorLog = errorLog.getAbsoluteFile();
+		outputLog = outputLog.getAbsoluteFile();
 		if (!errorLog.getParentFile().exists()) {
 			errorLog.getParentFile().mkdirs();
 		}

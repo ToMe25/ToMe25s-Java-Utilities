@@ -18,7 +18,7 @@ To add the git-hooks to your active git hooks just execute git-hooks/post-merge.
 ### How to add this library to your Jar file:
 If you want it to get downloaded on startup: <details><summary>click here to see</summary>
 
- 1. copy the LibraryDownloader class and the LibraryLoader class into your project.
+ 1. copy the LibraryDownloader class and the LibraryLoader class into your project.(if you copy the sources not the compiled classes you can move them to any package, but they need to all be in the same package)
  2. add something like
  ```java
  LibraryLoader loader = new LibraryLoader(args);
@@ -28,19 +28,38 @@ If you want it to get downloaded on startup: <details><summary>click here to see
  to the start of your main method.
  
 Note that you can't import any of this libraries classes in your main class if you do this, or else java will crash on startup,
-also the LibraryLoader will probably restart your software once to add an Attribute to the MANIFEST.MF.
+also the LibraryLoader will probably restart your software once to add the Premain-Class Attribute to the MANIFEST.MF and add a vm argument to the start command.
 </details>
 
 If you want it to be packaged into your main jar and get extracted on startup: <details><summary>click here to see</summary>
 
- 1. copy the JarExtractor class and the LibraryLoader class into your project.
- 2. add something like
+ 1. add the ToMe25s-Java-Utilites jar to your project in a way that gets it added to the finished jar.(e.g. copy it into your src directory)
+ 2. copy the JarExtractor class and the LibraryLoader class into your project.(if you copy the sources not the compiled classes you can move them to any package, but they need to all be in the same package)
+ 3. add something like
  ```java
- JarExtractor.extractThis(new File(MainClass.class.getProtectionDomain().getCodeSource().getLocation().getPath()));
+ LibraryLoader loader = new LibraryLoader(args);
+ File codeSource = new File(MainClass.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+ JarExtractor.extractThis(codeSource);
  loader.addThisToClasspath();
  ```
  to the start of your main method.
  
 Note that you can't import any of this libraries classes in your main class if you do this, or else java will crash on startup,
-also the LibraryLoader will probably restart your software once to add an Attribute to the MANIFEST.MF.
+also the LibraryLoader will probably restart your software once to add the Premain-Class Attribute to the MANIFEST.MF and add a vm argument to the start command.
+</details>
+
+If you want it to first try to download this library on startup,
+if that doesn't work extracts it from your jar,
+and sets the System Outputs to TracingMultiPrintStreams copying all the output to a log file: <details><summary>click here to see</summary>
+
+ 1. add the ToMe25s-Java-Utilites jar to your project in a way that gets it added to the finished jar.(e.g. copy it into your src directory)
+ 2. copy the JarExtractor, LibraryDownloader and LibraryLoader classes to your project.(if you copy the sources not the compiled classes you can move them to any package, but they need to all be in the same package)
+ 3. add something like
+ ```java
+ LibraryLoader.init(args, new File("LogFile.log"));
+ ```
+ to the start of your main method.
+ 
+Note that you can't import any of this libraries classes in your main class if you do this, or else java will crash on startup,
+also the LibraryLoader will probably restart your software once to add the Premain-Class Attribute to the MANIFEST.MF and add a vm argument to the start command.
 </details>

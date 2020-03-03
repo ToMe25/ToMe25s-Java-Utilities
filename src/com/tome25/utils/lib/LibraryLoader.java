@@ -73,6 +73,21 @@ public class LibraryLoader {
 	 * TracingMultiPrintStreams printing to the log files and the previous output
 	 * streams.
 	 * 
+	 * @param args          the program arguments.
+	 * @param outputLogFile the log file for System.out.
+	 * @param errorLogFile  the log file for System.err.
+	 */
+	public static void init(String[] args, File outputLogFile, File errorLogFile) {
+		init(args, outputLogFile, errorLogFile, DEFAULT_TOME25S_JAVA_UTILITIES_URL_STORAGE);
+	}
+
+	/**
+	 * Initializes a library loader, restarts your jvm if necessary, tries to
+	 * download ToMe25s-Java-Utilites, if that doesn't work it tries to extract it
+	 * from this Jar, adds it to the classpath, and sets the System Outputs to
+	 * TracingMultiPrintStreams printing to the log files and the previous output
+	 * streams.
+	 * 
 	 * @param args              the program arguments.
 	 * @param outputLogFile     the log file for System.out.
 	 * @param errorLogFile      the log file for System.err.

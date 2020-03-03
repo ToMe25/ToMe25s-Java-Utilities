@@ -154,7 +154,8 @@ public class JarExtractor {
 				continue;
 			}
 			if (extract.test(entry.getName())) {
-				File output = new File(outputDir, entry.getName());
+				File output = new File(outputDir, subDir ? entry.getName()
+						: entry.getName().substring(entry.getName().lastIndexOf(File.separatorChar) + 1));
 				if (!output.getParentFile().exists()) {
 					output.getParentFile().mkdirs();
 				}

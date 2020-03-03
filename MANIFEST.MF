@@ -1,1 +1,1 @@
-ToMe25s-Java-Utilities-Version: 1.26
+ToMe25s-Java-Utilities-Version: 1.27

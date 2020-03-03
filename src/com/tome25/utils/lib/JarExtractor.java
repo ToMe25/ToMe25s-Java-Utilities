@@ -30,7 +30,23 @@ public class JarExtractor {
 	 * @throws IOException if an I/O error has occurred
 	 */
 	public static void extractJar(File jarFile, boolean extractClasses) throws IOException {
-		extractJar(jarFile, (s) -> extractClasses || !s.endsWith(".class"));
+		extractJar(jarFile, extractClasses, jarFile.getParentFile());
+	}
+
+	/**
+	 * Extracts the contents out of the given jar file.
+	 * 
+	 * This doesn't extract empty directories.
+	 * 
+	 * @param jarFile        the jar file to extract.
+	 * @param extractClasses whether class files should get extracted too.
+	 * @param subDir         whether files in a directory inside the jar should get
+	 *                       put into a sub directory of outputDir or directly into
+	 *                       outputDir.
+	 * @throws IOException if an I/O error has occurred
+	 */
+	public static void extractJar(File jarFile, boolean extractClasses, boolean subDir) throws IOException {
+		extractJar(jarFile, extractClasses, jarFile.getParentFile(), subDir);
 	}
 
 	/**
@@ -44,7 +60,25 @@ public class JarExtractor {
 	 * @throws IOException if an I/O error has occurred
 	 */
 	public static void extractJar(File jarFile, boolean extractClasses, File outputDir) throws IOException {
-		extractJar(jarFile, (s) -> extractClasses || !s.endsWith(".class"), outputDir);
+		extractJar(jarFile, extractClasses, outputDir, true);
+	}
+
+	/**
+	 * Extracts the contents out of the given jar file.
+	 * 
+	 * This doesn't extract empty directories.
+	 * 
+	 * @param jarFile        the jar file to extract.
+	 * @param extractClasses whether class files should get extracted too.
+	 * @param outputDir      the directory to put the extracted files in.
+	 * @param subDir         whether files in a directory inside the jar should get
+	 *                       put into a sub directory of outputDir or directly into
+	 *                       outputDir.
+	 * @throws IOException if an I/O error has occurred
+	 */
+	public static void extractJar(File jarFile, boolean extractClasses, File outputDir, boolean subDir)
+			throws IOException {
+		extractJar(jarFile, (s) -> extractClasses || !s.endsWith(".class"), outputDir, subDir);
 	}
 
 	/**
@@ -65,12 +99,45 @@ public class JarExtractor {
 	 * 
 	 * This doesn't extract empty directories.
 	 * 
+	 * @param jarFile the jar file to extract.
+	 * @param extract a predicate that defines what files should get extracted.
+	 * @param subDir  whether files in a directory inside the jar should get put
+	 *                into a sub directory of outputDir or directly into outputDir.
+	 * @throws IOException if an I/O error has occurred
+	 */
+	public static void extractJar(File jarFile, Predicate<String> extract, boolean subDir) throws IOException {
+		extractJar(jarFile, extract, jarFile.getParentFile(), subDir);
+	}
+
+	/**
+	 * Extracts the contents out of the given jar file.
+	 * 
+	 * This doesn't extract empty directories.
+	 * 
 	 * @param jarFile   the jar file to extract.
 	 * @param extract   a predicate that defines what files should get extracted.
 	 * @param outputDir the directory to put the extracted files in.
 	 * @throws IOException if an I/O error has occurred
 	 */
 	public static void extractJar(File jarFile, Predicate<String> extract, File outputDir) throws IOException {
+		extractJar(jarFile, extract, outputDir, true);
+	}
+
+	/**
+	 * Extracts the contents out of the given jar file.
+	 * 
+	 * This doesn't extract empty directories.
+	 * 
+	 * @param jarFile   the jar file to extract.
+	 * @param extract   a predicate that defines what files should get extracted.
+	 * @param outputDir the directory to put the extracted files in.
+	 * @param subDir    whether files in a directory inside the jar should get put
+	 *                  into a sub directory of outputDir or directly into
+	 *                  outputDir.
+	 * @throws IOException if an I/O error has occurred
+	 */
+	public static void extractJar(File jarFile, Predicate<String> extract, File outputDir, boolean subDir)
+			throws IOException {
 		if (!outputDir.exists()) {
 			outputDir.mkdirs();
 		}
@@ -117,8 +184,7 @@ public class JarExtractor {
 	 * @throws IOException
 	 */
 	public static void extractFileFromJar(File jarFile, String fileName) throws IOException {
-		extractJar(jarFile, (s) -> s.equals(fileName)
-				|| (s.contains(File.separator) && s.substring(s.lastIndexOf(File.separatorChar) + 1).equals(fileName)));
+		extractFileFromJar(jarFile, fileName, jarFile.getParentFile());
 	}
 
 	/**
@@ -131,9 +197,26 @@ public class JarExtractor {
 	 * @throws IOException
 	 */
 	public static void extractFileFromJar(File jarFile, String fileName, File outputDir) throws IOException {
+		extractFileFromJar(jarFile, fileName, outputDir, true);
+	}
+
+	/**
+	 * Extracts the file with the given name from the directory if the name contains
+	 * the directory names, or all files with that name if it doesn't.
+	 * 
+	 * @param jarFile   the jar file to extract the file from.
+	 * @param fileName  the name of the file to extract from the jar.
+	 * @param outputDir the directory to put the extracted files in.
+	 * @param subDir    whether files in a directory inside the jar should get put
+	 *                  into a sub directory of outputDir or directly into
+	 *                  outputDir.
+	 * @throws IOException
+	 */
+	public static void extractFileFromJar(File jarFile, String fileName, File outputDir, boolean subDir)
+			throws IOException {
 		extractJar(jarFile, (s) -> s.equals(fileName)
 				|| (s.contains(File.separator) && s.substring(s.lastIndexOf(File.separatorChar) + 1).equals(fileName)),
-				outputDir);
+				outputDir, subDir);
 	}
 
 	/**
@@ -144,6 +227,33 @@ public class JarExtractor {
 	 * @throws IOException
 	 */
 	public static void extractLibsFromJar(File jarFile) throws IOException {
+		extractLibsFromJar(jarFile, new File(jarFile.getParent(), "libs"));
+	}
+
+	/**
+	 * Extracts all jar files from jarFile, as they are potentially libraries, into
+	 * the libs directory next to this jar file.
+	 * 
+	 * @param jarFile   the jar file to extract the files from.
+	 * @param outputDir the directory to put the extracted files in.
+	 * @throws IOException
+	 */
+	public static void extractLibsFromJar(File jarFile, File outputDir) throws IOException {
+		extractLibsFromJar(jarFile, outputDir, true);
+	}
+
+	/**
+	 * Extracts all jar files from jarFile, as they are potentially libraries, into
+	 * the libs directory next to this jar file.
+	 * 
+	 * @param jarFile   the jar file to extract the files from.
+	 * @param outputDir the directory to put the extracted files in.
+	 * @param subDir    whether files in a directory inside the jar should get put
+	 *                  into a sub directory of outputDir or directly into
+	 *                  outputDir.
+	 * @throws IOException
+	 */
+	public static void extractLibsFromJar(File jarFile, File outputDir, boolean subDir) throws IOException {
 		extractJar(jarFile, (s) -> s.endsWith(".jar"), new File(jarFile.getParent(), "libs"));
 	}
 
@@ -165,8 +275,22 @@ public class JarExtractor {
 	 * @param outputDir the directory to put the extracted files in.
 	 */
 	public static void extractThis(File jarFile, File outputDir) {
+		extractThis(jarFile, outputDir, false);
+	}
+
+	/**
+	 * Extracts the ToMe25s-Java-Utilites.jar from jarFile, if it exists, and puts
+	 * it into outputDir.
+	 * 
+	 * @param jarFile   the jar file to extract the file from.
+	 * @param outputDir the directory to put the extracted files in.
+	 * @param subDir    whether files in a directory inside the jar should get put
+	 *                  into a sub directory of outputDir or directly into
+	 *                  outputDir.
+	 */
+	public static void extractThis(File jarFile, File outputDir, boolean subDir) {
 		try {
-			extractJar(jarFile, (s) -> s.endsWith("ToMe25s-Java-Utilities.jar"), outputDir);
+			extractJar(jarFile, (s) -> s.endsWith("ToMe25s-Java-Utilities.jar"), outputDir, subDir);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

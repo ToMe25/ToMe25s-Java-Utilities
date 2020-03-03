@@ -50,7 +50,9 @@ also the LibraryLoader will probably restart your software once to add the Prema
 
 If you want it to first try to download this library on startup,
 if that doesn't work extracts it from your jar,
-and sets the System Outputs to TracingMultiPrintStreams copying all the output to a log file: <details><summary>click here to see</summary>
+adds it to the classpath,
+and sets the System Outputs to TracingMultiPrintStreams
+copying all the output to a log file: <details><summary>click here to see</summary>
 
  1. add the ToMe25s-Java-Utilites jar to your project in a way that gets it added to the finished jar.(e.g. copy it into your src directory)
  2. copy the JarExtractor, LibraryDownloader and LibraryLoader classes to your project.(if you copy the sources not the compiled classes you can move them to any package, but they need to all be in the same package)

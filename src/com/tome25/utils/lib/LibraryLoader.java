@@ -9,8 +9,6 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.lang.instrument.Instrumentation;
 import java.lang.management.ManagementFactory;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.Enumeration;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
@@ -161,7 +159,9 @@ public class LibraryLoader {
 				jar.getManifest().getMainAttributes().put(new Attributes.Name("Premain-Class"),
 						this.getClass().getName());
 				File tempFile = new File(file.getParent(), "tmp.jar");
-				JarOutputStream jarOut = new JarOutputStream(new FileOutputStream(tempFile), jar.getManifest());
+				tempFile.deleteOnExit();
+				FileOutputStream fiout = new FileOutputStream(tempFile);
+				JarOutputStream jarOut = new JarOutputStream(fiout, jar.getManifest());
 				Enumeration<JarEntry> entries = jar.entries();
 				while (entries.hasMoreElements()) {
 					JarEntry entry = entries.nextElement();
@@ -177,7 +177,26 @@ public class LibraryLoader {
 				}
 				jarOut.close();
 				jar.close();
-				Files.copy(tempFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				fiout.close();
+				jar = new JarFile(tempFile);
+				fiout = new FileOutputStream(file);
+				jarOut = new JarOutputStream(fiout, jar.getManifest());
+				entries = jar.entries();
+				while (entries.hasMoreElements()) {
+					JarEntry entry = entries.nextElement();
+					if (entry.getName().equals("META-INF/MANIFEST.MF")) {
+						continue;
+					}
+					jarOut.putNextEntry(entry);
+					InputStream jarIn = jar.getInputStream(entry);
+					while (jarIn.available() > 0) {
+						jarOut.write(jarIn.read());
+					}
+					jarIn.close();
+				}
+				jarOut.close();
+				jar.close();
+				fiout.close();
 				tempFile.delete();
 			}
 			ProcessBuilder pb = new ProcessBuilder("java", "-javaagent:" + file.getAbsolutePath(), "-jar",

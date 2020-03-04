@@ -180,13 +180,10 @@ public class LibraryLoader {
 				fiout.close();
 				jar = new JarFile(tempFile);
 				fiout = new FileOutputStream(file);
-				jarOut = new JarOutputStream(fiout, jar.getManifest());
+				jarOut = new JarOutputStream(fiout);
 				entries = jar.entries();
 				while (entries.hasMoreElements()) {
 					JarEntry entry = entries.nextElement();
-					if (entry.getName().equals("META-INF/MANIFEST.MF")) {
-						continue;
-					}
 					jarOut.putNextEntry(entry);
 					InputStream jarIn = jar.getInputStream(entry);
 					while (jarIn.available() > 0) {

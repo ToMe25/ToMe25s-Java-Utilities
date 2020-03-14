@@ -140,7 +140,7 @@ public class ConfigValue<T> {
 	 *                     FileOutputStream
 	 */
 	public void writeToConfig(FileOutputStream fiout) throws IOException {
-		String comment = "# " + description + " [DEFAULT: " + defaultValue + "]";
+		String comment = String.format("# %s%n# Default: %s", description, defaultValue);
 		String toWrite = comment + System.lineSeparator() + key + ": " + value + System.lineSeparator();
 		fiout.write(toWrite.getBytes());
 		fiout.flush();

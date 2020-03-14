@@ -42,28 +42,42 @@ public class Config {
 	}
 
 	/**
-	 * adds a Config option to read
+	 * adds a config option to be read from the given config file.
 	 * 
-	 * @param config
-	 * @param name
-	 * @param defaultValue
-	 * @param comment
+	 * @param config       the config file to read this config option from.
+	 * @param name         the key for this config option.
+	 * @param defaultValue this config options default value.
+	 * @param comment      a comment to add to this config option.
 	 */
-	public void addConfig(String config, String name, Object defaultValue, String comment) {
-		try {
-			addConfig(new File(cfgDir, config), name, defaultValue, comment);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public <T> void addConfig(String config, String name, T defaultValue, String comment) {
+		addConfig(new File(cfgDir, config), name, defaultValue, comment);
 	}
 
 	/**
-	 * adds a Config option to read
+	 * adds a config option to be read from the given config file.
 	 * 
-	 * @param config
-	 * @param name
-	 * @param defaultValue
-	 * @param comment
+	 * @param config       the config file to read this config option from.
+	 * @param name         the key for this config option.
+	 * @param defaultValue this config options default value.
+	 * @param comment      a list of comments to add to this config option. every
+	 *                     string will get its own line.
+	 */
+	public <T> void addConfig(String config, String name, T defaultValue, String... comments) {
+		String comment = "";
+		for (String str : comments) {
+			comment += String.format("# %s%n", str);
+		}
+		comment = comment.substring(2, comment.length() - (System.lineSeparator().length()));
+		addConfig(new File(cfgDir, config), name, defaultValue, comment);
+	}
+
+	/**
+	 * adds a config option to be read from the given config file.
+	 * 
+	 * @param config       the config file to read this config option from.
+	 * @param name         the key for this config option.
+	 * @param defaultValue this config options default value.
+	 * @param comment      a comment to add to this config option.
 	 */
 	public <T> void addConfig(File config, String name, T defaultValue, String comment) {
 		try {
@@ -75,6 +89,24 @@ public class Config {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * adds a config option to be read from the given config file.
+	 * 
+	 * @param config       the config file to read this config option from.
+	 * @param name         the key for this config option.
+	 * @param defaultValue this config options default value.
+	 * @param comment      a list of comments to add to this config option. every
+	 *                     string will get its own line.
+	 */
+	public <T> void addConfig(File config, String name, T defaultValue, String... comments) {
+		String comment = "";
+		for (String str : comments) {
+			comment += String.format("# %s%n", str);
+		}
+		comment = comment.substring(2, comment.length() - (System.lineSeparator().length()));
+		addConfig(config, name, defaultValue, comment);
 	}
 
 	/**

@@ -9,6 +9,10 @@ def main():
     elif(os.path.basename(os.getcwd()) == "hooks"):
         os.chdir(os.path.dirname(os.path.dirname(os.getcwd())))
     
+    if(os.path.exists(os.path.join(os.getcwd(), ".Keys.jks")) == False):
+        print("Don't compile ToMe25s-Java-Utilites as the .Keys.jks keystore doesn't exist.")
+        quit()
+    
     # create tmp dir to compile the source in.
     tmpdir = os.path.join(os.getcwd(), "tmp")
     os.mkdir(tmpdir)

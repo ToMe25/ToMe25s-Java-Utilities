@@ -134,6 +134,7 @@ public class JsonParser {
 				if (buildString || buildJson) {
 					buffer += c;
 				} else if (buildOther) {
+					buffer = buffer.trim();
 					try {
 						int i = Integer.parseInt(buffer);
 						if (json instanceof JsonArray) {

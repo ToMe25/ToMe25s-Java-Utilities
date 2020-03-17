@@ -3,10 +3,11 @@ package com.tome25.utils.json;
 import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-public class JsonArray extends JsonObject {
+public class JsonArray extends JsonObject implements Iterable<Object> {
 
 	private List<Object> content;
 
@@ -195,6 +196,11 @@ public class JsonArray extends JsonObject {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public Iterator<Object> iterator() {
+		return content.iterator();
 	}
 
 }

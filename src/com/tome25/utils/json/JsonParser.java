@@ -199,6 +199,7 @@ public class JsonParser {
 						buildJson = false;
 					}
 				} else if (buildOther) {
+					buffer = buffer.trim();
 					try {
 						int i = Integer.parseInt(buffer);
 						json.add(key, i);

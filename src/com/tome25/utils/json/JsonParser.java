@@ -47,8 +47,8 @@ public class JsonParser {
 	/**
 	 * This method parses the given String to a JsonObject.
 	 * 
-	 * Supported object types inside the Json: Integer, Boolean, String and Json
-	 * Objects(no Json Lists/Arrays).
+	 * Supported object types inside the Json: Integer, Double, Boolean, String,
+	 * Json Objects and Json Arrays/Lists.
 	 * 
 	 * WARNING: This method is not safe, over the time i worked on it before adding
 	 * it to this library there were multiple character that could make it crash or
@@ -136,12 +136,22 @@ public class JsonParser {
 				} else if (buildOther) {
 					buffer = buffer.trim();
 					try {
-						int i = Integer.parseInt(buffer);
-						if (json instanceof JsonArray) {
-							((JsonArray) json).add(i);
+						if (buffer.contains(".")) {
+							double d = Double.parseDouble(buffer);
+							if (json instanceof JsonArray) {
+								((JsonArray) json).add(d);
+							} else {
+								json.add(key, d);
+								key = null;
+							}
 						} else {
-							json.add(key, i);
-							key = null;
+							int i = Integer.parseInt(buffer);
+							if (json instanceof JsonArray) {
+								((JsonArray) json).add(i);
+							} else {
+								json.add(key, i);
+								key = null;
+							}
 						}
 						buffer = null;
 						buildOther = false;
@@ -201,9 +211,17 @@ public class JsonParser {
 					}
 				} else if (buildOther) {
 					buffer = buffer.trim();
+					if (buffer.isEmpty()) {
+						return json;
+					}
 					try {
-						int i = Integer.parseInt(buffer);
-						json.add(key, i);
+						if (buffer.contains(".")) {
+							double d = Double.parseDouble(buffer);
+							json.add(key, d);
+						} else {
+							int i = Integer.parseInt(buffer);
+							json.add(key, i);
+						}
 						key = null;
 						buffer = null;
 						buildOther = false;
@@ -271,9 +289,18 @@ public class JsonParser {
 						buildJson = false;
 					}
 				} else if (buildOther) {
+					buffer = buffer.trim();
+					if (buffer.isEmpty()) {
+						return json;
+					}
 					try {
-						int i = Integer.parseInt(buffer);
-						((JsonArray) json).add(i);
+						if (buffer.contains(".")) {
+							double d = Double.parseDouble(buffer);
+							((JsonArray) json).add(d);
+						} else {
+							int i = Integer.parseInt(buffer);
+							((JsonArray) json).add(i);
+						}
 						key = null;
 						buffer = null;
 						buildOther = false;

@@ -106,7 +106,10 @@ public class JsonParser {
 					buffer += c;
 					buildString = !buildString;
 				} else if (buildString) {
-					if (key == null) {
+					if (json instanceof JsonArray) {
+						((JsonArray) json).add(buffer);
+						buffer = null;
+					} else if (key == null) {
 						key = buffer;
 						buffer = null;
 					} else {
@@ -133,25 +136,37 @@ public class JsonParser {
 				} else if (buildOther) {
 					try {
 						int i = Integer.parseInt(buffer);
-						json.add(key, i);
-						key = null;
+						if (json instanceof JsonArray) {
+							((JsonArray) json).add(i);
+						} else {
+							json.add(key, i);
+							key = null;
+						}
 						buffer = null;
 						buildOther = false;
 					} catch (Exception e) {
 						if (buffer.equalsIgnoreCase("true")) {
-							if (key == null) {
-								throw new ParseException("Key Missing!", offset);
+							if (json instanceof JsonArray) {
+								((JsonArray) json).add(buffer);
+							} else {
+								if (key == null) {
+									throw new ParseException("Key Missing!", offset);
+								}
+								json.add(key, true);
+								key = null;
 							}
-							json.add(key, true);
-							key = null;
 							buffer = null;
 							buildOther = false;
 						} else if (buffer.equalsIgnoreCase("false")) {
-							if (key == null) {
-								throw new ParseException("Key Missing!", offset);
+							if (json instanceof JsonArray) {
+								((JsonArray) json).add(buffer);
+							} else {
+								if (key == null) {
+									throw new ParseException("Key Missing!", offset);
+								}
+								json.add(key, false);
+								key = null;
 							}
-							json.add(key, false);
-							key = null;
 							buffer = null;
 							buildOther = false;
 						} else {
@@ -171,11 +186,15 @@ public class JsonParser {
 					}
 					if (layer <= 0) {
 						JsonObject subjson = parseString(buffer);
-						if (key == null) {
-							throw new ParseException("Key Missing!", offset);
+						if (json instanceof JsonArray) {
+							((JsonArray) json).add(subjson);
+						} else {
+							if (key == null) {
+								throw new ParseException("Key Missing!", offset);
+							}
+							json.add(key, subjson);
+							key = null;
 						}
-						json.add(key, subjson);
-						key = null;
 						buffer = null;
 						buildJson = false;
 					}
@@ -212,11 +231,81 @@ public class JsonParser {
 				}
 				break;
 
+			case '[':
+				if (json == null) {
+					json = new JsonArray();
+				} else if (buildString) {
+					buffer += c;
+				} else if (buildJson) {
+					buffer += c;
+					layer++;
+				} else {
+					buffer = "[";
+					buildJson = true;
+					layer++;
+				}
+				break;
+
+			case ']':
+				if (buildString) {
+					buffer += c;
+				} else if (buildJson) {
+					buffer += c;
+					if (layer > 0) {
+						layer--;
+					}
+					if (layer <= 0) {
+						JsonObject subjson = parseString(buffer);
+						if (key == null) {
+							throw new ParseException("Key Missing!", offset);
+						}
+						if (json instanceof JsonArray) {
+							((JsonArray) json).add(subjson);
+						} else {
+							json.add(key, subjson);
+						}
+						key = null;
+						buffer = null;
+						buildJson = false;
+					}
+				} else if (buildOther) {
+					try {
+						int i = Integer.parseInt(buffer);
+						((JsonArray) json).add(i);
+						key = null;
+						buffer = null;
+						buildOther = false;
+					} catch (Exception e) {
+						if (buffer.equalsIgnoreCase("true")) {
+							if (key == null) {
+								throw new ParseException("Key Missing!", offset);
+							}
+							((JsonArray) json).add(true);
+							key = null;
+							buffer = null;
+							buildOther = false;
+						} else if (buffer.equalsIgnoreCase("false")) {
+							if (key == null) {
+								throw new ParseException("Key Missing!", offset);
+							}
+							((JsonArray) json).add(false);
+							key = null;
+							buffer = null;
+							buildOther = false;
+						} else {
+							throw new ParseException("type for value \"" + buffer + "\" Unknown!", offset);
+						}
+					}
+				} else {
+					return json;
+				}
+				break;
+
 			default:
 				if (buffer == null) {
 					buffer = "" + c;
 					buildOther = true;
-				} else if (buildString || buildJson || buildOther) {
+				} else {
 					buffer += c;
 				}
 				break;

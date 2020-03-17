@@ -1,6 +1,7 @@
 package com.tome25.utils.json;
 
 import java.security.InvalidKeyException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -9,12 +10,21 @@ public class JsonObject {
 
 	private Map<String, Object> content;
 
+	/**
+	 * creates a new empty Json Object.
+	 */
 	public JsonObject() {
 		content = new HashMap<String, Object>();
 	}
 
+	/**
+	 * creates a new Json Object and initializes it with the given key value pair.
+	 * 
+	 * @param key
+	 * @param value
+	 */
 	public JsonObject(String key, Object value) {
-		content = new HashMap<String, Object>();
+		this();
 		content.put(key, value);
 	}
 
@@ -45,12 +55,53 @@ public class JsonObject {
 		return content.get(key);
 	}
 
+	/**
+	 * returns this Json object's Keys.
+	 * 
+	 * @return
+	 */
 	public Set<String> getKeySet() {
 		return content.keySet();
 	}
 
+	/**
+	 * returns this Json object's Values.
+	 * 
+	 * @return
+	 */
+	public Collection<Object> getValues() {
+		return content.values();
+	}
+
+	/**
+	 * returns true if this Json object contains the given key.
+	 * 
+	 * @param key
+	 * @return
+	 */
+	@Deprecated
 	public boolean contains(String key) {
+		return containsKey(key);
+	}
+
+	/**
+	 * returns true if this Json object contains the given key.
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public boolean containsKey(String key) {
 		return content.containsKey(key);
+	}
+
+	/**
+	 * returns true if this Json object contains the given value.
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public boolean containsValue(Object value) {
+		return content.containsValue(value);
 	}
 
 	/**
@@ -75,8 +126,9 @@ public class JsonObject {
 			if (obj instanceof Boolean || obj instanceof Integer) {
 				ret += obj;
 				ret += ",";
-			} else if(obj instanceof JsonObject) {
+			} else if (obj instanceof JsonObject) {
 				ret += obj.toString();
+				ret += ",";
 			} else {
 				ret += "\"";
 				ret += obj.toString().replaceAll("\\\\", "\\\\\\\\").replaceAll("\\\"", "\\\\\"");
@@ -91,10 +143,17 @@ public class JsonObject {
 	}
 
 	/**
-	 * Returns a String representation of this element as byte Array.
+	 * Returns a String representation of this element as byte array.
 	 */
 	public byte[] toByteArray() {
 		return this.toString().getBytes();
+	}
+
+	/**
+	 * Returns a String representation of this element as character array.
+	 */
+	public char[] toCharArray() {
+		return this.toString().toCharArray();
 	}
 
 	@Override

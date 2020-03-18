@@ -169,13 +169,17 @@ public class JsonArray extends JsonObject implements Iterable<Object> {
 	}
 
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public JsonObject clone(boolean recursive) {
 		JsonArray clone = new JsonArray();
 		for (Object obj : content) {
-			try {
+			if (obj instanceof JsonObject) {
+				if (recursive) {
+					clone.add(((JsonObject) obj).clone(recursive));
+				} else {
+					clone.add(obj);
+				}
+			} else {
 				clone.add(obj);
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 		return clone;

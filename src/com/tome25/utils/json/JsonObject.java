@@ -158,10 +158,29 @@ public class JsonObject {
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {
+		return clone(true);
+	}
+
+	/**
+	 * Creates and returns a copy of this Json Object.
+	 * 
+	 * @param recursive whether json objects inside this json object should get
+	 *                  cloned aswell.
+	 * @return
+	 */
+	public JsonObject clone(boolean recursive) {
 		JsonObject clone = new JsonObject();
 		for (String s : content.keySet()) {
 			try {
-				clone.add(s, content.get(s));
+				if (content.get(s) instanceof JsonObject) {
+					if (recursive) {
+						clone.add(s, ((JsonObject) content.get(s)).clone(recursive));
+					} else {
+						clone.add(s, content.get(s));
+					}
+				} else {
+					clone.add(s, content.get(s));
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

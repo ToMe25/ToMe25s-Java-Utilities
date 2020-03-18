@@ -149,7 +149,8 @@ public class JsonArray extends JsonObject implements Iterable<Object> {
 	public String toString() {
 		String ret = "[";
 		for (Object obj : content) {
-			if (obj instanceof Boolean || obj instanceof Integer) {
+			if (obj instanceof Boolean || obj instanceof Integer || obj instanceof Short || obj instanceof Byte
+					|| obj instanceof Double || obj instanceof Float) {
 				ret += obj;
 				ret += ",";
 			} else if (obj instanceof JsonObject) {

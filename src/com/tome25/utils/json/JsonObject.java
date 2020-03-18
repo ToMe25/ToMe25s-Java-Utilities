@@ -123,7 +123,8 @@ public class JsonObject {
 			ret += s;
 			ret += "\":";
 			Object obj = content.get(s);
-			if (obj instanceof Boolean || obj instanceof Integer) {
+			if (obj instanceof Boolean || obj instanceof Integer || obj instanceof Short || obj instanceof Byte
+					|| obj instanceof Double || obj instanceof Float) {
 				ret += obj;
 				ret += ",";
 			} else if (obj instanceof JsonObject) {

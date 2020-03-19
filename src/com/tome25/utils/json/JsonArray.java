@@ -9,6 +9,7 @@ import java.util.Set;
 
 public class JsonArray extends JsonObject implements Iterable<Object> {
 
+	private static final long serialVersionUID = 5205197497094672807L;
 	private List<Object> content;
 
 	/**

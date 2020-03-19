@@ -1,13 +1,15 @@
 package com.tome25.utils.json;
 
+import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class JsonObject {
+public class JsonObject implements Serializable {
 
+	private static final long serialVersionUID = 8864863917582360165L;
 	private Map<String, Object> content;
 
 	/**

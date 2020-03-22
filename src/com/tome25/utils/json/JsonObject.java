@@ -112,6 +112,15 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 		}
 	}
 
+	@Override
+	public void remove(Object o, boolean key) {
+		if (key) {
+			remove(o);
+		} else {
+			content.values().remove(o);
+		}
+	}
+
 	/**
 	 * gets the value for the given key.
 	 * 
@@ -125,6 +134,15 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	public Object get(Object key) {
 		if (key instanceof String) {
 			return content.get(key);
+		} else {
+			throw new InvalidTypeException("String", key.getClass().getSimpleName());
+		}
+	}
+
+	@Override
+	public String getString(Object key) {
+		if (key instanceof String) {
+			return content.get(key).toString();
 		} else {
 			throw new InvalidTypeException("String", key.getClass().getSimpleName());
 		}

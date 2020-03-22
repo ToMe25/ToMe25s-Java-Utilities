@@ -88,6 +88,15 @@ public class JsonArray implements JsonElement, List<Object> {
 	}
 
 	@Override
+	public void remove(Object o, boolean key) {
+		if (key) {
+			remove((int) o);
+		} else {
+			remove(o);
+		}
+	}
+
+	@Override
 	public Object get(int index) {
 		return content.get(index);
 	}
@@ -98,6 +107,15 @@ public class JsonArray implements JsonElement, List<Object> {
 			return content.get((int) key);
 		} else {
 			throw new InvalidTypeException("Integer", key.getClass().getSimpleName());
+		}
+	}
+
+	@Override
+	public String getString(Object key) {
+		if (key instanceof Integer) {
+			return content.get((int) key).toString();
+		} else {
+			throw new InvalidTypeException("String", key.getClass().getSimpleName());
 		}
 	}
 

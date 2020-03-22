@@ -68,6 +68,18 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	public void setAll(Map<? extends Object, ? extends Object> m);
 
 	/**
+	 * if key is true this removes the object to the key o from this Json, if not it
+	 * removes the value o from this Json.
+	 * 
+	 * @param o
+	 * @param key
+	 * @throws InvalidTypeException if the key type doesn't match the key type for
+	 *                              this object(String for JsonObjects, Integer for
+	 *                              JsonArrays)
+	 */
+	public void remove(Object o, boolean key);
+
+	/**
 	 * gets the value for the given key.
 	 * 
 	 * @param key
@@ -77,6 +89,18 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * @return
 	 */
 	public Object get(Object key);
+
+	/**
+	 * gets the value for the given key if its a string, or a string representation
+	 * of that value if it isn't.
+	 * 
+	 * @param key
+	 * @throws InvalidTypeException if the key type doesn't match the key type for
+	 *                              this object(String for JsonObjects, Integer for
+	 *                              JsonArrays)
+	 * @return
+	 */
+	public String getString(Object key);
 
 	/**
 	 * returns this Jsons Values.
@@ -145,6 +169,11 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 		return toString().toCharArray();
 	}
 
+	/**
+	 * Creates and returns a copy of this Json Object.
+	 * 
+	 * @return
+	 */
 	public Object clone() throws CloneNotSupportedException;
 
 	/**
@@ -156,10 +185,24 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 */
 	public JsonElement clone(boolean recursive);
 
+	/**
+	 * Indicates whether some other object is "equal to" this one.
+	 * 
+	 * @param obj
+	 * @return
+	 */
 	public boolean equals(Object obj);
 
+	/**
+	 * whether this is empty.
+	 * 
+	 * @return
+	 */
 	public boolean isEmpty();
 
+	/**
+	 * Clears this Json.
+	 */
 	public void clear();
 
 }

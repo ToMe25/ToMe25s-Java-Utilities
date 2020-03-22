@@ -26,7 +26,7 @@ def main():
                 sources += os.path.join(root, file) + " "
     
     # compile the sources int tmp.
-    os.system("javac -d tmp " + sources)
+    os.system("javac -g -parameters -d tmp " + sources)
     
     # copy resources to tmp.
     for root, directories, files in os.walk(path):

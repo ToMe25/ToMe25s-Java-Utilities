@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import com.tome25.utils.config.exception.InvalidTypeException;
+import com.tome25.utils.exception.InvalidTypeException;
 
 /**
  * 

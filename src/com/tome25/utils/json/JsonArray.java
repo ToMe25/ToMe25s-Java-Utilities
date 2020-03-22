@@ -1,22 +1,25 @@
 package com.tome25.utils.json;
 
-import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
-public class JsonArray extends JsonObject implements Iterable<Object> {
+import com.tome25.utils.exception.InvalidKeyException;
+import com.tome25.utils.exception.InvalidTypeException;
+
+public class JsonArray implements JsonElement, List<Object> {
 
 	private static final long serialVersionUID = 5205197497094672807L;
-	private List<Object> content;
+	private List<Object> content = new ArrayList<Object>();
 
 	/**
 	 * creates a new empty Json Array.
 	 */
 	public JsonArray() {
-		content = new ArrayList<Object>();
 	}
 
 	/**
@@ -25,83 +28,77 @@ public class JsonArray extends JsonObject implements Iterable<Object> {
 	 * @param content
 	 */
 	public JsonArray(Object... content) {
-		this();
 		for (Object obj : content) {
 			this.content.add(obj);
 		}
 	}
 
+	public JsonArray(Collection<Object> content) {
+		this.content.addAll(content);
+	}
+
 	@Override
-	public void add(String key, Object value) throws InvalidKeyException {
-		throw new RuntimeException(
+	public Object add(Object key, Object value) {
+		throw new InvalidKeyException(
 				"Json Arrays can't store key values pairs, please use add(value) or put(index, value) instead.");
 	}
 
-	/**
-	 * adds the given value to this Json Array.
-	 * 
-	 * @param value
-	 */
-	public void add(Object value) {
-		content.add(value);
+	@Override
+	public boolean add(Object value) {
+		return content.add(value);
 	}
 
 	@Override
-	public void put(String key, Object value) {
-		throw new RuntimeException(
-				"Json Arrays can't store key values pairs, please use add(value) or put(index, value) instead.");
-	}
-
-	/**
-	 * adds the given value to this Json Array at the given index.
-	 * 
-	 * @param value
-	 * @param index
-	 */
-	public void put(int index, Object value) {
-		content.set(index, value);
+	public Object put(Object key, Object value) {
+		if (key instanceof Integer) {
+			return content.set((int) key, value);
+		} else {
+			throw new InvalidTypeException("Integer", key.getClass().getSimpleName());
+		}
 	}
 
 	@Override
-	public void remove(String key) {
-		remove(key);
-	}
-
-	/**
-	 * removes the given value from this Json Array.
-	 * 
-	 * @param value
-	 */
-	public void remove(Object value) {
-		content.remove(value);
-	}
-
-	/**
-	 * removes the object at the given index from this Json Array.
-	 * 
-	 * @param index
-	 */
-	public void remove(int index) {
-		content.remove(index);
+	public void putAll(Map<? extends Object, ? extends Object> m) {
+		for (Entry<? extends Object, ? extends Object> entry : m.entrySet()) {
+			if (entry.getKey() instanceof Integer) {
+				content.set((Integer) entry.getKey(), entry.getValue());
+			} else {
+				throw new InvalidTypeException("Integer", entry.getKey().getClass().getSimpleName());
+			}
+		}
 	}
 
 	@Override
-	public Object get(String key) {
-		throw new RuntimeException("Json Arrays can't store key values pairs, please use get(index) instead.");
+	public Object set(Object key, Object element) {
+		return put(key, element);
 	}
 
-	/**
-	 * gets the object at the given index.
-	 * 
-	 * @param index
-	 */
+	@Override
+	public void setAll(Map<? extends Object, ? extends Object> m) {
+		putAll(m);
+	}
+
+	@Override
+	public Object remove(int index) {
+		return content.remove(index);
+	}
+
+	public boolean remove(Object value) {
+		return content.remove(value);
+	}
+
+	@Override
 	public Object get(int index) {
 		return content.get(index);
 	}
 
 	@Override
-	public Set<String> getKeySet() {
-		throw new RuntimeException("Json Arrays can't store key values pairs, so they don't have a keySet.");
+	public Object get(Object key) {
+		if (key instanceof Integer) {
+			return content.get((int) key);
+		} else {
+			throw new InvalidTypeException("Integer", key.getClass().getSimpleName());
+		}
 	}
 
 	@Override
@@ -110,42 +107,40 @@ public class JsonArray extends JsonObject implements Iterable<Object> {
 	}
 
 	/**
-	 * returns whether this Json Array contains the given value.
+	 * whether this Json contains the given object, either as key if the type
+	 * matches, or as value.
 	 * 
-	 * @param value
+	 * @param o
 	 * @return
 	 */
-	public boolean contains(Object value) {
-		return content.contains(value);
+	@Override
+	public boolean contains(Object o) {
+		if (o instanceof Integer) {
+			return containsKey(o) || containsValue(o);
+		} else {
+			return containsValue(o);
+		}
 	}
 
 	@Override
-	public boolean contains(String key) {
-		return contains(key);
-	}
-
-	@Override
-	public boolean containsKey(String key) {
-		throw new RuntimeException("Json Arrays can't store key values pairs, so they don't have a keys.");
+	public boolean containsKey(Object key) {
+		if (key instanceof Integer) {
+			return size() > (int) key;
+		} else {
+			throw new InvalidTypeException("Integer", key.getClass().getSimpleName());
+		}
 	}
 
 	@Override
 	public boolean containsValue(Object value) {
-		return contains(value);
+		return content.contains(value);
 	}
 
-	/**
-	 * 
-	 * @return the size of this Object.
-	 */
 	@Override
 	public int size() {
 		return content.size();
 	}
 
-	/**
-	 * Returns a String representation of this array.
-	 */
 	@Override
 	public String toString() {
 		String ret = "[";
@@ -154,7 +149,7 @@ public class JsonArray extends JsonObject implements Iterable<Object> {
 					|| obj instanceof Double || obj instanceof Float) {
 				ret += obj;
 				ret += ",";
-			} else if (obj instanceof JsonObject) {
+			} else if (obj instanceof JsonElement) {
 				ret += obj.toString();
 				ret += ",";
 			} else {
@@ -171,12 +166,17 @@ public class JsonArray extends JsonObject implements Iterable<Object> {
 	}
 
 	@Override
-	public JsonObject clone(boolean recursive) {
+	public Object clone() throws CloneNotSupportedException {
+		return clone(true);
+	}
+
+	@Override
+	public JsonArray clone(boolean recursive) {
 		JsonArray clone = new JsonArray();
 		for (Object obj : content) {
-			if (obj instanceof JsonObject) {
+			if (obj instanceof JsonElement) {
 				if (recursive) {
-					clone.add(((JsonObject) obj).clone(recursive));
+					clone.add(((JsonElement) obj).clone(recursive));
 				} else {
 					clone.add(obj);
 				}
@@ -205,8 +205,88 @@ public class JsonArray extends JsonObject implements Iterable<Object> {
 	}
 
 	@Override
+	public boolean isEmpty() {
+		return content.isEmpty();
+	}
+
+	@Override
+	public void clear() {
+		content.clear();
+	}
+
+	@Override
 	public Iterator<Object> iterator() {
 		return content.iterator();
+	}
+
+	@Override
+	public void add(int index, Object element) {
+		content.add(index, element);
+	}
+
+	@Override
+	public boolean addAll(Collection<? extends Object> c) {
+		return content.addAll(c);
+	}
+
+	@Override
+	public boolean addAll(int index, Collection<? extends Object> c) {
+		return content.addAll(index, c);
+	}
+
+	@Override
+	public boolean containsAll(Collection<?> c) {
+		return content.containsAll(c);
+	}
+
+	@Override
+	public int indexOf(Object o) {
+		return content.indexOf(o);
+	}
+
+	@Override
+	public int lastIndexOf(Object o) {
+		return content.lastIndexOf(o);
+	}
+
+	@Override
+	public ListIterator<Object> listIterator() {
+		return content.listIterator();
+	}
+
+	@Override
+	public ListIterator<Object> listIterator(int index) {
+		return content.listIterator(index);
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		return content.removeAll(c);
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		return content.retainAll(c);
+	}
+
+	@Override
+	public Object set(int index, Object element) {
+		return put(index, element);
+	}
+
+	@Override
+	public List<Object> subList(int fromIndex, int toIndex) {
+		return new JsonArray(content.subList(fromIndex, toIndex));
+	}
+
+	@Override
+	public Object[] toArray() {
+		return content.toArray();
+	}
+
+	@Override
+	public <T> T[] toArray(T[] a) {
+		return content.toArray(a);
 	}
 
 }

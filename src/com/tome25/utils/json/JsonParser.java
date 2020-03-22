@@ -1,6 +1,5 @@
 package com.tome25.utils.json;
 
-import java.security.InvalidKeyException;
 import java.text.ParseException;
 
 public class JsonParser {
@@ -56,11 +55,10 @@ public class JsonParser {
 	 * 
 	 * @param s the String to parse
 	 * @return the Json Object parsed from String s
-	 * @throws InvalidKeyException
 	 * @throws ParseException
 	 */
-	public static JsonObject parseString(String s) throws InvalidKeyException, ParseException {
-		JsonObject json = null;
+	public static JsonElement parseString(String s) throws ParseException {
+		JsonElement json = null;
 		boolean buildString = false;
 		boolean buildJson = false;
 		boolean buildOther = false;
@@ -196,7 +194,7 @@ public class JsonParser {
 						layer--;
 					}
 					if (layer <= 0) {
-						JsonObject subjson = parseString(buffer);
+						JsonElement subjson = parseString(buffer);
 						if (json instanceof JsonArray) {
 							((JsonArray) json).add(subjson);
 						} else {
@@ -275,7 +273,7 @@ public class JsonParser {
 						layer--;
 					}
 					if (layer <= 0) {
-						JsonObject subjson = parseString(buffer);
+						JsonElement subjson = parseString(buffer);
 						if (key == null) {
 							throw new ParseException("Key Missing!", offset);
 						}

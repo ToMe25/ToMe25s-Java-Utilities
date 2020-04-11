@@ -4,10 +4,14 @@ A collection of common Utilities i use in a lot of Projects, moved into a librar
 The ToMe25s-Java-Utilities.jar file should always be the latest build, as it gets build on commit by the git hooks.
 
 ### This Library Currently contains:
- * A simple Json Handler
+ * A Json Object
+ * A Json Array/List
+ * A Json Parser
  * A simple Config Handler
- * A Print Stream That can write to multiple Output Streams
- * A Print Stream That can write to multiple Output Streams and has some logging/tracing capabilities
+ * A Print Stream that can write to multiple Output Streams
+ * A Print Stream that can write to multiple Output Streams and has some logging/tracing capabilities
+ * A Print Stream that writes to a Logger
+ * A simple Logging Handler
  * A Version Control class that can give you the currently used version of this library as long as the ToMe25s-Java-Utilities-Version attribute is in the MANIFEST.MF file inside its Jar
  * A simple Jar Extraction tool
  * A simple File/Library downloader

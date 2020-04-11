@@ -296,7 +296,7 @@ public class MultiPrintStream extends PrintStream {
 	@Override
 	public void write(byte[] b) throws IOException {
 		for (PrintStream ps : streams) {
-			ps.println(b);
+			ps.write(b);
 		}
 	}
 
@@ -310,7 +310,7 @@ public class MultiPrintStream extends PrintStream {
 	@Override
 	public void write(int b) {
 		for (PrintStream ps : streams) {
-			ps.println(b);
+			ps.write(b);
 		}
 	}
 

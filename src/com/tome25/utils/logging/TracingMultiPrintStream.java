@@ -4,14 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.time.LocalTime;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Formatter;
+import java.util.Date;
 import java.util.Locale;
 
 import com.tome25.utils.config.Config;
-
-import java.lang.Throwable;
 
 /**
  * 
@@ -40,19 +38,14 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	private int traceStartDepth = 4;
 	private Config cfg;
 	private boolean endLineSeperator = true;
-	/**
-	 * The Classes to Skip for getTrace.
-	 */
-	private final String[] systemClasses = { PrintStream.class.getName(), Throwable.class.getName(),
-			Formatter.class.getName(), TracingMultiPrintStream.class.getName(), ThreadGroup.class.getName(),
-			Thread.class.getName() };
-	protected String lineSeparator = System.lineSeparator();
+	private static final String LINE_SEPARATOR = System.lineSeparator();
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
 
 	public TracingMultiPrintStream(OutputStream... outs) {
 		this(new File(
 				new File(TracingMultiPrintStream.class.getProtectionDomain().getCodeSource().getLocation().getPath())
 						.getParent(),
-				classNameToSimpleClassName(Thread.currentThread().getStackTrace()[2].getClassName())
+				LogTracer.classNameToSimpleClassName(Thread.currentThread().getStackTrace()[2].getClassName())
 						+ "TracingMultiPrintStream.cfg"),
 				outs);
 	}
@@ -225,8 +218,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	private String getTrace() {
 		String ret = "";
 		if (traceTimestamp) {
-			LocalTime time = LocalTime.now();
-			ret += "[" + time.getHour() + ":" + time.getMinute() + ":" + time.getSecond() + "]";
+			ret += "[" + DATE_FORMAT.format(new Date()) + "]";
 		}
 		if (traceThread) {
 			if (ret.length() > 0) {
@@ -244,15 +236,15 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 				boolean firstClass = false;
 				if (traceSystemClasses) {
 					ret += String.format("[%s]",
-							traceSimpleClassName ? classNameToSimpleClassName(element.getClassName())
+							traceSimpleClassName ? LogTracer.classNameToSimpleClassName(element.getClassName())
 									: element.getClassName());
 					if (traceLineNumber) {
 						ret = ret.substring(0, ret.length() - 1) + String.format(":%s]", element.getLineNumber());
 					}
 					firstClass = true;
-				} else if (!ArrayContains(systemClasses, element.getClassName(), true)) {
+				} else if (!ArrayContains(LogTracer.SYSTEM_CLASSES, element.getClassName(), true)) {
 					ret += String.format("[%s]",
-							traceSimpleClassName ? classNameToSimpleClassName(element.getClassName())
+							traceSimpleClassName ? LogTracer.classNameToSimpleClassName(element.getClassName())
 									: element.getClassName());
 					if (traceLineNumber) {
 						ret = ret.substring(0, ret.length() - 1) + String.format(":%s]", element.getLineNumber());
@@ -260,7 +252,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 					firstClass = true;
 				}
 				int i = 0;
-				while (ArrayContains(systemClasses, element.getClassName(), true)) {
+				while (ArrayContains(LogTracer.SYSTEM_CLASSES, element.getClassName(), true)) {
 					i++;
 					if (trace.length > traceStartDepth + i) {
 						element = trace[traceStartDepth + i];
@@ -274,7 +266,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 						ret += " ";
 					}
 					ret += String.format("[%s]",
-							traceSimpleClassName ? classNameToSimpleClassName(element.getClassName())
+							traceSimpleClassName ? LogTracer.classNameToSimpleClassName(element.getClassName())
 									: element.getClassName());
 					if (traceLineNumber) {
 						ret = ret.substring(0, ret.length() - 1) + String.format(":%s]", element.getLineNumber());
@@ -293,12 +285,12 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 				if (traceSystemClassMethods) {
 					ret += "[" + element.getMethodName() + "]";
 					firstClass = true;
-				} else if (!ArrayContains(systemClasses, element.getClassName(), true)) {
+				} else if (!ArrayContains(LogTracer.SYSTEM_CLASSES, element.getClassName(), true)) {
 					ret += "[" + element.getMethodName() + "]";
 					firstClass = true;
 				}
 				int i = 0;
-				while (ArrayContains(systemClasses, element.getClassName(), true)) {
+				while (ArrayContains(LogTracer.SYSTEM_CLASSES, element.getClassName(), true)) {
 					i++;
 					if (trace.length > traceStartDepth + i) {
 						element = trace[traceStartDepth + i];
@@ -342,18 +334,18 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 			s = trace + s;
 			endLineSeperator = false;
 		}
-		s = s.replaceAll(lineSeparator, lineSeparator + trace.replaceAll("[$]", "\\\\\\$"));
-		if (s.replaceAll(" ", "").endsWith(lineSeparator + trace.replaceAll(" ", ""))) {
+		s = s.replaceAll(LINE_SEPARATOR, LINE_SEPARATOR + trace.replaceAll("[$]", "\\\\\\$"));
+		if (s.replaceAll(" ", "").endsWith(LINE_SEPARATOR + trace.replaceAll(" ", ""))) {
 			s = s.substring(0, s.lastIndexOf(trace));
 		}
-		if (s.contains(trace + lineSeparator)) {
+		if (s.contains(trace + LINE_SEPARATOR)) {
 			s = s.replaceAll(trace.replaceAll("\\[", "\\\\[").replaceAll("\\]", "\\\\]") + System.lineSeparator(),
 					System.lineSeparator());
 		}
 		if (println) {
-			s += lineSeparator;
+			s += LINE_SEPARATOR;
 		}
-		if (s.replaceAll(" ", "").endsWith(lineSeparator)) {
+		if (s.replaceAll(" ", "").endsWith(LINE_SEPARATOR)) {
 			endLineSeperator = true;
 		}
 		return s;
@@ -417,7 +409,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 				"Whether the beginning of every line of output should contain the name of the method writing it "
 						+ "even if it is from a system class.");
 		cfg.addConfig(cfgFile, "traceLineNumber", traceLineNumber,
-				"Whether the beginning of every line of output should contain the number of th line writing it.");
+				"Whether the beginning of every line of output should contain the number of the line writing it.");
 		cfg.addConfig(cfgFile, "traceStartDepth", traceStartDepth,
 				"How deep into the Stacktrace the tracer should start looking for informations.");
 		// read config
@@ -431,17 +423,6 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 		traceSystemClassMethods = (boolean) cfg.getConfig("traceSystemClassMethods");
 		traceLineNumber = (boolean) cfg.getConfig("traceLineNumber");
 		traceStartDepth = (int) cfg.getConfig("traceStartDepth");
-	}
-
-	/**
-	 * Converts the class name with package to a simple class name without.
-	 * 
-	 * @param className the class name to convert
-	 * @return
-	 */
-	private static String classNameToSimpleClassName(String className) {
-		return className.contains(".") ? className.substring(className.lastIndexOf('.') + 1)
-				: className.substring(className.lastIndexOf('/') + 1);
 	}
 
 }

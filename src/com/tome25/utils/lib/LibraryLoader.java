@@ -32,6 +32,20 @@ public class LibraryLoader {
 					+ "https://github.com/ToMe25/ToMe25s-Java-Utilities/raw/master/ToMe25s-Java-Utilities.jar%n");
 
 	private static Instrumentation instrumentation;
+	private static byte[] buffer;
+
+	/**
+	 * Initializes a library loader, restarts your jvm if necessary, tries to
+	 * download ToMe25s-Java-Utilites, if that doesn't work it tries to extract it
+	 * from this Jar and adds it to the classpath.
+	 * 
+	 * @param args          the program arguments.
+	 * @param outputLogFile the log file for System.out.
+	 * @param errorLogFile  the log file for System.err.
+	 */
+	public static void init(String[] args) {
+		init(args, null);
+	}
 
 	/**
 	 * Initializes a library loader, restarts your jvm if necessary, tries to
@@ -41,7 +55,8 @@ public class LibraryLoader {
 	 * streams.
 	 * 
 	 * @param args    the program arguments.
-	 * @param logFile the log file for System.out and System.err.
+	 * @param logFile the log file for System.out and System.err. set to null to
+	 *                disable changing System.out and System.err.
 	 */
 	public static void init(String[] args, File logFile) {
 		init(args, logFile, DEFAULT_TOME25S_JAVA_UTILITIES_URL_STORAGE);
@@ -55,7 +70,8 @@ public class LibraryLoader {
 	 * streams.
 	 * 
 	 * @param args              the program arguments.
-	 * @param logFile           the log file for System.out and System.err.
+	 * @param logFile           the log file for System.out and System.err. set to
+	 *                          null to disable changing System.out and System.err.
 	 * @param defaultUrlStorage the default contents for the URL storage file that
 	 *                          lists the urls to try and download
 	 *                          ToMe25s-Java-Utilites from.
@@ -72,8 +88,10 @@ public class LibraryLoader {
 	 * streams.
 	 * 
 	 * @param args          the program arguments.
-	 * @param outputLogFile the log file for System.out.
-	 * @param errorLogFile  the log file for System.err.
+	 * @param outputLogFile the log file for System.out. set to null to disable
+	 *                      changing System.out.
+	 * @param errorLogFile  the log file for System.err. set to null to disable
+	 *                      changing System.err.
 	 */
 	public static void init(String[] args, File outputLogFile, File errorLogFile) {
 		init(args, outputLogFile, errorLogFile, DEFAULT_TOME25S_JAVA_UTILITIES_URL_STORAGE);
@@ -87,15 +105,17 @@ public class LibraryLoader {
 	 * streams.
 	 * 
 	 * @param args              the program arguments.
-	 * @param outputLogFile     the log file for System.out.
-	 * @param errorLogFile      the log file for System.err.
+	 * @param outputLogFile     the log file for System.out. set to null to disable
+	 *                          changing System.out.
+	 * @param errorLogFile      the log file for System.err. set to null to disable
+	 *                          changing System.err.
 	 * @param defaultUrlStorage the default contents for the URL storage file that
 	 *                          lists the urls to try and download
 	 *                          ToMe25s-Java-Utilites from.
 	 */
 	public static void init(String[] args, File outputLogFile, File errorLogFile, String defaultUrlStorage) {
-		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-		PrintStream pb = new PrintStream(buffer);
+		ByteArrayOutputStream buf = new ByteArrayOutputStream();
+		PrintStream pb = new PrintStream(buf);
 		try {
 			LibraryLoader loader = new LibraryLoader(args);
 			File codeSource = new File(loader.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
@@ -122,10 +142,11 @@ public class LibraryLoader {
 			com.tome25.utils.logging.LogTracer.traceOutputs(outputLogFile, errorLogFile);// importing this would cause
 																							// it to crash on loading.
 			pb.close();
-			if (buffer.size() > 0) {
-				System.out.print(buffer.toString());
+			if (buf.size() > 0) {
+				System.out.print(buf.toString());
 			}
-			buffer.close();
+			buffer = buf.toByteArray();
+			buf.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -304,6 +325,15 @@ public class LibraryLoader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * if init got used, this is the way to get its output buffer.
+	 * 
+	 * @return
+	 */
+	public static byte[] getBuffer() {
+		return buffer;
 	}
 
 }

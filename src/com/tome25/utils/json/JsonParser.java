@@ -50,7 +50,7 @@ public class JsonParser {
 	 * Json Objects and Json Arrays/Lists.
 	 * 
 	 * WARNING: This method is not safe, over the time i worked on it before adding
-	 * it to this library there were multiple character that could make it crash or
+	 * it to this library there were multiple characters that could make it crash or
 	 * break out of String values.
 	 * 
 	 * @param s the String to parse
@@ -132,56 +132,17 @@ public class JsonParser {
 				if (buildString || buildJson) {
 					buffer += c;
 				} else if (buildOther) {
-					buffer = buffer.trim();
-					try {
-						if (buffer.contains(".")) {
-							double d = Double.parseDouble(buffer);
-							if (json instanceof JsonArray) {
-								((JsonArray) json).add(d);
-							} else {
-								json.add(key, d);
-								key = null;
-							}
-						} else {
-							int i = Integer.parseInt(buffer);
-							if (json instanceof JsonArray) {
-								((JsonArray) json).add(i);
-							} else {
-								json.add(key, i);
-								key = null;
-							}
+					if (json instanceof JsonArray) {
+						((JsonArray) json).add(buildOther(buffer, offset));
+					} else {
+						if (key == null) {
+							throw new ParseException("Key Missing!", offset);
 						}
-						buffer = null;
-						buildOther = false;
-					} catch (Exception e) {
-						if (buffer.equalsIgnoreCase("true")) {
-							if (json instanceof JsonArray) {
-								((JsonArray) json).add(buffer);
-							} else {
-								if (key == null) {
-									throw new ParseException("Key Missing!", offset);
-								}
-								json.add(key, true);
-								key = null;
-							}
-							buffer = null;
-							buildOther = false;
-						} else if (buffer.equalsIgnoreCase("false")) {
-							if (json instanceof JsonArray) {
-								((JsonArray) json).add(buffer);
-							} else {
-								if (key == null) {
-									throw new ParseException("Key Missing!", offset);
-								}
-								json.add(key, false);
-								key = null;
-							}
-							buffer = null;
-							buildOther = false;
-						} else {
-							throw new ParseException("type for value \"" + buffer + "\" Unknown!", offset);
-						}
+						json.add(key, buildOther(buffer, offset));
+						key = null;
 					}
+					buffer = null;
+					buildOther = false;
 				}
 				break;
 
@@ -212,38 +173,17 @@ public class JsonParser {
 					if (buffer.isEmpty()) {
 						return json;
 					}
-					try {
-						if (buffer.contains(".")) {
-							double d = Double.parseDouble(buffer);
-							json.add(key, d);
-						} else {
-							int i = Integer.parseInt(buffer);
-							json.add(key, i);
+					if (json instanceof JsonArray) {
+						((JsonArray) json).add(buildOther(buffer, offset));
+					} else {
+						if (key == null) {
+							throw new ParseException("Key Missing!", offset);
 						}
+						json.add(key, buildOther(buffer, offset));
 						key = null;
-						buffer = null;
-						buildOther = false;
-					} catch (Exception e) {
-						if (buffer.equalsIgnoreCase("true")) {
-							if (key == null) {
-								throw new ParseException("Key Missing!", offset);
-							}
-							json.add(key, true);
-							key = null;
-							buffer = null;
-							buildOther = false;
-						} else if (buffer.equalsIgnoreCase("false")) {
-							if (key == null) {
-								throw new ParseException("Key Missing!", offset);
-							}
-							json.add(key, false);
-							key = null;
-							buffer = null;
-							buildOther = false;
-						} else {
-							throw new ParseException("type for value \"" + buffer + "\" Unknown!", offset);
-						}
 					}
+					buffer = null;
+					buildOther = false;
 				} else {
 					return json;
 				}
@@ -281,8 +221,8 @@ public class JsonParser {
 							((JsonArray) json).add(subjson);
 						} else {
 							json.add(key, subjson);
+							key = null;
 						}
-						key = null;
 						buffer = null;
 						buildJson = false;
 					}
@@ -291,38 +231,17 @@ public class JsonParser {
 					if (buffer.isEmpty()) {
 						return json;
 					}
-					try {
-						if (buffer.contains(".")) {
-							double d = Double.parseDouble(buffer);
-							((JsonArray) json).add(d);
-						} else {
-							int i = Integer.parseInt(buffer);
-							((JsonArray) json).add(i);
+					if (json instanceof JsonArray) {
+						((JsonArray) json).add(buildOther(buffer, offset));
+					} else {
+						if (key == null) {
+							throw new ParseException("Key Missing!", offset);
 						}
+						json.add(key, buildOther(buffer, offset));
 						key = null;
-						buffer = null;
-						buildOther = false;
-					} catch (Exception e) {
-						if (buffer.equalsIgnoreCase("true")) {
-							if (key == null) {
-								throw new ParseException("Key Missing!", offset);
-							}
-							((JsonArray) json).add(true);
-							key = null;
-							buffer = null;
-							buildOther = false;
-						} else if (buffer.equalsIgnoreCase("false")) {
-							if (key == null) {
-								throw new ParseException("Key Missing!", offset);
-							}
-							((JsonArray) json).add(false);
-							key = null;
-							buffer = null;
-							buildOther = false;
-						} else {
-							throw new ParseException("type for value \"" + buffer + "\" Unknown!", offset);
-						}
 					}
+					buffer = null;
+					buildOther = false;
 				} else {
 					return json;
 				}
@@ -346,6 +265,37 @@ public class JsonParser {
 			offset++;
 		}
 		return json;
+	}
+
+	/**
+	 * builds an object of any type that is neither string nor json.
+	 * 
+	 * @param buffer
+	 * @param offset
+	 * @return
+	 * @throws ParseException
+	 */
+	private static Object buildOther(String buffer, int offset) throws ParseException {
+		buffer = buffer.trim();
+		try {
+			if (buffer.contains(".")) {
+				double d = Double.parseDouble(buffer);
+				return d;
+			} else {
+				int i = Integer.parseInt(buffer);
+				return i;
+			}
+		} catch (Exception e) {
+			if (buffer.equalsIgnoreCase("true")) {
+				return true;
+			} else if (buffer.equalsIgnoreCase("false")) {
+				return false;
+			} else if (buffer.equalsIgnoreCase("null")) {
+				return null;
+			} else {
+				throw new ParseException("type for value \"" + buffer + "\" Unknown!", offset);
+			}
+		}
 	}
 
 }

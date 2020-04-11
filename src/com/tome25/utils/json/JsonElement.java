@@ -103,11 +103,20 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	public String getString(Object key);
 
 	/**
-	 * returns this Jsons Values.
+	 * returns this jsons Values.
 	 * 
 	 * @return
 	 */
-	public Collection<Object> getValues();
+	public default Collection<Object> getValues() {
+		return values();
+	}
+
+	/**
+	 * returns this jsons Values.
+	 * 
+	 * @return
+	 */
+	public Collection<Object> values();
 
 	/**
 	 * whether this Json contains the given object, either as key if the type
@@ -170,9 +179,19 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	}
 
 	/**
-	 * Creates and returns a copy of this Json Object.
+	 * whether this JsonElement can be cloned
 	 * 
 	 * @return
+	 */
+	public default boolean supportsClone() {
+		return true;
+	}
+
+	/**
+	 * Creates and returns a copy of this Json Object. Recursive.
+	 * 
+	 * @return
+	 * @throws CloneNotSupportedException if this element can't be cloned.
 	 */
 	public Object clone() throws CloneNotSupportedException;
 
@@ -182,8 +201,9 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * @param recursive whether Jsons inside this Json object should get cloned as
 	 *                  well.
 	 * @return
+	 * @throws CloneNotSupportedException if this element can't be cloned
 	 */
-	public JsonElement clone(boolean recursive);
+	public JsonElement clone(boolean recursive) throws CloneNotSupportedException;
 
 	/**
 	 * Indicates whether some other object is "equal to" this one.
@@ -204,5 +224,72 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * Clears this Json.
 	 */
 	public void clear();
+
+	/**
+	 * whether this element supports getting the changes against a given version.
+	 * 
+	 * @return
+	 */
+	public default boolean supportsChanges() {
+		return true;
+	}
+
+	/**
+	 * returns a new JsonElement containing the changes from the given JsonElement
+	 * to this one. Recursive. This marks removed values by setting them to null, so
+	 * it will not fully work with JsonElements containing null objects.
+	 * 
+	 * @param from the previous JsonElement
+	 * @return
+	 * @throws UnsupportedOperationException if this JsonElement doesn't support
+	 *                                       generating a changes json.
+	 */
+	public default JsonElement changes(JsonElement from) throws UnsupportedOperationException {
+		return changes(from, true);
+	}
+
+	/**
+	 * returns a new JsonElement containing the changes from the given JsonElement
+	 * to this one. This marks removed values by setting them to null, so it will
+	 * not fully work with JsonElements containing null objects.
+	 * 
+	 * @param from      the previous JsonElement
+	 * @param recursive whether changed JsonElements inside this one should get
+	 *                  checked for changes too, or just cloned from this one.
+	 * @return
+	 * @throws UnsupportedOperationException if this JsonElement doesn't support
+	 *                                       generating a changes json.
+	 */
+	public JsonElement changes(JsonElement from, boolean recursive) throws UnsupportedOperationException;
+
+	/**
+	 * returns a new JsonElement containing the values of the given JsonElement with
+	 * the changes contained in this JsonElement applied. Recursive. This marks
+	 * removed values by setting them to null, so it will not fully work with
+	 * JsonElements containing null objects.
+	 * 
+	 * @param from the previous JsonElement
+	 * @return
+	 * @throws UnsupportedOperationException if this JsonElement doesn't support
+	 *                                       generating a changes json.
+	 */
+	public default JsonElement reconstruct(JsonElement from) throws UnsupportedOperationException {
+		return reconstruct(from, true);
+	}
+
+	/**
+	 * returns a new JsonElement containing the values of the given JsonElement with
+	 * the changes contained in this JsonElement applied. This marks removed values
+	 * by setting them to null, so it will not fully work with JsonElements
+	 * containing null objects.
+	 * 
+	 * @param from      the previous JsonElement
+	 * @param recursive whether changedJsonElements inside this one should get
+	 *                  reconstructed too, or just cloned from this one.
+	 * @return
+	 * @throws UnsupportedOperationException if this JsonElement doesn't support
+	 *                                       generating a changes json.
+	 */
+	public JsonElement reconstruct(JsonElement from, boolean recursive);
 
 }

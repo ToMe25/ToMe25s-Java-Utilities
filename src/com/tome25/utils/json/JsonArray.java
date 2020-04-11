@@ -120,7 +120,7 @@ public class JsonArray implements JsonElement, List<Object> {
 	}
 
 	@Override
-	public Collection<Object> getValues() {
+	public Collection<Object> values() {
 		return content;
 	}
 
@@ -164,7 +164,7 @@ public class JsonArray implements JsonElement, List<Object> {
 		String ret = "[";
 		for (Object obj : content) {
 			if (obj instanceof Boolean || obj instanceof Integer || obj instanceof Short || obj instanceof Byte
-					|| obj instanceof Double || obj instanceof Float) {
+					|| obj instanceof Double || obj instanceof Float || obj == null) {
 				ret += obj;
 				ret += ",";
 			} else if (obj instanceof JsonElement) {
@@ -184,7 +184,7 @@ public class JsonArray implements JsonElement, List<Object> {
 	}
 
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public Object clone() {
 		return clone(true);
 	}
 
@@ -192,14 +192,14 @@ public class JsonArray implements JsonElement, List<Object> {
 	public JsonArray clone(boolean recursive) {
 		JsonArray clone = new JsonArray();
 		for (Object obj : content) {
-			if (obj instanceof JsonElement) {
-				if (recursive) {
+			try {
+				if (recursive && obj instanceof JsonElement && ((JsonElement) obj).supportsClone()) {
 					clone.add(((JsonElement) obj).clone(recursive));
 				} else {
 					clone.add(obj);
 				}
-			} else {
-				clone.add(obj);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		return clone;
@@ -209,7 +209,7 @@ public class JsonArray implements JsonElement, List<Object> {
 	public boolean equals(Object obj) {
 		if (obj instanceof JsonArray) {
 			JsonArray json = (JsonArray) obj;
-			if (content.size() != json.content.size()) {
+			if (content.size() != json.size()) {
 				return false;
 			}
 			for (Object value : content) {
@@ -305,6 +305,23 @@ public class JsonArray implements JsonElement, List<Object> {
 	@Override
 	public <T> T[] toArray(T[] a) {
 		return content.toArray(a);
+	}
+
+	@Override
+	public boolean supportsChanges() {
+		return false;
+	}
+
+	@Override
+	public JsonElement changes(JsonElement from, boolean recursive) throws UnsupportedOperationException {
+		throw new UnsupportedOperationException(
+				"Json Arrays don't support this operation as it relies on the key-value-pair structure.");
+	}
+
+	@Override
+	public JsonElement reconstruct(JsonElement from, boolean recursive) {
+		throw new UnsupportedOperationException(
+				"Json Arrays don't support this operation as it relies on the key-value-pair structure.");
 	}
 
 }

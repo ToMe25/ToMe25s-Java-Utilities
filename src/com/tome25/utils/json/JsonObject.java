@@ -158,11 +158,6 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	}
 
 	@Override
-	public Collection<Object> getValues() {
-		return content.values();
-	}
-
-	@Override
 	public boolean contains(Object o) {
 		if (o instanceof String) {
 			return containsKey(o) || containsValue(o);
@@ -208,7 +203,7 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 			ret += "\":";
 			Object obj = content.get(s);
 			if (obj instanceof Boolean || obj instanceof Integer || obj instanceof Short || obj instanceof Byte
-					|| obj instanceof Double || obj instanceof Float) {
+					|| obj instanceof Double || obj instanceof Float || obj == null) {
 				ret += obj;
 				ret += ",";
 			} else if (obj instanceof JsonElement) {
@@ -228,7 +223,7 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	}
 
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public JsonObject clone() {
 		return clone(true);
 	}
 
@@ -237,12 +232,9 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 		JsonObject clone = new JsonObject();
 		for (String s : content.keySet()) {
 			try {
-				if (content.get(s) instanceof JsonElement) {
-					if (recursive) {
-						clone.add(s, ((JsonElement) content.get(s)).clone(recursive));
-					} else {
-						clone.add(s, content.get(s));
-					}
+				if (recursive && content.get(s) instanceof JsonElement
+						&& ((JsonElement) content.get(s)).supportsClone()) {
+					clone.add(s, ((JsonElement) content.get(s)).clone(recursive));
 				} else {
 					clone.add(s, content.get(s));
 				}
@@ -257,7 +249,7 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	public boolean equals(Object obj) {
 		if (obj instanceof JsonObject) {
 			JsonObject json = (JsonObject) obj;
-			if (content.size() != json.content.size()) {
+			if (content.size() != json.size()) {
 				return false;
 			}
 			for (String key : content.keySet()) {
@@ -296,12 +288,117 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 
 	@Override
 	public Collection<Object> values() {
-		return getValues();
+		return content.values();
 	}
 
 	@Override
 	public Iterator<Object> iterator() {
 		return keySet().iterator();
+	}
+
+	@Override
+	public JsonObject changes(JsonElement from) throws UnsupportedOperationException {
+		return changes(from, true);
+	}
+
+	@Override
+	public JsonObject changes(JsonElement from, boolean recursive) {
+		JsonObject last;
+		if (from instanceof JsonObject) {
+			last = (JsonObject) from;
+		} else {
+			return clone(true);
+		}
+		JsonObject changes = new JsonObject();
+		for (String s : content.keySet()) {
+			try {
+				if (last.containsKey(s)) {
+					if (content.get(s) != null && !content.get(s).equals(last.get(s))) {
+						if (content.get(s) instanceof JsonElement && last.get(s) instanceof JsonElement) {
+							if (recursive && ((JsonElement) content.get(s)).supportsChanges()
+									&& ((JsonElement) last.get(s)).supportsChanges()) {
+								changes.add(s, ((JsonElement) content.get(s)).changes((JsonElement) last.get(s)));
+							} else if (((JsonElement) content.get(s)).supportsClone()) {
+								changes.add(s, ((JsonElement) content.get(s)).clone(true));
+							} else {
+								changes.add(s, content.get(s));
+							}
+						} else {
+							changes.add(s, content.get(s));
+						}
+					}
+				} else if (content.get(s) instanceof JsonElement && ((JsonElement) content.get(s)).supportsClone()) {
+					changes.add(s, ((JsonElement) content.get(s)).clone(true));
+				} else {
+					changes.add(s, content.get(s));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		for (Object s : last.keySet()) {
+			if (!content.containsKey(s)) {
+				changes.add(s, null);
+			}
+		}
+		return changes;
+	}
+
+	@Override
+	public JsonObject reconstruct(JsonElement from) throws UnsupportedOperationException {
+		return reconstruct(from, true);
+	}
+
+	@Override
+	public JsonObject reconstruct(JsonElement from, boolean recursive) {
+		JsonObject last;
+		if (from instanceof JsonObject) {
+			last = (JsonObject) from;
+		} else {
+			return clone(true);
+		}
+		JsonObject reconstructed = new JsonObject();
+		for (String s : content.keySet()) {
+			try {
+				if (last.containsKey(s)) {
+					if (content.get(s) != null && !content.get(s).equals(last.get(s))) {
+						if (content.get(s) instanceof JsonElement && last.get(s) instanceof JsonElement) {
+							if (recursive && ((JsonElement) content.get(s)).supportsChanges()
+									&& ((JsonElement) last.get(s)).supportsChanges()) {
+								reconstructed.add(s,
+										((JsonElement) content.get(s)).reconstruct((JsonElement) last.get(s)));
+							} else if (((JsonElement) content.get(s)).supportsClone()) {
+								reconstructed.add(s, ((JsonElement) content.get(s)).clone(true));
+							} else {
+								reconstructed.add(s, content.get(s));
+							}
+						} else {
+							reconstructed.add(s, content.get(s));
+						}
+					}
+				} else if (content.get(s) instanceof JsonElement && ((JsonElement) content.get(s)).supportsClone()) {
+					reconstructed.add(s, ((JsonElement) content.get(s)).clone(true));
+				} else {
+					reconstructed.add(s, content.get(s));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		for (Object s : last.getKeySet()) {
+			if (!content.containsKey(s)) {
+				try {
+					if (last.get(s) instanceof JsonElement && ((JsonElement) content.get(s)).supportsClone()) {
+						reconstructed.add(s, ((JsonElement) last.get(s)).clone(true));
+					} else {
+						reconstructed.add(s, last.get(s));
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return reconstructed;
 	}
 
 }

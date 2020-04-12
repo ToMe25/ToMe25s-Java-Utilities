@@ -163,18 +163,8 @@ public class JsonArray implements JsonElement, List<Object> {
 	public String toString() {
 		String ret = "[";
 		for (Object obj : content) {
-			if (obj instanceof Boolean || obj instanceof Integer || obj instanceof Short || obj instanceof Byte
-					|| obj instanceof Double || obj instanceof Float || obj == null) {
-				ret += obj;
-				ret += ",";
-			} else if (obj instanceof JsonElement) {
-				ret += obj.toString();
-				ret += ",";
-			} else {
-				ret += "\"";
-				ret += obj.toString().replaceAll("\\\\", "\\\\\\\\").replaceAll("\\\"", "\\\\\"");
-				ret += "\",";
-			}
+			ret += contentToString(obj);
+			ret += ",";
 		}
 		if (ret.endsWith(",")) {
 			ret = ret.substring(0, ret.length() - 1);

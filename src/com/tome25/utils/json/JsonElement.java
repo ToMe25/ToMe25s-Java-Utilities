@@ -292,4 +292,25 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 */
 	public JsonElement reconstruct(JsonElement from, boolean recursive);
 
+	/**
+	 * converts the given object to a string in the way intended for jsons to match
+	 * the json specifications.
+	 * 
+	 * @param content
+	 * @return
+	 */
+	public default String contentToString(Object content) {
+		String str = "";
+		if (content == null || content instanceof Boolean || content instanceof Byte || content instanceof Short
+				|| content instanceof Integer || content instanceof Float || content instanceof Double
+				|| content instanceof Long || content instanceof JsonElement) {
+			str += content;
+		} else {
+			str += "\"";
+			str += content.toString().replaceAll("\\\\", "\\\\\\\\").replaceAll("\\\"", "\\\\\"");
+			str += "\"";
+		}
+		return str;
+	}
+
 }

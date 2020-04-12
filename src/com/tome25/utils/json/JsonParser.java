@@ -46,12 +46,16 @@ public class JsonParser {
 	/**
 	 * This method parses the given String to a JsonObject.
 	 * 
-	 * Supported object types inside the Json: Integer, Double, Boolean, String,
-	 * Json Objects and Json Arrays/Lists.
+	 * Supported object types inside the Json: Integer, Long, Double, Boolean,
+	 * String, Json Objects and Json Arrays/Lists.
 	 * 
-	 * WARNING: This method is not safe, over the time i worked on it before adding
-	 * it to this library there were multiple characters that could make it crash or
-	 * break out of String values.
+	 * This parser will handle numbers as double if they contain a dot, as long if
+	 * they are too big(or too small) to be a integer, and as an integer in any
+	 * other case.
+	 * 
+	 * WARNING: This method may not be safe, over the time i worked on it before
+	 * adding it to this library there were multiple characters that could make it
+	 * crash or break out of String values, tho i know of none with this version.
 	 * 
 	 * @param s the String to parse
 	 * @return the Json Object parsed from String s
@@ -282,8 +286,11 @@ public class JsonParser {
 				double d = Double.parseDouble(buffer);
 				return d;
 			} else {
-				int i = Integer.parseInt(buffer);
-				return i;
+				long l = Long.parseLong(buffer);
+				if (l <= Integer.MAX_VALUE && l >= Integer.MIN_VALUE) {
+					return (int) l;
+				}
+				return l;
 			}
 		} catch (Exception e) {
 			if (buffer.equalsIgnoreCase("true")) {

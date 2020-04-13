@@ -1,7 +1,7 @@
 package com.tome25.utils.exception;
 
 /**
- * Just a simple Exception for Invalid types.
+ * A simple Exception for Invalid types.
  * 
  * @author ToMe25
  */

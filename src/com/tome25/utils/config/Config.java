@@ -8,6 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * A configuration handler.
+ * 
+ * @author ToMe25
+ *
+ */
 public class Config {
 
 	private Map<String, ConfigValue<?>> cfg = new HashMap<String, ConfigValue<?>>();

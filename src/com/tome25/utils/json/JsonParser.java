@@ -3,7 +3,7 @@ package com.tome25.utils.json;
 import java.text.ParseException;
 
 /**
- * This class can parse the string representation of jsons to JsonElements.
+ * A parser to convert strings to json objects.
  * 
  * @author ToMe25
  *

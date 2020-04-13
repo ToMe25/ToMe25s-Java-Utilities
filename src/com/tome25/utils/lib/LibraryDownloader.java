@@ -532,7 +532,7 @@ public class LibraryDownloader {
 	 * 
 	 * @param urlStorage        the file to read the URLs from.
 	 * @param defaultUrlStorage the default content for urlStorage.
-	 * @return
+	 * @return the urls listed in the url storage file.
 	 */
 	private static List<URL> readUrlStorage(File urlStorage, String defaultUrlStorage) {
 		List<URL> urls = new ArrayList<URL>();

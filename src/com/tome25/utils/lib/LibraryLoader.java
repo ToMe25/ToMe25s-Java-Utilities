@@ -240,7 +240,7 @@ public class LibraryLoader {
 	 * converts a String Array to a String. entries are separated with a space.
 	 * 
 	 * @param array
-	 * @return
+	 * @return a string representation of the given string array.
 	 */
 	private static String stringArrayToString(String[] array) {
 		String string = "";
@@ -328,7 +328,7 @@ public class LibraryLoader {
 	/**
 	 * if init got used, this is the way to get its output buffer.
 	 * 
-	 * @return
+	 * @return the output buffer used in init.
 	 */
 	public static byte[] getBuffer() {
 		return buffer;

@@ -59,7 +59,7 @@ public class Config {
 	 * @param config       the config file to read this config option from.
 	 * @param name         the key for this config option.
 	 * @param defaultValue this config options default value.
-	 * @param comment      a list of comments to add to this config option. every
+	 * @param comments     a list of comments to add to this config option. every
 	 *                     string will get its own line.
 	 */
 	public <T> void addConfig(String config, String name, T defaultValue, String... comments) {
@@ -97,7 +97,7 @@ public class Config {
 	 * @param config       the config file to read this config option from.
 	 * @param name         the key for this config option.
 	 * @param defaultValue this config options default value.
-	 * @param comment      a list of comments to add to this config option. every
+	 * @param comments     a list of comments to add to this config option. every
 	 *                     string will get its own line.
 	 */
 	public <T> void addConfig(File config, String name, T defaultValue, String... comments) {

@@ -39,9 +39,7 @@ public class LibraryLoader {
 	 * download ToMe25s-Java-Utilites, if that doesn't work it tries to extract it
 	 * from this Jar and adds it to the classpath.
 	 * 
-	 * @param args          the program arguments.
-	 * @param outputLogFile the log file for System.out.
-	 * @param errorLogFile  the log file for System.err.
+	 * @param args the program arguments.
 	 */
 	public static void init(String[] args) {
 		init(args, null);

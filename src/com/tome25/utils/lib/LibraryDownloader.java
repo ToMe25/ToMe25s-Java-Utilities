@@ -70,7 +70,7 @@ public class LibraryDownloader {
 	 * @param defaultUrlStorage the default content for urlStorage.
 	 * @param overrideTarget    whether the target file should get overridden if it
 	 *                          already exists.
-	 * @param makeExecuteable   whether the target file should get made executable.
+	 * @param makeExecutable    whether the target file should get made executable.
 	 */
 	public LibraryDownloader(File urlStorage, String defaultUrlStorage, boolean overrideTarget,
 			boolean makeExecutable) {
@@ -91,7 +91,7 @@ public class LibraryDownloader {
 	 *                          response from the URL.
 	 * @param overrideTarget    whether the target file should get overridden if it
 	 *                          already exists.
-	 * @param makeExecuteable   whether the target file should get made executable.
+	 * @param makeExecutable    whether the target file should get made executable.
 	 */
 	public LibraryDownloader(File urlStorage, String defaultUrlStorage, Predicate<String> contentTypeCheck,
 			boolean overrideTarget, boolean makeExecutable) {
@@ -116,16 +116,14 @@ public class LibraryDownloader {
 	 *                          directory with the name it has on the server. If
 	 *                          this is null the file will be saved into the libs
 	 *                          directory next to this jar.
-	 * @param contentTypeCheck  a Predicate that checks the content type of the
-	 *                          response from the URL.
 	 * @param overrideTarget    whether the target file should get overridden if it
 	 *                          already exists.
-	 * @param makeExecuteable   whether the target file should get made executable.
+	 * @param makeExecutable    whether the target file should get made executable.
 	 */
 	public LibraryDownloader(File urlStorage, String defaultUrlStorage, File target, boolean overrideTarget,
-			boolean makeExecuteable) {
+			boolean makeExecutable) {
 		this(readUrlStorage(urlStorage, defaultUrlStorage), target, JAR_CONTENT_TYPE_CHECKER, overrideTarget,
-				makeExecuteable);
+				makeExecutable);
 	}
 
 	/**
@@ -146,11 +144,11 @@ public class LibraryDownloader {
 	 *                          response from the URL.
 	 * @param overrideTarget    whether the target file should get overridden if it
 	 *                          already exists.
-	 * @param makeExecuteable   whether the target file should get made executable.
+	 * @param makeExecutable    whether the target file should get made executable.
 	 */
 	public LibraryDownloader(File urlStorage, String defaultUrlStorage, File target, Predicate<String> contentTypeCheck,
-			boolean overrideTarget, boolean makeExecuteable) {
-		this(readUrlStorage(urlStorage, defaultUrlStorage), target, contentTypeCheck, overrideTarget, makeExecuteable);
+			boolean overrideTarget, boolean makeExecutable) {
+		this(readUrlStorage(urlStorage, defaultUrlStorage), target, contentTypeCheck, overrideTarget, makeExecutable);
 	}
 
 	/**
@@ -163,10 +161,10 @@ public class LibraryDownloader {
 	 * application/octet-stream, application/download and
 	 * application/force-download.
 	 * 
-	 * @param url             the URL to download a file from.
-	 * @param overrideTarget  whether the target file should get overridden if it
-	 *                        already exists.
-	 * @param makeExecuteable whether the target file should get made executable.
+	 * @param url            the URL to download a file from.
+	 * @param overrideTarget whether the target file should get overridden if it
+	 *                       already exists.
+	 * @param makeExecutable whether the target file should get made executable.
 	 */
 	public LibraryDownloader(URL url, boolean overrideTarget, boolean makeExecutable) {
 		this(url, null, JAR_CONTENT_TYPE_CHECKER, overrideTarget, makeExecutable);
@@ -183,7 +181,7 @@ public class LibraryDownloader {
 	 *                         response from the URL.
 	 * @param overrideTarget   whether the target file should get overridden if it
 	 *                         already exists.
-	 * @param makeExecuteable  whether the target file should get made executable.
+	 * @param makeExecutable   whether the target file should get made executable.
 	 */
 	public LibraryDownloader(URL url, Predicate<String> contentTypeCheck, boolean overrideTarget,
 			boolean makeExecutable) {
@@ -199,14 +197,12 @@ public class LibraryDownloader {
 	 *                         directory with the name it has on the server. If this
 	 *                         is null the file will be saved into the libs
 	 *                         directory next to this jar.
-	 * @param contentTypeCheck a Predicate that checks the content type of the
-	 *                         response from the URL.
 	 * @param overrideTarget   whether the target file should get overridden if it
 	 *                         already exists.
-	 * @param makeExecuteable  whether the target file should get made executable.
+	 * @param makeExecutable   whether the target file should get made executable.
 	 */
-	public LibraryDownloader(URL url, File target, boolean overrideTarget, boolean makeExecuteable) {
-		this(url, target, JAR_CONTENT_TYPE_CHECKER, overrideTarget, makeExecuteable);
+	public LibraryDownloader(URL url, File target, boolean overrideTarget, boolean makeExecutable) {
+		this(url, target, JAR_CONTENT_TYPE_CHECKER, overrideTarget, makeExecutable);
 	}
 
 	/**
@@ -223,11 +219,11 @@ public class LibraryDownloader {
 	 *                         response from the URL.
 	 * @param overrideTarget   whether the target file should get overridden if it
 	 *                         already exists.
-	 * @param makeExecuteable  whether the target file should get made executable.
+	 * @param makeExecutable   whether the target file should get made executable.
 	 */
 	public LibraryDownloader(URL url, File target, Predicate<String> contentTypeCheck, boolean overrideTarget,
-			boolean makeExecuteable) {
-		this(toList(url), target, contentTypeCheck, overrideTarget, makeExecuteable);
+			boolean makeExecutable) {
+		this(toList(url), target, contentTypeCheck, overrideTarget, makeExecutable);
 	}
 
 	/**
@@ -240,10 +236,10 @@ public class LibraryDownloader {
 	 * application/octet-stream, application/download and
 	 * application/force-download.
 	 * 
-	 * @param urls            the List of URLs to download a file from.
-	 * @param overrideTarget  whether the target file should get overridden if it
-	 *                        already exists.
-	 * @param makeExecuteable whether the target file should get made executable.
+	 * @param urls           the List of URLs to download a file from.
+	 * @param overrideTarget whether the target file should get overridden if it
+	 *                       already exists.
+	 * @param makeExecutable whether the target file should get made executable.
 	 */
 	public LibraryDownloader(List<URL> urls, boolean overrideTarget, boolean makeExecutable) {
 		this(urls, null, JAR_CONTENT_TYPE_CHECKER, overrideTarget, makeExecutable);
@@ -261,7 +257,7 @@ public class LibraryDownloader {
 	 *                         response from the URL.
 	 * @param overrideTarget   whether the target file should get overridden if it
 	 *                         already exists.
-	 * @param makeExecuteable  whether the target file should get made executable.
+	 * @param makeExecutable   whether the target file should get made executable.
 	 */
 	public LibraryDownloader(List<URL> urls, Predicate<String> contentTypeCheck, boolean overrideTarget,
 			boolean makeExecutable) {
@@ -276,15 +272,14 @@ public class LibraryDownloader {
 	 * application/octet-stream, application/download and
 	 * application/force-download.
 	 * 
-	 * @param urls            the List of URLs to download a file from.
-	 * @param target          the target location for the File. If it is a directory
-	 *                        the download will get saved into that directory with
-	 *                        the name it has on the server. If this is null the
-	 *                        file will be saved into the libs directory next to
-	 *                        this jar.
-	 * @param overrideTarget  whether the target file should get overridden if it
-	 *                        already exists.
-	 * @param makeExecuteable whether the target file should get made executable.
+	 * @param urls           the List of URLs to download a file from.
+	 * @param target         the target location for the File. If it is a directory
+	 *                       the download will get saved into that directory with
+	 *                       the name it has on the server. If this is null the file
+	 *                       will be saved into the libs directory next to this jar.
+	 * @param overrideTarget whether the target file should get overridden if it
+	 *                       already exists.
+	 * @param makeExecutable whether the target file should get made executable.
 	 */
 	public LibraryDownloader(List<URL> urls, File target, boolean overrideTarget, boolean makeExecutable) {
 		this(urls, target, JAR_CONTENT_TYPE_CHECKER, overrideTarget, makeExecutable);
@@ -304,7 +299,7 @@ public class LibraryDownloader {
 	 *                         response from the URL.
 	 * @param overrideTarget   whether the target file should get overridden if it
 	 *                         already exists.
-	 * @param makeExecuteable  whether the target file should get made executable.
+	 * @param makeExecutable   whether the target file should get made executable.
 	 */
 	public LibraryDownloader(List<URL> urls, File target, Predicate<String> contentTypeCheck, boolean overrideTarget,
 			boolean makeExecutable) {

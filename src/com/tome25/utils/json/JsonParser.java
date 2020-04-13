@@ -14,7 +14,7 @@ public class JsonParser {
 	 * it to this library there were multiple character that could make it crash or
 	 * break out of String values.
 	 * 
-	 * @param s the String to parse
+	 * @param str the String to parse
 	 * @return the Json Object parsed from String s
 	 * @throws ParseException
 	 */

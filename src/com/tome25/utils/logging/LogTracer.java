@@ -171,7 +171,6 @@ public class LogTracer {
 	 * gets a Logger that logs log levels info and below to System.out, and warning
 	 * and above to System.err, with the give custom name.
 	 * 
-	 * @param name
 	 * @return
 	 */
 	public static Logger getGlobal() {
@@ -199,7 +198,6 @@ public class LogTracer {
 	/**
 	 * gets the System Error Logger.
 	 * 
-	 * @param name
 	 * @return
 	 */
 	public static Logger getError() {
@@ -227,7 +225,6 @@ public class LogTracer {
 	/**
 	 * gets the System Output Logger.
 	 * 
-	 * @param name
 	 * @return
 	 */
 	public static Logger getOutput() {

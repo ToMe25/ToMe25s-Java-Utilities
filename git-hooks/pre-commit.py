@@ -18,9 +18,9 @@ def main():
     os.mkdir(tmpdir)
     
     # get all files to compile.
-    path = os.path.join(os.getcwd(), "src")
+    srcdir = os.path.join(os.getcwd(), "src")
     sources = ""
-    for root, directories, files in os.walk(path):
+    for root, directories, files in os.walk(srcdir):
         for file in files:
             if(file.endswith(".java")):
                 sources += os.path.join(root, file) + " "
@@ -29,7 +29,7 @@ def main():
     os.system("javac -g -parameters -d tmp " + sources)
     
     # copy resources to tmp.
-    for root, directories, files in os.walk(path):
+    for root, directories, files in os.walk(srcdir):
         for file in files:
             if(file.endswith(".java") == False and os.path.basename(file) != ".directory"):
                 shutil.copyfile(os.path.join(root, file), os.path.join(tmpdir, file))
@@ -51,9 +51,6 @@ def main():
     # pack tmp into a jar.
     os.system("jar -cfm ToMe25s-Java-Utilities.jar MANIFEST.MF -C tmp .")
     
-    # remove the tmp directory.
-    shutil.rmtree(tmpdir)
-    
     # read the keystore password.
     file = open(".KeysPWD", "rt")
     password = file.readline()
@@ -63,6 +60,27 @@ def main():
     
     # add the compiled file to the commit.
     os.system("git add ToMe25s-Java-Utilities.jar")
+    
+    # remove old javadocs
+    javadocdir = os.path.join(os.getcwd(), "javadoc")
+    if(os.path.exists(javadocdir)):
+        shutil.rmtree(javadocdir)
+    
+    # create new javadocs
+    os.mkdir(javadocdir)
+    os.system("javadoc -quiet -d javadoc -sourcepath " + srcdir + " -subpackages com.tome25.utils")
+    
+    # add javadoc directory to the commit
+    os.system("git add " + javadocdir)
+    
+    # package the javadoc files into a jar file
+    os.system("jar -cf ToMe25s-Java-Utilites-javadoc.jar -C javadoc . LICENSE")
+    
+    # add the javadoc archive to the commit
+    os.system("git add ToMe25s-Java-Utilites-javadoc.jar")
+    
+    # remove the tmp directory.
+    shutil.rmtree(tmpdir)
     
     # print a secess message.
     print("Successfully compiled ToMe25s-Java-Utilities.")

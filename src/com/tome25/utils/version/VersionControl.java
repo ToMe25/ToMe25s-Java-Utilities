@@ -4,6 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.jar.JarFile;
 
+/**
+ * A version control utility.
+ * 
+ * @author ToMe25
+ *
+ */
 public class VersionControl {
 
 	private static File file;

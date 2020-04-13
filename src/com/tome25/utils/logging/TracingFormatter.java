@@ -5,13 +5,15 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
 import com.tome25.utils.config.Config;
 
 /**
- * a custom formatter for the tracing log style
+ * A custom formatter for the tracing log style.
  * 
  * @author ToMe25
  *
@@ -19,13 +21,18 @@ import com.tome25.utils.config.Config;
 public class TracingFormatter extends Formatter {
 
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
+	private static final Map<Integer, String> THREAD_NAMES = new HashMap<Integer, String>();
 
+	/**
+	 * Whether a timestamp of the creation of the message should be added to the
+	 * output.
+	 */
 	private boolean traceTimestamp = true;
 	private boolean traceThread = true;
 	private boolean traceOutputtingClass = true;
 	/**
 	 * Whether the traced class name should be the simple class name(without
-	 * package)
+	 * package).
 	 */
 	private boolean traceSimpleClassName = true;
 	private boolean traceOutputtingMethod = true;
@@ -85,16 +92,18 @@ public class TracingFormatter extends Formatter {
 	/**
 	 * returns the name of the Thread for the given id.
 	 * 
-	 * @param threadId
-	 * @return
+	 * @param threadId the id of the thread which name you want.
+	 * @return the name of the Thread for the given id.
 	 */
 	private String getThreadNameForId(int threadId) {
-		for (Thread thread : Thread.getAllStackTraces().keySet()) {
-			if (thread.getId() == threadId) {
-				return thread.getName();
+		if (!THREAD_NAMES.containsKey(threadId)) {
+			for (Thread thread : Thread.getAllStackTraces().keySet()) {
+				if (thread.getId() == threadId) {
+					THREAD_NAMES.put(threadId, thread.getName());
+				}
 			}
 		}
-		return "";
+		return THREAD_NAMES.get(threadId);
 	}
 
 	/**

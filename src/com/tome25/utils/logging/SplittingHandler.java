@@ -5,7 +5,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
- * a Handler that splits records into System.out and System.err based on their
+ * A Handler that splits records into System.out and System.err based on their
  * log level.
  * 
  * @author ToMe25

@@ -191,15 +191,14 @@ public class LibraryDownloader {
 	/**
 	 * Creates a new Library Downloader downloading a jar file from a single URL.
 	 * 
-	 * @param url              the URL to download a file from.
-	 * @param target           the target location for the File. If it is a
-	 *                         directory the download will get saved into that
-	 *                         directory with the name it has on the server. If this
-	 *                         is null the file will be saved into the libs
-	 *                         directory next to this jar.
-	 * @param overrideTarget   whether the target file should get overridden if it
-	 *                         already exists.
-	 * @param makeExecutable   whether the target file should get made executable.
+	 * @param url            the URL to download a file from.
+	 * @param target         the target location for the File. If it is a directory
+	 *                       the download will get saved into that directory with
+	 *                       the name it has on the server. If this is null the file
+	 *                       will be saved into the libs directory next to this jar.
+	 * @param overrideTarget whether the target file should get overridden if it
+	 *                       already exists.
+	 * @param makeExecutable whether the target file should get made executable.
 	 */
 	public LibraryDownloader(URL url, File target, boolean overrideTarget, boolean makeExecutable) {
 		this(url, target, JAR_CONTENT_TYPE_CHECKER, overrideTarget, makeExecutable);
@@ -476,16 +475,16 @@ public class LibraryDownloader {
 	/**
 	 * returns the size of the file to download in bytes.
 	 * 
-	 * @return
+	 * @return the size of the file to download in bytes.
 	 */
 	public int getDownloadSize() {
 		return size;
 	}
 
 	/**
-	 * returns the amount of bytes that are downloaded.
+	 * returns the amount of bytes that are already downloaded.
 	 * 
-	 * @return
+	 * @return the amount of bytes that are already downloaded.
 	 */
 	public int getBytesDownloaded() {
 		return downloaded;
@@ -494,7 +493,7 @@ public class LibraryDownloader {
 	/**
 	 * returns the percentage of the file that is already downloaded.
 	 * 
-	 * @return
+	 * @return the percentage of the file that is already downloaded.
 	 */
 	public double getPercentDownloaded() {
 		return downloaded / (size / 100D);
@@ -503,7 +502,7 @@ public class LibraryDownloader {
 	/**
 	 * returns the URL that got used for the download, after all redirects.
 	 * 
-	 * @return
+	 * @return the URL that got used for the download.
 	 */
 	public URL getDownloadUrl() {
 		return downloadedFrom;
@@ -512,9 +511,9 @@ public class LibraryDownloader {
 	/**
 	 * creates a new ArrayList and adds all the given objects to it.
 	 * 
-	 * @param <T>
+	 * @param <T>     the type of objects and list.
 	 * @param objects
-	 * @return
+	 * @return a new list containing all the given objects
 	 */
 	@SafeVarargs
 	private static <T> List<T> toList(T... objects) {

@@ -2,6 +2,12 @@ package com.tome25.utils.json;
 
 import java.text.ParseException;
 
+/**
+ * This class can parse the string representation of jsons to JsonElements.
+ * 
+ * @author ToMe25
+ *
+ */
 public class JsonParser {
 
 	/**

@@ -36,10 +36,10 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * Adds the given values to the given keys replacing the current ones if
 	 * existing.
 	 * 
-	 * @param m
+	 * @param m mappings to be stored in this json.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
-	 *                              JsonArrays)
+	 *                              JsonArrays).
 	 */
 	public void putAll(Map<? extends Object, ? extends Object> m);
 
@@ -60,10 +60,10 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * Adds the given values to the given keys replacing the current ones if
 	 * existing.
 	 * 
-	 * @param m
+	 * @param m mappings to be stored in this json.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
-	 *                              JsonArrays)
+	 *                              JsonArrays).
 	 */
 	public void setAll(Map<? extends Object, ? extends Object> m);
 
@@ -82,11 +82,11 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	/**
 	 * gets the value for the given key.
 	 * 
-	 * @param key
+	 * @param key the key to look for.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays)
-	 * @return
+	 * @return the value for the given key.
 	 */
 	public Object get(Object key);
 
@@ -94,18 +94,19 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * gets the value for the given key if its a string, or a string representation
 	 * of that value if it isn't.
 	 * 
-	 * @param key
+	 * @param key the key to look for.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays)
-	 * @return
+	 * @return the value for the given key if its a string, or a string
+	 *         representation of that value if it isn't.
 	 */
 	public String getString(Object key);
 
 	/**
 	 * returns this jsons Values.
 	 * 
-	 * @return
+	 * @return this jsons Values.
 	 */
 	public default Collection<Object> getValues() {
 		return values();
@@ -114,16 +115,16 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	/**
 	 * returns this jsons Values.
 	 * 
-	 * @return
+	 * @return this jsons Values.
 	 */
 	public Collection<Object> values();
 
 	/**
-	 * whether this Json contains the given object, either as key if the type
+	 * checks whether this Json contains the given object, either as key if the type
 	 * matches, or as value.
 	 * 
 	 * @param o
-	 * @return
+	 * @return whether this Json contains the given object.
 	 */
 	public boolean contains(Object o);
 
@@ -134,7 +135,7 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays)
-	 * @return
+	 * @return whether this Json contains the given key.
 	 */
 	public boolean containsKey(Object key);
 
@@ -142,46 +143,46 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * returns true if this Json contains the given value.
 	 * 
 	 * @param value
-	 * @return
+	 * @return this Json contains the given value.
 	 */
 	public boolean containsValue(Object value);
 
 	/**
 	 * gets the size of this object.
 	 * 
-	 * @return
+	 * @return the size of this object.
 	 */
 	public int size();
 
 	/**
-	 * Returns a String representation of this element.
+	 * Returns a string representation of this element.
 	 * 
-	 * @return
+	 * @return a string representation of this element.
 	 */
 	public String toString();
 
 	/**
-	 * Returns a String representation of this element as byte array.
+	 * Returns a string representation of this element as byte array.
 	 * 
-	 * @return
+	 * @return a String representation of this element as byte array.
 	 */
 	public default byte[] toByteArray() {
 		return toString().getBytes();
 	}
 
 	/**
-	 * Returns a String representation of this element as character array.
+	 * Returns a string representation of this element as character array.
 	 * 
-	 * @return
+	 * @return a string representation of this element as character array.
 	 */
 	public default char[] toCharArray() {
 		return toString().toCharArray();
 	}
 
 	/**
-	 * whether this JsonElement can be cloned
+	 * Checks whether this JsonElement can be cloned.
 	 * 
-	 * @return
+	 * @return whether this JsonElement can be cloned.
 	 */
 	public default boolean supportsClone() {
 		return true;
@@ -190,7 +191,7 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	/**
 	 * Creates and returns a copy of this Json Object. Recursive.
 	 * 
-	 * @return
+	 * @return a copy of this Json Object.
 	 * @throws CloneNotSupportedException if this element can't be cloned.
 	 */
 	public Object clone() throws CloneNotSupportedException;
@@ -200,7 +201,7 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * 
 	 * @param recursive whether Jsons inside this Json object should get cloned as
 	 *                  well.
-	 * @return
+	 * @return a copy of this Json Object.
 	 * @throws CloneNotSupportedException if this element can't be cloned
 	 */
 	public JsonElement clone(boolean recursive) throws CloneNotSupportedException;
@@ -209,14 +210,14 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * Indicates whether some other object is "equal to" this one.
 	 * 
 	 * @param obj
-	 * @return
+	 * @return whether some other object is "equal to" this one.
 	 */
 	public boolean equals(Object obj);
 
 	/**
-	 * whether this is empty.
+	 * Checks whether this json is empty.
 	 * 
-	 * @return
+	 * @return whether this json is empty.
 	 */
 	public boolean isEmpty();
 
@@ -226,9 +227,11 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	public void clear();
 
 	/**
-	 * whether this element supports getting the changes against a given version.
+	 * Checks whether this element supports getting the changes against a given
+	 * version.
 	 * 
-	 * @return
+	 * @return whether this element supports getting the changes against a given
+	 *         version.
 	 */
 	public default boolean supportsChanges() {
 		return true;
@@ -240,7 +243,8 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * it will not fully work with JsonElements containing null objects.
 	 * 
 	 * @param from the previous JsonElement
-	 * @return
+	 * @return a new JsonElement containing the changes from the given JsonElement
+	 *         to this one.
 	 * @throws UnsupportedOperationException if this JsonElement doesn't support
 	 *                                       generating a changes json.
 	 */
@@ -256,7 +260,8 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * @param from      the previous JsonElement
 	 * @param recursive whether changed JsonElements inside this one should get
 	 *                  checked for changes too, or just cloned from this one.
-	 * @return
+	 * @return a new JsonElement containing the changes from the given JsonElement
+	 *         to this one.
 	 * @throws UnsupportedOperationException if this JsonElement doesn't support
 	 *                                       generating a changes json.
 	 */
@@ -269,7 +274,8 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * JsonElements containing null objects.
 	 * 
 	 * @param from the previous JsonElement
-	 * @return
+	 * @return a new JsonElement containing the values of the given JsonElement with
+	 *         the changes contained in this JsonElement applied.
 	 * @throws UnsupportedOperationException if this JsonElement doesn't support
 	 *                                       generating a changes json.
 	 */
@@ -286,7 +292,8 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * @param from      the previous JsonElement
 	 * @param recursive whether changedJsonElements inside this one should get
 	 *                  reconstructed too, or just cloned from this one.
-	 * @return
+	 * @return a new JsonElement containing the values of the given JsonElement with
+	 *         the changes contained in this JsonElement applied.
 	 * @throws UnsupportedOperationException if this JsonElement doesn't support
 	 *                                       generating a changes json.
 	 */
@@ -297,7 +304,7 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * the json specifications.
 	 * 
 	 * @param content
-	 * @return
+	 * @return a string representation of the given object.
 	 */
 	public default String contentToString(Object content) {
 		String str = "";

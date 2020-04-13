@@ -29,7 +29,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	private boolean traceSystemClasses = true;
 	/**
 	 * Whether the traced class name should be the simple class name(without
-	 * package)
+	 * package).
 	 */
 	private boolean traceSimpleClassName = true;
 	private boolean traceOutputtingMethod = true;

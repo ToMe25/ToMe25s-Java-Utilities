@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * a PrintStream that writes everything to a Logger, everything written into it
+ * A PrintStream that writes everything to a Logger, everything written into it
  * after the last newline will be buffered until the next newline or flush.
  * 
  * @author ToMe25
@@ -22,14 +22,14 @@ public class LoggingPrintStream extends PrintStream {
 	private static String lineSeparator = System.lineSeparator();
 
 	/**
-	 * creates a new LoggingPrintStream with the global logger and log level info.
+	 * Creates a new LoggingPrintStream with the global logger and log level info.
 	 */
 	public LoggingPrintStream() {
 		this(Logger.getGlobal());
 	}
 
 	/**
-	 * creates a new LoggingPrintStream with a custom logger and log level info.
+	 * Creates a new LoggingPrintStream with a custom logger and log level info.
 	 * 
 	 * @param logger
 	 */
@@ -38,7 +38,7 @@ public class LoggingPrintStream extends PrintStream {
 	}
 
 	/**
-	 * creates a new LoggingPrintStream with a custom logger and log level.
+	 * Creates a new LoggingPrintStream with a custom logger and log level.
 	 * 
 	 * @param logger
 	 * @param logLevel
@@ -52,7 +52,7 @@ public class LoggingPrintStream extends PrintStream {
 	/**
 	 * returns the Logger this LoggingPrintStream writes to.
 	 * 
-	 * @return
+	 * @return the Logger this LoggingPrintStream writes to.
 	 */
 	public Logger getLogger() {
 		return log;
@@ -61,7 +61,7 @@ public class LoggingPrintStream extends PrintStream {
 	/**
 	 * returns the log level this LoggingPrintStream writes to.
 	 * 
-	 * @return
+	 * @return the log level this LoggingPrintStream writes to.
 	 */
 	public Level getLogLevel() {
 		return lvl;

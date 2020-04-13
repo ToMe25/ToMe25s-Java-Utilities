@@ -8,9 +8,9 @@ import com.tome25.utils.exception.InvalidTypeException;
 
 /**
  * 
- * @author ToMe25
+ * A utility class that stores config values.
  * 
- *         a utility class that stores config values
+ * @author ToMe25
  *
  */
 public class ConfigValue<T> {

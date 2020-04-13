@@ -1,5 +1,6 @@
 import os
 import shutil
+import stat
 
 def main():
     # move to the git-hooks directory.
@@ -11,7 +12,10 @@ def main():
     for root, directories, files in os.walk(os.getcwd()):
         for file in files:
             if(file.endswith(".py") == False):
-                shutil.copyfile(os.path.join(root, file), os.path.join(githooks, file))
+                newfile = os.path.join(githooks, file)
+                shutil.copyfile(os.path.join(root, file), newfile)
+                perms = os.stat(newfile)
+                os.chmod(newfile, perms.st_mode | stat.S_IEXEC)
     
     # print a secess message.
     print("installed all the git hooks.")

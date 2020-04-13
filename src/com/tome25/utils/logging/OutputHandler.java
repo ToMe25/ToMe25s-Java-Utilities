@@ -7,7 +7,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.StreamHandler;
 
 /**
- * a StreamHandler that can have a custom log level from the start.
+ * A StreamHandler that can have a custom log level from the start.
  * 
  * @author ToMe25
  *

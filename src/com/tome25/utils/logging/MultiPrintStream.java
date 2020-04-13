@@ -38,7 +38,7 @@ public class MultiPrintStream extends PrintStream {
 	 * as Output.
 	 * 
 	 * @param out the OutputStream to add.
-	 * @return this
+	 * @return this MultiPrintStream
 	 */
 	public MultiPrintStream addOutputStream(OutputStream out) {
 		streams = Arrays.copyOf(streams, streams.length + 1);

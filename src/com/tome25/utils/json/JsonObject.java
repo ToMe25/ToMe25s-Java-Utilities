@@ -10,19 +10,25 @@ import java.util.Set;
 import com.tome25.utils.exception.InvalidKeyException;
 import com.tome25.utils.exception.InvalidTypeException;
 
+/**
+ * A standard json object, that can store stuff, and be converted to a string.
+ * 
+ * @author ToMe25
+ *
+ */
 public class JsonObject implements JsonElement, Map<Object, Object> {
 
 	private static final long serialVersionUID = 8864863917582360165L;
 	private Map<String, Object> content = new HashMap<String, Object>();
 
 	/**
-	 * creates a new empty Json Object.
+	 * Creates a new empty Json Object.
 	 */
 	public JsonObject() {
 	}
 
 	/**
-	 * creates a new Json Object and initializes it with the given key value pair.
+	 * Creates a new Json Object and initializes it with the given key value pair.
 	 * 
 	 * @param key
 	 * @param value
@@ -32,7 +38,7 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	}
 
 	/**
-	 * creates a new Json Object and initializes it with the given content.
+	 * Creates a new Json Object and initializes it with the given content.
 	 * 
 	 * @param content
 	 */
@@ -122,13 +128,13 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	}
 
 	/**
-	 * gets the value for the given key.
+	 * Gets the value for the given key.
 	 * 
 	 * @param key
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays)
-	 * @return
+	 * @return the value for the given key.
 	 */
 	@Override
 	public Object get(Object key) {
@@ -149,9 +155,9 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	}
 
 	/**
-	 * returns this Json object's Keys.
+	 * returns this jsons Keys.
 	 * 
-	 * @return
+	 * @return this jsons Keys.
 	 */
 	public Set<String> getKeySet() {
 		return content.keySet();
@@ -173,7 +179,7 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays)
-	 * @return
+	 * @return whether this Json contains the given key.
 	 */
 	@Override
 	public boolean containsKey(Object key) {

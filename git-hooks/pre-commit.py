@@ -68,7 +68,7 @@ def main():
     
     # create new javadocs
     os.mkdir(javadocdir)
-    os.system("javadoc -quiet -d javadoc -sourcepath " + srcdir + " -subpackages com.tome25.utils")
+    os.system("javadoc -quiet -private -d javadoc -sourcepath " + srcdir + " -subpackages com.tome25.utils")
     
     # add javadoc directory to the commit
     os.system("git add " + javadocdir)

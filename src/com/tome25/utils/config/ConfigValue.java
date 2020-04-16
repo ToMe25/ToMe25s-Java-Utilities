@@ -7,7 +7,6 @@ import java.io.IOException;
 import com.tome25.utils.exception.InvalidTypeException;
 
 /**
- * 
  * A utility class that stores config values.
  * 
  * @author ToMe25

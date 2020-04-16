@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
+/**
+ * The interface all the json object types implement.
+ * 
+ * @author ToMe25
+ *
+ */
 public interface JsonElement extends Iterable<Object>, Serializable {
 
 	/**

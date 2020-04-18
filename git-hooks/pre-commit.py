@@ -9,10 +9,16 @@ def main():
     elif(os.path.basename(os.getcwd()) == "hooks"):
         os.chdir(os.path.dirname(os.path.dirname(os.getcwd())))
 
-    # dont do anything if the keystore file doesn't exists
-    if(os.path.exists(os.path.join(os.getcwd(), ".Keys.jks")) == False):
-        print("Don't compile ToMe25s-Java-Utilites as the .Keys.jks keystore doesn't exist.")
-        quit()
+    # update the version number.
+    for line in fileinput.input("buildNumber.properties", inplace=True):
+        #line = line[:-1]
+        if(line.startswith("buildNumber=")):
+            index = line.index('=') + 1
+            line = line[:index] + str(int(line[index:]) + 1)
+        print(line)
+
+    # add the buildNumber.properties file to the commit
+    os.system("git add buildNumber.properties")
 
     # execute maven build
     os.system("mvn -B package")
@@ -36,10 +42,6 @@ def main():
     os.system("git add ToMe25s-Java-Utilities.jar")
     os.system("git add ToMe25s-Java-Utilities-javadoc.jar")
     os.system("git add ToMe25s-Java-Utilities-sources.jar")
-
-    # add the buildNumber.properties file to the commit
-    # also it seems like adding this directly after the maven command is unreliable
-    os.system("git add buildNumber.properties")
 
     # remove old javadocs
     javadocdir = os.path.join(os.getcwd(), "javadoc")

@@ -30,8 +30,5 @@ hs_err_pid*
 # dolphin
 .directory
 
-# jar signing
-.Keys.jks
-
 # maven
 /target/

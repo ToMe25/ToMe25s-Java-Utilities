@@ -107,9 +107,9 @@ public class TracingFormatter extends Formatter {
 	}
 
 	/**
-	 * reads this formatters config file
+	 * reads the values from the given config file.
 	 * 
-	 * @param cfgFile
+	 * @param cfgFile the config file to read.
 	 */
 	private void readConfig(File cfgFile) {
 		// init config

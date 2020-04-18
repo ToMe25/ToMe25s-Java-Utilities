@@ -30,8 +30,8 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	/**
 	 * Creates a new Json Object and initializes it with the given key value pair.
 	 * 
-	 * @param key
-	 * @param value
+	 * @param key   the key to represent value in the new json object.
+	 * @param value a value to add to the new json object.
 	 */
 	public JsonObject(String key, Object value) {
 		content.put(key, value);
@@ -40,7 +40,7 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	/**
 	 * Creates a new Json Object and initializes it with the given content.
 	 * 
-	 * @param content
+	 * @param content the content for the new json object.
 	 */
 	public JsonObject(Map<String, Object> content) {
 		this.content.putAll(content);
@@ -68,7 +68,8 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays)
-	 * @return
+	 * @return the previous value associated with key, or null if there was no
+	 *         mapping for key.
 	 */
 	@Override
 	public Object put(Object key, Object value) {
@@ -103,11 +104,12 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	/**
 	 * Removes the mapping for the given key from this map if it is present.
 	 * 
-	 * @param key
+	 * @param key the key to remove.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays)
-	 * @return
+	 * @return the previous value associated with key, or null if there was no
+	 *         mapping for key.
 	 */
 	@Override
 	public Object remove(Object key) {
@@ -130,7 +132,7 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	/**
 	 * Gets the value for the given key.
 	 * 
-	 * @param key
+	 * @param key the key to get the value for.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays)
@@ -175,7 +177,7 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	/**
 	 * returns true if this Json contains the given key.
 	 * 
-	 * @param key
+	 * @param key the key to look for.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays)

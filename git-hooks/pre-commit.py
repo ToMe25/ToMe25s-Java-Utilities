@@ -47,6 +47,7 @@ def main():
     javadocdir = os.path.join(os.getcwd(), "javadoc")
     if(os.path.exists(javadocdir)):
         os.system("git rm -rf " + javadocdir)
+    if(os.path.exists(javadocdir)):
         shutil.rmtree(javadocdir) # archives seem to survive git rm, so they get removed here
 
     # copy javadocs into root directory

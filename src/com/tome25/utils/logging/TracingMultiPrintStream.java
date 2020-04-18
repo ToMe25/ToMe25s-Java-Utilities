@@ -41,6 +41,11 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	private static final String LINE_SEPARATOR = System.lineSeparator();
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
 
+	/**
+	 * creates a new TracingMultiPrintStream printing to the give OutputStreams.
+	 * 
+	 * @param outs the outputstreams to print to.
+	 */
 	public TracingMultiPrintStream(OutputStream... outs) {
 		this(new File(
 				new File(TracingMultiPrintStream.class.getProtectionDomain().getCodeSource().getLocation().getPath())
@@ -316,9 +321,10 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	/**
 	 * Creates a String from the given Object and the Trace.
 	 * 
-	 * @param x
+	 * @param x       the string to finish. can be a string, a byte array or a
+	 *                character array.
 	 * @param println whether to end the String with a lineSeperator
-	 * @return
+	 * @return the finished string.
 	 */
 	private String FinishStr(Object x, boolean println) {
 		String s = String.valueOf(x);
@@ -354,22 +360,24 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	/**
 	 * Creates a byte[] from the given Object and the Trace.
 	 * 
-	 * @param x
+	 * @param x       the string to finish. can be a string, a byte array or a
+	 *                character array.
 	 * @param println whether to end the byte[] with a lineSeperator
-	 * @return
+	 * @return the finished byte array.
 	 */
 	private byte[] FinishBArr(Object x, boolean println) {
 		return FinishStr(x, println).getBytes();
 	}
 
 	/**
-	 * Checks if the given array contains the String str, or a String starting with
-	 * str.
+	 * Checks whether the given array contains the String str, or a String starting
+	 * with str.
 	 * 
 	 * @param array      the Array to Search in.
 	 * @param str        the String to Search
 	 * @param startsWith needs the String in the Array only start with str?
-	 * @return
+	 * @return whether the given array contains the String str, or a String starting
+	 *         with str.
 	 */
 	private boolean ArrayContains(String[] array, String str, boolean startsWith) {
 		boolean contains = false;
@@ -389,6 +397,11 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 		return contains;
 	}
 
+	/**
+	 * reads the values from the given config file.
+	 * 
+	 * @param cfgFile the config file to read.
+	 */
 	private void readConfig(File cfgFile) {
 		// init config
 		cfg.addConfig(cfgFile, "traceTimestamp", traceTimestamp,

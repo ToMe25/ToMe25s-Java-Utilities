@@ -22,7 +22,7 @@ public class JsonParser {
 	 * 
 	 * @param str the String to parse
 	 * @return the Json Object parsed from String s
-	 * @throws ParseException
+	 * @throws ParseException if something goes wrong while parsing.
 	 */
 	public static JsonObject parseStringFast(String str) throws ParseException {
 		JsonObject json = new JsonObject();
@@ -64,8 +64,8 @@ public class JsonParser {
 	 * crash or break out of String values, tho i know of none with this version.
 	 * 
 	 * @param s the String to parse
-	 * @return the Json Object parsed from String s
-	 * @throws ParseException
+	 * @return the json Object parsed from String s.
+	 * @throws ParseException if something goes wrong while parsing.
 	 */
 	public static JsonElement parseString(String s) throws ParseException {
 		JsonElement json = null;
@@ -280,10 +280,10 @@ public class JsonParser {
 	/**
 	 * builds an object of any type that is neither string nor json.
 	 * 
-	 * @param buffer
-	 * @param offset
-	 * @return
-	 * @throws ParseException
+	 * @param buffer the buffer to build the object from.
+	 * @param offset the offset in the string to parse, used for error handling.
+	 * @return the built object.
+	 * @throws ParseException if something goes wrong while parsing.
 	 */
 	private static Object buildOther(String buffer, int offset) throws ParseException {
 		buffer = buffer.trim();

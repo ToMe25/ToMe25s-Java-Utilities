@@ -17,8 +17,8 @@ public class OutputHandler extends StreamHandler {
 	/**
 	 * creates a new OutputHandler with log level info.
 	 * 
-	 * @param out
-	 * @param formatter
+	 * @param out       the OutputStream to write the messages to.
+	 * @param formatter the formatter to use for all messages.
 	 */
 	public OutputHandler(OutputStream out, Formatter formatter) {
 		this(out, Level.INFO, formatter);
@@ -27,9 +27,9 @@ public class OutputHandler extends StreamHandler {
 	/**
 	 * creates a new OutputHandler with the given log level.
 	 * 
-	 * @param out
-	 * @param level
-	 * @param formatter
+	 * @param outthe    OutputStream to write the messages to.
+	 * @param level     the minimal log level this handler should handle.
+	 * @param formatter the formatter to use for all messages.
 	 */
 	public OutputHandler(OutputStream out, Level level, Formatter formatter) {
 		super(out, formatter);

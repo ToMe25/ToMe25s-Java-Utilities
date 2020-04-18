@@ -36,7 +36,7 @@ public class Config {
 	 * gets the Config value for the given Name.
 	 * 
 	 * @param name the name of the config option to get.
-	 * @return
+	 * @return the Config value for the given Name.
 	 */
 	public Object getConfig(String name) {
 		if (cfg.containsKey(name)) {
@@ -50,6 +50,7 @@ public class Config {
 	/**
 	 * adds a config option to be read from the given config file.
 	 * 
+	 * @param <T>          the option type.
 	 * @param config       the config file to read this config option from.
 	 * @param name         the key for this config option.
 	 * @param defaultValue this config options default value.
@@ -62,6 +63,7 @@ public class Config {
 	/**
 	 * adds a config option to be read from the given config file.
 	 * 
+	 * @param <T>          the option type.
 	 * @param config       the config file to read this config option from.
 	 * @param name         the key for this config option.
 	 * @param defaultValue this config options default value.
@@ -80,6 +82,7 @@ public class Config {
 	/**
 	 * adds a config option to be read from the given config file.
 	 * 
+	 * @param <T>          the option type.
 	 * @param config       the config file to read this config option from.
 	 * @param name         the key for this config option.
 	 * @param defaultValue this config options default value.
@@ -100,6 +103,7 @@ public class Config {
 	/**
 	 * adds a config option to be read from the given config file.
 	 * 
+	 * @param <T>          the option type.
 	 * @param config       the config file to read this config option from.
 	 * @param name         the key for this config option.
 	 * @param defaultValue this config options default value.
@@ -118,6 +122,7 @@ public class Config {
 	/**
 	 * sets the Config value for the given Name the the given Value.
 	 * 
+	 * @param <T>   the option type.
 	 * @param name  the name of the config option to get.
 	 * @param value the value to set the config option to.
 	 */

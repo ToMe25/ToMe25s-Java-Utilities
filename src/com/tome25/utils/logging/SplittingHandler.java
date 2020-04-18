@@ -15,12 +15,10 @@ public class SplittingHandler extends Handler {
 
 	@Override
 	public void close() {
-
 	}
 
 	@Override
 	public void flush() {
-
 	}
 
 	@Override
@@ -35,8 +33,8 @@ public class SplittingHandler extends Handler {
 	/**
 	 * publishes the give LogRecord to all the handlers of the given Logger
 	 * 
-	 * @param logger
-	 * @param record
+	 * @param logger the logger to publish the record to.
+	 * @param record the log record to publish to logger.
 	 */
 	private void publish(Logger logger, LogRecord record) {
 		for (Handler handler : logger.getHandlers()) {

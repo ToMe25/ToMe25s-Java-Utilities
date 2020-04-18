@@ -19,7 +19,7 @@ import java.util.function.Predicate;
 /**
  * 
  * This class can download files from web servers. You will need to copy this
- * class and <link>LibraryLoader</link> into your project in order to add this
+ * class and {@link LibraryLoader} into your project in order to add this
  * library to the classpath if you want to download it at the start of your
  * software.
  * 
@@ -322,7 +322,6 @@ public class LibraryDownloader {
 	 * constructor.
 	 * 
 	 * @return whether the download was successful.
-	 * @throws IOException
 	 */
 	public boolean downloadFile() {
 		return downloadFile((e) -> e.printStackTrace());
@@ -334,7 +333,6 @@ public class LibraryDownloader {
 	 * 
 	 * @param exceptionHandler a consumer that handles exceptions if any occur.
 	 * @return whether the download was successful.
-	 * @throws IOException
 	 */
 	public boolean downloadFile(Consumer<Exception> exceptionHandler) {
 		for (URL url : urls) {
@@ -354,7 +352,7 @@ public class LibraryDownloader {
 	 * 
 	 * @param url the file to download.
 	 * @return whether the download was successful.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public boolean downloadFile(URL url) throws IOException {
 		URLConnection connection = url.openConnection();
@@ -512,7 +510,7 @@ public class LibraryDownloader {
 	 * creates a new ArrayList and adds all the given objects to it.
 	 * 
 	 * @param <T>     the type of objects and list.
-	 * @param objects
+	 * @param objects the objects to put into a list.
 	 * @return a new list containing all the given objects
 	 */
 	@SafeVarargs

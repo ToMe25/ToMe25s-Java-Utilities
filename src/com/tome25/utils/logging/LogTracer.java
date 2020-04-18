@@ -136,7 +136,7 @@ public class LogTracer {
 	 * Converts the class name with package to a simple class name without.
 	 * 
 	 * @param className the class name to convert
-	 * @return
+	 * @return the simple class name for the given class name.
 	 */
 	public static String classNameToSimpleClassName(String className) {
 		return className.contains(".") ? className.substring(className.lastIndexOf('.') + 1)
@@ -147,8 +147,8 @@ public class LogTracer {
 	 * gets a Logger that logs log levels info and below to System.out, and warning
 	 * and above to System.err, with the give custom name.
 	 * 
-	 * @param name
-	 * @return
+	 * @param name the name of the logger to get.
+	 * @return the logger for the given name.
 	 */
 	public static Logger getLogger(String name) {
 		Logger logger = Logger.getLogger(name);
@@ -171,7 +171,7 @@ public class LogTracer {
 	 * gets a Logger that logs log levels info and below to System.out, and warning
 	 * and above to System.err, with the give custom name.
 	 * 
-	 * @return
+	 * @return the global logger.
 	 */
 	public static Logger getGlobal() {
 		if (global != null) {
@@ -198,7 +198,7 @@ public class LogTracer {
 	/**
 	 * gets the System Error Logger.
 	 * 
-	 * @return
+	 * @return the system error logger.
 	 */
 	public static Logger getError() {
 		if (error != null) {
@@ -225,7 +225,7 @@ public class LogTracer {
 	/**
 	 * gets the System Output Logger.
 	 * 
-	 * @return
+	 * @return the system output logger.
 	 */
 	public static Logger getOutput() {
 		if (output != null) {

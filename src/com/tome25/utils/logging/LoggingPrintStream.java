@@ -31,7 +31,7 @@ public class LoggingPrintStream extends PrintStream {
 	/**
 	 * Creates a new LoggingPrintStream with a custom logger and log level info.
 	 * 
-	 * @param logger
+	 * @param logger the logger to print the input to.
 	 */
 	public LoggingPrintStream(Logger logger) {
 		this(logger, Level.INFO);
@@ -40,8 +40,8 @@ public class LoggingPrintStream extends PrintStream {
 	/**
 	 * Creates a new LoggingPrintStream with a custom logger and log level.
 	 * 
-	 * @param logger
-	 * @param logLevel
+	 * @param logger   logger the logger to print the input to.
+	 * @param logLevel the log level to use when printing the input to logger.
 	 */
 	public LoggingPrintStream(Logger logger, Level logLevel) {
 		super((OutputStream) System.err);
@@ -255,7 +255,8 @@ public class LoggingPrintStream extends PrintStream {
 	 * returns the StackTraceElement that contains the method writing the current
 	 * message.
 	 * 
-	 * @return
+	 * @return the StackTraceElement that contains the method writing the current
+	 *         message.
 	 */
 	private StackTraceElement getWriter() {
 		StackTraceElement[] trace = Thread.currentThread().getStackTrace();
@@ -274,11 +275,11 @@ public class LoggingPrintStream extends PrintStream {
 	}
 
 	/**
-	 * Checks if the given array contains the give string.
+	 * Checks whether the given array contains the give string.
 	 * 
 	 * @param array the array to search in.
 	 * @param str   the string to search.
-	 * @return
+	 * @return whether the give array contains the given string.
 	 */
 	private boolean arrayContains(String[] array, String str) {
 		boolean contains = false;

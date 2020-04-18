@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
+import com.tome25.utils.exception.InvalidKeyException;
+import com.tome25.utils.exception.InvalidTypeException;
+
 /**
  * The interface all the json object types implement.
  * 
@@ -21,9 +24,9 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays)
-	 * @return
+	 * @return depends on the implementation.
 	 */
-	public Object add(Object key, Object value);
+	public Object add(Object key, Object value) throws InvalidKeyException, InvalidTypeException;
 
 	/**
 	 * Adds the given value to the given key replacing the current value if it
@@ -34,9 +37,9 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays)
-	 * @return
+	 * @return the previous value associated with key.
 	 */
-	public Object put(Object key, Object value);
+	public Object put(Object key, Object value) throws InvalidTypeException;
 
 	/**
 	 * Adds the given values to the given keys replacing the current ones if
@@ -47,7 +50,7 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays).
 	 */
-	public void putAll(Map<? extends Object, ? extends Object> m);
+	public void putAll(Map<? extends Object, ? extends Object> m) throws InvalidTypeException;
 
 	/**
 	 * Adds the given value to the given key replacing the current value if it
@@ -58,9 +61,9 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays)
-	 * @return
+	 * @return the previous value associated with key.
 	 */
-	public Object set(Object key, Object value);
+	public Object set(Object key, Object value) throws InvalidTypeException;
 
 	/**
 	 * Adds the given values to the given keys replacing the current ones if
@@ -71,19 +74,19 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays).
 	 */
-	public void setAll(Map<? extends Object, ? extends Object> m);
+	public void setAll(Map<? extends Object, ? extends Object> m) throws InvalidTypeException;
 
 	/**
 	 * if key is true this removes the object to the key o from this Json, if not it
 	 * removes the value o from this Json.
 	 * 
-	 * @param o
-	 * @param key
+	 * @param o   the object to remove.
+	 * @param key whether the object is key or value.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays)
 	 */
-	public void remove(Object o, boolean key);
+	public void remove(Object o, boolean key) throws InvalidTypeException;
 
 	/**
 	 * gets the value for the given key.
@@ -94,20 +97,20 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 *                              JsonArrays)
 	 * @return the value for the given key.
 	 */
-	public Object get(Object key);
+	public Object get(Object key) throws InvalidTypeException;
 
 	/**
 	 * gets the value for the given key if its a string, or a string representation
 	 * of that value if it isn't.
 	 * 
 	 * @param key the key to look for.
+	 * @return the value for the given key if its a string, or a string
+	 *         representation of that value if it isn't.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays)
-	 * @return the value for the given key if its a string, or a string
-	 *         representation of that value if it isn't.
 	 */
-	public String getString(Object key);
+	public String getString(Object key) throws InvalidTypeException;
 
 	/**
 	 * returns this jsons Values.
@@ -129,7 +132,7 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * checks whether this Json contains the given object, either as key if the type
 	 * matches, or as value.
 	 * 
-	 * @param o
+	 * @param o the object to look for.
 	 * @return whether this Json contains the given object.
 	 */
 	public boolean contains(Object o);
@@ -137,18 +140,18 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	/**
 	 * returns true if this Json contains the given key.
 	 * 
-	 * @param key
+	 * @param key the key to look for.
+	 * @return whether this Json contains the given key.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for JsonObjects, Integer for
 	 *                              JsonArrays)
-	 * @return whether this Json contains the given key.
 	 */
-	public boolean containsKey(Object key);
+	public boolean containsKey(Object key) throws InvalidTypeException;
 
 	/**
 	 * returns true if this Json contains the given value.
 	 * 
-	 * @param value
+	 * @param value the value to look for.
 	 * @return this Json contains the given value.
 	 */
 	public boolean containsValue(Object value);
@@ -215,7 +218,7 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	/**
 	 * Indicates whether some other object is "equal to" this one.
 	 * 
-	 * @param obj
+	 * @param obj the object to compare this object to.
 	 * @return whether some other object is "equal to" this one.
 	 */
 	public boolean equals(Object obj);
@@ -228,7 +231,7 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	public boolean isEmpty();
 
 	/**
-	 * Clears this Json.
+	 * Clears this json.
 	 */
 	public void clear();
 
@@ -309,7 +312,7 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * converts the given object to a string in the way intended for jsons to match
 	 * the json specifications.
 	 * 
-	 * @param content
+	 * @param content the object to get the string representation for.
 	 * @return a string representation of the given object.
 	 */
 	public default String contentToString(Object content) {

@@ -18,8 +18,8 @@ import java.util.jar.JarOutputStream;
 /**
  * 
  * This class can add Jar Files to the classpath at runtime. You will need to
- * copy this class into your project in order to add this library to the
- * classpath at runtime.
+ * copy this class and {@link JarExtractor} and/or {@link LibraryDownloader}
+ * into your project in order to add this library to the classpath at runtime.
  * 
  * @author ToMe25
  *
@@ -229,8 +229,8 @@ public class LibraryLoader {
 	/**
 	 * The premain method needed for this Agent to work.
 	 * 
-	 * @param args
-	 * @param instrumentation
+	 * @param args            some arguments.
+	 * @param instrumentation the instrumentation instance to use.
 	 */
 	public static void premain(String args, Instrumentation instrumentation) {
 		LibraryLoader.instrumentation = instrumentation;
@@ -239,7 +239,7 @@ public class LibraryLoader {
 	/**
 	 * converts a String Array to a String. entries are separated with a space.
 	 * 
-	 * @param array
+	 * @param array the array to get the string representation of.
 	 * @return a string representation of the given string array.
 	 */
 	private static String stringArrayToString(String[] array) {
@@ -257,7 +257,7 @@ public class LibraryLoader {
 	 * Adds the given library jar to the classpath.
 	 * 
 	 * @param library the jar archive that should get added to the classpath.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public void addJarToClasspath(String library) throws IOException {
 		addJarToClasspath(new File(library));
@@ -267,7 +267,7 @@ public class LibraryLoader {
 	 * Adds the given library jar to the classpath.
 	 * 
 	 * @param library the jar archive that should get added to the classpath.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public void addJarToClasspath(File library) throws IOException {
 		addJarToClasspath(new JarFile(library));
@@ -277,7 +277,7 @@ public class LibraryLoader {
 	 * Adds the given library jar to the classpath.
 	 * 
 	 * @param library the jar archive that should get added to the classpath.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public void addJarToClasspath(JarFile library) {
 		instrumentation.appendToSystemClassLoaderSearch(library);
@@ -287,7 +287,7 @@ public class LibraryLoader {
 	 * Adds all jar archives in the given directory to the classpath.
 	 * 
 	 * @param libDir the directory containing the libraries.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public void addJarsToClasspath(String libDir) throws IOException {
 		addJarsToClasspath(new File(libDir));
@@ -297,7 +297,7 @@ public class LibraryLoader {
 	 * Adds the given library jar to the classpath.
 	 * 
 	 * @param libDir the directory containing the libraries.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public void addJarsToClasspath(File libDir) throws IOException {
 		if (!libDir.isDirectory()) {

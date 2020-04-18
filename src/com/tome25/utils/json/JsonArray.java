@@ -11,6 +11,12 @@ import java.util.Map.Entry;
 import com.tome25.utils.exception.InvalidKeyException;
 import com.tome25.utils.exception.InvalidTypeException;
 
+/**
+ * A json list/array.
+ * 
+ * @author ToMe25
+ *
+ */
 public class JsonArray implements JsonElement, List<Object> {
 
 	private static final long serialVersionUID = 5205197497094672807L;
@@ -25,7 +31,7 @@ public class JsonArray implements JsonElement, List<Object> {
 	/**
 	 * creates a new Json Array and initializes it with the given content.
 	 * 
-	 * @param content
+	 * @param content the content for the new json list/array.
 	 */
 	public JsonArray(Object... content) {
 		for (Object obj : content) {
@@ -125,11 +131,11 @@ public class JsonArray implements JsonElement, List<Object> {
 	}
 
 	/**
-	 * whether this Json contains the given object, either as key if the type
+	 * checks whether this Json contains the given object, either as key if the type
 	 * matches, or as value.
 	 * 
-	 * @param o
-	 * @return
+	 * @param o the object to look for
+	 * @return whether this Json contains the given object.
 	 */
 	@Override
 	public boolean contains(Object o) {

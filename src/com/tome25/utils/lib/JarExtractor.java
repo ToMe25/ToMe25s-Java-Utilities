@@ -13,7 +13,7 @@ import java.util.jar.JarFile;
 /**
  * 
  * This class can extract files from jar archives. You will need to copy this
- * class and <link>LibraryLoader</link> into your project in order to extract
+ * class and {@link LibraryLoader} into your project in order to extract
  * and add this library to the classpath if you packaged it into your main jar.
  * 
  * @author ToMe25
@@ -28,7 +28,7 @@ public class JarExtractor {
 	 * 
 	 * @param jarFile        the jar file to extract.
 	 * @param extractClasses whether class files should get extracted too.
-	 * @throws IOException if an I/O error has occurred
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractJar(File jarFile, boolean extractClasses) throws IOException {
 		extractJar(jarFile, extractClasses, jarFile.getParentFile());
@@ -44,7 +44,7 @@ public class JarExtractor {
 	 * @param subDir         whether files in a directory inside the jar should get
 	 *                       put into a sub directory of outputDir or directly into
 	 *                       outputDir.
-	 * @throws IOException if an I/O error has occurred
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractJar(File jarFile, boolean extractClasses, boolean subDir) throws IOException {
 		extractJar(jarFile, extractClasses, jarFile.getParentFile(), subDir);
@@ -58,7 +58,7 @@ public class JarExtractor {
 	 * @param jarFile        the jar file to extract.
 	 * @param extractClasses whether class files should get extracted too.
 	 * @param outputDir      the directory to put the extracted files in.
-	 * @throws IOException if an I/O error has occurred
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractJar(File jarFile, boolean extractClasses, File outputDir) throws IOException {
 		extractJar(jarFile, extractClasses, outputDir, true);
@@ -75,7 +75,7 @@ public class JarExtractor {
 	 * @param extractedName  a function that generates the name for the extracted
 	 *                       files after extraction. this function gets the filename
 	 *                       from inside the jar including directories.
-	 * @throws IOException if an I/O error has occurred
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractJar(File jarFile, boolean extractClasses, File outputDir,
 			Function<String, String> extractedName) throws IOException {
@@ -93,7 +93,7 @@ public class JarExtractor {
 	 * @param subDir         whether files in a directory inside the jar should get
 	 *                       put into a sub directory of outputDir or directly into
 	 *                       outputDir.
-	 * @throws IOException if an I/O error has occurred
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractJar(File jarFile, boolean extractClasses, File outputDir, boolean subDir)
 			throws IOException {
@@ -115,7 +115,7 @@ public class JarExtractor {
 	 *                       files after extraction. this function gets the filename
 	 *                       from inside the jar including directories if subDir is
 	 *                       enabled and just the files name if not.
-	 * @throws IOException if an I/O error has occurred
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractJar(File jarFile, boolean extractClasses, File outputDir, boolean subDir,
 			Function<String, String> extractedName) throws IOException {
@@ -129,7 +129,7 @@ public class JarExtractor {
 	 * 
 	 * @param jarFile the jar file to extract.
 	 * @param extract a predicate that defines what files should get extracted.
-	 * @throws IOException if an I/O error has occurred
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractJar(File jarFile, Predicate<String> extract) throws IOException {
 		extractJar(jarFile, extract, jarFile.getParentFile());
@@ -144,7 +144,7 @@ public class JarExtractor {
 	 * @param extract a predicate that defines what files should get extracted.
 	 * @param subDir  whether files in a directory inside the jar should get put
 	 *                into a sub directory of outputDir or directly into outputDir.
-	 * @throws IOException if an I/O error has occurred
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractJar(File jarFile, Predicate<String> extract, boolean subDir) throws IOException {
 		extractJar(jarFile, extract, jarFile.getParentFile(), subDir);
@@ -158,7 +158,7 @@ public class JarExtractor {
 	 * @param jarFile   the jar file to extract.
 	 * @param extract   a predicate that defines what files should get extracted.
 	 * @param outputDir the directory to put the extracted files in.
-	 * @throws IOException if an I/O error has occurred
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractJar(File jarFile, Predicate<String> extract, File outputDir) throws IOException {
 		extractJar(jarFile, extract, outputDir, true);
@@ -176,7 +176,7 @@ public class JarExtractor {
 	 * @param extractedName a function that generates the name for the extracted
 	 *                      files after extraction. this function gets the filename
 	 *                      from inside the jar including directories.
-	 * @throws IOException if an I/O error has occurred
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractJar(File jarFile, Predicate<String> extract, File outputDir,
 			Function<String, String> extractedName) throws IOException {
@@ -194,7 +194,7 @@ public class JarExtractor {
 	 * @param subDir    whether files in a directory inside the jar should get put
 	 *                  into a sub directory of outputDir or directly into
 	 *                  outputDir.
-	 * @throws IOException if an I/O error has occurred
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractJar(File jarFile, Predicate<String> extract, File outputDir, boolean subDir)
 			throws IOException {
@@ -217,7 +217,7 @@ public class JarExtractor {
 	 *                      files after extraction. this function gets the filename
 	 *                      from inside the jar including directories if subDir is
 	 *                      enabled and just the files name if not.
-	 * @throws IOException if an I/O error has occurred
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractJar(File jarFile, Predicate<String> extract, File outputDir, boolean subDir,
 			Function<String, String> extractedName) throws IOException {
@@ -279,7 +279,7 @@ public class JarExtractor {
 	 * @param jarFile   the jar file to extract the file from.
 	 * @param fileName  the name of the file to extract from the jar.
 	 * @param outputDir the directory to put the extracted files in.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractFileFromJar(File jarFile, String fileName, File outputDir) throws IOException {
 		extractFileFromJar(jarFile, fileName, outputDir, true);
@@ -293,7 +293,7 @@ public class JarExtractor {
 	 * @param fileName the name of the file to extract from the jar.
 	 * @param subDir   whether files in a directory inside the jar should get put
 	 *                 into a sub directory of outputDir or directly into outputDir.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractFileFromJar(File jarFile, String fileName, boolean subDir) throws IOException {
 		extractFileFromJar(jarFile, fileName, jarFile.getParentFile(), subDir);
@@ -306,7 +306,7 @@ public class JarExtractor {
 	 * @param jarFile       the jar file to extract the file from.
 	 * @param fileName      the name of the file to extract from the jar.
 	 * @param extractedName the name for the file after extraction.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractFileFromJar(File jarFile, String fileName, String extractedName) throws IOException {
 		extractFileFromJar(jarFile, fileName, jarFile.getParentFile(), extractedName);
@@ -322,7 +322,7 @@ public class JarExtractor {
 	 * @param subDir    whether files in a directory inside the jar should get put
 	 *                  into a sub directory of outputDir or directly into
 	 *                  outputDir.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractFileFromJar(File jarFile, String fileName, File outputDir, boolean subDir)
 			throws IOException {
@@ -337,7 +337,7 @@ public class JarExtractor {
 	 * @param fileName      the name of the file to extract from the jar.
 	 * @param outputDir     the directory to put the extracted files in.
 	 * @param extractedName the name for the file after extraction.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractFileFromJar(File jarFile, String fileName, File outputDir, String extractedName)
 			throws IOException {
@@ -355,7 +355,7 @@ public class JarExtractor {
 	 *                      put into a sub directory of outputDir or directly into
 	 *                      outputDir.
 	 * @param extractedName the name for the file after extraction.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractFileFromJar(File jarFile, String fileName, File outputDir, boolean subDir,
 			String extractedName) throws IOException {
@@ -373,7 +373,7 @@ public class JarExtractor {
 	 * the libs directory next to this jar file.
 	 * 
 	 * @param jarFile the jar file to extract the files from.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractLibsFromJar(File jarFile) throws IOException {
 		extractLibsFromJar(jarFile, new File(jarFile.getParent(), "libs"));
@@ -385,7 +385,7 @@ public class JarExtractor {
 	 * 
 	 * @param jarFile   the jar file to extract the files from.
 	 * @param outputDir the directory to put the extracted files in.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractLibsFromJar(File jarFile, File outputDir) throws IOException {
 		extractLibsFromJar(jarFile, outputDir, true);
@@ -400,7 +400,7 @@ public class JarExtractor {
 	 * @param subDir    whether files in a directory inside the jar should get put
 	 *                  into a sub directory of outputDir or directly into
 	 *                  outputDir.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractLibsFromJar(File jarFile, File outputDir, boolean subDir) throws IOException {
 		extractJar(jarFile, (s) -> s.endsWith(".jar"), new File(jarFile.getParent(), "libs"));

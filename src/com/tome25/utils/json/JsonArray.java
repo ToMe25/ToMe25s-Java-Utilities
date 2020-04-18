@@ -12,7 +12,8 @@ import com.tome25.utils.exception.InvalidKeyException;
 import com.tome25.utils.exception.InvalidTypeException;
 
 /**
- * A json list/array.
+ * A standard json list/array, that can store stuff, and be converted to a
+ * string.
  * 
  * @author ToMe25
  *

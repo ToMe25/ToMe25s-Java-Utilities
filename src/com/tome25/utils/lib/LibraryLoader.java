@@ -277,7 +277,6 @@ public class LibraryLoader {
 	 * Adds the given library jar to the classpath.
 	 * 
 	 * @param library the jar archive that should get added to the classpath.
-	 * @throws IOException if an I/O error has occurred.
 	 */
 	public void addJarToClasspath(JarFile library) {
 		instrumentation.appendToSystemClassLoaderSearch(library);

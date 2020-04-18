@@ -27,7 +27,7 @@ public class OutputHandler extends StreamHandler {
 	/**
 	 * creates a new OutputHandler with the given log level.
 	 * 
-	 * @param outthe    OutputStream to write the messages to.
+	 * @param out       the OutputStream to write the messages to.
 	 * @param level     the minimal log level this handler should handle.
 	 * @param formatter the formatter to use for all messages.
 	 */

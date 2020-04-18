@@ -3,7 +3,7 @@ package com.tome25.utils.json;
 import java.text.ParseException;
 
 /**
- * A parser to convert strings to json objects.
+ * A parser to convert strings to {@link JsonObject}'s and {@link JsonArray}'s.
  * 
  * @author ToMe25
  *

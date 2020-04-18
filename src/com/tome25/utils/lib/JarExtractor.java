@@ -13,8 +13,8 @@ import java.util.jar.JarFile;
 /**
  * 
  * This class can extract files from jar archives. You will need to copy this
- * class and {@link LibraryLoader} into your project in order to extract
- * and add this library to the classpath if you packaged it into your main jar.
+ * class and {@link LibraryLoader} into your project in order to extract and add
+ * this library to the classpath if you packaged it into your main jar.
  * 
  * @author ToMe25
  * 
@@ -266,7 +266,7 @@ public class JarExtractor {
 	 * 
 	 * @param jarFile  the jar file to extract the file from.
 	 * @param fileName the name of the file to extract from the jar.
-	 * @throws IOException
+	 * @throws IOException if an I/O error has occurred.
 	 */
 	public static void extractFileFromJar(File jarFile, String fileName) throws IOException {
 		extractFileFromJar(jarFile, fileName, jarFile.getParentFile());

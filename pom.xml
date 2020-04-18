@@ -30,7 +30,7 @@
     <repository>
       <id>github</id>
       <name>GitHub ToMe25 Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/ToMe25/ToMe25s-Java-Utilites</url>
+      <url>https://maven.pkg.github.com/ToMe25/ToMe25s-Java-Utilities</url>
     </repository>
   </distributionManagement>
 

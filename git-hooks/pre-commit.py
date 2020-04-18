@@ -74,10 +74,10 @@ def main():
     os.system("git add " + javadocdir)
     
     # package the javadoc files into a jar file
-    os.system("jar -cf ToMe25s-Java-Utilites-javadoc.jar -C javadoc . LICENSE")
+    os.system("jar -cf ToMe25s-Java-Utilities-javadoc.jar -C javadoc . LICENSE")
     
     # add the javadoc archive to the commit
-    os.system("git add ToMe25s-Java-Utilites-javadoc.jar")
+    os.system("git add ToMe25s-Java-Utilities-javadoc.jar")
     
     # remove the tmp directory.
     shutil.rmtree(tmpdir)

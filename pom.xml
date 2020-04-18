@@ -117,8 +117,7 @@
         <configuration>
           <alias>Utilities</alias>
           <keystore>${project.basedir}/.Keys.jks</keystore>
-          <storepass>NewPasswordMuchSecure</storepass>
-          <keypass>NewPasswordMuchSecure</keypass>
+          <storepass>{yLCRNLbzztMHnIMe/sPDb5pLudos7Uh95w9OG89x6Chinc+aUqPoMJmm6xsBtYmm}</storepass>
         </configuration>
       </plugin>
       <plugin>

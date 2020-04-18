@@ -37,6 +37,10 @@ def main():
     os.system("git add ToMe25s-Java-Utilities-javadoc.jar")
     os.system("git add ToMe25s-Java-Utilities-sources.jar")
 
+    # add the buildNumber.properties file to the commit
+    # also it seems like adding this directly after the maven command is unreliable
+    os.system("git add buildNumber.properties")
+
     # remove old javadocs
     javadocdir = os.path.join(os.getcwd(), "javadoc")
     if(os.path.exists(javadocdir)):

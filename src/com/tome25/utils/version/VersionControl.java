@@ -51,7 +51,7 @@ public class VersionControl {
 			}
 		}
 		try {
-			return archieve.getManifest().getMainAttributes().getValue("ToMe25s-Java-Utilities-Version");
+			return archieve.getManifest().getMainAttributes().getValue("Implementation-Version");
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "1.0";

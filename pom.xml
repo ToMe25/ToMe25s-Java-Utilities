@@ -26,6 +26,14 @@
     </dependency>
   </dependencies>
 
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub ToMe25 Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/ToMe25/ToMe25s-Java-Utilites</url>
+    </repository>
+  </distributionManagement>
+
   <build>
     <sourceDirectory>${project.basedir}/src</sourceDirectory>
     <testSourceDirectory>${project.basedir}/test-src</testSourceDirectory>
@@ -84,6 +92,7 @@
             <manifestEntries>
               <Specification-Version>${project.version}.${buildNumber}</Specification-Version>
               <Implementation-Version>${project.version}.${buildNumber}</Implementation-Version>
+              <Built-By>ToMe25</Built-By>
             </manifestEntries>
           </archive>
         </configuration>

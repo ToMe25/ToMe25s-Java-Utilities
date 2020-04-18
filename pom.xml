@@ -6,7 +6,7 @@
 
   <groupId>com.tome25.ToMe25s-Java-Utilities</groupId>
   <artifactId>ToMe25s-Java-Utilities</artifactId>
-  <version>1</version>
+  <version>1.${buildNumber}</version>
 
   <name>ToMe25s-Java-Utilities</name>
   <url>https://www.github.com/ToMe25/ToMe25s-Java-Utilities</url>
@@ -90,8 +90,8 @@
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
             </manifest>
             <manifestEntries>
-              <Specification-Version>${project.version}.${buildNumber}</Specification-Version>
-              <Implementation-Version>${project.version}.${buildNumber}</Implementation-Version>
+              <Specification-Version>${project.version}</Specification-Version>
+              <Implementation-Version>${project.version}</Implementation-Version>
               <Built-By>ToMe25</Built-By>
             </manifestEntries>
           </archive>
@@ -148,6 +148,6 @@
         </executions>
       </plugin>
     </plugins>
-    <finalName>${project.artifactId}-${project.version}.${buildNumber}</finalName>
+    <finalName>${project.artifactId}-${project.version}</finalName>
   </build>
 </project>

@@ -18,8 +18,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":41,"i4":9,"i5":9};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -111,7 +111,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">VersionControl</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
-<div class="block">A version control utility.</div>
+<div class="block">A utility class to check for this libraries version.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>ToMe25</dd>
@@ -169,25 +169,48 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getVersion--">getVersion</a></span>()</code>
-<div class="block">gets this libraries version attribute(only applicable if the
- ToMe25s-Java-Utilities-Version attribute in the MANIFEST.MF exists), if this
- is still in a Jar, if not this will return 0;</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getBuild--">getBuild</a></span>()</code>
+<div class="block">gets the build part of this libraries version number.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getMajor--">getMajor</a></span>()</code>
+<div class="block">gets the major part of this libraries version number.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getMinor--">getMinor</a></span>()</code>
+<div class="block">gets the minor part of this libraries version number.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getVersion--">getVersion</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>static int[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getVersionArray--">getVersionArray</a></span>()</code>
+<div class="block">gets this libraries version number split into its components, if this is
+ still in a Jar, if not this will return [1, 0]. the used format is [MAJOR,
+ MINOR, BUILD].</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getVersionString--">getVersionString</a></span>()</code>
-<div class="block">gets this libraries version attribute(only applicable if the
- ToMe25s-Java-Utilities-Version attribute in the MANIFEST.MF exists), if this
- is still in a Jar, if not this will return 1.0;</div>
+<div class="block">gets this libraries version number as a string, if this is still in a Jar, if
+ not this will return 1.0. the used format is "MAJOR.MINOR.BUILD".</div>
 </td>
 </tr>
 </table>
@@ -261,14 +284,72 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>getVersion</h4>
-<pre>public static&nbsp;int&nbsp;getVersion()</pre>
-<div class="block">gets this libraries version attribute(only applicable if the
- ToMe25s-Java-Utilities-Version attribute in the MANIFEST.MF exists), if this
- is still in a Jar, if not this will return 0;</div>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public static&nbsp;int&nbsp;getVersion()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block">gets this libraries build number, if this is still in a Jar, if not this will
+ return 0;</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the version number without 1.(e.g. if the version is 1.19 this will
-         return 19)</dd>
+<dd>the build number.</dd>
+</dl>
+</li>
+</ul>
+<a name="getMajor--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMajor</h4>
+<pre>public static&nbsp;int&nbsp;getMajor()</pre>
+<div class="block">gets the major part of this libraries version number.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the major version.</dd>
+</dl>
+</li>
+</ul>
+<a name="getMinor--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMinor</h4>
+<pre>public static&nbsp;int&nbsp;getMinor()</pre>
+<div class="block">gets the minor part of this libraries version number.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minor version.</dd>
+</dl>
+</li>
+</ul>
+<a name="getBuild--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBuild</h4>
+<pre>public static&nbsp;int&nbsp;getBuild()</pre>
+<div class="block">gets the build part of this libraries version number.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the build number.</dd>
+</dl>
+</li>
+</ul>
+<a name="getVersionArray--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getVersionArray</h4>
+<pre>public static&nbsp;int[]&nbsp;getVersionArray()</pre>
+<div class="block">gets this libraries version number split into its components, if this is
+ still in a Jar, if not this will return [1, 0]. the used format is [MAJOR,
+ MINOR, BUILD].</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the version number.</dd>
 </dl>
 </li>
 </ul>
@@ -279,12 +360,11 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>getVersionString</h4>
 <pre>public static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getVersionString()</pre>
-<div class="block">gets this libraries version attribute(only applicable if the
- ToMe25s-Java-Utilities-Version attribute in the MANIFEST.MF exists), if this
- is still in a Jar, if not this will return 1.0;</div>
+<div class="block">gets this libraries version number as a string, if this is still in a Jar, if
+ not this will return 1.0. the used format is "MAJOR.MINOR.BUILD".</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the version number</dd>
+<dd>the version number.</dd>
 </dl>
 </li>
 </ul>

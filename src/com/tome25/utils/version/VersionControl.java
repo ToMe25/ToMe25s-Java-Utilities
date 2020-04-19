@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.jar.JarFile;
 
 /**
- * A version control utility.
+ * A utility class to check for this libraries version.
  * 
  * @author ToMe25
  *
@@ -16,24 +16,81 @@ public class VersionControl {
 	private static JarFile archieve;
 
 	/**
-	 * gets this libraries version attribute(only applicable if the
-	 * ToMe25s-Java-Utilities-Version attribute in the MANIFEST.MF exists), if this
-	 * is still in a Jar, if not this will return 0;
+	 * gets this libraries build number, if this is still in a Jar, if not this will
+	 * return 0;
 	 * 
-	 * @return the version number without 1.(e.g. if the version is 1.19 this will
-	 *         return 19)
+	 * @return the build number.
 	 */
+	@Deprecated
 	public static int getVersion() {
-		String version = getVersionString();
-		return Integer.parseInt(version.substring(version.lastIndexOf('.') + 1));
+		return getBuild();
 	}
 
 	/**
-	 * gets this libraries version attribute(only applicable if the
-	 * ToMe25s-Java-Utilities-Version attribute in the MANIFEST.MF exists), if this
-	 * is still in a Jar, if not this will return 1.0;
+	 * gets the major part of this libraries version number.
 	 * 
-	 * @return the version number
+	 * @return the major version.
+	 */
+	public static int getMajor() {
+		int[] version = getVersionArray();
+		if (version.length > 0) {
+			return version[0];
+		} else {
+			return 1;
+		}
+	}
+
+	/**
+	 * gets the minor part of this libraries version number.
+	 * 
+	 * @return the minor version.
+	 */
+	public static int getMinor() {
+		int[] version = getVersionArray();
+		if (version.length > 1) {
+			return version[1];
+		} else {
+			return 0;
+		}
+	}
+
+	/**
+	 * gets the build part of this libraries version number.
+	 * 
+	 * @return the build number.
+	 */
+	public static int getBuild() {
+		int[] version = getVersionArray();
+		if (version.length > 2) {
+			return version[2];
+		} else {
+			return 0;
+		}
+	}
+
+	/**
+	 * gets this libraries version number split into its components, if this is
+	 * still in a Jar, if not this will return [1, 0]. the used format is [MAJOR,
+	 * MINOR, BUILD].
+	 * 
+	 * @return the version number.
+	 */
+	public static int[] getVersionArray() {
+		String[] split = getVersionString().split(".");
+		int[] version = new int[split.length];
+		int i = 0;
+		for (String part : split) {
+			version[i] = Integer.parseInt(part);
+			i++;
+		}
+		return version;
+	}
+
+	/**
+	 * gets this libraries version number as a string, if this is still in a Jar, if
+	 * not this will return 1.0. the used format is "MAJOR.MINOR.BUILD".
+	 * 
+	 * @return the version number.
 	 */
 	public static String getVersionString() {
 		if (file == null) {

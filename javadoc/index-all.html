@@ -576,6 +576,10 @@
 <dd>
 <div class="block">if init got used, this is the way to get its output buffer.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getBuild--">getBuild()</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>
+<div class="block">gets the build part of this libraries version number.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryDownloader.html#getBytesDownloaded--">getBytesDownloaded()</a></span> - Method in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryDownloader.html" title="class in com.tome25.utils.lib">LibraryDownloader</a></dt>
 <dd>
 <div class="block">returns the amount of bytes that are already downloaded.</div>
@@ -626,10 +630,18 @@
 <dd>
 <div class="block">returns the log level this LoggingPrintStream writes to.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getMajor--">getMajor()</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>
+<div class="block">gets the major part of this libraries version number.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidKeyException.html#getMessage--">getMessage()</a></span> - Method in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception">InvalidKeyException</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidTypeException.html#getMessage--">getMessage()</a></span> - Method in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getMinor--">getMinor()</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>
+<div class="block">gets the minor part of this libraries version number.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#getOutput--">getOutput()</a></span> - Static method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
 <dd>
 <div class="block">gets the System Output Logger.</div>
@@ -673,15 +685,18 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getVersion--">getVersion()</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
 <dd>
-<div class="block">gets this libraries version attribute(only applicable if the
- ToMe25s-Java-Utilities-Version attribute in the MANIFEST.MF exists), if this
- is still in a Jar, if not this will return 0;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getVersionArray--">getVersionArray()</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>
+<div class="block">gets this libraries version number split into its components, if this is
+ still in a Jar, if not this will return [1, 0]. the used format is [MAJOR,
+ MINOR, BUILD].</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getVersionString--">getVersionString()</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
 <dd>
-<div class="block">gets this libraries version attribute(only applicable if the
- ToMe25s-Java-Utilities-Version attribute in the MANIFEST.MF exists), if this
- is still in a Jar, if not this will return 1.0;</div>
+<div class="block">gets this libraries version number as a string, if this is still in a Jar, if
+ not this will return 1.0. the used format is "MAJOR.MINOR.BUILD".</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LoggingPrintStream.html#getWriter--">getWriter()</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LoggingPrintStream.html" title="class in com.tome25.utils.logging">LoggingPrintStream</a></dt>
 <dd>
@@ -1502,7 +1517,7 @@
 <dd>&nbsp;</dd>
 <dt><a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version"><span class="typeNameLink">VersionControl</span></a> - Class in <a href="com/tome25/utils/version/package-summary.html">com.tome25.utils.version</a></dt>
 <dd>
-<div class="block">A version control utility.</div>
+<div class="block">A utility class to check for this libraries version.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#VersionControl--">VersionControl()</a></span> - Constructor for class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
 <dd>&nbsp;</dd>

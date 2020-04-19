@@ -10,15 +10,8 @@ def main():
         os.chdir(os.path.dirname(os.path.dirname(os.getcwd())))
 
     # update the version number.
-    for line in fileinput.input("buildNumber.properties", inplace=True):
-        #line = line[:-1]
-        if(line.startswith("buildNumber=")):
-            index = line.index('=') + 1
-            line = line[:index] + str(int(line[index:]) + 1)
-        print(line)
-
-    # add the buildNumber.properties file to the commit
-    os.system("git add buildNumber.properties")
+    os.system("mvn -B release:update-versions")
+    os.system("mvn -B versions:set")
 
     # execute maven build
     os.system("mvn -B package")
@@ -37,6 +30,9 @@ def main():
                 elif(file.endswith(".jar")):
                     shutil.copyfile(os.path.join(targetdir, file), os.path.join(os.getcwd(), "ToMe25s-Java-Utilities.jar"))
                     os.remove(os.path.join(targetdir, file))
+
+    # add pom.xml to the commit
+    os.system("git add pom.xml")
 
     # add the archives to the commit
     os.system("git add ToMe25s-Java-Utilities.jar")

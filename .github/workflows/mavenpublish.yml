@@ -29,3 +29,20 @@ jobs:
       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
+
+    - name: Move artifacts into repository
+      run: |
+        mv target/ToMe25s-Java-Utilities-*-sources.jar ToMe25s-Java-Utilities-sources.jar
+        mv target/ToMe25s-Java-Utilities-*-javadoc.jar ToMe25s-Java-Utilities-javadoc.jar
+        mv target/ToMe25s-Java-Utilities-*.jar ToMe25s-Java-Utilities.jar
+
+    - name: Commit files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Add changes" -a
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}

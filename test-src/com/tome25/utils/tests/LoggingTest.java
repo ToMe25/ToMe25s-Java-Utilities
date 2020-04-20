@@ -9,7 +9,6 @@ import java.io.PrintStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import java.util.logging.StreamHandler;
 import java.util.regex.Pattern;
 
 import org.junit.Test;
@@ -61,7 +60,7 @@ public class LoggingTest {
 		// test the LoggingPrintStream
 		ByteArrayOutputStream baOut = new ByteArrayOutputStream();
 		SimpleFormatter formatter = new SimpleFormatter();
-		StreamHandler handler = new StreamHandler(baOut, formatter);
+		OutputHandler handler = new OutputHandler(baOut, formatter);
 		// this OutputHandler basically acts like a ConsoleHandler for System.out
 		OutputHandler consoleHandler = new OutputHandler(System.out, formatter);
 		Logger logger = Logger.getLogger("test");
@@ -72,7 +71,6 @@ public class LoggingTest {
 		Pattern outputPattern = Pattern.compile(
 				".*com\\.tome25\\.utils\\.tests\\.LoggingTest\\sloggingPrintStreamTest\\nINFORMATION:\\s.*\\n");
 		lOut.println("Test String\"");
-		handler.flush();
 		assertTrue(outputPattern.matcher(baOut.toString()).matches());
 		// close the LoggingPrintStream
 		lOut.close();
@@ -90,10 +88,8 @@ public class LoggingTest {
 		Pattern outputPattern = Pattern
 				.compile(".*com\\.tome25\\.utils\\.tests\\.LoggingTest\\soutputHandlerTest\\n.*:\\s.*\\n");
 		logger.info("INFO");
-		severeHandler.flush();
 		assertTrue(baOut.toByteArray().length == 0);
 		logger.severe("SEVERE");
-		severeHandler.flush();
 		assertTrue(outputPattern.matcher(baOut.toString()).matches());
 		// test the level handling of the OutputHandler wit a set level of ALL
 		baOut = new ByteArrayOutputStream();
@@ -102,7 +98,6 @@ public class LoggingTest {
 		logger.removeHandler(severeHandler);
 		logger.addHandler(allHandler);
 		logger.finest("INFO");
-		allHandler.flush();
 		assertTrue(outputPattern.matcher(baOut.toString()).matches());
 	}
 
@@ -112,14 +107,14 @@ public class LoggingTest {
 		ByteArrayOutputStream baOut1 = new ByteArrayOutputStream();
 		ByteArrayOutputStream baOut2 = new ByteArrayOutputStream();
 		SimpleFormatter formatter = new SimpleFormatter();
-		StreamHandler streamHandler1 = new StreamHandler(baOut1, formatter);
-		StreamHandler streamHandler2 = new StreamHandler(baOut2, formatter);
+		OutputHandler OutputHandler1 = new OutputHandler(baOut1, formatter);
+		OutputHandler OutputHandler2 = new OutputHandler(baOut2, formatter);
 		Logger logger1 = Logger.getLogger("output");
 		Logger logger2 = Logger.getLogger("error");
 		logger1.setUseParentHandlers(false);
 		logger2.setUseParentHandlers(false);
-		logger1.addHandler(streamHandler1);
-		logger2.addHandler(streamHandler2);
+		logger1.addHandler(OutputHandler1);
+		logger2.addHandler(OutputHandler2);
 		SplittingHandler handler = new SplittingHandler(logger1, logger2);
 		Logger logger = Logger.getLogger("test");
 		logger.setUseParentHandlers(false);
@@ -127,13 +122,9 @@ public class LoggingTest {
 		Pattern outputPattern = Pattern
 				.compile(".*com\\.tome25\\.utils\\.tests\\.LoggingTest\\ssplittingHandlerTest\\n.*:\\s.*\\n");
 		logger.info("INFO");
-		streamHandler1.flush();
-		streamHandler2.flush();
 		assertTrue(outputPattern.matcher(baOut1.toString()).matches());
 		assertTrue(baOut2.toByteArray().length == 0);
 		logger.severe("SEVERE");
-		streamHandler1.flush();
-		streamHandler2.flush();
 		assertTrue(outputPattern.matcher(baOut2.toString()).matches());
 	}
 
@@ -142,23 +133,23 @@ public class LoggingTest {
 		// test the TracingFormatter
 		ByteArrayOutputStream baOut = new ByteArrayOutputStream();
 		TracingFormatter formatter = new TracingFormatter();
-		StreamHandler handler = new StreamHandler(baOut, formatter);
+		OutputHandler handler = new OutputHandler(baOut, formatter);
 		Logger logger = Logger.getLogger("test");
 		logger.setUseParentHandlers(false);
 		logger.addHandler(handler);
 		Pattern outputPattern = Pattern.compile(
 				"\\[[^\\[]*\\]\\s\\[main\\]\\s\\[test/[^\\[]*\\]\\s\\[LoggingTest\\]\\s\\[tracingFormatterTest\\]:\\s.*\\n");
 		logger.warning("WARNING");
-		handler.flush();
 		assertTrue(outputPattern.matcher(baOut.toString()).matches());
 	}
 
 	@Test
 	public void logTracerTest() {
 		// test LogTracer.traceOutput
+		PrintStream systemOut = System.out;
 		ByteArrayOutputStream baOut = new ByteArrayOutputStream();
 		SimpleFormatter formatter = new SimpleFormatter();
-		StreamHandler handler = new StreamHandler(baOut, formatter);
+		OutputHandler handler = new OutputHandler(baOut, formatter);
 		Logger logger = Logger.getLogger("test");
 		logger.setUseParentHandlers(false);
 		logger.addHandler(handler);
@@ -167,9 +158,9 @@ public class LoggingTest {
 		Pattern outputPattern = Pattern.compile(
 				".*sun\\.nio\\.cs\\.StreamEncoder\\swriteBytes\\n.*\\[[^\\[]*\\]\\s\\[main\\]\\s\\[SYSOUT/[^\\[]*\\]\\s\\[LoggingTest\\]\\s\\[logTracerTest\\]:\\s.*\\n");
 		System.out.println("test");
-		handler.flush();
-		System.err.println(baOut.toString());
 		assertTrue(outputPattern.matcher(baOut.toString()).matches());
+		// reset System.out in case to not cause problems for later tests
+		System.setOut(systemOut);
 	}
 
 	private void println(Object toPrint, PrintStream... printStreams) {

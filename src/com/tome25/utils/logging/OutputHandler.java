@@ -7,7 +7,8 @@ import java.util.logging.LogRecord;
 import java.util.logging.StreamHandler;
 
 /**
- * A StreamHandler that can have a custom log level from the start.
+ * A StreamHandler that can have a custom log level from the start. Also it
+ * automatically flushes like the ConsoleHandler.
  * 
  * @author ToMe25
  *

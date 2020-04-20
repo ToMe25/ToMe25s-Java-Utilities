@@ -250,7 +250,13 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 				return false;
 			}
 			for (String key : content.keySet()) {
-				if (!json.contains(key) || !get(key).equals(json.get(key))) {
+				if (!json.contains(key)) {
+					return false;
+				} else if (get(key) == null ^ json.get(key) == null) {
+					return false;
+				} else if (get(key) == json.get(key)) {
+					continue;
+				} else if (!get(key).equals(json.get(key))) {
 					return false;
 				}
 			}

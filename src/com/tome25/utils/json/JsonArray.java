@@ -181,7 +181,7 @@ public class JsonArray implements JsonElement, List<Object> {
 	}
 
 	@Override
-	public Object clone() {
+	public JsonArray clone() {
 		return clone(true);
 	}
 
@@ -247,6 +247,17 @@ public class JsonArray implements JsonElement, List<Object> {
 	@Override
 	public boolean addAll(int index, Collection<? extends Object> c) {
 		return content.addAll(index, c);
+	}
+
+	/**
+	 * adds all the given objects to this array.
+	 * 
+	 * @param obj the objects to add.
+	 */
+	public void addAll(Object... obj) {
+		for (Object o : obj) {
+			add(o);
+		}
 	}
 
 	@Override

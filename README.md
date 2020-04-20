@@ -71,3 +71,5 @@ copying all the output to a log file: <details><summary>click here to see</summa
 Note that you can't import any of this libraries classes in your main class if you do this, or else java will crash on startup,
 also the LibraryLoader will probably restart your software once to add the Premain-Class Attribute to the MANIFEST.MF and add a vm argument to the start command.
 </details>
+
+To build this library yourself just run `mvn package` in the root directory of this repo.

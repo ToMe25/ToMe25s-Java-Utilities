@@ -203,7 +203,7 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 * @return a copy of this Json Object.
 	 * @throws CloneNotSupportedException if this element can't be cloned.
 	 */
-	public Object clone() throws CloneNotSupportedException;
+	public JsonElement clone() throws CloneNotSupportedException;
 
 	/**
 	 * Creates and returns a copy of this Json Object.

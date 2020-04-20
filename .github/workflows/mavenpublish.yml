@@ -40,6 +40,8 @@ jobs:
         mv target/ToMe25s-Java-Utilities-*-sources.jar ToMe25s-Java-Utilities-sources.jar
         mv target/ToMe25s-Java-Utilities-*-javadoc.jar ToMe25s-Java-Utilities-javadoc.jar
         mv target/ToMe25s-Java-Utilities-*.jar ToMe25s-Java-Utilities.jar
+        rm -r javadocs
+        mv target/apidocs/* javadocs/
 
     - name: Commit files
       run: |

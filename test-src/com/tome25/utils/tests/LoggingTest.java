@@ -62,8 +62,11 @@ public class LoggingTest {
 		ByteArrayOutputStream baOut = new ByteArrayOutputStream();
 		SimpleFormatter formatter = new SimpleFormatter();
 		StreamHandler handler = new StreamHandler(baOut, formatter);
+		// this OutputHandler basically acts like a ConsoleHandler for System.out
+		OutputHandler consoleHandler = new OutputHandler(System.out, formatter);
 		Logger logger = Logger.getLogger("test");
 		logger.setUseParentHandlers(false);
+		logger.addHandler(consoleHandler);
 		logger.addHandler(handler);
 		LoggingPrintStream lOut = new LoggingPrintStream(logger);
 		Pattern outputPattern = Pattern.compile(

@@ -69,7 +69,7 @@ public class LoggingTest {
 		logger.addHandler(handler);
 		LoggingPrintStream lOut = new LoggingPrintStream(logger);
 		Pattern outputPattern = Pattern.compile(
-				".*com\\.tome25\\.utils\\.tests\\.LoggingTest\\sloggingPrintStreamTest\\nINFORMATION:\\s.*\\n");
+				".*com\\.tome25\\.utils\\.tests\\.LoggingTest\\sloggingPrintStreamTest\\n.*:\\s.*\\n");
 		lOut.println("Test String\"");
 		assertTrue(outputPattern.matcher(baOut.toString()).matches());
 		// close the LoggingPrintStream

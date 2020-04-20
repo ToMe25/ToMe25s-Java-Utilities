@@ -1,4 +1,4 @@
-package com.tome25.utils.json;
+package com.tome25.utils.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -7,6 +7,11 @@ import static org.junit.Assert.assertTrue;
 import java.text.ParseException;
 
 import org.junit.Test;
+
+import com.tome25.utils.json.JsonArray;
+import com.tome25.utils.json.JsonElement;
+import com.tome25.utils.json.JsonObject;
+import com.tome25.utils.json.JsonParser;
 
 public class JsonTest {
 

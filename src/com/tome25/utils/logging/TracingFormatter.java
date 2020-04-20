@@ -78,6 +78,9 @@ public class TracingFormatter extends Formatter {
 		if (traceOutputtingMethod) {
 			buf.append(String.format("[%s] ", record.getSourceMethodName()));
 		}
+		if (buf.length() > 0) {
+			buf.replace(buf.length() - 1, buf.length(), ": ");
+		}
 		buf.append(formatMessage(record));
 		Throwable throwable = record.getThrown();
 		if (throwable != null) {

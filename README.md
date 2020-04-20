@@ -3,7 +3,7 @@ A collection of common Utilities i use in a lot of Projects, moved into a librar
 
 ![Maven Package](https://github.com/ToMe25/ToMe25s-Java-Utilities/workflows/Maven%20Package/badge.svg)
 
-The ToMe25s-Java-Utilities.jar file should always be the latest build, as it gets build on commit by the git hooks.
+The ToMe25s-Java-Utilities.jar file should always be the latest build, as it gets build on commit by github actions.
 
 ### This Library Currently contains:
  * A Json Object
@@ -18,8 +18,6 @@ The ToMe25s-Java-Utilities.jar file should always be the latest build, as it get
  * A simple Jar Extraction tool
  * A simple File/Library downloader
  * A tool to add Libraries to the classpath
-
-To add the git-hooks to your active git hooks just execute git-hooks/post-merge.py(`python git-hooks/post-merge.py`).(they are not tested on Windows, but according to the internet they should work.)
 
 ### How to add this library to your Jar file:
 If you want it to get downloaded on startup: <details><summary>click here to see</summary>

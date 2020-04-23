@@ -264,6 +264,12 @@ public class JsonParser {
 				}
 				break;
 
+			case '\n':
+				if (buildString || buildJson) {
+					buffer += c;
+				}
+				break;
+
 			default:
 				if (buffer == null) {
 					buffer = "" + c;

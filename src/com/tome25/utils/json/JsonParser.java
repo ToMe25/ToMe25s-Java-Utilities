@@ -146,7 +146,7 @@ public class JsonParser {
 						((JsonArray) json).add(buildOther(buffer, offset));
 					} else {
 						if (key == null) {
-							throw new ParseException("Key Missing!", offset);
+							throw new ParseException(String.format("Missing key for value \"%s\"!", buffer), offset);
 						}
 						json.add(key, buildOther(buffer, offset));
 						key = null;
@@ -170,7 +170,8 @@ public class JsonParser {
 							((JsonArray) json).add(subjson);
 						} else {
 							if (key == null) {
-								throw new ParseException("Key Missing!", offset);
+								throw new ParseException(String.format("Missing key for value \"%s\"!", buffer),
+										offset);
 							}
 							json.add(key, subjson);
 							key = null;
@@ -187,7 +188,7 @@ public class JsonParser {
 						((JsonArray) json).add(buildOther(buffer, offset));
 					} else {
 						if (key == null) {
-							throw new ParseException("Key Missing!", offset);
+							throw new ParseException(String.format("Missing key for value \"%s\"!", buffer), offset);
 						}
 						json.add(key, buildOther(buffer, offset));
 						key = null;
@@ -225,7 +226,7 @@ public class JsonParser {
 					if (layer <= 0) {
 						JsonElement subjson = parseString(buffer);
 						if (key == null) {
-							throw new ParseException("Key Missing!", offset);
+							throw new ParseException(String.format("Missing key for value \"%s\"!", buffer), offset);
 						}
 						if (json instanceof JsonArray) {
 							((JsonArray) json).add(subjson);
@@ -245,7 +246,7 @@ public class JsonParser {
 						((JsonArray) json).add(buildOther(buffer, offset));
 					} else {
 						if (key == null) {
-							throw new ParseException("Key Missing!", offset);
+							throw new ParseException(String.format("Missing key for value \"%s\"!", buffer), offset);
 						}
 						json.add(key, buildOther(buffer, offset));
 						key = null;

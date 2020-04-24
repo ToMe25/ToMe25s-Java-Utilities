@@ -179,6 +179,13 @@ public class JsonTest {
 		deduplicatedJson = json2.changes(json1);
 		reconstructedJson = deduplicatedJson.reconstruct(json1);
 		assertEquals(json2, reconstructedJson);
+		// test deduplication of jsons if an entire subjson got removed
+		((JsonObject) json1.get("jsonTest")).put("stringTest", "Another Test String");
+		json2 = json1.clone();
+		((JsonObject) json2).remove("jsonTest");
+		deduplicatedJson = json2.changes(json1);
+		reconstructedJson = deduplicatedJson.reconstruct(json1);
+		assertEquals(json2, reconstructedJson);
 	}
 
 }

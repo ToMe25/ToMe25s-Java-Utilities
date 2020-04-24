@@ -391,7 +391,7 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 		for (Object s : last.getKeySet()) {
 			if (!content.containsKey(s)) {
 				try {
-					if (last.get(s) instanceof JsonElement && ((JsonElement) content.get(s)).supportsClone()) {
+					if (last.get(s) instanceof JsonElement && ((JsonElement) last.get(s)).supportsClone()) {
 						reconstructed.add(s, ((JsonElement) last.get(s)).clone(true));
 					} else {
 						reconstructed.add(s, last.get(s));

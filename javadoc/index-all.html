@@ -76,9 +76,9 @@
 <dl>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#add-java.lang.Object-java.lang.Object-">add(Object, Object)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#add-java.lang.Object-">add(Object)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#add-int-java.lang.Object-">add(int, Object)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#add-java.lang.Object-">add(Object)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#add-java.lang.Object-java.lang.Object-">add(Object, Object)</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
 <dd>
@@ -199,6 +199,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#cfgDir">cfgDir</a></span> - Variable in class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#changes-com.tome25.utils.json.JsonElement-">changes(JsonElement)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#changes-com.tome25.utils.json.JsonElement-boolean-">changes(JsonElement, boolean)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-">changes(JsonElement)</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
@@ -266,6 +268,20 @@
 <dt><a href="com/tome25/utils/logging/package-summary.html">com.tome25.utils.logging</a> - package com.tome25.utils.logging</dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/tome25/utils/version/package-summary.html">com.tome25.utils.version</a> - package com.tome25.utils.version</dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#compare-java.lang.Object-java.lang.Object-">compare(Object, Object)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
+<dd>
+<div class="block">compares the two given objects if they implement Comparable, and are
+ compatible types.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#compare-java.lang.Object-java.lang.Object-">compare(Object, Object)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
+<dd>
+<div class="block">compares the two given objects if they implement Comparable, and are
+ compatible types.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#compareTo-com.tome25.utils.json.JsonElement-">compareTo(JsonElement)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#compareTo-com.tome25.utils.json.JsonElement-">compareTo(JsonElement)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config"><span class="typeNameLink">Config</span></a> - Class in <a href="com/tome25/utils/config/package-summary.html">com.tome25.utils.config</a></dt>
 <dd>
@@ -1032,9 +1048,21 @@
 </a>
 <h2 class="title">P</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonParser.html#parseByteArray-byte:A-">parseByteArray(byte[])</a></span> - Static method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonParser.html" title="class in com.tome25.utils.json">JsonParser</a></dt>
+<dd>
+<div class="block">This method parses the given byte array to a JsonObject, or JsonArray.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonParser.html#parseByteArray-byte:A-java.lang.String-">parseByteArray(byte[], String)</a></span> - Static method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonParser.html" title="class in com.tome25.utils.json">JsonParser</a></dt>
+<dd>
+<div class="block">This method parses the given byte array to a JsonObject, or JsonArray.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonParser.html#parseCharArray-char:A-">parseCharArray(char[])</a></span> - Static method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonParser.html" title="class in com.tome25.utils.json">JsonParser</a></dt>
+<dd>
+<div class="block">This method parses the given character array to a JsonObject, or JsonArray.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonParser.html#parseString-java.lang.String-">parseString(String)</a></span> - Static method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonParser.html" title="class in com.tome25.utils.json">JsonParser</a></dt>
 <dd>
-<div class="block">This method parses the given String to a JsonObject.</div>
+<div class="block">This method parses the given string to a JsonObject, or JsonArray.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonParser.html#parseStringFast-java.lang.String-">parseStringFast(String)</a></span> - Static method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonParser.html" title="class in com.tome25.utils.json">JsonParser</a></dt>
 <dd>
@@ -1217,11 +1245,17 @@
 <dd>
 <div class="block">reads the values from the given config file.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#readExternal-java.io.ObjectInput-">readExternal(ObjectInput)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#readExternal-java.io.ObjectInput-">readExternal(ObjectInput)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryDownloader.html#readUrlStorage-java.io.File-java.lang.String-">readUrlStorage(File, String)</a></span> - Static method in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryDownloader.html" title="class in com.tome25.utils.lib">LibraryDownloader</a></dt>
 <dd>
 <div class="block">reads all URLs from the given file, as long as they are separated by a ',' or
  a ';'.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#reconstruct-com.tome25.utils.json.JsonElement-">reconstruct(JsonElement)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#reconstruct-com.tome25.utils.json.JsonElement-boolean-">reconstruct(JsonElement, boolean)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-">reconstruct(JsonElement)</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
@@ -1336,8 +1370,6 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#subList-int-int-">subList(int, int)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#supportsChanges--">supportsChanges()</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#supportsChanges--">supportsChanges()</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
 <dd>
 <div class="block">Checks whether this element supports getting the changes against a given
@@ -1369,6 +1401,10 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#toArray-T:A-">toArray(T[])</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#toByteArray--">toByteArray()</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
+<dd>
+<div class="block">Returns a string representation of this element as byte array.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#toByteArray-java.lang.String-">toByteArray(String)</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
 <dd>
 <div class="block">Returns a string representation of this element as byte array.</div>
 </dd>
@@ -1557,6 +1593,10 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#write-byte:A-">write(byte[])</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#write-byte:A-int-int-">write(byte[], int, int)</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#writeExternal-java.io.ObjectOutput-">writeExternal(ObjectOutput)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#writeExternal-java.io.ObjectOutput-">writeExternal(ObjectOutput)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/ConfigValue.html#writeToConfig-java.io.FileOutputStream-">writeToConfig(FileOutputStream)</a></span> - Method in class com.tome25.utils.config.<a href="com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config">ConfigValue</a></dt>
 <dd>

@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":18,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":18,"i10":6,"i11":6,"i12":6,"i13":18,"i14":6,"i15":6,"i16":6,"i17":18,"i18":6,"i19":6,"i20":6,"i21":6,"i22":6,"i23":18,"i24":18,"i25":18,"i26":18,"i27":6,"i28":6};
+var methods = {"i0":6,"i1":18,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":18,"i10":6,"i11":6,"i12":6,"i13":18,"i14":6,"i15":6,"i16":6,"i17":18,"i18":6,"i19":6,"i20":6,"i21":6,"i22":6,"i23":18,"i24":18,"i25":18,"i26":18,"i27":18,"i28":6,"i29":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -101,7 +101,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></dd>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Externalizable.html?is-external=true" title="class or interface in java.io">Externalizable</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
@@ -110,7 +110,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">JsonElement</span>
-extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></pre>
+extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Externalizable.html?is-external=true" title="class or interface in java.io">Externalizable</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&gt;</pre>
 <div class="block">The interface all the json object types implement.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
@@ -310,18 +310,24 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 </td>
 </tr>
 <tr id="i26" class="altColor">
+<td class="colFirst"><code>default byte[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#toByteArray-java.lang.String-">toByteArray</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;charset)</code>
+<div class="block">Returns a string representation of this element as byte array.</div>
+</td>
+</tr>
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>default char[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#toCharArray--">toCharArray</a></span>()</code>
 <div class="block">Returns a string representation of this element as character array.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#toString--">toString</a></span>()</code>
 <div class="block">Returns a string representation of this element.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#values--">values</a></span>()</code>
 <div class="block">returns this jsons Values.</div>
@@ -334,6 +340,20 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 </a>
 <h3>Methods inherited from interface&nbsp;java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
 <code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#iterator--" title="class or interface in java.lang">iterator</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true#spliterator--" title="class or interface in java.lang">spliterator</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.java.io.Externalizable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;java.io.<a href="https://docs.oracle.com/javase/8/docs/api/java/io/Externalizable.html?is-external=true" title="class or interface in java.io">Externalizable</a></h3>
+<code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Externalizable.html?is-external=true#readExternal-java.io.ObjectInput-" title="class or interface in java.io">readExternal</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Externalizable.html?is-external=true#writeExternal-java.io.ObjectOutput-" title="class or interface in java.io">writeExternal</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.java.lang.Comparable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a></h3>
+<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true#compareTo-T-" title="class or interface in java.lang">compareTo</a></code></li>
 </ul>
 </li>
 </ul>
@@ -651,6 +671,26 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a String representation of this element as byte array.</dd>
+</dl>
+</li>
+</ul>
+<a name="toByteArray-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toByteArray</h4>
+<pre>default&nbsp;byte[]&nbsp;toByteArray(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;charset)
+                    throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/UnsupportedEncodingException.html?is-external=true" title="class or interface in java.io">UnsupportedEncodingException</a></pre>
+<div class="block">Returns a string representation of this element as byte array.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>charset</code> - the name of the charset to use to convert the string to a byte
+                array.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a String representation of this element as byte array.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/UnsupportedEncodingException.html?is-external=true" title="class or interface in java.io">UnsupportedEncodingException</a></code> - If the named charset is not supported.</dd>
 </dl>
 </li>
 </ul>

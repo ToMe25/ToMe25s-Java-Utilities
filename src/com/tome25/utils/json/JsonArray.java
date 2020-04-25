@@ -173,7 +173,24 @@ public class JsonArray implements JsonElement, List<Object> {
 
 	@Override
 	public int size() {
-		return content.size();
+		return size(false);
+	}
+
+	@Override
+	public int size(boolean recursive) {
+		if (recursive) {
+			int[] size = new int[] { 0 };
+			content.forEach((value) -> {
+				if (value instanceof JsonElement) {
+					size[0] += ((JsonElement) value).size(recursive);
+				} else {
+					size[0]++;
+				}
+			});
+			return size[0];
+		} else {
+			return content.size();
+		}
 	}
 
 	@Override

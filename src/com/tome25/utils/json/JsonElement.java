@@ -158,11 +158,22 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	public boolean containsValue(Object value);
 
 	/**
-	 * gets the size of this object.
+	 * gets the size of this object. Not recursive.
 	 * 
 	 * @return the size of this object.
 	 */
-	public int size();
+	public default int size() {
+		return size(false);
+	}
+
+	/**
+	 * gets the size of this object. if recursive is enabled this counts all sub
+	 * json elements as their size instead of one.
+	 * 
+	 * @param recursive whether to recursively count the size.
+	 * @return the size of this object.
+	 */
+	public int size(boolean recursive);
 
 	/**
 	 * Returns a string representation of this element.

@@ -204,7 +204,24 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 
 	@Override
 	public int size() {
-		return content.size();
+		return size(false);
+	}
+
+	@Override
+	public int size(boolean recursive) {
+		if (recursive) {
+			int[] size = new int[] { 0 };
+			content.keySet().forEach((key) -> {
+				if (content.get(key) instanceof JsonElement) {
+					size[0] += ((JsonElement) content.get(key)).size(recursive);
+				} else {
+					size[0]++;
+				}
+			});
+			return size[0];
+		} else {
+			return content.size();
+		}
 	}
 
 	@Override

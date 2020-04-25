@@ -379,7 +379,7 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 
 	@Override
 	public JsonObject reconstruct(JsonElement from, boolean recursive) {
-		if (!(from instanceof JsonObject)) {
+		if (!(from instanceof JsonObject) || equals(from)) {
 			if (supportsClone()) {
 				return clone(true);
 			} else {
@@ -402,6 +402,13 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 							} else {
 								reconstructed.add(key, content.get(key));
 							}
+						} else {
+							reconstructed.add(key, content.get(key));
+						}
+					} else if (content.get(key) != null) {
+						if (content.get(key) instanceof JsonElement
+								&& ((JsonElement) content.get(key)).supportsClone()) {
+							reconstructed.add(key, ((JsonElement) content.get(key)).clone(true));
 						} else {
 							reconstructed.add(key, content.get(key));
 						}

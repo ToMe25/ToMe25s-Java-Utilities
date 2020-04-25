@@ -390,7 +390,7 @@ public class JsonArray implements JsonElement, List<Object> {
 
 	@Override
 	public JsonArray reconstruct(JsonElement from, boolean recursive) {
-		if (!(from instanceof JsonArray)) {
+		if (!(from instanceof JsonArray) || equals(from)) {
 			if (supportsClone()) {
 				return clone(true);
 			} else {

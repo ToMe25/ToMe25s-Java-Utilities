@@ -175,15 +175,10 @@ public class JsonParser {
 				break;
 
 			case '\\':
-				if (escaped) {
+				if (escaped || buildJson) {
 					buffer += c;
-					escaped = false;
-				} else if (buildJson) {
-					buffer += c;
-					escaped = true;
-				} else {
-					escaped = true;
 				}
+				escaped = !escaped;
 				break;
 
 			case '"':

@@ -1,6 +1,7 @@
 package com.tome25.utils.json;
 
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import com.tome25.utils.exception.InvalidTypeException;
  * @author ToMe25
  *
  */
-public interface JsonElement extends Iterable<Object>, Serializable {
+public interface JsonElement extends Iterable<Object>, Externalizable, Comparable<JsonElement> {
 
 	/**
 	 * Adds the Value with the given key if there are no Object with this Key.
@@ -177,6 +178,18 @@ public interface JsonElement extends Iterable<Object>, Serializable {
 	 */
 	public default byte[] toByteArray() {
 		return toString().getBytes();
+	}
+
+	/**
+	 * Returns a string representation of this element as byte array.
+	 * 
+	 * @param charset the name of the charset to use to convert the string to a byte
+	 *                array.
+	 * @return a String representation of this element as byte array.
+	 * @throws UnsupportedEncodingException If the named charset is not supported.
+	 */
+	public default byte[] toByteArray(String charset) throws UnsupportedEncodingException {
+		return toString().getBytes(charset);
 	}
 
 	/**

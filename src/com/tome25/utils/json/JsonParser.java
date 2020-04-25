@@ -1,5 +1,8 @@
 package com.tome25.utils.json;
 
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 import java.text.ParseException;
 
 /**
@@ -50,7 +53,7 @@ public class JsonParser {
 	}
 
 	/**
-	 * This method parses the given String to a JsonObject.
+	 * This method parses the given string to a JsonObject, or JsonArray.
 	 * 
 	 * Supported object types inside the Json: Integer, Long, Double, Boolean,
 	 * String, Json Objects and Json Arrays/Lists.
@@ -63,11 +66,88 @@ public class JsonParser {
 	 * adding it to this library there were multiple characters that could make it
 	 * crash or break out of String values, tho i know of none with this version.
 	 * 
-	 * @param s the String to parse
-	 * @return the json Object parsed from String s.
+	 * @param str the string to parse.
+	 * @return the json object parsed from the given string.
 	 * @throws ParseException if something goes wrong while parsing.
 	 */
-	public static JsonElement parseString(String s) throws ParseException {
+	public static JsonElement parseString(String str) throws ParseException {
+		return parseCharArray(str.toCharArray());
+	}
+
+	/**
+	 * This method parses the given byte array to a JsonObject, or JsonArray.
+	 * 
+	 * Supported object types inside the Json: Integer, Long, Double, Boolean,
+	 * String, Json Objects and Json Arrays/Lists.
+	 * 
+	 * This parser will handle numbers as double if they contain a dot, as long if
+	 * they are too big(or too small) to be a integer, and as an integer in any
+	 * other case.
+	 * 
+	 * WARNING: This method may not be safe, over the time i worked on it before
+	 * adding it to this library there were multiple characters that could make it
+	 * crash or break out of String values, tho i know of none with this version.
+	 * 
+	 * @param byteArr the byte array to parse.
+	 * @return the json object parsed from the given string.
+	 * @throws ParseException if something goes wrong while parsing.
+	 */
+	public static JsonElement parseByteArray(byte[] byteArr) throws ParseException {
+		return parseByteArray(byteArr, null);
+	}
+
+	/**
+	 * This method parses the given byte array to a JsonObject, or JsonArray.
+	 * 
+	 * Supported object types inside the Json: Integer, Long, Double, Boolean,
+	 * String, Json Objects and Json Arrays/Lists.
+	 * 
+	 * This parser will handle numbers as double if they contain a dot, as long if
+	 * they are too big(or too small) to be a integer, and as an integer in any
+	 * other case.
+	 * 
+	 * WARNING: This method may not be safe, over the time i worked on it before
+	 * adding it to this library there were multiple characters that could make it
+	 * crash or break out of String values, tho i know of none with this version.
+	 * 
+	 * @param byteArr the byte array to parse.
+	 * @param charset the name of the charset to use for the conversion to a
+	 *                character array. set to null to use the default charset.
+	 * @return the json object parsed from the given string.
+	 * @throws ParseException if something goes wrong while parsing.
+	 */
+	public static JsonElement parseByteArray(byte[] byteArr, String charset) throws ParseException {
+		Charset cSet;
+		if (charset == null || charset.isEmpty()) {
+			cSet = Charset.defaultCharset();
+		} else {
+			cSet = Charset.forName(charset);
+		}
+		CharBuffer cBuf = cSet.decode(ByteBuffer.wrap(byteArr));
+		char[] chars = new char[cBuf.length()];
+		cBuf.get(chars);
+		return parseCharArray(chars);
+	}
+
+	/**
+	 * This method parses the given character array to a JsonObject, or JsonArray.
+	 * 
+	 * Supported object types inside the Json: Integer, Long, Double, Boolean,
+	 * String, Json Objects and Json Arrays/Lists.
+	 * 
+	 * This parser will handle numbers as double if they contain a dot, as long if
+	 * they are too big(or too small) to be a integer, and as an integer in any
+	 * other case.
+	 * 
+	 * WARNING: This method may not be safe, over the time i worked on it before
+	 * adding it to this library there were multiple characters that could make it
+	 * crash or break out of String values, tho i know of none with this version.
+	 * 
+	 * @param charArr the character array to parse.
+	 * @return the json object parsed from the given char array.
+	 * @throws ParseException if something goes wrong while parsing.
+	 */
+	public static JsonElement parseCharArray(char[] charArr) throws ParseException {
 		JsonElement json = null;
 		boolean buildString = false;
 		boolean buildJson = false;
@@ -77,7 +157,7 @@ public class JsonParser {
 		String buffer = null;
 		short layer = 0;
 		short offset = 0;
-		for (char c : s.toCharArray()) {
+		for (char c : charArr) {
 			switch (c) {
 			case '{':
 				if (json == null) {

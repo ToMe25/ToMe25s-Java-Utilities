@@ -2,12 +2,21 @@ package com.tome25.utils.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 
 import org.junit.Test;
 
+import com.tome25.utils.exception.InvalidKeyException;
+import com.tome25.utils.exception.InvalidTypeException;
 import com.tome25.utils.json.JsonArray;
 import com.tome25.utils.json.JsonElement;
 import com.tome25.utils.json.JsonObject;
@@ -40,7 +49,7 @@ public class JsonTest {
 	}
 
 	@Test
-	public void parsingTest() throws ParseException, CloneNotSupportedException {
+	public void parsingTest() throws ParseException, CloneNotSupportedException, UnsupportedEncodingException {
 		// test whether the basic most things work
 		String jsonString = "{\"testString\":\"Just a simple Test\",\"testInt\":51223,\"testJson\":{\"simple\":\"json\"}}";
 		JsonElement simpleJson = new JsonObject("simple", "json");
@@ -106,6 +115,22 @@ public class JsonTest {
 		((JsonArray) jsonArray).add(json);
 		jsonArrayString = jsonArray.toString();
 		parsedJsonArray = JsonParser.parseString(jsonArrayString);
+		assertEquals(jsonArray, parsedJsonArray);
+		// test char array parsing
+		char[] jsonCharArray = jsonString.toCharArray();
+		parsedJson = JsonParser.parseCharArray(jsonCharArray);
+		assertEquals(json, parsedJson);
+		// test char array parsing for json arrays
+		char[] jsonArrayCharArray = jsonArrayString.toCharArray();
+		parsedJsonArray = JsonParser.parseCharArray(jsonArrayCharArray);
+		assertEquals(jsonArray, parsedJsonArray);
+		// test byte array parsing
+		byte[] jsonByteArray = jsonString.getBytes("UTF-8");
+		parsedJson = JsonParser.parseByteArray(jsonByteArray, "UTF-8");
+		assertEquals(json, parsedJson);
+		// test json array byte array parsing
+		byte[] jsonArrayByteArray = jsonArrayString.getBytes("UTF-8");
+		parsedJsonArray = JsonParser.parseByteArray(jsonArrayByteArray, "UTF-8");
 		assertEquals(jsonArray, parsedJsonArray);
 	}
 
@@ -186,6 +211,77 @@ public class JsonTest {
 		deduplicatedJson = json2.changes(json1);
 		reconstructedJson = deduplicatedJson.reconstruct(json1);
 		assertEquals(json2, reconstructedJson);
+		// test basic deduplication of json arrays
+		JsonElement jsonArray1 = new JsonArray(json1.values());
+		JsonElement jsonArray2 = jsonArray1.clone();
+		((JsonArray) jsonArray2).remove(3);
+		((JsonArray) jsonArray2).add(1, "test");
+		JsonElement deduplicatedJsonArray = jsonArray2.changes(jsonArray1);
+		assertNotEquals(jsonArray2, deduplicatedJsonArray);
+		JsonElement reconstructedJsonArray = deduplicatedJsonArray.reconstruct(jsonArray1);
+		assertEquals(jsonArray2, reconstructedJsonArray);
+		// test deduplication of json arrays with a changed subjson
+		jsonArray1.add(0, "test");
+		jsonArray2 = jsonArray1.clone();
+		((JsonObject) jsonArray2.get(1)).set("longTest", 123);
+		deduplicatedJsonArray = jsonArray2.changes(jsonArray1);
+		reconstructedJsonArray = deduplicatedJsonArray.reconstruct(jsonArray1);
+		assertEquals(jsonArray2, reconstructedJsonArray);
+	}
+
+	@Test
+	public void serializationTest() throws IOException, InvalidKeyException, InvalidTypeException,
+			CloneNotSupportedException, ClassNotFoundException {
+		// test basic serialization and deserialization
+		PipedOutputStream pOut = new PipedOutputStream();
+		PipedInputStream pIn = new PipedInputStream(pOut);
+		ObjectOutputStream oOut = new ObjectOutputStream(pOut);
+		ObjectInputStream oIn = new ObjectInputStream(pIn);
+		JsonElement json = new JsonObject("stringTest", "Test String &2$?");
+		json.add("longTest", Integer.MAX_VALUE * 2l);
+		json.add("jsonTest", json.clone());
+		json.remove("longTest", true);
+		oOut.writeObject(json.clone());// clone the json because otherwise the caching will prevent it from getting
+										// written multiple times.
+		Object deserialzedJson = oIn.readObject();
+		assertEquals(json, deserialzedJson);
+		// test some more string stuff
+		json.add("backslashTest", "Test\\");
+		json.add("newlineTest", "Newline\nTest");
+		oOut.writeObject(json.clone());// clone the json because otherwise the caching will prevent it from getting
+										// written multiple times.
+		deserialzedJson = oIn.readObject();
+		assertEquals(json, deserialzedJson);
+		// test json array serialization
+		JsonElement jsonArray = new JsonArray(json.values());
+		((JsonArray) jsonArray).addAll(123, 456, 789);
+		oOut.writeObject(jsonArray.clone());// clone the json because otherwise the caching will prevent it from getting
+											// written multiple times.
+		Object deserializedJsonArray = oIn.readObject();
+		assertEquals(jsonArray, deserializedJsonArray);
+		// close oIn
+		oIn.close();
+	}
+
+	@Test
+	public void compareTest() throws CloneNotSupportedException {
+		// test json object comparison
+		JsonElement json1 = new JsonObject("testString", "Some Random String!");
+		json1.add("testInt", 321456);
+		json1.add("testJson", ((JsonObject) json1).clone());
+		JsonElement json2 = ((JsonObject) json1).clone();
+		json2.put("testInt", 2);
+		assertNotEquals(0, json1.compareTo(json2));
+		assertEquals(json1.compareTo(json2), -json2.compareTo(json1));
+		// test comparing json arrays
+		JsonElement jsonArray1 = new JsonArray("testString", json1, 321234, "TesT StrinG");
+		JsonElement jsonArray2 = jsonArray1.clone();
+		((JsonArray) jsonArray2).add("test");
+		assertNotEquals(0, jsonArray1.compareTo(jsonArray2));
+		assertEquals(jsonArray1.compareTo(jsonArray2), -jsonArray2.compareTo(jsonArray1));
+		// test cross comparison
+		assertNotEquals(0, json1.compareTo(jsonArray2));
+		assertEquals(json1.compareTo(jsonArray2), -jsonArray2.compareTo(json1));
 	}
 
 }

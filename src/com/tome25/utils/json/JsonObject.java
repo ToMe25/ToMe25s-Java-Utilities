@@ -1,9 +1,14 @@
 package com.tome25.utils.json;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -82,13 +87,13 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 
 	@Override
 	public void putAll(Map<? extends Object, ? extends Object> m) {
-		for (Entry<? extends Object, ? extends Object> entry : m.entrySet()) {
-			if (entry.getKey() instanceof String) {
-				content.put((String) entry.getKey(), entry.getValue());
+		m.keySet().forEach((key) -> {
+			if (key instanceof String) {
+				content.put((String) key, m.get(key));
 			} else {
-				throw new InvalidTypeException("String", entry.getKey().getClass().getSimpleName());
+				throw new InvalidTypeException("String", key.getClass().getSimpleName());
 			}
-		}
+		});
 	}
 
 	@Override
@@ -227,18 +232,18 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	@Override
 	public JsonObject clone(boolean recursive) {
 		JsonObject clone = new JsonObject();
-		for (String s : content.keySet()) {
+		content.keySet().forEach((key) -> {
 			try {
-				if (recursive && content.get(s) instanceof JsonElement
-						&& ((JsonElement) content.get(s)).supportsClone()) {
-					clone.add(s, ((JsonElement) content.get(s)).clone(recursive));
+				if (recursive && content.get(key) instanceof JsonElement
+						&& ((JsonElement) content.get(key)).supportsClone()) {
+					clone.add(key, ((JsonElement) content.get(key)).clone(recursive));
 				} else {
-					clone.add(s, content.get(s));
+					clone.add(key, content.get(key));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+		});
 		return clone;
 	}
 
@@ -300,108 +305,221 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	}
 
 	@Override
-	public JsonObject changes(JsonElement from) throws UnsupportedOperationException {
+	public JsonObject changes(JsonElement from) {
 		return changes(from, true);
 	}
 
 	@Override
 	public JsonObject changes(JsonElement from, boolean recursive) {
-		JsonObject last;
-		if (from instanceof JsonObject) {
-			last = (JsonObject) from;
-		} else {
-			return clone(true);
+		if (!(from instanceof JsonObject)) {
+			if (supportsClone()) {
+				return clone(true);
+			} else {
+				return this;
+			}
 		}
+		JsonObject last = (JsonObject) from;
 		JsonObject changes = new JsonObject();
-		for (String s : content.keySet()) {
+		content.keySet().forEach((key) -> {
 			try {
-				if (last.containsKey(s)) {
-					if (content.get(s) != null && !content.get(s).equals(last.get(s))) {
-						if (content.get(s) instanceof JsonElement && last.get(s) instanceof JsonElement) {
-							if (recursive && ((JsonElement) content.get(s)).supportsChanges()
-									&& ((JsonElement) last.get(s)).supportsChanges()) {
-								changes.add(s, ((JsonElement) content.get(s)).changes((JsonElement) last.get(s)));
-							} else if (((JsonElement) content.get(s)).supportsClone()) {
-								changes.add(s, ((JsonElement) content.get(s)).clone(true));
+				if (last.containsKey(key)) {
+					if (content.get(key) != null && !content.get(key).equals(last.get(key))) {
+						if (content.get(key) instanceof JsonElement && last.get(key) instanceof JsonElement) {
+							if (recursive && ((JsonElement) content.get(key)).supportsChanges()
+									&& ((JsonElement) last.get(key)).supportsChanges()) {
+								changes.add(key, ((JsonElement) content.get(key)).changes((JsonElement) last.get(key)));
+							} else if (((JsonElement) content.get(key)).supportsClone()) {
+								changes.add(key, ((JsonElement) content.get(key)).clone(true));
 							} else {
-								changes.add(s, content.get(s));
+								changes.add(key, content.get(key));
 							}
 						} else {
-							changes.add(s, content.get(s));
+							changes.add(key, content.get(key));
 						}
 					}
-				} else if (content.get(s) instanceof JsonElement && ((JsonElement) content.get(s)).supportsClone()) {
-					changes.add(s, ((JsonElement) content.get(s)).clone(true));
+				} else if (content.get(key) instanceof JsonElement
+						&& ((JsonElement) content.get(key)).supportsClone()) {
+					changes.add(key, ((JsonElement) content.get(key)).clone(true));
 				} else {
-					changes.add(s, content.get(s));
+					changes.add(key, content.get(key));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-		for (Object s : last.keySet()) {
-			if (!content.containsKey(s)) {
-				changes.add(s, null);
+		});
+		last.keySet().forEach((key) -> {
+			if (!content.containsKey(key)) {
+				changes.add(key, null);
 			}
-		}
+		});
 		return changes;
 	}
 
 	@Override
-	public JsonObject reconstruct(JsonElement from) throws UnsupportedOperationException {
+	public JsonObject reconstruct(JsonElement from) {
 		return reconstruct(from, true);
 	}
 
 	@Override
 	public JsonObject reconstruct(JsonElement from, boolean recursive) {
-		JsonObject last;
-		if (from instanceof JsonObject) {
-			last = (JsonObject) from;
-		} else {
-			return clone(true);
+		if (!(from instanceof JsonObject)) {
+			if (supportsClone()) {
+				return clone(true);
+			} else {
+				return this;
+			}
 		}
+		JsonObject last = (JsonObject) from;
 		JsonObject reconstructed = new JsonObject();
-		for (String s : content.keySet()) {
+		content.keySet().forEach((key) -> {
 			try {
-				if (last.containsKey(s)) {
-					if (content.get(s) != null && !content.get(s).equals(last.get(s))) {
-						if (content.get(s) instanceof JsonElement && last.get(s) instanceof JsonElement) {
-							if (recursive && ((JsonElement) content.get(s)).supportsChanges()
-									&& ((JsonElement) last.get(s)).supportsChanges()) {
-								reconstructed.add(s,
-										((JsonElement) content.get(s)).reconstruct((JsonElement) last.get(s)));
-							} else if (((JsonElement) content.get(s)).supportsClone()) {
-								reconstructed.add(s, ((JsonElement) content.get(s)).clone(true));
+				if (last.containsKey(key)) {
+					if (content.get(key) != null && !content.get(key).equals(last.get(key))) {
+						if (content.get(key) instanceof JsonElement && last.get(key) instanceof JsonElement) {
+							if (recursive && ((JsonElement) content.get(key)).supportsChanges()
+									&& ((JsonElement) last.get(key)).supportsChanges()) {
+								reconstructed.add(key,
+										((JsonElement) content.get(key)).reconstruct((JsonElement) last.get(key)));
+							} else if (((JsonElement) content.get(key)).supportsClone()) {
+								reconstructed.add(key, ((JsonElement) content.get(key)).clone(true));
 							} else {
-								reconstructed.add(s, content.get(s));
+								reconstructed.add(key, content.get(key));
 							}
 						} else {
-							reconstructed.add(s, content.get(s));
+							reconstructed.add(key, content.get(key));
 						}
 					}
-				} else if (content.get(s) instanceof JsonElement && ((JsonElement) content.get(s)).supportsClone()) {
-					reconstructed.add(s, ((JsonElement) content.get(s)).clone(true));
+				} else if (content.get(key) instanceof JsonElement
+						&& ((JsonElement) content.get(key)).supportsClone()) {
+					reconstructed.add(key, ((JsonElement) content.get(key)).clone(true));
 				} else {
-					reconstructed.add(s, content.get(s));
+					reconstructed.add(key, content.get(key));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-		for (Object s : last.getKeySet()) {
-			if (!content.containsKey(s)) {
+		});
+		last.keySet().forEach((key) -> {
+			if (!content.containsKey(key)) {
 				try {
-					if (last.get(s) instanceof JsonElement && ((JsonElement) last.get(s)).supportsClone()) {
-						reconstructed.add(s, ((JsonElement) last.get(s)).clone(true));
+					if (last.get(key) instanceof JsonElement && ((JsonElement) last.get(key)).supportsClone()) {
+						reconstructed.add(key, ((JsonElement) last.get(key)).clone(true));
 					} else {
-						reconstructed.add(s, last.get(s));
+						reconstructed.add(key, last.get(key));
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		}
+		});
 		return reconstructed;
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		int entries = in.readInt();
+		while (entries > 0) {
+			String key = in.readUTF();
+			content.put(key, in.readObject());
+			entries--;
+		}
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeInt(content.size());
+		for (String key : content.keySet()) {
+			out.writeUTF(key);
+			out.writeObject(content.get(key));
+		}
+	}
+
+	@Override
+	public int compareTo(JsonElement o) {
+		if (this.equals(o)) {
+			return 0;
+		}
+		int[] difference = new int[] { 0 };
+		List<Object> diffs1 = new ArrayList<Object>();
+		List<Object> diffs2 = new ArrayList<Object>();
+		if (o instanceof JsonObject) {
+			content.keySet().forEach((key) -> {
+				if (o.containsKey(key)) {
+					difference[0] += compare(content.get(key), o.get(key));
+				} else {
+					diffs1.add(content.get(key));
+				}
+			});
+			((JsonObject) o).keySet().forEach((key) -> {
+				if (!content.containsKey(key)) {
+					diffs2.add(o.get(key));
+				}
+			});
+		} else {
+			content.values().forEach((value) -> {
+				if (!o.containsValue(value)) {
+					diffs1.add(value);
+				}
+			});
+			o.values().forEach((value) -> {
+				if (!content.values().contains(value)) {
+					diffs2.add(value);
+				}
+			});
+		}
+		int i = 0;
+		while (i < diffs1.size() || i < diffs2.size()) {
+			if (i < diffs1.size() && i < diffs2.size()) {
+				difference[0] += compare(diffs1.get(i), diffs2.get(i));
+			} else if (i < diffs1.size()) {
+				difference[0]++;
+			} else {
+				difference[0]--;
+			}
+			i++;
+		}
+		if (difference[0] == 0) {
+			difference[0] = 1;
+		}
+		return difference[0];
+	}
+
+	/**
+	 * compares the two given objects if they implement Comparable, and are
+	 * compatible types. can only return 1, 0 or -1. returns 0 if the objects can't
+	 * be compared.
+	 * 
+	 * @param obj1 the first object to compare.
+	 * @param obj2 the second object to compare.
+	 * @return the comparison of the two objects.
+	 */
+	private int compare(Object obj1, Object obj2) {
+		if (obj1 instanceof Comparable<?> && obj2 instanceof Comparable<?>) {
+			Class<?> class1 = obj1.getClass();
+			Class<?> class2 = obj2.getClass();
+			if (class1.isAssignableFrom(class2)) {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				int diff = ((Comparable) obj1).compareTo((Comparable) obj2);
+				if (diff > 0) {
+					return 1;
+				} else if (diff < 0) {
+					return -1;
+				} else {
+					return 0;
+				}
+			} else if (class2.isAssignableFrom(class1)) {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				int diff = ((Comparable) obj2).compareTo((Comparable) obj1);
+				if (diff > 0) {
+					return -1;
+				} else if (diff < 0) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		}
+		return 0;
 	}
 
 }

@@ -1,14 +1,15 @@
 package com.tome25.utils.json;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import com.tome25.utils.exception.InvalidKeyException;
 import com.tome25.utils.exception.InvalidTypeException;
 
 /**
@@ -46,8 +47,17 @@ public class JsonArray implements JsonElement, List<Object> {
 
 	@Override
 	public Object add(Object key, Object value) {
-		throw new InvalidKeyException(
-				"Json Arrays can't store key values pairs, please use add(value) or put(index, value) instead.");
+		if (key instanceof Integer) {
+			content.add((int) key, value);
+			return null;
+		} else {
+			throw new InvalidTypeException("Integer", key.getClass().getSimpleName());
+		}
+	}
+
+	@Override
+	public void add(int index, Object element) {
+		content.add(index, element);
 	}
 
 	@Override
@@ -66,13 +76,13 @@ public class JsonArray implements JsonElement, List<Object> {
 
 	@Override
 	public void putAll(Map<? extends Object, ? extends Object> m) {
-		for (Entry<? extends Object, ? extends Object> entry : m.entrySet()) {
-			if (entry.getKey() instanceof Integer) {
-				content.set((Integer) entry.getKey(), entry.getValue());
+		m.keySet().forEach((key) -> {
+			if (key instanceof Integer) {
+				content.set((Integer) key, m.get(key));
 			} else {
-				throw new InvalidTypeException("Integer", entry.getKey().getClass().getSimpleName());
+				throw new InvalidTypeException("Integer", key.getClass().getSimpleName());
 			}
-		}
+		});
 	}
 
 	@Override
@@ -188,17 +198,17 @@ public class JsonArray implements JsonElement, List<Object> {
 	@Override
 	public JsonArray clone(boolean recursive) {
 		JsonArray clone = new JsonArray();
-		for (Object obj : content) {
+		content.forEach((value) -> {
 			try {
-				if (recursive && obj instanceof JsonElement && ((JsonElement) obj).supportsClone()) {
-					clone.add(((JsonElement) obj).clone(recursive));
+				if (recursive && value instanceof JsonElement && ((JsonElement) value).supportsClone()) {
+					clone.add(((JsonElement) value).clone(recursive));
 				} else {
-					clone.add(obj);
+					clone.add(value);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+		});
 		return clone;
 	}
 
@@ -232,11 +242,6 @@ public class JsonArray implements JsonElement, List<Object> {
 	@Override
 	public Iterator<Object> iterator() {
 		return content.iterator();
-	}
-
-	@Override
-	public void add(int index, Object element) {
-		content.add(index, element);
 	}
 
 	@Override
@@ -316,20 +321,177 @@ public class JsonArray implements JsonElement, List<Object> {
 	}
 
 	@Override
-	public boolean supportsChanges() {
-		return false;
+	public JsonArray changes(JsonElement from) {
+		return changes(from, true);
 	}
 
 	@Override
-	public JsonElement changes(JsonElement from, boolean recursive) throws UnsupportedOperationException {
-		throw new UnsupportedOperationException(
-				"Json Arrays don't support this operation as it relies on the key-value-pair structure.");
+	public JsonArray changes(JsonElement from, boolean recursive) {
+		if (!(from instanceof JsonArray)) {
+			if (supportsClone()) {
+				return clone(true);
+			} else {
+				return this;
+			}
+		}
+		JsonArray last = (JsonArray) from;
+		JsonArray changes = new JsonArray();
+		int[] index = new int[] { 0 };
+		content.forEach((value) -> {
+			try {
+				if (!last.contains(value)) {
+					if (value instanceof JsonElement && ((JsonElement) value).supportsClone()) {
+						JsonObject val = new JsonObject("val", (JsonElement) value).clone(true);
+						val.put("after", index[0]);
+						changes.add(val);
+					} else {
+						JsonObject val = new JsonObject("val", value);
+						val.put("after", index[0]);
+						changes.add(val);
+					}
+				} else {
+					index[0]++;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+		index[0] = 0;
+		last.forEach((value) -> {
+			if (!content.contains(value)) {
+				changes.add(new JsonObject("rm", index[0]));
+			}
+			index[0]++;
+		});
+		return changes;
 	}
 
 	@Override
-	public JsonElement reconstruct(JsonElement from, boolean recursive) {
-		throw new UnsupportedOperationException(
-				"Json Arrays don't support this operation as it relies on the key-value-pair structure.");
+	public JsonArray reconstruct(JsonElement from) {
+		return reconstruct(from, true);
+	}
+
+	@Override
+	public JsonArray reconstruct(JsonElement from, boolean recursive) {
+		if (!(from instanceof JsonArray)) {
+			if (supportsClone()) {
+				return clone(true);
+			} else {
+				return this;
+			}
+		}
+		JsonArray last = (JsonArray) from;
+		JsonArray reconstructed = new JsonArray(last);
+		int[] offset = new int[] { 0 };
+		content.forEach((change) -> {
+			try {
+				if (change instanceof JsonObject) {
+					JsonObject chg = (JsonObject) change;
+					if (chg.containsKey("rm")) {
+						reconstructed.remove(((int) chg.get("rm")) + offset[0]);
+						offset[0]--;
+					} else if (chg.containsKey("after") && chg.containsKey("val")) {
+						reconstructed.add(((int) chg.get("after")) + offset[0], chg.get("val"));
+						offset[0]++;
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+		return reconstructed;
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		int entries = in.readInt();
+		while (entries > 0) {
+			content.add(in.readObject());
+			entries--;
+		}
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeInt(content.size());
+		int i = 0;
+		while (i < content.size()) {
+			out.writeObject(content.get(i));
+			i++;
+		}
+	}
+
+	@Override
+	public int compareTo(JsonElement o) {
+		if (this.equals(o)) {
+			return 0;
+		}
+		List<Object> diffs1 = new ArrayList<Object>();
+		List<Object> diffs2 = new ArrayList<Object>();
+		int difference = 0;
+		content.forEach((value) -> {
+			if (!o.containsValue(value)) {
+				diffs1.add(value);
+			}
+		});
+		o.values().forEach((value) -> {
+			if (!content.contains(value)) {
+				diffs2.add(value);
+			}
+		});
+		int i = 0;
+		while (i < diffs1.size() || i < diffs2.size()) {
+			if (i < diffs1.size() && i < diffs2.size()) {
+				difference += compare(diffs1.get(i), diffs2.get(i));
+			} else if (i < diffs1.size()) {
+				difference++;
+			} else {
+				difference--;
+			}
+			i++;
+		}
+		if (difference == 0) {
+			difference = 1;
+		}
+		return difference;
+	}
+
+	/**
+	 * compares the two given objects if they implement Comparable, and are
+	 * compatible types. can only return 1, 0 or -1. returns 0 if the objects can't
+	 * be compared.
+	 * 
+	 * @param obj1 the first object to compare.
+	 * @param obj2 the second object to compare.
+	 * @return the comparison of the two objects.
+	 */
+	private int compare(Object obj1, Object obj2) {
+		if (obj1 instanceof Comparable<?> && obj2 instanceof Comparable<?>) {
+			Class<?> class1 = obj1.getClass();
+			Class<?> class2 = obj2.getClass();
+			if (class1.isAssignableFrom(class2)) {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				int diff = ((Comparable) obj1).compareTo((Comparable) obj2);
+				if (diff > 0) {
+					return 1;
+				} else if (diff < 0) {
+					return -1;
+				} else {
+					return 0;
+				}
+			} else if (class2.isAssignableFrom(class1)) {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				int diff = ((Comparable) obj2).compareTo((Comparable) obj1);
+				if (diff > 0) {
+					return -1;
+				} else if (diff < 0) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		}
+		return 0;
 	}
 
 }

@@ -69,19 +69,19 @@ public class LoggingPrintStream extends PrintStream {
 
 	@Override
 	public PrintStream append(char c) {
-		print("" + c);
+		print(String.valueOf(c));
 		return this;
 	}
 
 	@Override
 	public PrintStream append(CharSequence csq) {
-		print(csq.toString());
+		print(String.valueOf(csq));
 		return this;
 	}
 
 	@Override
 	public PrintStream append(CharSequence csq, int start, int end) {
-		print(csq.subSequence(start, end).toString());
+		print(csq == null ? "null" : csq.subSequence(start, end).toString());
 		return this;
 	}
 
@@ -125,12 +125,12 @@ public class LoggingPrintStream extends PrintStream {
 
 	@Override
 	public void print(boolean b) {
-		print("" + b);
+		print(String.valueOf(b));
 	}
 
 	@Override
 	public void print(char c) {
-		print("" + c);
+		print(String.valueOf(c));
 	}
 
 	@Override
@@ -140,27 +140,27 @@ public class LoggingPrintStream extends PrintStream {
 
 	@Override
 	public void print(double d) {
-		print("" + d);
+		print(String.valueOf(d));
 	}
 
 	@Override
 	public void print(float f) {
-		print("" + f);
+		print(String.valueOf(f));
 	}
 
 	@Override
 	public void print(int i) {
-		print("" + i);
+		print(String.valueOf(i));
 	}
 
 	@Override
 	public void print(long l) {
-		print("" + l);
+		print(String.valueOf(l));
 	}
 
 	@Override
 	public void print(Object obj) {
-		print(obj.toString());
+		print(String.valueOf(obj));
 	}
 
 	@Override
@@ -228,7 +228,7 @@ public class LoggingPrintStream extends PrintStream {
 
 	@Override
 	public void println(Object x) {
-		print(x.toString() + lineSeparator);
+		print(x + lineSeparator);
 	}
 
 	@Override

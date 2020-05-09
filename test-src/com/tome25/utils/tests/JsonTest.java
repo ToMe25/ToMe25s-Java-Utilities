@@ -132,6 +132,12 @@ public class JsonTest {
 		byte[] jsonArrayByteArray = jsonArrayString.getBytes("UTF-8");
 		parsedJsonArray = JsonParser.parseByteArray(jsonArrayByteArray, "UTF-8");
 		assertEquals(jsonArray, parsedJsonArray);
+		// test json array order after parsing
+		jsonArrayString = jsonArray.toString();
+		parsedJsonArray = JsonParser.parseString(jsonArrayString);
+		assertEquals(((JsonArray)jsonArray).getFirst(), ((JsonArray)parsedJsonArray).getFirst());
+		assertEquals(((JsonArray)jsonArray).get(2), ((JsonArray)parsedJsonArray).get(2));
+		assertEquals(((JsonArray)jsonArray).getLast(), ((JsonArray)parsedJsonArray).getLast());
 	}
 
 	@Test

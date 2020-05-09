@@ -511,4 +511,22 @@ public class JsonArray implements JsonElement, List<Object> {
 		return 0;
 	}
 
+	/**
+	 * gets the last object from this list.
+	 * 
+	 * @return the last object from this list.
+	 */
+	public Object getLast() {
+		return content.get(content.size() - 1);
+	}
+
+	/**
+	 * gets the first object from this list.
+	 * 
+	 * @return the first object from this list.
+	 */
+	public Object getFirst() {
+		return content.get(0);
+	}
+
 }

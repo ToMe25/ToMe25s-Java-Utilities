@@ -1,7 +1,7 @@
 # ToMe25s-Java-Utilities
 A collection of common Utilities i use in a lot of Projects, moved into a library to simplify keeping them up to date everywhere.
 
-![Maven Package](https://github.com/ToMe25/ToMe25s-Java-Utilities/workflows/Maven%20Package/badge.svg)
+![Maven Build and Publish](https://github.com/ToMe25/ToMe25s-Java-Utilities/workflows/Maven%20Build%20and%20Publish/badge.svg)
 
 The ToMe25s-Java-Utilities.jar file should always be the latest build, as it gets build on commit by github actions.
 

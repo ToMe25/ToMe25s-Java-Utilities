@@ -60,7 +60,9 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git commit -m "Update builds" -a
+        git commit -m "Update builds
+        
+        ${{ steps.tag_dry.outputs.changelog }}" -a
         git tag ${{ steps.tag_dry.outputs.new_tag }}
 
     - name: Push changes

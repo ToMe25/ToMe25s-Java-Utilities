@@ -72,7 +72,7 @@ jobs:
 
     - name: Get commit
       id: get_commit
-      run: "::set-output commit=$(git log -1 --pretty=oneline | awk -F ' ' '{print $1}')"
+      run: echo "::set-output commit=$(git log -1 --pretty=oneline | awk -F ' ' '{print $1}')"
 
   release:
     runs-on: ubuntu-latest

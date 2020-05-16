@@ -16,7 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
+
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
@@ -27,7 +29,8 @@ jobs:
     - name: Tag commit
       id: tag
       uses: mathieudutour/github-tag-action@v4
-      with: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Increase build number
       id: bump_mvn

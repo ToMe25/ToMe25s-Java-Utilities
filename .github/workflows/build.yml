@@ -30,7 +30,7 @@ jobs:
 
     - name: Calculate new tag
       id: tag_dry
-      uses: mathieudutour/github-tag-action@v4
+      uses: mathieudutour/github-tag-action@v4.2
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         dry_run: true # just calculate the new tag name to be used for other things, tag the new commit later, to make the new tag contain the new builds.
@@ -68,7 +68,7 @@ jobs:
 
     - name: Tag commit # actually tag the commit.
       id: tag
-      uses: mathieudutour/github-tag-action@v4
+      uses: mathieudutour/github-tag-action@v4.2
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 

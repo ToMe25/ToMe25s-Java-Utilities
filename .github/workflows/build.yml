@@ -66,11 +66,21 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Tag commit # actually tag the commit.
+  release:
+    runs-on: ubuntu-latest
+    name: Publish Github Release
+    needs: build
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    - name: Tag commit
       id: tag
       uses: mathieudutour/github-tag-action@v4.2
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        dry_run: false  # actually tag the commit. 
 
     - name: Create release
       id: release

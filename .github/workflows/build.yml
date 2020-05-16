@@ -17,9 +17,6 @@ jobs:
     name: Build and Publish
     runs-on: ubuntu-latest
 
-    outputs:
-      commit: ${{ steps.get_commit.outputs.commit }}
-
     steps:
     - name: Checkout repo
       uses: actions/checkout@v2
@@ -64,33 +61,13 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git commit -m "Update builds" -a
+        git tag ${{ steps.tag_dry.outputs.new_tag }}
 
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Get commit
-      id: get_commit
-      run: echo "::set-output commit=$(git log -1 --pretty=oneline | awk -F ' ' '{print $1}')"
-
-  release:
-    runs-on: ubuntu-latest
-    name: Publish Github Release
-    needs: build
-
-    steps:
-    - name: Checkout repo
-      uses: actions/checkout@v2
-      with:
-        ref: ${{needs.build.outputs.commit}}
-
-    - name: Tag commit
-      id: tag
-      uses: mathieudutour/github-tag-action@v4.2
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        dry_run: false  # actually tag the commit. 
+        tags: true
 
     - name: Create release
       id: release

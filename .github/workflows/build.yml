@@ -42,12 +42,20 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-    - name: Publish to GitHub Packages Apache Maven
+    - name: Publish to Github Packages
       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
 
+    - name: Upload artifacts
+      id: artifacts_upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: builds
+        path: target/ToMe25s-Java-Utilities-*.jar
+
     - name: Move artifacts into repository
+      id: artifacts_move
       run: |
         mv target/ToMe25s-Java-Utilities-*-sources.jar ToMe25s-Java-Utilities-sources.jar
         mv target/ToMe25s-Java-Utilities-*-javadoc.jar ToMe25s-Java-Utilities-javadoc.jar
@@ -88,7 +96,7 @@ jobs:
         prerelease: false
 
     - name: Release add build
-      id: release-build
+      id: release_build
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -99,7 +107,7 @@ jobs:
         asset_content_type: application/java-archive
 
     - name: Release add sources
-      id: release-sources
+      id: release_sources
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -110,7 +118,7 @@ jobs:
         asset_content_type: application/java-archive
 
     - name: Release add javadoc
-      id: release-javadoc
+      id: release_javadoc
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -57,7 +57,7 @@ jobs:
 
     - name: Generate changelog
       id: changelog
-      run: echo "::set-output changelog=$(git log ${{ steps.tag_dry.outputs.previous_tag }}..HEAD --no-merges --format=%B)"
+      run: echo "::set-output changelog=\"$(git log ${{ steps.tag_dry.outputs.previous_tag }}..HEAD --no-merges --format=%B)\""
 
     - name: Commit files
       id: commit

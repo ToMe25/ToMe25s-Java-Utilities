@@ -2,7 +2,8 @@
 # after that it will push the modified builds and javadoc back to the github reporitory, it will also create a new github release.
 # For more information see https://github.com/actions/setup-java#apache-maven-with-a-settings-path,
 # https://github.com/ad-m/github-push-action#example-workflow-file,
-# https://github.com/mathieudutour/github-tag-action#usage
+# https://github.com/mathieudutour/github-tag-action#usage,
+# https://github.com/actions/upload-artifact#upload-using-a-wildcard-pattern
 # and https://github.com/actions/upload-release-asset#example-workflow---upload-a-release-asset
 
 name: Maven Build and Publish
@@ -51,7 +52,7 @@ jobs:
       id: artifacts_upload
       uses: actions/upload-artifact@v2
       with:
-        name: builds
+        name: build
         path: target/ToMe25s-Java-Utilities-*.jar
 
     - name: Move artifacts into repository

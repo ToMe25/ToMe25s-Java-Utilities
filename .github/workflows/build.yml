@@ -57,7 +57,7 @@ jobs:
     - name: Move artifacts into repository
       id: artifacts_move
       run: |
-        rename 's/-\d+\.\d+\.\d+-/-/|s/-\d+\.\d+\.\d+\././' target/*.jar
+        for f in target/*.jar; do fo=${f:7}; cp "$f" $(echo "$fo" | sed -r 's/-[0-9]+\.[0-9]+\.[0-9]+-/-/g; s/-[0-9]+\.[0-9]+\.[0-9]+\././g'); done
         mv target/ToMe25s-Java-Utilities* .
         rm -r javadoc/*
         mv target/apidocs/* javadoc/

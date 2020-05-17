@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
+    - name: Checkout repository
       uses: actions/checkout@v2
 
     - name: Set up JDK 1.8
@@ -57,9 +57,8 @@ jobs:
     - name: Move artifacts into repository
       id: artifacts_move
       run: |
-        mv target/ToMe25s-Java-Utilities-*-sources.jar ToMe25s-Java-Utilities-sources.jar
-        mv target/ToMe25s-Java-Utilities-*-javadoc.jar ToMe25s-Java-Utilities-javadoc.jar
-        mv target/ToMe25s-Java-Utilities-*.jar ToMe25s-Java-Utilities.jar
+        rename 's/-\d+\.\d+\.\d+-/-/|s/-\d+\.\d+\.\d+\././' target/*.jar
+        mv target/ToMe25s-Java-Utilities* .
         rm -r javadoc/*
         mv target/apidocs/* javadoc/
 

@@ -55,6 +55,10 @@ jobs:
         rm -r javadoc/*
         mv target/apidocs/* javadoc/
 
+    - name: Generate changelog
+      id: changelog
+      run: echo "::set-output changelog=$(git log ${{ steps.tag_dry.outputs.previous_tag }}..HEAD --no-merges --format=%B)"
+
     - name: Commit files
       id: commit
       run: |
@@ -62,10 +66,11 @@ jobs:
         git config --local user.name "GitHub Action"
         git commit -m "Update builds
         
-        ${{ steps.tag_dry.outputs.changelog }}" -a
+        ${{ steps.changelog.outputs.changelog }}" -a
         git tag ${{ steps.tag_dry.outputs.new_tag }}
 
     - name: Push changes
+      id: push
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}

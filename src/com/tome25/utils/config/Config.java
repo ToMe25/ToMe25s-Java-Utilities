@@ -167,7 +167,11 @@ public class Config {
 					if (!line.startsWith("#")) {
 						for (ConfigValue<?> c : sortedConfig.get(f)) {
 							if (line.startsWith(c.getKey())) {
-								c.setValue(line.replaceFirst(c.getKey(), "").replaceFirst(":", "").replaceAll(" ", ""));
+								String value = line.replaceFirst(c.getKey(), "").replaceFirst(":", "");
+								while(value.startsWith(" ")) {
+									value = value.substring(1);
+								}
+								c.setValue(value);
 								missing.remove(c);
 							}
 						}
@@ -223,5 +227,13 @@ public class Config {
 			}
 			sortedConfig.get(c.getCfg()).add(c);
 		}
+	}
+
+	/**
+	 * Deletes all used config files, and the config directory, if it is empty.
+	 */
+	public void delete() {
+		sortedConfig.keySet().forEach(file -> file.delete());
+		cfgDir.delete();
 	}
 }

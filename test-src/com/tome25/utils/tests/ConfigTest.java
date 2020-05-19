@@ -10,6 +10,8 @@ import java.io.IOException;
 import org.junit.Test;
 
 import com.tome25.utils.config.Config;
+import com.tome25.utils.json.JsonArray;
+import com.tome25.utils.json.JsonObject;
 
 public class ConfigTest {
 
@@ -27,13 +29,13 @@ public class ConfigTest {
 		assertEquals(32123, cfg.getConfig("testInt"));
 		assertEquals(Double.MAX_VALUE, cfg.getConfig("testDouble"));
 		// test the handling of changed values.
-		FileInputStream fIn = new FileInputStream(new File(cfgFile.getName(), "Test.cfg"));
+		FileInputStream fIn = new FileInputStream(new File(cfgFile, "Test.cfg"));
 		byte[] buffer = new byte[fIn.available()];
 		fIn.read(buffer);
 		fIn.close();
 		String config = new String(buffer);
 		config = config.replaceAll("World", "Pond").replaceAll("32123", "" + Integer.MAX_VALUE);
-		FileOutputStream fOut = new FileOutputStream(new File(cfgFile.getName(), "Test.cfg"));
+		FileOutputStream fOut = new FileOutputStream(new File(cfgFile, "Test.cfg"));
 		fOut.write(config.getBytes());
 		fOut.close();
 		cfg.readConfig();
@@ -51,6 +53,23 @@ public class ConfigTest {
 		cfg.addConfig("test.txt", "floatTest", Float.MAX_EXPONENT, "A float test.");
 		cfg.readConfig();
 		assertEquals(Float.MAX_EXPONENT, cfg.getConfig("floatTest"));
+		// test json handling.
+		cfg.addConfig("Test.cfg", "testJson", new JsonObject("someTest", "Test String"), "a test json object.");
+		cfg.addConfig("Test.cfg", "testJsonArray", new JsonArray("Test", 123, "some random test", Double.MIN_VALUE), "a test json array.");
+		cfg.readConfig();
+		assertEquals(new JsonObject("someTest", "Test String"), cfg.getConfig("testJson"));
+		assertEquals(new JsonArray("Test", 123, "some random test", Double.MIN_VALUE), cfg.getConfig("testJsonArray"));
+		// test wrong subclass handling.
+		cfg.addConfig("wrong.cfg", "int", Integer.MIN_VALUE, "Some random test.");
+		cfg.addConfig("wrong.cfg", "json", new JsonObject("key", "value"), "Some random test.");
+		fOut = new FileOutputStream(new File(cfgFile, "wrong.cfg"));
+		fOut.write("json: [123, 321]\nint: Test".getBytes());
+		fOut.close();
+		System.err.println("The following ClassCastException and NumberFormatException are excepted to happen during this test, and not a problem!");
+		cfg.readConfig();
+		assertEquals(Integer.MIN_VALUE, cfg.getConfig("int"));
+		assertEquals(new JsonObject("key", "value"), cfg.getConfig("json"));
+		// delete config files.
 		cfg.delete();
 	}
 

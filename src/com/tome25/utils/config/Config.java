@@ -162,27 +162,34 @@ public class Config {
 				sc = new Scanner(f);
 				List<ConfigValue<?>> missing = new ArrayList<ConfigValue<?>>();
 				missing.addAll(sortedConfig.get(f));
+				boolean error = false;
 				while (sc.hasNextLine()) {
 					String line = sc.nextLine();
 					if (!line.startsWith("#")) {
 						for (ConfigValue<?> c : sortedConfig.get(f)) {
-							if (line.startsWith(c.getKey())) {
+							if (line.replaceAll(" ", "").startsWith(c.getKey() + ":")) {
 								String value = line.replaceFirst(c.getKey(), "").replaceFirst(":", "");
-								while(value.startsWith(" ")) {
+								while (value.startsWith(" ")) {
 									value = value.substring(1);
 								}
 								c.setValue(value);
+								error = error || c.isError();
+								c.clearError();
 								missing.remove(c);
 							}
 						}
 					}
 				}
 				sc.close();
-				FileOutputStream fiout = new FileOutputStream(f, true);
-				for (ConfigValue<?> c : missing) {
-					c.writeToConfig(fiout);
+				if (error) {
+					createConfig(f);
+				} else {
+					FileOutputStream fiout = new FileOutputStream(f, true);
+					for (ConfigValue<?> c : missing) {
+						c.writeToConfig(fiout);
+					}
+					fiout.close();
 				}
-				fiout.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -221,6 +228,7 @@ public class Config {
 	}
 
 	private void sortConfig() {
+		sortedConfig.clear();
 		for (ConfigValue<?> c : cfg.values()) {
 			if (!sortedConfig.containsKey(c.getCfg())) {
 				sortedConfig.put(c.getCfg(), new ArrayList<ConfigValue<?>>());

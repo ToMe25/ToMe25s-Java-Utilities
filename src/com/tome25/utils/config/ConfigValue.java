@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import com.tome25.utils.exception.InvalidTypeException;
+import com.tome25.utils.json.JsonElement;
+import com.tome25.utils.json.JsonParser;
 
 /**
  * A utility class that stores config values.
@@ -17,9 +19,10 @@ public class ConfigValue<T> {
 	private final File cfg;
 	private final String key;
 	private static final Class<?>[] validTypes = { String.class, Integer.class, Short.class, Byte.class, Boolean.class,
-			Double.class, Float.class };
+			Double.class, Float.class, JsonElement.class };
 	private final Class<?> type;
 	private T value;
+	private boolean error;
 	private final T defaultValue;
 	private final String description;
 
@@ -100,20 +103,28 @@ public class ConfigValue<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	public void setValue(String value) {
-		if (String.class.isAssignableFrom(type)) {
-			((ConfigValue<String>) this).value = value;
-		} else if (Integer.class.isAssignableFrom(type)) {
-			((ConfigValue<Integer>) this).value = Integer.parseInt(value);
-		} else if (Short.class.isAssignableFrom(type)) {
-			((ConfigValue<Short>) this).value = Short.parseShort(value);
-		} else if (Byte.class.isAssignableFrom(type)) {
-			((ConfigValue<Byte>) this).value = Byte.parseByte(value);
-		} else if (Boolean.class.isAssignableFrom(type)) {
-			((ConfigValue<Boolean>) this).value = Boolean.parseBoolean(value);
-		} else if (Double.class.isAssignableFrom(type)) {
-			((ConfigValue<Double>) this).value = Double.parseDouble(value);
-		} else if (Float.class.isAssignableFrom(type)) {
-			((ConfigValue<Float>) this).value = Float.parseFloat(value);
+		try {
+			if (String.class.isAssignableFrom(type)) {
+				((ConfigValue<String>) this).value = value;
+			} else if (Integer.class.isAssignableFrom(type)) {
+				((ConfigValue<Integer>) this).value = Integer.parseInt(value);
+			} else if (Short.class.isAssignableFrom(type)) {
+				((ConfigValue<Short>) this).value = Short.parseShort(value);
+			} else if (Byte.class.isAssignableFrom(type)) {
+				((ConfigValue<Byte>) this).value = Byte.parseByte(value);
+			} else if (Boolean.class.isAssignableFrom(type)) {
+				((ConfigValue<Boolean>) this).value = Boolean.parseBoolean(value);
+			} else if (Double.class.isAssignableFrom(type)) {
+				((ConfigValue<Double>) this).value = Double.parseDouble(value);
+			} else if (Float.class.isAssignableFrom(type)) {
+				((ConfigValue<Float>) this).value = Float.parseFloat(value);
+			} else if (JsonElement.class.isAssignableFrom(type)) {
+				((ConfigValue<T>) this).value = (T) type.cast(JsonParser.parseString(value));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			error = true;
+			this.value = defaultValue;
 		}
 	}
 
@@ -186,6 +197,22 @@ public class ConfigValue<T> {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Checks whether this value caught an error while trying to parse a value.
+	 * 
+	 * @return whether this value caught an error while trying to parse a value.
+	 */
+	public boolean isError() {
+		return error;
+	}
+
+	/**
+	 * resets the error state of this value.
+	 */
+	public void clearError() {
+		error = false;
 	}
 
 }

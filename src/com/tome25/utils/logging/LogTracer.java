@@ -249,4 +249,25 @@ public class LogTracer {
 		}
 	}
 
+	/**
+	 * gets the first stack trace element in the thread calling this method from the
+	 * given class.
+	 * 
+	 * @param callerName the name of the class to look for.
+	 * @return the StackTraceElement of the searched class, or null, if there was no
+	 *         StackTraceElement from that class.
+	 */
+	public static StackTraceElement getCallerStackTraceElement(final String callerName) {
+		StackTraceElement callerFrame = null;
+		final StackTraceElement stack[] = Thread.currentThread().getStackTrace();
+		for (int i = 0; i < stack.length; i++) {
+			final StackTraceElement frame = stack[i];
+			if (callerName.equals(frame.getClassName())) {
+				callerFrame = frame;
+				break;
+			}
+		}
+		return callerFrame;
+	}
+
 }

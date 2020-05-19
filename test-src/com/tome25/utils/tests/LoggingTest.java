@@ -138,7 +138,7 @@ public class LoggingTest {
 		logger.setUseParentHandlers(false);
 		logger.addHandler(handler);
 		Pattern outputPattern = Pattern.compile(
-				"\\[[^\\[]*\\]\\s\\[main\\]\\s\\[test/[^\\[]*\\]\\s\\[LoggingTest\\]\\s\\[tracingFormatterTest\\]:\\s.*\\n");
+				"\\[[^\\[]*\\]\\s\\[main\\]\\s\\[test/[^\\[]*\\]\\s\\[LoggingTest\\.tracingFormatterTest\\]:\\s.*\\n");
 		logger.warning("WARNING");
 		assertTrue(outputPattern.matcher(baOut.toString()).matches());
 	}
@@ -156,7 +156,7 @@ public class LoggingTest {
 		LoggingPrintStream lOut = new LoggingPrintStream(logger);
 		LogTracer.traceOutput(lOut);
 		Pattern outputPattern = Pattern.compile(
-				".*sun\\.nio\\.cs\\.StreamEncoder\\swriteBytes\\n.*\\[[^\\[]*\\]\\s\\[main\\]\\s\\[SYSOUT/[^\\[]*\\]\\s\\[LoggingTest\\]\\s\\[logTracerTest\\]:\\s.*\\n");
+				".*sun\\.nio\\.cs\\.StreamEncoder\\swriteBytes\\n.*\\[[^\\[]*\\]\\s\\[main\\]\\s\\[SYSOUT/[^\\[]*\\]\\s\\[LoggingTest\\.logTracerTest\\]:\\s.*\\n");
 		System.out.println("test");
 		assertTrue(outputPattern.matcher(baOut.toString()).matches());
 		// reset System.out in case to not cause problems for later tests

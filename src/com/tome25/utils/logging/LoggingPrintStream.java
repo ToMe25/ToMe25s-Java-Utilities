@@ -170,7 +170,7 @@ public class LoggingPrintStream extends PrintStream {
 		while (buffer.contains(lineSeparator)) {
 			log.logp(lvl, writer.getClassName(), writer.getMethodName(),
 					buffer.substring(0, buffer.indexOf(lineSeparator)));
-			buffer = buffer.substring(buffer.indexOf(lineSeparator) + 1);
+			buffer = buffer.substring(buffer.indexOf(lineSeparator) + lineSeparator.length());
 		}
 	}
 

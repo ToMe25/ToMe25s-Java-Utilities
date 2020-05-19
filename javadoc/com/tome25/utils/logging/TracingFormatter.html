@@ -153,19 +153,32 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceClass">traceClass</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceFile">traceFile</a></span></code>
+<div class="block">Whether the name of the file that caused the message should be added to the
+ output.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceLevel">traceLevel</a></span></code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceLogger">traceLogger</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceLine">traceLine</a></span></code>
+<div class="block">Whether the line the message got caused in should be added to the output.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceOutputtingClass">traceOutputtingClass</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceLogger">traceLogger</a></span></code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceOutputtingMethod">traceOutputtingMethod</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceMethod">traceMethod</a></span></code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private boolean</code></td>
@@ -176,7 +189,10 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceThread">traceThread</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceThread">traceThread</a></span></code>
+<div class="block">Whether the name of the thread printing the message should be added to the
+ output.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private boolean</code></td>
@@ -301,15 +317,17 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 <li class="blockList">
 <h4>traceThread</h4>
 <pre>private&nbsp;boolean traceThread</pre>
+<div class="block">Whether the name of the thread printing the message should be added to the
+ output.</div>
 </li>
 </ul>
-<a name="traceOutputtingClass">
+<a name="traceClass">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>traceOutputtingClass</h4>
-<pre>private&nbsp;boolean traceOutputtingClass</pre>
+<h4>traceClass</h4>
+<pre>private&nbsp;boolean traceClass</pre>
 </li>
 </ul>
 <a name="traceSimpleClassName">
@@ -323,13 +341,13 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
  package).</div>
 </li>
 </ul>
-<a name="traceOutputtingMethod">
+<a name="traceMethod">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>traceOutputtingMethod</h4>
-<pre>private&nbsp;boolean traceOutputtingMethod</pre>
+<h4>traceMethod</h4>
+<pre>private&nbsp;boolean traceMethod</pre>
 </li>
 </ul>
 <a name="traceLogger">
@@ -348,6 +366,27 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 <li class="blockList">
 <h4>traceLevel</h4>
 <pre>private&nbsp;boolean traceLevel</pre>
+</li>
+</ul>
+<a name="traceLine">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>traceLine</h4>
+<pre>private&nbsp;boolean traceLine</pre>
+<div class="block">Whether the line the message got caused in should be added to the output.</div>
+</li>
+</ul>
+<a name="traceFile">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>traceFile</h4>
+<pre>private&nbsp;boolean traceFile</pre>
+<div class="block">Whether the name of the file that caused the message should be added to the
+ output.</div>
 </li>
 </ul>
 <a name="cfg">

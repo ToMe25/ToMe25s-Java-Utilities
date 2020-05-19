@@ -606,6 +606,11 @@
 <dd>
 <div class="block">returns the amount of bytes that are already downloaded.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#getCallerStackTraceElement-java.lang.String-">getCallerStackTraceElement(String)</a></span> - Static method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
+<dd>
+<div class="block">gets the first stack trace element in the thread calling this method from the
+ given class.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/ConfigValue.html#getCfg--">getCfg()</a></span> - Method in class com.tome25.utils.config.<a href="com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config">ConfigValue</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#getConfig-java.lang.String-">getConfig(String)</a></span> - Method in class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
@@ -1442,16 +1447,29 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#toString--">toString()</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceClass">traceClass</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#traceError-java.io.OutputStream...-">traceError(OutputStream...)</a></span> - Static method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
 <dd>
 <div class="block">Sets System Error Stream to a TracingMultiPrintStream with the old System
  Error Stream and the Output Streams from additionalStreams.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceFile">traceFile</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
+<dd>
+<div class="block">Whether the name of the file that caused the message should be added to the
+ output.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceLevel">traceLevel</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceLine">traceLine</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
+<dd>
+<div class="block">Whether the line the message got caused in should be added to the output.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#traceLineNumber">traceLineNumber</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceLogger">traceLogger</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceMethod">traceMethod</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#traceOutput-java.io.OutputStream...-">traceOutput(OutputStream...)</a></span> - Static method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
 <dd>
@@ -1483,11 +1501,7 @@
 <div class="block">Sets System Output and Error Stream to a TracingMultiPrintStream with the old
  Stream and the Output Streams from additionalStreams.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceOutputtingClass">traceOutputtingClass</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#traceOutputtingClass">traceOutputtingClass</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceOutputtingMethod">traceOutputtingMethod</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#traceOutputtingMethod">traceOutputtingMethod</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
 <dd>&nbsp;</dd>
@@ -1510,7 +1524,10 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#traceSystemClassMethods">traceSystemClassMethods</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceThread">traceThread</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Whether the name of the thread printing the message should be added to the
+ output.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#traceThread">traceThread</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceTimestamp">traceTimestamp</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>

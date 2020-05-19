@@ -1,6 +1,7 @@
 package com.tome25.utils.tests;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
@@ -27,7 +28,7 @@ public class LoggingTest {
 	 * The original System.out.
 	 */
 	private static PrintStream systemOut = System.out;
-	
+
 	@Test
 	public void multiPrintStreamTest() {
 		// test the basics of the MultiPrintStream
@@ -51,10 +52,10 @@ public class LoggingTest {
 		ByteArrayOutputStream baOut1 = new ByteArrayOutputStream();
 		ByteArrayOutputStream baOut2 = new ByteArrayOutputStream();
 		TracingMultiPrintStream tOut = new TracingMultiPrintStream(baOut1, baOut2, systemOut);
-		Pattern outputPattern = Pattern
-				.compile("\\[[^\\[]*\\]\\s\\[main\\]\\s\\[LoggingTest\\]\\s\\[tracingMultiPrintStreamTest\\]:\\s.*\\r{0,1}\\n");
+		Pattern outputPattern = Pattern.compile(
+				"\\[[^\\[]*\\]\\s\\[main\\]\\s\\[LoggingTest\\]\\s\\[tracingMultiPrintStreamTest\\]:\\s.*\\r{0,1}\\n");
 		tOut.println("Test");
-		assertTrue(outputPattern.matcher(baOut1.toString()).matches());
+		assertTrue(baOut1.toString(), outputPattern.matcher(baOut1.toString()).matches());
 		assertArrayEquals(baOut1.toByteArray(), baOut2.toByteArray());
 		// close the TracingMultiPrintStream
 		tOut.close();
@@ -76,7 +77,7 @@ public class LoggingTest {
 		Pattern outputPattern = Pattern.compile(
 				".*com\\.tome25\\.utils\\.tests\\.LoggingTest\\sloggingPrintStreamTest\\r{0,1}\\n.*:\\s.*\\r{0,1}\\n");
 		lOut.println("Test String\"");
-		assertTrue(outputPattern.matcher(baOut.toString()).matches());
+		assertTrue(baOut.toString(), outputPattern.matcher(baOut.toString()).matches());
 		// close the LoggingPrintStream
 		lOut.close();
 	}
@@ -90,12 +91,12 @@ public class LoggingTest {
 		Logger logger = Logger.getLogger("test");
 		logger.setUseParentHandlers(false);
 		logger.addHandler(severeHandler);
-		Pattern outputPattern = Pattern
-				.compile(".*com\\.tome25\\.utils\\.tests\\.LoggingTest\\soutputHandlerTest\\r{0,1}\\n.*:\\s.*\\r{0,1}\\n");
+		Pattern outputPattern = Pattern.compile(
+				".*com\\.tome25\\.utils\\.tests\\.LoggingTest\\soutputHandlerTest\\r{0,1}\\n.*:\\s.*\\r{0,1}\\n");
 		logger.info("INFO");
-		assertTrue(baOut.toByteArray().length == 0);
+		assertEquals(0, baOut.toByteArray().length);
 		logger.severe("SEVERE");
-		assertTrue(outputPattern.matcher(baOut.toString()).matches());
+		assertTrue(baOut.toString(), outputPattern.matcher(baOut.toString()).matches());
 		// test the level handling of the OutputHandler wit a set level of ALL
 		baOut = new ByteArrayOutputStream();
 		OutputHandler allHandler = new OutputHandler(baOut, Level.ALL, formatter);
@@ -103,7 +104,7 @@ public class LoggingTest {
 		logger.removeHandler(severeHandler);
 		logger.addHandler(allHandler);
 		logger.finest("INFO");
-		assertTrue(outputPattern.matcher(baOut.toString()).matches());
+		assertTrue(baOut.toString(), outputPattern.matcher(baOut.toString()).matches());
 	}
 
 	@Test
@@ -124,13 +125,13 @@ public class LoggingTest {
 		Logger logger = Logger.getLogger("test");
 		logger.setUseParentHandlers(false);
 		logger.addHandler(handler);
-		Pattern outputPattern = Pattern
-				.compile(".*com\\.tome25\\.utils\\.tests\\.LoggingTest\\ssplittingHandlerTest\\r{0,1}\\n.*:\\s.*\\r{0,1}\\n");
+		Pattern outputPattern = Pattern.compile(
+				".*com\\.tome25\\.utils\\.tests\\.LoggingTest\\ssplittingHandlerTest\\r{0,1}\\n.*:\\s.*\\r{0,1}\\n");
 		logger.info("INFO");
-		assertTrue(outputPattern.matcher(baOut1.toString()).matches());
-		assertTrue(baOut2.toByteArray().length == 0);
+		assertTrue(baOut1.toString(), outputPattern.matcher(baOut1.toString()).matches());
+		assertEquals(0, baOut2.toByteArray().length);
 		logger.severe("SEVERE");
-		assertTrue(outputPattern.matcher(baOut2.toString()).matches());
+		assertTrue(baOut2.toString(), outputPattern.matcher(baOut2.toString()).matches());
 	}
 
 	@Test
@@ -145,7 +146,7 @@ public class LoggingTest {
 		Pattern outputPattern = Pattern.compile(
 				"\\[[^\\[]*\\]\\s\\[main\\]\\s\\[test/[^\\[]*\\]\\s\\[LoggingTest\\.tracingFormatterTest\\]:\\s.*\\r{0,1}\\n");
 		logger.warning("WARNING");
-		assertTrue(outputPattern.matcher(baOut.toString()).matches());
+		assertTrue(baOut.toString(), outputPattern.matcher(baOut.toString()).matches());
 	}
 
 	@Test
@@ -162,7 +163,7 @@ public class LoggingTest {
 		Pattern outputPattern = Pattern.compile(
 				".*sun\\.nio\\.cs\\.StreamEncoder\\swriteBytes\\r{0,1}\\n.*\\[[^\\[]*\\]\\s\\[main\\]\\s\\[SYSOUT/[^\\[]*\\]\\s\\[LoggingTest\\.logTracerTest\\]:\\s.*\\r{0,1}\\n");
 		System.out.println("test");
-		assertTrue(outputPattern.matcher(baOut.toString()).matches());
+		assertTrue(baOut.toString(), outputPattern.matcher(baOut.toString()).matches());
 		// reset System.out in case to not cause problems for later tests
 		System.setOut(systemOut);
 	}

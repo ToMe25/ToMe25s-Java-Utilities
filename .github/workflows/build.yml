@@ -50,6 +50,7 @@ jobs:
 
     - name: Upload artifacts
       id: artifacts_upload
+      if: ${{ always() }}
       uses: actions/upload-artifact@v2
       with:
         name: build
@@ -57,6 +58,7 @@ jobs:
 
     - name: Move artifacts into repository
       id: artifacts_move
+      if: ${{ always() }}
       run: |
         for f in target/*.jar; do fo=${f:7}; cp "$f" $(echo "$fo" | sed -r 's/-[0-9]+\.[0-9]+\.[0-9]+-/-/g; s/-[0-9]+\.[0-9]+\.[0-9]+\././g'); done
         rm -r javadoc/*
@@ -68,6 +70,7 @@ jobs:
 
     - name: Commit files
       id: commit
+      if: ${{ always() }}
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
@@ -78,6 +81,7 @@ jobs:
 
     - name: Push changes
       id: push
+      if: ${{ always() }}
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}

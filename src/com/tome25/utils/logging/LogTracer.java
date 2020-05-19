@@ -125,11 +125,11 @@ public class LogTracer {
 	 * @param additionalStreams the Output Streams to add to System.out
 	 */
 	public static void traceOutput(OutputStream... additionalStreams) {
-		Logger error = getOutput();
+		Logger output = getOutput();
 		for (OutputStream out : additionalStreams) {
-			error.addHandler(new OutputHandler(out, new TracingFormatter()));
+			output.addHandler(new OutputHandler(out, new TracingFormatter()));
 		}
-		System.setOut(new LoggingPrintStream(error, Level.INFO));
+		System.setOut(new LoggingPrintStream(output, Level.INFO));
 	}
 
 	/**

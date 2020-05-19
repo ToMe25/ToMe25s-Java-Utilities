@@ -23,6 +23,11 @@ import com.tome25.utils.logging.TracingMultiPrintStream;
 
 public class LoggingTest {
 
+	/**
+	 * The original System.out.
+	 */
+	private static PrintStream systemOut = System.out;
+	
 	@Test
 	public void multiPrintStreamTest() {
 		// test the basics of the MultiPrintStream
@@ -45,7 +50,7 @@ public class LoggingTest {
 		// test the TracingMultiPrintStream
 		ByteArrayOutputStream baOut1 = new ByteArrayOutputStream();
 		ByteArrayOutputStream baOut2 = new ByteArrayOutputStream();
-		TracingMultiPrintStream tOut = new TracingMultiPrintStream(baOut1, baOut2);
+		TracingMultiPrintStream tOut = new TracingMultiPrintStream(baOut1, baOut2, systemOut);
 		Pattern outputPattern = Pattern
 				.compile("\\[[^\\[]*\\]\\s\\[main\\]\\s\\[LoggingTest\\]\\s\\[tracingMultiPrintStreamTest\\]:\\s.*\\n");
 		tOut.println("Test");
@@ -62,7 +67,7 @@ public class LoggingTest {
 		SimpleFormatter formatter = new SimpleFormatter();
 		OutputHandler handler = new OutputHandler(baOut, formatter);
 		// this OutputHandler basically acts like a ConsoleHandler for System.out
-		OutputHandler consoleHandler = new OutputHandler(System.out, formatter);
+		OutputHandler consoleHandler = new OutputHandler(systemOut, formatter);
 		Logger logger = Logger.getLogger("test");
 		logger.setUseParentHandlers(false);
 		logger.addHandler(consoleHandler);
@@ -146,7 +151,6 @@ public class LoggingTest {
 	@Test
 	public void logTracerTest() {
 		// test LogTracer.traceOutput
-		PrintStream systemOut = System.out;
 		ByteArrayOutputStream baOut = new ByteArrayOutputStream();
 		SimpleFormatter formatter = new SimpleFormatter();
 		OutputHandler handler = new OutputHandler(baOut, formatter);

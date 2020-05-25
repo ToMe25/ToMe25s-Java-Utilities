@@ -24,9 +24,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Environment (please complete the following information):**
- - OS: [e.g. Windows]
+ - OS: [e.g. Windows 10]
  - Java Version [e.g. 8_162]
- - Version [e.g. 1.18]
+ - Version [e.g. 1.0.120]
 
 **Crash-Log:**
 If applicable, add a crash log or log to help explain your problem.

@@ -60,7 +60,7 @@ jobs:
       id: artifacts_move
       if: ${{ always() }}
       run: |
-        for f in target/*.jar; do fo=${f:7}; cp "$f" $(echo "$fo" | sed -r 's/-[0-9]+\.[0-9]+\.[0-9]+-/-/g; s/-[0-9]+\.[0-9]+\.[0-9]+\././g'); done
+        for f in target/ToMe25s-Java-Utilities*.jar; do fo=${f:7}; cp "$f" $(echo "$fo" | sed -r 's/-[0-9]+\.[0-9]+\.[0-9]+-/-/g; s/-[0-9]+\.[0-9]+\.[0-9]+\././g'); done
         rm -r javadoc/*
         mv target/apidocs/* javadoc/
 

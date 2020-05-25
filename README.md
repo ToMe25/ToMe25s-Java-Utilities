@@ -34,7 +34,7 @@ If you want it to get downloaded on startup: <details><summary>click here to see
  ```java
  com.tome25.utils.logging.LogTracer.traceOutputs(new File("LogFile.log"));// importing this would cause it to crash on loading.
  ```
- to after the block above, to make it to Trace the System Outputs.
+ after the block above, to make it to Trace the System Outputs.
  
 Note that you can't import any of this libraries classes in your main class if you do this, or else java will crash on startup,
 also the LibraryLoader will probably restart your software once to add the Premain-Class Attribute to the MANIFEST.MF and add a vm argument to the start command.
@@ -56,7 +56,7 @@ If you want it to be packaged into your main jar and get extracted on startup: <
  ```java
  com.tome25.utils.logging.LogTracer.traceOutputs(new File("LogFile.log"));// importing this would cause it to crash on loading.
  ```
- to after the block above, to make it to Trace the System Outputs.
+ after the block above, to make it to Trace the System Outputs.
  
 Note that you can't import any of this libraries classes in your main class if you do this, or else java will crash on startup,
 also the LibraryLoader will probably restart your software once to add the Premain-Class Attribute to the MANIFEST.MF and add a vm argument to the start command.

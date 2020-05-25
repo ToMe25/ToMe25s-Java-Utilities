@@ -26,11 +26,6 @@ import java.util.jar.JarOutputStream;
  */
 public class LibraryLoader {
 
-	private static final String DEFAULT_TOME25S_JAVA_UTILITIES_URL_STORAGE = String
-			.format("# The URL'S to try and download ToMe25's-Java-Utilites from.%n"
-					+ "# separate entries with a ',', they will be tried from start to end.%n"
-					+ "https://github.com/ToMe25/ToMe25s-Java-Utilities/raw/master/ToMe25s-Java-Utilities.jar%n");
-
 	private static Instrumentation instrumentation;
 	private static byte[] buffer;
 
@@ -57,7 +52,7 @@ public class LibraryLoader {
 	 *                disable changing System.out and System.err.
 	 */
 	public static void init(String[] args, File logFile) {
-		init(args, logFile, DEFAULT_TOME25S_JAVA_UTILITIES_URL_STORAGE);
+		init(args, logFile, LibraryDownloader.DEFAULT_TOME25S_JAVA_UTILITIES_URL_STORAGE);
 	}
 
 	/**
@@ -92,7 +87,7 @@ public class LibraryLoader {
 	 *                      changing System.err.
 	 */
 	public static void init(String[] args, File outputLogFile, File errorLogFile) {
-		init(args, outputLogFile, errorLogFile, DEFAULT_TOME25S_JAVA_UTILITIES_URL_STORAGE);
+		init(args, outputLogFile, errorLogFile, LibraryDownloader.DEFAULT_TOME25S_JAVA_UTILITIES_URL_STORAGE);
 	}
 
 	/**

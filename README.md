@@ -30,6 +30,11 @@ If you want it to get downloaded on startup: <details><summary>click here to see
  loader.addThisToClasspath();
  ```
  to the start of your main method.
+ You can also add
+ ```java
+ com.tome25.utils.logging.LogTracer.traceOutputs(new File("LogFile.log"));// importing this would cause it to crash on loading.
+ ```
+ to after the block above, to make it to Trace the System Outputs.
  
 Note that you can't import any of this libraries classes in your main class if you do this, or else java will crash on startup,
 also the LibraryLoader will probably restart your software once to add the Premain-Class Attribute to the MANIFEST.MF and add a vm argument to the start command.
@@ -47,6 +52,11 @@ If you want it to be packaged into your main jar and get extracted on startup: <
  loader.addThisToClasspath();
  ```
  to the start of your main method.
+  You can also add
+ ```java
+ com.tome25.utils.logging.LogTracer.traceOutputs(new File("LogFile.log"));// importing this would cause it to crash on loading.
+ ```
+ to after the block above, to make it to Trace the System Outputs.
  
 Note that you can't import any of this libraries classes in your main class if you do this, or else java will crash on startup,
 also the LibraryLoader will probably restart your software once to add the Premain-Class Attribute to the MANIFEST.MF and add a vm argument to the start command.
@@ -55,7 +65,7 @@ also the LibraryLoader will probably restart your software once to add the Prema
 If you want it to first try to download this library on startup,
 if that doesn't work extracts it from your jar,
 adds it to the classpath,
-and sets the System Outputs to TracingMultiPrintStreams
+and Trace the System Outputs
 copying all the output to a log file: <details><summary>click here to see</summary>
 
  1. add the ToMe25s-Java-Utilites jar to your project in a way that gets it added to the finished jar.(e.g. copy it into your src directory)

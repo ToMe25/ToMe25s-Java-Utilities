@@ -35,7 +35,10 @@ public class LibraryDownloader {
 			"application/octet-stream", "application/download", "application/force-download" };
 	private static final Predicate<String> JAR_CONTENT_TYPE_CHECKER = (s) -> Arrays.asList(JAR_CONTENT_TYPES)
 			.contains(s);
-	private static final String TOME25S_JAVA_UTILITIES_URL = "https://github.com/ToMe25/ToMe25s-Java-Utilities/raw/master/ToMe25s-Java-Utilities.jar";
+	protected static final String DEFAULT_TOME25S_JAVA_UTILITIES_URL_STORAGE = String
+			.format("# The URL'S to try and download ToMe25's-Java-Utilites from.%n"
+					+ "# separate entries with a ',', they will be tried from start to end.%n"
+					+ "https://github.com/ToMe25/ToMe25s-Java-Utilities/raw/master/ToMe25s-Java-Utilities.jar%n");
 
 	private List<URL> urls;
 	private File target;
@@ -429,7 +432,7 @@ public class LibraryDownloader {
 	 * @return whether the download was successful.
 	 */
 	public static boolean downloadThis() {
-		return downloadThis(TOME25S_JAVA_UTILITIES_URL);
+		return downloadThis(DEFAULT_TOME25S_JAVA_UTILITIES_URL_STORAGE);
 	}
 
 	/**
@@ -452,7 +455,7 @@ public class LibraryDownloader {
 	 * @return whether the download was successful.
 	 */
 	public static boolean downloadThis(Consumer<Exception> exceptionHandler) {
-		return downloadThis(TOME25S_JAVA_UTILITIES_URL, exceptionHandler);
+		return downloadThis(DEFAULT_TOME25S_JAVA_UTILITIES_URL_STORAGE, exceptionHandler);
 	}
 
 	/**

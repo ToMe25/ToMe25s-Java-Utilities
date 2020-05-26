@@ -27,6 +27,8 @@ public class LogTracer {
 	private static Logger global;
 	private static Logger error;
 	private static Logger output;
+	private static final PrintStream DEFAULT_ERR = System.err;
+	private static final PrintStream DEFAULT_OUT = System.out;
 
 	/**
 	 * Sets System Output and Error Stream to a TracingMultiPrintStream with the old
@@ -268,6 +270,22 @@ public class LogTracer {
 			}
 		}
 		return callerFrame;
+	}
+
+	/**
+	 * Resets the system error output to its value from before this class changed
+	 * it. And maybe before other classes changed it.
+	 */
+	public static void resetErr() {
+		System.setErr(DEFAULT_ERR);
+	}
+
+	/**
+	 * Resets the system output to its value from before this class changed it. And
+	 * maybe before other classes changed it.
+	 */
+	public static void resetOut() {
+		System.setErr(DEFAULT_OUT);
 	}
 
 }

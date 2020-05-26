@@ -18,8 +18,8 @@ public class ConfigTest {
 	@Test
 	public void configTest() throws IOException {
 		// test the basics of the config system.
-		File cfgFile = new File(".", "Config");
-		Config cfg = new Config(cfgFile, false);
+		File cfgFile = new File("Config");
+		Config cfg = new Config(false, cfgFile, false);
 		cfg.addConfig("Test.cfg", "testString", "\\Hello\"World:?\\",
 				"This is a Test config option to test the Config class.");
 		cfg.addConfig("Test.cfg", "testInt", 32123, "A Test integer");
@@ -55,7 +55,8 @@ public class ConfigTest {
 		assertEquals(Float.MAX_EXPONENT, cfg.getConfig("floatTest"));
 		// test json handling.
 		cfg.addConfig("Test.cfg", "testJson", new JsonObject("someTest", "Test String"), "a test json object.");
-		cfg.addConfig("Test.cfg", "testJsonArray", new JsonArray("Test", 123, "some random test", Double.MIN_VALUE), "a test json array.");
+		cfg.addConfig("Test.cfg", "testJsonArray", new JsonArray("Test", 123, "some random test", Double.MIN_VALUE),
+				"a test json array.");
 		cfg.readConfig();
 		assertEquals(new JsonObject("someTest", "Test String"), cfg.getConfig("testJson"));
 		assertEquals(new JsonArray("Test", 123, "some random test", Double.MIN_VALUE), cfg.getConfig("testJsonArray"));
@@ -65,11 +66,35 @@ public class ConfigTest {
 		fOut = new FileOutputStream(new File(cfgFile, "wrong.cfg"));
 		fOut.write("json: [123, 321]\nint: Test".getBytes());
 		fOut.close();
-		System.err.println("The following ClassCastException and NumberFormatException are excepted to happen during this test, and not a problem!");
+		System.err.println(
+				"The following ClassCastException and NumberFormatException are excepted to happen during this test, and not a problem!");
 		cfg.readConfig();
 		assertEquals(Integer.MIN_VALUE, cfg.getConfig("int"));
 		assertEquals(new JsonObject("key", "value"), cfg.getConfig("json"));
 		// delete config files.
+		cfg.delete();
+	}
+
+	@Test
+	public void configWatcherTest() throws IOException, InterruptedException {
+		// test the basics of the config watcher.
+		File cfgFile = new File("Config");
+		Config cfg = new Config(cfgFile);
+		cfg.addConfig("Watcher.cfg", "StringTest", "Some Random String",
+				"A String that definitifly wont get changed...");
+		assertEquals("Some Random String", cfg.getConfig("StringTest"));
+		FileInputStream fIn = new FileInputStream(new File(cfgFile, "Watcher.cfg"));
+		byte[] buffer = new byte[fIn.available()];
+		fIn.read(buffer);
+		fIn.close();
+		String config = new String(buffer);
+		config = config.replace("Random", "Changed").replaceAll("wont", "will");
+		FileOutputStream fOut = new FileOutputStream(new File(cfgFile, "Watcher.cfg"));
+		Thread.sleep(10);// Wait for the ConfigWatcher to finish initializing.
+		fOut.write(config.getBytes());
+		fOut.close();
+		Thread.sleep(10);// Wait for the ConfigWatcher to detect the change.
+		assertEquals("Some Changed String", cfg.getConfig("StringTest"));
 		cfg.delete();
 	}
 

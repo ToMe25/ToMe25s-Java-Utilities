@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -143,8 +143,16 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#cfgDir">cfgDir</a></span></code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>private boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#read">read</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>private <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config">ConfigValue</a>&lt;?&gt;&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#sortedConfig">sortedConfig</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private <a href="../../../../com/tome25/utils/config/ConfigWatcher.html" title="class in com.tome25.utils.config">ConfigWatcher</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#watcher">watcher</a></span></code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -161,11 +169,40 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#Config-boolean-">Config</a></span>(boolean&nbsp;read)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#Config--">Config</a></span>()</code>
+<div class="block">Creates a new Config.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#Config-boolean-">Config</a></span>(boolean&nbsp;read)</code>
+<div class="block">Creates a new Config.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#Config-boolean-java.io.File-boolean-">Config</a></span>(boolean&nbsp;read,
+      <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;configDir,
+      boolean&nbsp;watch)</code>
+<div class="block">Creates a new Config.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#Config-boolean-java.io.File-boolean-java.util.function.Consumer-">Config</a></span>(boolean&nbsp;read,
+      <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;configDir,
+      boolean&nbsp;watch,
+      <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&gt;&nbsp;callback)</code>
+<div class="block">Creates a new Config.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#Config-java.io.File-">Config</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;configDir)</code>
+<div class="block">Creates a new Config.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#Config-java.io.File-boolean-">Config</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;configDir,
-      boolean&nbsp;read)</code>&nbsp;</td>
+      boolean&nbsp;read)</code>
+<div class="block">Creates a new Config.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -220,7 +257,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>private void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#createConfig-java.io.File-">createConfig</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;config)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#createConfig-java.io.File-">createConfig</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;config)</code>
+<div class="block">Writes all config options in the given file to the disk.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -241,15 +280,23 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#readConfigFile-java.io.File-">readConfigFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file)</code>
+<div class="block">reads the given config file.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#setConfig-java.lang.String-T-">setConfig</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
          T&nbsp;value)</code>
 <div class="block">sets the Config value for the given Name the the given Value.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>private void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#sortConfig--">sortConfig</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#sortConfig--">sortConfig</a></span>()</code>
+<div class="block">Sorts the <a href="../../../../com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config"><code>ConfigValue</code></a>s by the file they are stored in.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -294,10 +341,28 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <a name="cfgDir">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>cfgDir</h4>
 <pre>private&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a> cfgDir</pre>
+</li>
+</ul>
+<a name="read">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>read</h4>
+<pre>private&nbsp;boolean read</pre>
+</li>
+</ul>
+<a name="watcher">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>watcher</h4>
+<pre>private&nbsp;<a href="../../../../com/tome25/utils/config/ConfigWatcher.html" title="class in com.tome25.utils.config">ConfigWatcher</a> watcher</pre>
 </li>
 </ul>
 </li>
@@ -308,6 +373,16 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
+<a name="Config--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Config</h4>
+<pre>public&nbsp;Config()</pre>
+<div class="block">Creates a new Config.</div>
+</li>
+</ul>
 <a name="Config-boolean-">
 <!--   -->
 </a>
@@ -315,16 +390,86 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>Config</h4>
 <pre>public&nbsp;Config(boolean&nbsp;read)</pre>
+<div class="block">Creates a new Config.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>read</code> - whether the config file should be automatically read on addition
+             of options.</dd>
+</dl>
+</li>
+</ul>
+<a name="Config-java.io.File-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Config</h4>
+<pre>public&nbsp;Config(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;configDir)</pre>
+<div class="block">Creates a new Config.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>configDir</code> - the directory to put config files in.</dd>
+</dl>
 </li>
 </ul>
 <a name="Config-java.io.File-boolean-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>Config</h4>
 <pre>public&nbsp;Config(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;configDir,
               boolean&nbsp;read)</pre>
+<div class="block">Creates a new Config.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>configDir</code> - the directory to put config files in.</dd>
+<dd><code>read</code> - whether the config file should be automatically read on
+                  addition of options.</dd>
+</dl>
+</li>
+</ul>
+<a name="Config-boolean-java.io.File-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Config</h4>
+<pre>public&nbsp;Config(boolean&nbsp;read,
+              <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;configDir,
+              boolean&nbsp;watch)</pre>
+<div class="block">Creates a new Config.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>read</code> - whether the config file should be automatically read on
+                  addition of options.</dd>
+<dd><code>configDir</code> - the directory to put config files in.</dd>
+<dd><code>watch</code> - whether to watch the config dir, and update config options
+                  on change.</dd>
+</dl>
+</li>
+</ul>
+<a name="Config-boolean-java.io.File-boolean-java.util.function.Consumer-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>Config</h4>
+<pre>public&nbsp;Config(boolean&nbsp;read,
+              <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;configDir,
+              boolean&nbsp;watch,
+              <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&gt;&nbsp;callback)</pre>
+<div class="block">Creates a new Config.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>read</code> - whether the config file should be automatically read on
+                  addition of options.</dd>
+<dd><code>configDir</code> - the directory to put config files in.</dd>
+<dd><code>watch</code> - whether to watch the config dir, and update config options
+                  on change.</dd>
+<dd><code>callback</code> - a consumer to call with the changed file when a file
+                  changes. can be null.</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -400,30 +545,6 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </dl>
 </li>
 </ul>
-<a name="addConfig-java.io.File-java.lang.String-java.lang.Object-java.lang.String-">
-<!--   -->
-</a><a name="addConfig-java.io.File-java.lang.String-T-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>addConfig</h4>
-<pre>public&nbsp;&lt;T&gt;&nbsp;void&nbsp;addConfig(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;config,
-                          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-                          T&nbsp;defaultValue,
-                          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;comment)</pre>
-<div class="block">adds a config option to be read from the given config file.</div>
-<dl>
-<dt><span class="paramLabel">Type Parameters:</span></dt>
-<dd><code>T</code> - the option type.</dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>config</code> - the config file to read this config option from.</dd>
-<dd><code>name</code> - the key for this config option.</dd>
-<dd><code>defaultValue</code> - this config options default value.</dd>
-<dd><code>comment</code> - a comment to add to this config option.</dd>
-</dl>
-</li>
-</ul>
 <a name="addConfig-java.io.File-java.lang.String-java.lang.Object-java.lang.String:A-">
 <!--   -->
 </a><a name="addConfig-java.io.File-java.lang.String-T-java.lang.String...-">
@@ -446,6 +567,30 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dd><code>defaultValue</code> - this config options default value.</dd>
 <dd><code>comments</code> - a list of comments to add to this config option. every
                      string will get its own line.</dd>
+</dl>
+</li>
+</ul>
+<a name="addConfig-java.io.File-java.lang.String-java.lang.Object-java.lang.String-">
+<!--   -->
+</a><a name="addConfig-java.io.File-java.lang.String-T-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addConfig</h4>
+<pre>public&nbsp;&lt;T&gt;&nbsp;void&nbsp;addConfig(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;config,
+                          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                          T&nbsp;defaultValue,
+                          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;comment)</pre>
+<div class="block">adds a config option to be read from the given config file.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - the option type.</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>config</code> - the config file to read this config option from.</dd>
+<dd><code>name</code> - the key for this config option.</dd>
+<dd><code>defaultValue</code> - this config options default value.</dd>
+<dd><code>comment</code> - a comment to add to this config option.</dd>
 </dl>
 </li>
 </ul>
@@ -479,6 +624,20 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <div class="block">reads the Config.</div>
 </li>
 </ul>
+<a name="readConfigFile-java.io.File-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>readConfigFile</h4>
+<pre>public&nbsp;void&nbsp;readConfigFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file)</pre>
+<div class="block">reads the given config file.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>file</code> - the file to read.</dd>
+</dl>
+</li>
+</ul>
 <a name="createConfig-java.io.File-">
 <!--   -->
 </a>
@@ -486,6 +645,11 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>createConfig</h4>
 <pre>private&nbsp;void&nbsp;createConfig(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;config)</pre>
+<div class="block">Writes all config options in the given file to the disk.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>config</code> - the file to write.</dd>
+</dl>
 </li>
 </ul>
 <a name="sortConfig--">
@@ -495,6 +659,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>sortConfig</h4>
 <pre>private&nbsp;void&nbsp;sortConfig()</pre>
+<div class="block">Sorts the <a href="../../../../com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config"><code>ConfigValue</code></a>s by the file they are stored in.</div>
 </li>
 </ul>
 <a name="delete--">

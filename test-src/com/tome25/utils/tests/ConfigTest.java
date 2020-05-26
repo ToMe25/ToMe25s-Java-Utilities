@@ -90,10 +90,10 @@ public class ConfigTest {
 		String config = new String(buffer);
 		config = config.replace("Random", "Changed").replaceAll("wont", "will");
 		FileOutputStream fOut = new FileOutputStream(new File(cfgFile, "Watcher.cfg"));
-		Thread.sleep(10);// Wait for the ConfigWatcher to finish initializing.
+		Thread.sleep(20);// Wait for the ConfigWatcher to finish initializing.
 		fOut.write(config.getBytes());
 		fOut.close();
-		Thread.sleep(10);// Wait for the ConfigWatcher to detect the change.
+		Thread.sleep(50);// Wait for the ConfigWatcher to detect the change.
 		assertEquals("Some Changed String", cfg.getConfig("StringTest"));
 		cfg.delete();
 	}

@@ -1,6 +1,7 @@
 package com.tome25.utils.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -79,7 +80,8 @@ public class ConfigTest {
 	public void configWatcherTest() throws IOException, InterruptedException {
 		// test the basics of the config watcher.
 		File cfgFile = new File("Config");
-		Config cfg = new Config(cfgFile);
+		final boolean[] changed = new boolean[] { false };
+		Config cfg = new Config(true, cfgFile, true, (file) -> changed[0] = true);
 		cfg.addConfig("Watcher.cfg", "StringTest", "Some Random String",
 				"A String that definitifly wont get changed...");
 		assertEquals("Some Random String", cfg.getConfig("StringTest"));
@@ -90,10 +92,16 @@ public class ConfigTest {
 		String config = new String(buffer);
 		config = config.replace("Random", "Changed").replaceAll("wont", "will");
 		FileOutputStream fOut = new FileOutputStream(new File(cfgFile, "Watcher.cfg"));
-		Thread.sleep(20);// Wait for the ConfigWatcher to finish initializing.
+		Thread.sleep(50);// Wait for the ConfigWatcher to finish initializing.
 		fOut.write(config.getBytes());
 		fOut.close();
-		Thread.sleep(50);// Wait for the ConfigWatcher to detect the change.
+		final int maxWaitTime = 5000;
+		int waitTime = 0;
+		while(!changed[0] && waitTime < maxWaitTime) {
+			Thread.sleep(5);
+			waitTime += 5;
+		}
+		assertTrue(String.format("The ConfigWatcher didn't detect any changes in the may allowed wait time of %ds.", maxWaitTime / 1000), changed[0]);
 		assertEquals("Some Changed String", cfg.getConfig("StringTest"));
 		cfg.delete();
 	}

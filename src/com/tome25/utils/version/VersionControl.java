@@ -76,7 +76,7 @@ public class VersionControl {
 	 * @return the version number.
 	 */
 	public static int[] getVersionArray() {
-		String[] split = getVersionString().split(".");
+		String[] split = getVersionString().split("\\.");
 		int[] version = new int[split.length];
 		int i = 0;
 		for (String part : split) {

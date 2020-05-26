@@ -213,6 +213,27 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	}
 
 	/**
+	 * Returns a string representation of this element as byte array.
+	 * 
+	 * @return a String representation of this element as byte array.
+	 */
+	public default byte[] getBytes() {
+		return toByteArray();
+	}
+
+	/**
+	 * Returns a string representation of this element as byte array.
+	 * 
+	 * @param charset the name of the charset to use to convert the string to a byte
+	 *                array.
+	 * @return a String representation of this element as byte array.
+	 * @throws UnsupportedEncodingException If the named charset is not supported.
+	 */
+	public default byte[] getBytes(String charset) throws UnsupportedEncodingException {
+		return toByteArray(charset);
+	}
+
+	/**
 	 * Checks whether this JsonElement can be cloned.
 	 * 
 	 * @return whether this JsonElement can be cloned.

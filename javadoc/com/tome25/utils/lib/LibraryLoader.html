@@ -18,8 +18,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var methods = {"i0":42,"i1":42,"i2":42,"i3":42,"i4":42,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":41,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -113,7 +113,10 @@ var activeTableTab = "activeTableTab";
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
 <div class="block">This class can add Jar Files to the classpath at runtime. You will need to
  copy this class and <a href="../../../../com/tome25/utils/lib/JarExtractor.html" title="class in com.tome25.utils.lib"><code>JarExtractor</code></a> and/or <a href="../../../../com/tome25/utils/lib/LibraryDownloader.html" title="class in com.tome25.utils.lib"><code>LibraryDownloader</code></a>
- into your project in order to add this library to the classpath at runtime.</div>
+ into your project in order to add this library to the classpath at
+ runtime(requires a restart as of version 1.0.126). This class can be used as
+ a java agent, to add stuff to the classpath without a restart, this behavior
+ is deprecated tho.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>ToMe25</dd>
@@ -144,6 +147,10 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <td class="colFirst"><code>private static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/instrument/Instrumentation.html?is-external=true" title="class or interface in java.lang.instrument">Instrumentation</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#instrumentation">instrumentation</a></span></code>&nbsp;</td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>private static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#mainArgs">mainArgs</a></span></code>&nbsp;</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -160,9 +167,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#LibraryLoader-java.lang.String:A-">LibraryLoader</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;mainArgs)</code>
-<div class="block">Creates a new LibraryLoader, it is recommended to do this at the start of
- your program as this may need to restart to jvm, which is what it needs the
- arguments from your main method for.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </td>
 </tr>
 </table>
@@ -175,7 +180,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -183,47 +188,78 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#addJarsToClasspath-java.io.File-">addJarsToClasspath</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;libDir)</code>
-<div class="block">Adds the given library jar to the classpath.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#addJarsToClasspath-java.lang.String-">addJarsToClasspath</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;libDir)</code>
-<div class="block">Adds all jar archives in the given directory to the classpath.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#addJarToClasspath-java.io.File-">addJarToClasspath</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;library)</code>
-<div class="block">Adds the given library jar to the classpath.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#addJarToClasspath-java.util.jar.JarFile-">addJarToClasspath</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/jar/JarFile.html?is-external=true" title="class or interface in java.util.jar">JarFile</a>&nbsp;library)</code>
-<div class="block">Adds the given library jar to the classpath.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#addJarToClasspath-java.lang.String-">addJarToClasspath</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;library)</code>
-<div class="block">Adds the given library jar to the classpath.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>void</code></td>
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#addLibsToClasspath--">addLibsToClasspath</a></span>()</code>
+<div class="block">Adds everything inside the libs folder to the classpath.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#addLibToClasspath-java.lang.String-">addLibToClasspath</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;library)</code>
+<div class="block">Adds the library with the given name inside the libs directory to the
+ classpath.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#addThisToClasspath--">addThisToClasspath</a></span>()</code>
 <div class="block">Adds ToMe25s-Java-Utilities to the classpath of it is in the libs directory
  next to this jar.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#addToClasspath-java.io.File-">addToClasspath</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;path)</code>
+<div class="block">Adds the given String to the classpath.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#addToClasspath-java.nio.file.Path-">addToClasspath</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html?is-external=true" title="class or interface in java.nio.file">Path</a>&nbsp;path)</code>
+<div class="block">Adds the given String to the classpath.</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#addToClasspath-java.lang.String-">addToClasspath</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>
+<div class="block">Adds the given String to the classpath.</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#getBuffer--">getBuffer</a></span>()</code>
 <div class="block">if init got used, this is the way to get its output buffer.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#init-java.lang.String:A-">init</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;args)</code>
 <div class="block">Initializes a library loader, restarts your jvm if necessary, tries to
@@ -231,7 +267,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  from this Jar and adds it to the classpath.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#init-java.lang.String:A-java.io.File-">init</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;args,
     <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;logFile)</code>
@@ -242,7 +278,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  streams.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#init-java.lang.String:A-java.io.File-java.io.File-">init</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;args,
     <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;outputLogFile,
@@ -254,7 +290,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  streams.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#init-java.lang.String:A-java.io.File-java.io.File-java.lang.String-">init</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;args,
     <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;outputLogFile,
@@ -267,7 +303,21 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  streams.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#init-java.lang.String:A-java.io.File-java.io.File-java.lang.String-boolean-">init</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;args,
+    <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;outputLogFile,
+    <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;errorLogFile,
+    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;defaultUrlStorage,
+    boolean&nbsp;update)</code>
+<div class="block">Initializes a library loader, restarts your jvm if necessary, tries to
+ download ToMe25s-Java-Utilites, if that doesn't work it tries to extract it
+ from this Jar, adds it to the classpath, and sets the System Outputs to
+ TracingMultiPrintStreams printing to the log files and the previous output
+ streams.</div>
+</td>
+</tr>
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#init-java.lang.String:A-java.io.File-java.lang.String-">init</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;args,
     <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;logFile,
@@ -279,14 +329,38 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
  streams.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#premain-java.lang.String-java.lang.instrument.Instrumentation-">premain</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;args,
        <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/instrument/Instrumentation.html?is-external=true" title="class or interface in java.lang.instrument">Instrumentation</a>&nbsp;instrumentation)</code>
-<div class="block">The premain method needed for this Agent to work.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i19" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#removeToClasspath-java.io.File-">removeToClasspath</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;path)</code>
+<div class="block">Removes the given String from the classpath.</div>
+</td>
+</tr>
+<tr id="i20" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#removeToClasspath-java.nio.file.Path-">removeToClasspath</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html?is-external=true" title="class or interface in java.nio.file">Path</a>&nbsp;path)</code>
+<div class="block">Removes the given String from the classpath.</div>
+</td>
+</tr>
+<tr id="i21" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#removeToClasspath-java.lang.String-">removeToClasspath</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>
+<div class="block">Removes the given String from the classpath.</div>
+</td>
+</tr>
+<tr id="i22" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#setArgs-java.lang.String:A-">setArgs</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;args)</code>
+<div class="block">Sets the main args to be used for eventual restarts.</div>
+</td>
+</tr>
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>private static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#stringArrayToString-java.lang.String:A-">stringArrayToString</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;array)</code>
 <div class="block">converts a String Array to a String.</div>
@@ -326,10 +400,19 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <a name="buffer">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>buffer</h4>
 <pre>private static&nbsp;byte[] buffer</pre>
+</li>
+</ul>
+<a name="mainArgs">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>mainArgs</h4>
+<pre>private static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> mainArgs</pre>
 </li>
 </ul>
 </li>
@@ -346,11 +429,13 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockListLast">
 <li class="blockList">
 <h4>LibraryLoader</h4>
-<pre>public&nbsp;LibraryLoader(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;mainArgs)
-              throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;LibraryLoader(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;mainArgs)
+                          throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <div class="block">Creates a new LibraryLoader, it is recommended to do this at the start of
- your program as this may need to restart to jvm, which is what it needs the
- arguments from your main method for.</div>
+ your program, as this may need to restart to jvm, which is what it needs the
+ arguments from your main method for. Part of the Java Agent.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>mainArgs</code> - the main methods arguments.</dd>
@@ -482,15 +567,48 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </dl>
 </li>
 </ul>
+<a name="init-java.lang.String:A-java.io.File-java.io.File-java.lang.String-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>init</h4>
+<pre>public static&nbsp;void&nbsp;init(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;args,
+                        <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;outputLogFile,
+                        <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;errorLogFile,
+                        <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;defaultUrlStorage,
+                        boolean&nbsp;update)</pre>
+<div class="block">Initializes a library loader, restarts your jvm if necessary, tries to
+ download ToMe25s-Java-Utilites, if that doesn't work it tries to extract it
+ from this Jar, adds it to the classpath, and sets the System Outputs to
+ TracingMultiPrintStreams printing to the log files and the previous output
+ streams.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>args</code> - the program arguments.</dd>
+<dd><code>outputLogFile</code> - the log file for System.out. set to null to disable
+                          changing System.out.</dd>
+<dd><code>errorLogFile</code> - the log file for System.err. set to null to disable
+                          changing System.err.</dd>
+<dd><code>defaultUrlStorage</code> - the default contents for the URL storage file that
+                          lists the urls to try and download
+                          ToMe25s-Java-Utilites from.</dd>
+<dd><code>update</code> - whether to download/extract the file if it already
+                          exists.</dd>
+</dl>
+</li>
+</ul>
 <a name="premain-java.lang.String-java.lang.instrument.Instrumentation-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>premain</h4>
-<pre>public static&nbsp;void&nbsp;premain(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;args,
-                           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/instrument/Instrumentation.html?is-external=true" title="class or interface in java.lang.instrument">Instrumentation</a>&nbsp;instrumentation)</pre>
-<div class="block">The premain method needed for this Agent to work.</div>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public static&nbsp;void&nbsp;premain(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;args,
+                                       <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/instrument/Instrumentation.html?is-external=true" title="class or interface in java.lang.instrument">Instrumentation</a>&nbsp;instrumentation)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block">The premain method needed for this Agent to work. Part of the Java Agent.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>args</code> - some arguments.</dd>
@@ -520,9 +638,11 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>addJarToClasspath</h4>
-<pre>public&nbsp;void&nbsp;addJarToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;library)
-                       throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Adds the given library jar to the classpath.</div>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;addJarToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;library)
+                                   throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block">Adds the given library jar to the classpath. Part of the Java Agent.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>library</code> - the jar archive that should get added to the classpath.</dd>
@@ -537,9 +657,11 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>addJarToClasspath</h4>
-<pre>public&nbsp;void&nbsp;addJarToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;library)
-                       throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Adds the given library jar to the classpath.</div>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;addJarToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;library)
+                                   throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block">Adds the given library jar to the classpath. Part of the Java Agent.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>library</code> - the jar archive that should get added to the classpath.</dd>
@@ -554,8 +676,10 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>addJarToClasspath</h4>
-<pre>public&nbsp;void&nbsp;addJarToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/jar/JarFile.html?is-external=true" title="class or interface in java.util.jar">JarFile</a>&nbsp;library)</pre>
-<div class="block">Adds the given library jar to the classpath.</div>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;addJarToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/jar/JarFile.html?is-external=true" title="class or interface in java.util.jar">JarFile</a>&nbsp;library)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block">Adds the given library jar to the classpath. Part of the Java Agent.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>library</code> - the jar archive that should get added to the classpath.</dd>
@@ -568,9 +692,12 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>addJarsToClasspath</h4>
-<pre>public&nbsp;void&nbsp;addJarsToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;libDir)
-                        throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Adds all jar archives in the given directory to the classpath.</div>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;addJarsToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;libDir)
+                                    throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block">Adds all jar archives in the given directory to the classpath. Part of the
+ Java Agent.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>libDir</code> - the directory containing the libraries.</dd>
@@ -585,9 +712,11 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>addJarsToClasspath</h4>
-<pre>public&nbsp;void&nbsp;addJarsToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;libDir)
-                        throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Adds the given library jar to the classpath.</div>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;addJarsToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;libDir)
+                                    throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block">Adds the given library jar to the classpath. Part of the Java Agent.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>libDir</code> - the directory containing the libraries.</dd>
@@ -602,9 +731,155 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>addThisToClasspath</h4>
-<pre>public&nbsp;void&nbsp;addThisToClasspath()</pre>
+<pre>public static&nbsp;void&nbsp;addThisToClasspath()</pre>
 <div class="block">Adds ToMe25s-Java-Utilities to the classpath of it is in the libs directory
  next to this jar.</div>
+</li>
+</ul>
+<a name="addLibToClasspath-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addLibToClasspath</h4>
+<pre>public static&nbsp;void&nbsp;addLibToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;library)</pre>
+<div class="block">Adds the library with the given name inside the libs directory to the
+ classpath.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>library</code> - the library to add.</dd>
+</dl>
+</li>
+</ul>
+<a name="addLibsToClasspath--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addLibsToClasspath</h4>
+<pre>public static&nbsp;void&nbsp;addLibsToClasspath()</pre>
+<div class="block">Adds everything inside the libs folder to the classpath. Sadly just adding a
+ "*" file in the directory doesn't work in the MANIFEST.MF attribute, so this
+ looks for all .jar files in the libs direcotry.</div>
+</li>
+</ul>
+<a name="addToClasspath-java.nio.file.Path-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addToClasspath</h4>
+<pre>public static&nbsp;void&nbsp;addToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html?is-external=true" title="class or interface in java.nio.file">Path</a>&nbsp;path)
+                           throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Adds the given String to the classpath. Requires setArgs to be run first!</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>path</code> - the path to add.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if something goes wrong.</dd>
+</dl>
+</li>
+</ul>
+<a name="addToClasspath-java.io.File-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addToClasspath</h4>
+<pre>public static&nbsp;void&nbsp;addToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;path)
+                           throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Adds the given String to the classpath. Requires setArgs to be run first!</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>path</code> - the path to add.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if something goes wrong.</dd>
+</dl>
+</li>
+</ul>
+<a name="addToClasspath-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addToClasspath</h4>
+<pre>public static&nbsp;void&nbsp;addToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)
+                           throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Adds the given String to the classpath. Requires setArgs to be run first!</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>path</code> - the path to add.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if something goes wrong.</dd>
+</dl>
+</li>
+</ul>
+<a name="removeToClasspath-java.nio.file.Path-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeToClasspath</h4>
+<pre>public static&nbsp;void&nbsp;removeToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html?is-external=true" title="class or interface in java.nio.file">Path</a>&nbsp;path)
+                              throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Removes the given String from the classpath. Requires setArgs to be run
+ first!</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>path</code> - the path to remove.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if something goes wrong.</dd>
+</dl>
+</li>
+</ul>
+<a name="removeToClasspath-java.io.File-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeToClasspath</h4>
+<pre>public static&nbsp;void&nbsp;removeToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;path)
+                              throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Removes the given String from the classpath. Requires setArgs to be run
+ first!</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>path</code> - the path to remove.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if something goes wrong.</dd>
+</dl>
+</li>
+</ul>
+<a name="removeToClasspath-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeToClasspath</h4>
+<pre>public static&nbsp;void&nbsp;removeToClasspath(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)
+                              throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Removes the given String from the classpath. Requires setArgs to be run
+ first!</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>path</code> - the path to remove.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if something goes wrong.</dd>
+</dl>
+</li>
+</ul>
+<a name="setArgs-java.lang.String:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setArgs</h4>
+<pre>public static&nbsp;void&nbsp;setArgs(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;args)</pre>
+<div class="block">Sets the main args to be used for eventual restarts.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>args</code> - the arguments of the main method.</dd>
+</dl>
 </li>
 </ul>
 <a name="getBuffer--">

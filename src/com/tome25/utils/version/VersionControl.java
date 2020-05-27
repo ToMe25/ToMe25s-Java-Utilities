@@ -14,8 +14,6 @@ import java.util.jar.JarFile;
  */
 public class VersionControl {
 
-	private static File file;
-	private static JarFile archieve;
 	private static final Map<String, String> LIBRARY_VERSION_STRINGS = new HashMap<String, String>();
 	private static final Map<String, int[]> LIBRARY_VERSION_ARRAYS = new HashMap<String, int[]>();
 	private static String versionString;
@@ -119,14 +117,13 @@ public class VersionControl {
 	 */
 	public static String getVersionString() {
 		if (versionString == null) {
-			if (file == null) {
-				file = new File(VersionControl.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-			}
+			File file = new File(VersionControl.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+			JarFile jar = null;
 			if (file.isDirectory()) {
 				versionString = "1.0";
-			} else if (archieve == null) {
+			} else {
 				try {
-					archieve = new JarFile(file);
+					jar = new JarFile(file);
 				} catch (IOException e) {
 					e.printStackTrace();
 					versionString = "1.0";
@@ -134,7 +131,7 @@ public class VersionControl {
 			}
 			if (!file.isDirectory()) {
 				try {
-					versionString = archieve.getManifest().getMainAttributes().getValue("Implementation-Version");
+					versionString = jar.getManifest().getMainAttributes().getValue("Implementation-Version");
 				} catch (Exception e) {
 					e.printStackTrace();
 					versionString = "1.0";

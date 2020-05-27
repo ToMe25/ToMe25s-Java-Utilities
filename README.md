@@ -25,9 +25,9 @@ If you want it to get downloaded on startup: <details><summary>click here to see
  1. copy the LibraryDownloader class and the LibraryLoader class into your project.(if you copy the sources not the compiled classes you can move them to any package, but they need to all be in the same package)
  2. add something like
  ```java
- LibraryLoader loader = new LibraryLoader(args);
  LibraryDownloader.downloadThis();
- loader.addThisToClasspath();
+ LibraryLoader.setArgs(args);
+ LibraryLoader.addLibsToClasspath();
  ```
  to the start of your main method.
  You can also add
@@ -46,10 +46,9 @@ If you want it to be packaged into your main jar and get extracted on startup: <
  2. copy the JarExtractor class and the LibraryLoader class into your project.(if you copy the sources not the compiled classes you can move them to any package, but they need to all be in the same package)
  3. add something like
  ```java
- LibraryLoader loader = new LibraryLoader(args);
- File codeSource = new File(MainClass.class.getProtectionDomain().getCodeSource().getLocation().getPath());
- JarExtractor.extractThis(codeSource);
- loader.addThisToClasspath();
+ JarExtractor.extractThis(new File(MainClass.class.getProtectionDomain().getCodeSource().getLocation().getPath()));
+ LibraryLoader.setArgs(args);
+ LibraryLoader.addLibsToClasspath();
  ```
  to the start of your main method.
   You can also add

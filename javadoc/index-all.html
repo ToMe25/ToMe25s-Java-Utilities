@@ -671,7 +671,13 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getBuild--">getBuild()</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
 <dd>
-<div class="block">gets the build part of this libraries version number.</div>
+<div class="block">Gets the build/patch part of this libraries version number, or 0 if it isn't
+ available.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getBuild-java.lang.String-">getBuild(String)</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>
+<div class="block">Gets the build/patch part of the given libraries version number, or 0 if it
+ isn't available.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#getBytes--">getBytes()</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
 <dd>
@@ -746,7 +752,13 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getMajor--">getMajor()</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
 <dd>
-<div class="block">gets the major part of this libraries version number.</div>
+<div class="block">Gets the major part of this libraries version number, or 1 if it isn't
+ available.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getMajor-java.lang.String-">getMajor(String)</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>
+<div class="block">Gets the major part of the given libraries version number, or 1 if it isn't
+ available.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidKeyException.html#getMessage--">getMessage()</a></span> - Method in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception">InvalidKeyException</a></dt>
 <dd>&nbsp;</dd>
@@ -754,7 +766,13 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getMinor--">getMinor()</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
 <dd>
-<div class="block">gets the minor part of this libraries version number.</div>
+<div class="block">Gets the minor part of this libraries version number, or 0 if it isn't
+ available.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getMinor-java.lang.String-">getMinor(String)</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>
+<div class="block">Gets the minor part of the given libraries version number, or 0 if it isn't
+ available.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#getOutput--">getOutput()</a></span> - Static method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
 <dd>
@@ -763,6 +781,16 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/MultiPrintStream.html#getOutputStreams--">getOutputStreams()</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/MultiPrintStream.html" title="class in com.tome25.utils.logging">MultiPrintStream</a></dt>
 <dd>
 <div class="block">returns a list of all used OutputStreams.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getPatch--">getPatch()</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>
+<div class="block">Gets the build/patch part of this libraries version number, or 0 if it isn't
+ available.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getPatch-java.lang.String-">getPatch(String)</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>
+<div class="block">Gets the build/patch part of the given libraries version number, or 0 if it
+ isn't available.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryDownloader.html#getPercentDownloaded--">getPercentDownloaded()</a></span> - Method in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryDownloader.html" title="class in com.tome25.utils.lib">LibraryDownloader</a></dt>
 <dd>
@@ -803,13 +831,23 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getVersionArray--">getVersionArray()</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
 <dd>
-<div class="block">gets this libraries version number split into its components, if this is
+<div class="block">Gets this libraries version number split into its components, if this is
  still in a Jar, if not this will return [1, 0].</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getVersionArray-java.lang.String-">getVersionArray(String)</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>
+<div class="block">Gets the version number of the given library as a string, if it was
+ registered prior to this call, if not this will return "1.0".</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getVersionString--">getVersionString()</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
 <dd>
-<div class="block">gets this libraries version number as a string, if this is still in a Jar, if
+<div class="block">Gets this libraries version number as a string, if this is still in a Jar, if
  not this will return 1.0.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#getVersionString-java.lang.String-">getVersionString(String)</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>
+<div class="block">Gets the version number of the given library as a string, if it was
+ registered prior to this call, if not this will return "1.0".</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LoggingPrintStream.html#getWriter--">getWriter()</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LoggingPrintStream.html" title="class in com.tome25.utils.logging">LoggingPrintStream</a></dt>
 <dd>
@@ -984,6 +1022,10 @@
 <h2 class="title">L</h2>
 <dl>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#lastIndexOf-java.lang.Object-">lastIndexOf(Object)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#LIBRARY_VERSION_ARRAYS">LIBRARY_VERSION_ARRAYS</a></span> - Static variable in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#LIBRARY_VERSION_STRINGS">LIBRARY_VERSION_STRINGS</a></span> - Static variable in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/tome25/utils/lib/LibraryDownloader.html" title="class in com.tome25.utils.lib"><span class="typeNameLink">LibraryDownloader</span></a> - Class in <a href="com/tome25/utils/lib/package-summary.html">com.tome25.utils.lib</a></dt>
 <dd>
@@ -1482,6 +1524,14 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/ConfigValue.html#setValue-java.lang.String-">setValue(String)</a></span> - Method in class com.tome25.utils.config.<a href="com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config">ConfigValue</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#setVersionArray-java.lang.String-int:A-">setVersionArray(String, int[])</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>
+<div class="block">Set the currently used version of a library.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#setVersionString-java.lang.String-java.lang.String-">setVersionString(String, String)</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>
+<div class="block">Set the currently used version of a library.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#size--">size()</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#size-boolean-">size(boolean)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
@@ -1587,6 +1637,12 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#toString--">toString()</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#toString--">toString()</a></span> - Method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#toStringStatic--">toStringStatic()</a></span> - Static method in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>
+<div class="block">Converts all the stored version data to a single String.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/ConfigWatcher.html#toWatch">toWatch</a></span> - Variable in class com.tome25.utils.config.<a href="com/tome25/utils/config/ConfigWatcher.html" title="class in com.tome25.utils.config">ConfigWatcher</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceClass">traceClass</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
@@ -1739,11 +1795,15 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#values--">values()</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#versionArray">versionArray</a></span> - Static variable in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version"><span class="typeNameLink">VersionControl</span></a> - Class in <a href="com/tome25/utils/version/package-summary.html">com.tome25.utils.version</a></dt>
 <dd>
-<div class="block">A utility class to check for this libraries version.</div>
+<div class="block">A utility class to check library versions.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#VersionControl--">VersionControl()</a></span> - Constructor for class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/version/VersionControl.html#versionString">versionString</a></span> - Static variable in class com.tome25.utils.version.<a href="com/tome25/utils/version/VersionControl.html" title="class in com.tome25.utils.version">VersionControl</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <a name="I:W">

@@ -18,8 +18,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":41,"i4":9,"i5":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":41,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":10,"i16":9};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -111,7 +111,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">VersionControl</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
-<div class="block">A utility class to check for this libraries version.</div>
+<div class="block">A utility class to check library versions.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>ToMe25</dd>
@@ -142,6 +142,22 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <td class="colFirst"><code>private static <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#file">file</a></span></code>&nbsp;</td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>private static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,int[]&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#LIBRARY_VERSION_ARRAYS">LIBRARY_VERSION_ARRAYS</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#LIBRARY_VERSION_STRINGS">LIBRARY_VERSION_STRINGS</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private static int[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#versionArray">versionArray</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#versionString">versionString</a></span></code>&nbsp;</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -169,7 +185,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -177,39 +193,115 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getBuild--">getBuild</a></span>()</code>
-<div class="block">gets the build part of this libraries version number.</div>
+<div class="block">Gets the build/patch part of this libraries version number, or 0 if it isn't
+ available.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getMajor--">getMajor</a></span>()</code>
-<div class="block">gets the major part of this libraries version number.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getBuild-java.lang.String-">getBuild</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
+<div class="block">Gets the build/patch part of the given libraries version number, or 0 if it
+ isn't available.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getMinor--">getMinor</a></span>()</code>
-<div class="block">gets the minor part of this libraries version number.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getMajor--">getMajor</a></span>()</code>
+<div class="block">Gets the major part of this libraries version number, or 1 if it isn't
+ available.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getMajor-java.lang.String-">getMajor</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
+<div class="block">Gets the major part of the given libraries version number, or 1 if it isn't
+ available.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getMinor--">getMinor</a></span>()</code>
+<div class="block">Gets the minor part of this libraries version number, or 0 if it isn't
+ available.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getMinor-java.lang.String-">getMinor</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
+<div class="block">Gets the minor part of the given libraries version number, or 0 if it isn't
+ available.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getPatch--">getPatch</a></span>()</code>
+<div class="block">Gets the build/patch part of this libraries version number, or 0 if it isn't
+ available.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getPatch-java.lang.String-">getPatch</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
+<div class="block">Gets the build/patch part of the given libraries version number, or 0 if it
+ isn't available.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getVersion--">getVersion</a></span>()</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static int[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getVersionArray--">getVersionArray</a></span>()</code>
-<div class="block">gets this libraries version number split into its components, if this is
+<div class="block">Gets this libraries version number split into its components, if this is
  still in a Jar, if not this will return [1, 0].</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>static int[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getVersionArray-java.lang.String-">getVersionArray</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
+<div class="block">Gets the version number of the given library as a string, if it was
+ registered prior to this call, if not this will return "1.0".</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getVersionString--">getVersionString</a></span>()</code>
-<div class="block">gets this libraries version number as a string, if this is still in a Jar, if
+<div class="block">Gets this libraries version number as a string, if this is still in a Jar, if
  not this will return 1.0.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#getVersionString-java.lang.String-">getVersionString</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
+<div class="block">Gets the version number of the given library as a string, if it was
+ registered prior to this call, if not this will return "1.0".</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#setVersionArray-java.lang.String-int:A-">setVersionArray</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+               int[]&nbsp;versionArray)</code>
+<div class="block">Set the currently used version of a library.</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#setVersionString-java.lang.String-java.lang.String-">setVersionString</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;versionString)</code>
+<div class="block">Set the currently used version of a library.</div>
+</td>
+</tr>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#toString--">toString</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/version/VersionControl.html#toStringStatic--">toStringStatic</a></span>()</code>
+<div class="block">Converts all the stored version data to a single String.</div>
 </td>
 </tr>
 </table>
@@ -218,7 +310,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -246,10 +338,46 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <a name="archieve">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>archieve</h4>
 <pre>private static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/jar/JarFile.html?is-external=true" title="class or interface in java.util.jar">JarFile</a> archieve</pre>
+</li>
+</ul>
+<a name="LIBRARY_VERSION_STRINGS">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LIBRARY_VERSION_STRINGS</h4>
+<pre>private static final&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt; LIBRARY_VERSION_STRINGS</pre>
+</li>
+</ul>
+<a name="LIBRARY_VERSION_ARRAYS">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LIBRARY_VERSION_ARRAYS</h4>
+<pre>private static final&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,int[]&gt; LIBRARY_VERSION_ARRAYS</pre>
+</li>
+</ul>
+<a name="versionString">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>versionString</h4>
+<pre>private static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> versionString</pre>
+</li>
+</ul>
+<a name="versionArray">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>versionArray</h4>
+<pre>private static&nbsp;int[] versionArray</pre>
 </li>
 </ul>
 </li>
@@ -301,7 +429,8 @@ public static&nbsp;int&nbsp;getVersion()</pre>
 <li class="blockList">
 <h4>getMajor</h4>
 <pre>public static&nbsp;int&nbsp;getMajor()</pre>
-<div class="block">gets the major part of this libraries version number.</div>
+<div class="block">Gets the major part of this libraries version number, or 1 if it isn't
+ available.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the major version.</dd>
@@ -315,7 +444,8 @@ public static&nbsp;int&nbsp;getVersion()</pre>
 <li class="blockList">
 <h4>getMinor</h4>
 <pre>public static&nbsp;int&nbsp;getMinor()</pre>
-<div class="block">gets the minor part of this libraries version number.</div>
+<div class="block">Gets the minor part of this libraries version number, or 0 if it isn't
+ available.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minor version.</dd>
@@ -329,7 +459,23 @@ public static&nbsp;int&nbsp;getVersion()</pre>
 <li class="blockList">
 <h4>getBuild</h4>
 <pre>public static&nbsp;int&nbsp;getBuild()</pre>
-<div class="block">gets the build part of this libraries version number.</div>
+<div class="block">Gets the build/patch part of this libraries version number, or 0 if it isn't
+ available.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the build number.</dd>
+</dl>
+</li>
+</ul>
+<a name="getPatch--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPatch</h4>
+<pre>public static&nbsp;int&nbsp;getPatch()</pre>
+<div class="block">Gets the build/patch part of this libraries version number, or 0 if it isn't
+ available.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the build number.</dd>
@@ -343,7 +489,7 @@ public static&nbsp;int&nbsp;getVersion()</pre>
 <li class="blockList">
 <h4>getVersionArray</h4>
 <pre>public static&nbsp;int[]&nbsp;getVersionArray()</pre>
-<div class="block">gets this libraries version number split into its components, if this is
+<div class="block">Gets this libraries version number split into its components, if this is
  still in a Jar, if not this will return [1, 0]. the used format is [MAJOR,
  MINOR, BUILD].</div>
 <dl>
@@ -355,15 +501,184 @@ public static&nbsp;int&nbsp;getVersion()</pre>
 <a name="getVersionString--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getVersionString</h4>
 <pre>public static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getVersionString()</pre>
-<div class="block">gets this libraries version number as a string, if this is still in a Jar, if
+<div class="block">Gets this libraries version number as a string, if this is still in a Jar, if
  not this will return 1.0. the used format is "MAJOR.MINOR.BUILD".</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the version number.</dd>
+</dl>
+</li>
+</ul>
+<a name="setVersionString-java.lang.String-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setVersionString</h4>
+<pre>public static&nbsp;void&nbsp;setVersionString(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;versionString)</pre>
+<div class="block">Set the currently used version of a library. This sets both the String, and
+ the Array.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - the name of the library.</dd>
+<dd><code>versionString</code> - the version of the library. Please use the format
+                      "MAJOR.MINOR.BUILD", as this utility wont be able to
+                      handle anything else.</dd>
+</dl>
+</li>
+</ul>
+<a name="setVersionArray-java.lang.String-int:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setVersionArray</h4>
+<pre>public static&nbsp;void&nbsp;setVersionArray(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                   int[]&nbsp;versionArray)</pre>
+<div class="block">Set the currently used version of a library. This sets both the String, and
+ the Array.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - the name of the library.</dd>
+<dd><code>versionArray</code> - the version of the library. Please use the format [MAJOR,
+                     MINOR, BUILD], as this utility wont be able to handle
+                     anything else.</dd>
+</dl>
+</li>
+</ul>
+<a name="getVersionString-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getVersionString</h4>
+<pre>public static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getVersionString(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<div class="block">Gets the version number of the given library as a string, if it was
+ registered prior to this call, if not this will return "1.0". The used format
+ is "MAJOR.MINOR.BUILD", if the library adding it didn't mess up.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - the name of the library to check.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the version number.</dd>
+</dl>
+</li>
+</ul>
+<a name="getVersionArray-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getVersionArray</h4>
+<pre>public static&nbsp;int[]&nbsp;getVersionArray(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<div class="block">Gets the version number of the given library as a string, if it was
+ registered prior to this call, if not this will return "1.0". The used format
+ is "MAJOR.MINOR.BUILD", if the library adding it didn't mess up.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - the name of the library to check.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the version number.</dd>
+</dl>
+</li>
+</ul>
+<a name="getMajor-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMajor</h4>
+<pre>public static&nbsp;int&nbsp;getMajor(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<div class="block">Gets the major part of the given libraries version number, or 1 if it isn't
+ available.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - the name of the library to check.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the major version.</dd>
+</dl>
+</li>
+</ul>
+<a name="getMinor-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMinor</h4>
+<pre>public static&nbsp;int&nbsp;getMinor(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<div class="block">Gets the minor part of the given libraries version number, or 0 if it isn't
+ available.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - the name of the library to check.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minor version.</dd>
+</dl>
+</li>
+</ul>
+<a name="getBuild-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBuild</h4>
+<pre>public static&nbsp;int&nbsp;getBuild(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<div class="block">Gets the build/patch part of the given libraries version number, or 0 if it
+ isn't available.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - the name of the library to check.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the build number.</dd>
+</dl>
+</li>
+</ul>
+<a name="getPatch-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPatch</h4>
+<pre>public static&nbsp;int&nbsp;getPatch(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<div class="block">Gets the build/patch part of the given libraries version number, or 0 if it
+ isn't available.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - the name of the library to check.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the build number.</dd>
+</dl>
+</li>
+</ul>
+<a name="toString--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toString</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="toStringStatic--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>toStringStatic</h4>
+<pre>public static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toStringStatic()</pre>
+<div class="block">Converts all the stored version data to a single String.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>all the stored version data.</dd>
 </dl>
 </li>
 </ul>

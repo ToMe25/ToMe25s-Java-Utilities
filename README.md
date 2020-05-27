@@ -14,7 +14,7 @@ The ToMe25s-Java-Utilities.jar file should always be the latest build, as it get
  * A Print Stream that can write to multiple Output Streams and has some logging/tracing capabilities
  * A Print Stream that writes to a Logger
  * A simple Logging Handler
- * A Version Control class that can give you the currently used version of this library as long as the ToMe25s-Java-Utilities-Version attribute is in the MANIFEST.MF file inside its Jar
+ * A Version Control class that can give you the currently used version of this library, and other libraries, as long as they registered their version number with this utility
  * A simple Jar Extraction tool
  * A simple File/Library downloader
  * A tool to add Libraries to the classpath

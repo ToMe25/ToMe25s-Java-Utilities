@@ -598,4 +598,13 @@ public class LibraryLoader {
 		return buffer;
 	}
 
+	/**
+	 * Returns the previously set main method arguments.
+	 * 
+	 * @return the previously set main method arguments.
+	 */
+	public static String getMainArgs() {
+		return mainArgs;
+	}
+
 }

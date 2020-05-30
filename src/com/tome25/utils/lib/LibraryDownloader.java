@@ -468,7 +468,9 @@ public class LibraryDownloader {
 	 * @return whether the download was successful.
 	 */
 	public static boolean downloadThis(String defaultUrls, Consumer<Exception> exceptionHandler) {
-		LibraryDownloader downloader = new LibraryDownloader(new File("ToMe25s-Java-Utilities-Download-Url.txt"),
+		LibraryDownloader downloader = new LibraryDownloader(
+				new File(new File(LibraryDownloader.class.getProtectionDomain().getCodeSource().getLocation().getPath())
+						.getParent(), "ToMe25s-Java-Utilities-Download-Url.txt"),
 				defaultUrls, true, true);
 		return downloader.downloadFile();
 	}

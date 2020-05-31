@@ -101,6 +101,7 @@ public class ConfigTest {
 			Thread.sleep(5);
 			waitTime += 5;
 		}
+		Thread.sleep(10);
 		assertTrue(String.format("The ConfigWatcher didn't detect any changes in the may allowed wait time of %ds.", maxWaitTime / 1000), changed[0]);
 		assertEquals("Some Changed String", cfg.getConfig("StringTest"));
 		cfg.delete();

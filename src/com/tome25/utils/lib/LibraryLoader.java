@@ -335,12 +335,12 @@ public class LibraryLoader {
 
 	/**
 	 * Adds ToMe25s-Java-Utilities to the classpath of it is in the libs directory
-	 * next to this jar.
+	 * next to this jar. Automatically restarts this software if necessary.
 	 */
 	public static void addThisToClasspath() {
 		File library = new File("libs", "ToMe25s-Java-Utilities.jar");
 		try {
-			addToClasspath(library);
+			addToClasspath(library, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -368,26 +368,31 @@ public class LibraryLoader {
 	 * Adds everything inside the libs folder to the classpath. Sadly just adding a
 	 * "*" file in the directory doesn't work in the MANIFEST.MF attribute, so this
 	 * looks for all .jar files that don't have "sources" or "javadoc in their name
-	 * in the libs direcotry.
+	 * in the libs direcotry. Automatically restarts this software if necessary.
 	 */
 	public static void addLibsToClasspath() {
-		addLibsToClasspath(name -> name.endsWith(".jar") && !name.contains("source") && !name.contains("javadoc"));
+		addLibsToClasspath(name -> name.endsWith(".jar") && !name.contains("sources") && !name.contains("javadoc"));
 	}
 
 	/**
 	 * Adds everything inside the libs folder to the classpath. Sadly just adding a
 	 * "*" file in the directory doesn't work in the MANIFEST.MF attribute, so this
-	 * looks for all files maching the libraryChecker predicate.
+	 * looks for all files maching the libraryChecker predicate. Automatically
+	 * restarts this software if necessary.
 	 * 
 	 * @param libraryChecker the predicate that checks what files to add to the
 	 *                       classpath.
 	 */
 	public static void addLibsToClasspath(Predicate<String> libraryChecker) {
 		try {
+			boolean restart = false;
 			for (String file : new File("libs").list()) {
 				if (libraryChecker.test(file)) {
-					addToClasspath(new File("libs", file));
+					restart = addToClasspath(new File("libs", file)) || restart;
 				}
+			}
+			if (restart) {
+				restart();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -395,32 +400,35 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Adds the given String to the classpath. Requires setArgs to be run first!
+	 * Adds the given String to the classpath.
 	 * 
 	 * @param path the path to add.
+	 * @return whether a restart is necessary.
 	 * @throws IOException if something goes wrong.
 	 */
-	public static void addToClasspath(Path path) throws IOException {
-		addToClasspath(path.toString());
+	public static boolean addToClasspath(Path path) throws IOException {
+		return addToClasspath(path.toString());
 	}
 
 	/**
-	 * Adds the given String to the classpath. Requires setArgs to be run first!
+	 * Adds the given String to the classpath.
 	 * 
 	 * @param path the path to add.
+	 * @return whether a restart is necessary.
 	 * @throws IOException if something goes wrong.
 	 */
-	public static void addToClasspath(File path) throws IOException {
-		addToClasspath(path.getPath());
+	public static boolean addToClasspath(File path) throws IOException {
+		return addToClasspath(path.getPath());
 	}
 
 	/**
-	 * Adds the given String to the classpath. Requires setArgs to be run first!
+	 * Adds the given String to the classpath.
 	 * 
 	 * @param path the path to add.
+	 * @return whether a restart is necessary.
 	 * @throws IOException if something goes wrong.
 	 */
-	public static void addToClasspath(String path) throws IOException {
+	public static boolean addToClasspath(String path) throws IOException {
 		File file = new File(LibraryLoader.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 		if (!file.exists()) {
 			throw new FileNotFoundException(
@@ -481,44 +489,81 @@ public class LibraryLoader {
 			jar.close();
 			fiout.close();
 			tempFile.delete();
-			ProcessBuilder pb = new ProcessBuilder("java", "-jar", file.getAbsolutePath(), stringArrayToString(
-					ManagementFactory.getRuntimeMXBean().getInputArguments().toArray(new String[0])), mainArgs);
-			pb.inheritIO();
-			pb.start();
-			System.exit(0);
+			return true;
+		} else {
+			jar.close();
+			return false;
 		}
 	}
 
 	/**
-	 * Removes the given String from the classpath. Requires setArgs to be run
-	 * first!
+	 * Adds the given String to the classpath.
 	 * 
-	 * @param path the path to remove.
+	 * @param path    the path to add.
+	 * @param restart whether to automatically restart this software if necessary.
+	 *                Requires setArgs to be run first!
 	 * @throws IOException if something goes wrong.
 	 */
-	public static void removeToClasspath(Path path) throws IOException {
-		addToClasspath(path.toString());
+	public static void addToClasspath(Path path, boolean restart) throws IOException {
+		addToClasspath(path.toString(), restart);
 	}
 
 	/**
-	 * Removes the given String from the classpath. Requires setArgs to be run
-	 * first!
+	 * Adds the given String to the classpath.
 	 * 
-	 * @param path the path to remove.
+	 * @param path    the path to add.
+	 * @param restart whether to automatically restart this software if necessary.
+	 *                Requires setArgs to be run first!
 	 * @throws IOException if something goes wrong.
 	 */
-	public static void removeToClasspath(File path) throws IOException {
-		addToClasspath(path.getPath());
+	public static void addToClasspath(File path, boolean restart) throws IOException {
+		addToClasspath(path.getPath(), restart);
 	}
 
 	/**
-	 * Removes the given String from the classpath. Requires setArgs to be run
-	 * first!
+	 * Adds the given String to the classpath.
 	 * 
-	 * @param path the path to remove.
+	 * @param path    the path to add.
+	 * @param restart whether to automatically restart this software if necessary.
+	 *                Requires setArgs to be run first!
 	 * @throws IOException if something goes wrong.
 	 */
-	public static void removeToClasspath(String path) throws IOException {
+	public static void addToClasspath(String path, boolean restart) throws IOException {
+		if (addToClasspath(path) && restart) {
+			restart();
+		}
+	}
+
+	/**
+	 * Removes the given String from the classpath.
+	 * 
+	 * @param path the path to remove.
+	 * @return whether a restart is necessary.
+	 * @throws IOException if something goes wrong.
+	 */
+	public static boolean removeFromClasspath(Path path) throws IOException {
+		return removeFromClasspath(path.toString());
+	}
+
+	/**
+	 * Removes the given String from the classpath.
+	 * 
+	 * @param path the path to remove.
+	 * @return whether a restart is necessary.
+	 * @throws IOException if something goes wrong.
+	 */
+	public static boolean removeFromClasspath(File path) throws IOException {
+		return removeFromClasspath(path.getPath());
+	}
+
+	/**
+	 * Removes the given String from the classpath.
+	 * 
+	 * @param path the path to remove.
+	 * @return whether a restart is necessary.
+	 * @throws IOException if something goes wrong.
+	 */
+	public static boolean removeFromClasspath(String path) throws IOException {
 		File file = new File(LibraryLoader.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 		if (!file.exists()) {
 			throw new FileNotFoundException(
@@ -582,15 +627,49 @@ public class LibraryLoader {
 			jar.close();
 			fiout.close();
 			tempFile.delete();
-			ProcessBuilder pb = new ProcessBuilder("java", "-jar", file.getAbsolutePath(), stringArrayToString(
-					ManagementFactory.getRuntimeMXBean().getInputArguments().toArray(new String[0])), mainArgs);
-			pb.inheritIO();
-			pb.start();
-			System.exit(0);
-		} else
-
-		{
+			return true;
+		} else {
 			System.err.format("Couldn't remove %s from the classpath, as it wasn't there.%n", path);
+			jar.close();
+			return false;
+		}
+	}
+
+	/**
+	 * Removes the given String from the classpath.
+	 * 
+	 * @param path    the path to remove.
+	 * @param restart whether to automatically restart this software if necessary.
+	 *                Requires setArgs to be run first!
+	 * @throws IOException if something goes wrong.
+	 */
+	public static void removeFromClasspath(Path path, boolean restart) throws IOException {
+		removeFromClasspath(path.toString(), restart);
+	}
+
+	/**
+	 * Removes the given String from the classpath.
+	 * 
+	 * @param path    the path to remove.
+	 * @param restart whether to automatically restart this software if necessary.
+	 *                Requires setArgs to be run first!
+	 * @throws IOException if something goes wrong.
+	 */
+	public static void removeFromClasspath(File path, boolean restart) throws IOException {
+		removeFromClasspath(path.getPath(), restart);
+	}
+
+	/**
+	 * Removes the given String from the classpath.
+	 * 
+	 * @param path    the path to remove.
+	 * @param restart whether to automatically restart this software if necessary.
+	 *                Requires setArgs to be run first!
+	 * @throws IOException if something goes wrong.
+	 */
+	public static void removeFromClasspath(String path, boolean restart) throws IOException {
+		if (removeFromClasspath(path) && restart) {
+			restart();
 		}
 	}
 
@@ -619,6 +698,23 @@ public class LibraryLoader {
 	 */
 	public static String getMainArgs() {
 		return mainArgs;
+	}
+
+	/**
+	 * restarts this process. Requires setArgs to be run first!
+	 */
+	public static void restart() {
+		File codeSource = new File(LibraryLoader.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+		ProcessBuilder pb = new ProcessBuilder("java", "-jar", codeSource.getAbsolutePath(),
+				stringArrayToString(ManagementFactory.getRuntimeMXBean().getInputArguments().toArray(new String[0])),
+				mainArgs);
+		pb.inheritIO();
+		try {
+			pb.start();
+			System.exit(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

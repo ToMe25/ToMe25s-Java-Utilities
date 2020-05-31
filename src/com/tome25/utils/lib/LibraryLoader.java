@@ -11,6 +11,7 @@ import java.lang.instrument.Instrumentation;
 import java.lang.management.ManagementFactory;
 import java.nio.file.Path;
 import java.util.Enumeration;
+import java.util.function.Predicate;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -366,12 +367,25 @@ public class LibraryLoader {
 	/**
 	 * Adds everything inside the libs folder to the classpath. Sadly just adding a
 	 * "*" file in the directory doesn't work in the MANIFEST.MF attribute, so this
-	 * looks for all .jar files in the libs direcotry.
+	 * looks for all .jar files that don't have "sources" or "javadoc in their name
+	 * in the libs direcotry.
 	 */
 	public static void addLibsToClasspath() {
+		addLibsToClasspath(name -> name.endsWith(".jar") && !name.contains("source") && !name.contains("javadoc"));
+	}
+
+	/**
+	 * Adds everything inside the libs folder to the classpath. Sadly just adding a
+	 * "*" file in the directory doesn't work in the MANIFEST.MF attribute, so this
+	 * looks for all files maching the libraryChecker predicate.
+	 * 
+	 * @param libraryChecker the predicate that checks what files to add to the
+	 *                       classpath.
+	 */
+	public static void addLibsToClasspath(Predicate<String> libraryChecker) {
 		try {
 			for (String file : new File("libs").list()) {
-				if (file.endsWith(".jar")) {
+				if (libraryChecker.test(file)) {
 					addToClasspath(new File("libs", file));
 				}
 			}

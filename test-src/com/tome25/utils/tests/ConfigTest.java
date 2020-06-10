@@ -96,17 +96,18 @@ public class ConfigTest {
 		fOut.write(config.getBytes());
 		fOut.flush();
 		fOut.close();
-		final int maxWaitTime = 10000;
-		int waitTime = 0;
-		while (!changed[0] && waitTime < maxWaitTime) {
-			Thread.sleep(5);
-			waitTime += 5;
-		}
-		Thread.sleep(10);
 		String os = System.getProperty("os.name").toLowerCase();
 		if (os.contains("mac") || os.contains("darwin")) {
 			cfg.readConfig();
 		} else {
+			// skip waiting for the config watcher, as that doesn't work on macos anyways.
+			final int maxWaitTime = 10000;
+			int waitTime = 0;
+			while (!changed[0] && waitTime < maxWaitTime) {
+				Thread.sleep(5);
+				waitTime += 5;
+			}
+			Thread.sleep(10);
 			assertTrue(String.format("The ConfigWatcher didn't detect any changes in the may allowed wait time of %ds.",
 					maxWaitTime / 1000), changed[0]);
 		}

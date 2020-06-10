@@ -103,7 +103,7 @@ public class ConfigTest {
 			waitTime += 5;
 		}
 		Thread.sleep(10);
-		String os = System.getProperty("os.name");
+		String os = System.getProperty("os.name").toLowerCase();
 		if (os.contains("mac") || os.contains("darwin")) {
 			cfg.readConfig();
 		} else {

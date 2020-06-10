@@ -47,6 +47,11 @@ public class ConfigWatcher implements Runnable {
 		this.toWatch = toWatch;
 		this.consumer = consumer;
 		thread.start();
+		String os = System.getProperty("os.name");
+		if (os.contains("mac") || os.contains("darwin")) {
+			System.out
+					.println("Warning: Watching for file or directory changes is neither reliable, nor fast on macos!");
+		}
 	}
 
 	@Override

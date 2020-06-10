@@ -94,8 +94,9 @@ public class ConfigTest {
 		FileOutputStream fOut = new FileOutputStream(new File(cfgFile, "Watcher.cfg"));
 		Thread.sleep(50);// Wait for the ConfigWatcher to finish initializing.
 		fOut.write(config.getBytes());
+		fOut.flush();
 		fOut.close();
-		final int maxWaitTime = 5000;
+		final int maxWaitTime = 10000;
 		int waitTime = 0;
 		while(!changed[0] && waitTime < maxWaitTime) {
 			Thread.sleep(5);

@@ -99,6 +99,7 @@ public class ConfigTest {
 		String os = System.getProperty("os.name").toLowerCase();
 		if (os.contains("mac") || os.contains("darwin")) {
 			cfg.readConfig();
+			System.out.println("Skipping ConfigWatcher test because it doesn't work in macos.");
 		} else {
 			// skip waiting for the config watcher, as that doesn't work on macos anyways.
 			final int maxWaitTime = 10000;

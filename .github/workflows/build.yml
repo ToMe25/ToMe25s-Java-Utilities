@@ -68,24 +68,19 @@ jobs:
       id: changelog
       run: echo "::set-output name=changelog::$(git log ${{ steps.tag_dry.outputs.previous_tag }}..HEAD --no-merges --format=%B)"
 
-    - name: Commit files
+    - name: Commit and Push changes
       id: commit
       if: ${{ always() }}
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git commit -m "Update builds
-        
-        ${{ steps.changelog.outputs.changelog }}" -a
-        git tag ${{ steps.tag_dry.outputs.new_tag }}
-
-    - name: Push changes
-      id: push
-      if: ${{ always() }}
-      uses: ad-m/github-push-action@master
+      uses: EndBug/add-and-commit@v4.2.0
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        tags: true
+        author_name: GitHub Action
+        author_email: action@github.com
+        message: |
+          Update builds
+          
+          ${{ steps.changelog.outputs.changelog }} -a
+        add: '*'
+        tag: ${{ steps.tag_dry.outputs.new_tag }}
 
     - name: Create release
       id: release

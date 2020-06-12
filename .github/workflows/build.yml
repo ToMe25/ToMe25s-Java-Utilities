@@ -20,9 +20,11 @@ jobs:
 
     steps:
     - name: Checkout repository
+      id: checkout
       uses: actions/checkout@v2
 
     - name: Set up JDK 1.8
+      id: java_setup
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
@@ -41,6 +43,7 @@ jobs:
       run: mvn -B versions:set -D newVersion=${{ steps.tag_dry.outputs.new_version }}
 
     - name: Build with Maven
+      id: build
       run: mvn -B package --file pom.xml
 
     - name: Publish to Github Packages
@@ -77,9 +80,9 @@ jobs:
         author_name: GitHub Action
         author_email: action@github.com
         message: |
-          "Update builds
+          Update builds
           
-          ${{ steps.changelog.outputs.changelog }}"
+          ${{ steps.changelog.outputs.changelog }}
         add: '*'
         tag: ${{ steps.tag_dry.outputs.new_tag }}
       env:

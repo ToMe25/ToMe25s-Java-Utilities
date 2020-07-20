@@ -226,19 +226,19 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 
 	@Override
 	public String toString() {
-		String ret = "{";
-		for (String s : content.keySet()) {
-			ret += "\"";
-			ret += s;
-			ret += "\":";
-			ret += contentToString(content.get(s));
-			ret += ",";
+		String[] ret = new String[] { "{" };
+		content.keySet().forEach(key -> {
+			ret[0] += "\"";
+			ret[0] += key;
+			ret[0] += "\":";
+			ret[0] += contentToString(content.get(key));
+			ret[0] += ",";
+		});
+		if (ret[0].endsWith(",")) {
+			ret[0] = ret[0].substring(0, ret[0].length() - 1);
 		}
-		if (ret.endsWith(",")) {
-			ret = ret.substring(0, ret.length() - 1);
-		}
-		ret += "}";
-		return ret;
+		ret[0] += "}";
+		return ret[0];
 	}
 
 	@Override
@@ -442,10 +442,9 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
 		int entries = in.readInt();
-		while (entries > 0) {
+		for (int i = 0; i < entries; i++) {
 			String key = in.readUTF();
 			content.put(key, in.readObject());
-			entries--;
 		}
 	}
 

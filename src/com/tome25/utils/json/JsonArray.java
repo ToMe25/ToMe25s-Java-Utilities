@@ -195,16 +195,16 @@ public class JsonArray implements JsonElement, List<Object> {
 
 	@Override
 	public String toString() {
-		String ret = "[";
-		for (Object obj : content) {
-			ret += contentToString(obj);
-			ret += ",";
+		String[] ret = new String[] { "[" };
+		content.forEach(obj -> {
+			ret[0] += contentToString(obj);
+			ret[0] += ",";
+		});
+		if (ret[0].endsWith(",")) {
+			ret[0] = ret[0].substring(0, ret[0].length() - 1);
 		}
-		if (ret.endsWith(",")) {
-			ret = ret.substring(0, ret.length() - 1);
-		}
-		ret += "]";
-		return ret;
+		ret[0] += "]";
+		return ret[0];
 	}
 
 	@Override
@@ -422,19 +422,17 @@ public class JsonArray implements JsonElement, List<Object> {
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
 		int entries = in.readInt();
-		while (entries > 0) {
+		for (int i = 0; i < entries; i++) {
 			content.add(in.readObject());
-			entries--;
 		}
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
 		out.writeInt(content.size());
-		int i = 0;
-		while (i < content.size()) {
+		int size = content.size();
+		for (int i = 0; i < size; i++) {
 			out.writeObject(content.get(i));
-			i++;
 		}
 	}
 

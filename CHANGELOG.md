@@ -1,0 +1,131 @@
+# Changelog
+
+## [v1.0.145](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.145) (2020-07-20)
+
+## [v1.0.144](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.144) (2020-06-19)
+
+## [v1.0.143](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.143) (2020-06-12)
+
+## [v1.0.142](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.142) (2020-06-12)
+
+## [v1.0.141](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.141) (2020-06-12)
+
+## [v1.0.140](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.140) (2020-06-12)
+
+## [v1.0.139](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.139) (2020-06-10)
+
+## [v1.0.138](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.138) (2020-06-10)
+
+## [v1.0.137](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.137) (2020-06-10)
+
+## [v1.0.136](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.136) (2020-06-10)
+
+## [v1.0.135](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.135) (2020-06-10)
+
+## [v1.0.134](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.134) (2020-05-31)
+
+## [v1.0.133](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.133) (2020-05-31)
+
+## [v1.0.132](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.132) (2020-05-31)
+
+## [v1.0.131](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.131) (2020-05-30)
+
+## [v1.0.130](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.130) (2020-05-29)
+
+## [v1.0.129](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.129) (2020-05-27)
+
+## [v1.0.128](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.128) (2020-05-27)
+
+## [v1.0.127](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.127) (2020-05-27)
+
+## [v1.0.126](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.126) (2020-05-27)
+
+## [v1.0.125](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.125) (2020-05-26)
+
+## [v1.0.124](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.124) (2020-05-26)
+
+## [v1.0.123](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.123) (2020-05-26)
+
+## [v1.0.122](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.122) (2020-05-26)
+
+## [v1.0.121](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.121) (2020-05-25)
+
+## [v1.0.120](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.120) (2020-05-25)
+
+## [v1.0.119](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.119) (2020-05-25)
+
+## [v1.0.118](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.118) (2020-05-25)
+
+## [v1.0.117](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.117) (2020-05-25)
+
+## [v1.0.116](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.116) (2020-05-19)
+
+## [v1.0.115](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.115) (2020-05-19)
+
+## [v1.0.114](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.114) (2020-05-19)
+
+## [v1.0.113](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.113) (2020-05-19)
+
+## [v1.0.112](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.112) (2020-05-19)
+
+## [v1.0.111](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.111) (2020-05-19)
+
+## [v1.0.110](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.110) (2020-05-19)
+
+## [v1.0.109](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.109) (2020-05-19)
+
+## [v1.0.108](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.108) (2020-05-19)
+
+## [v1.0.107](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.107) (2020-05-17)
+
+## [v1.0.106](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.106) (2020-05-17)
+
+## [v1.0.105](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.105) (2020-05-17)
+
+## [v1.0.104](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.104) (2020-05-17)
+
+## [v1.0.103](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.103) (2020-05-17)
+
+## [v1.0.102](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.102) (2020-05-17)
+
+## [v1.0.101](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.101) (2020-05-17)
+
+## [v1.0.100](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.100) (2020-05-17)
+
+## [v1.0.99](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.99) (2020-05-17)
+
+## [v1.0.98](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.98) (2020-05-17)
+
+## [v1.0.97](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.97) (2020-05-16)
+
+## [v1.0.96](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.96) (2020-05-16)
+
+## [v1.0.95](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.95) (2020-05-16)
+
+## [v1.0.94](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.94) (2020-05-16)
+
+## [v1.0.93](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.93) (2020-05-16)
+
+## [v1.0.92](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.92) (2020-05-16)
+
+## [v1.0.91](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.91) (2020-05-16)
+
+## [v1.0.90](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.90) (2020-05-16)
+
+## [v1.0.89](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.89) (2020-05-16)
+
+## [v1.0.88](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.88) (2020-05-16)
+
+## [v1.0.87](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.87) (2020-05-16)
+
+## [v1.0.86](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.86) (2020-05-16)
+
+## [v1.0.85](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.85) (2020-05-16)
+
+## [v1.0.84](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.84) (2020-05-16)
+
+## [v1.0.83](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.83) (2020-05-11)
+
+
+
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*

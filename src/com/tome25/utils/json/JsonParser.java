@@ -40,10 +40,22 @@ public class JsonParser {
 			if (s.contains(":")) {
 				String[] pair = s.split(":");
 				String key = pair[0];
-				String value = pair[1];
-				key = key.replaceAll("\"", "");
+				String value = "";
+				boolean v = false;
+				int size = pair.length;
+				for (int i = 1; i < size; i++) {
+					value += (v ? ":" : "") + pair[i];
+					v = true;
+				}
+				if (value.contains("\\\"")) {
+					value = value.replaceAll("\\\\\"", "\"");
+				}
+				if(value.contains("\\\\")) {
+					value = value.replaceAll("\\\\\\\\", "\\");
+				}
+				key = key.substring(1, key.length() - 1);
 				if (value.contains("\"")) {
-					json.put(key, value.replaceAll("\"", ""));
+					json.put(key, value.substring(1, value.length() - 1));
 				} else {
 					json.put(key, Integer.parseInt(value));
 				}

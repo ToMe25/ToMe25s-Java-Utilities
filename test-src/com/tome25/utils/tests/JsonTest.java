@@ -15,6 +15,7 @@ import java.text.ParseException;
 
 import org.junit.Test;
 
+import com.carrotsearch.junitbenchmarks.AbstractBenchmark;
 import com.tome25.utils.exception.InvalidKeyException;
 import com.tome25.utils.exception.InvalidTypeException;
 import com.tome25.utils.json.JsonArray;
@@ -22,7 +23,7 @@ import com.tome25.utils.json.JsonElement;
 import com.tome25.utils.json.JsonObject;
 import com.tome25.utils.json.JsonParser;
 
-public class JsonTest {
+public class JsonTest extends AbstractBenchmark {
 
 	@Test
 	public void fastParsingTest() throws ParseException {
@@ -38,13 +39,13 @@ public class JsonTest {
 		// the past
 		json.add("quoteTest", "double quotes:\"");
 		jsonString = json.toString();
-		parsedJson = JsonParser.parseString(jsonString);
+		parsedJson = JsonParser.parseStringFast(jsonString);
 		assertEquals(json, parsedJson);
 		// test a string ending with a backslash at the end as that was a problem in the
 		// past
 		json.add("backslashTest", "backslash:\\");
 		jsonString = json.toString();
-		parsedJson = JsonParser.parseString(jsonString);
+		parsedJson = JsonParser.parseStringFast(jsonString);
 		assertEquals(json, parsedJson);
 	}
 

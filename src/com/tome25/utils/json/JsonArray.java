@@ -76,9 +76,9 @@ public class JsonArray implements JsonElement, List<Object> {
 
 	@Override
 	public void putAll(Map<? extends Object, ? extends Object> m) {
-		m.keySet().forEach((key) -> {
+		m.forEach((key, value) -> {
 			if (key instanceof Integer) {
-				content.set((Integer) key, m.get(key));
+				content.set((Integer) key, value);
 			} else {
 				throw new InvalidTypeException("Integer", key.getClass().getSimpleName());
 			}

@@ -87,9 +87,9 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 
 	@Override
 	public void putAll(Map<? extends Object, ? extends Object> m) {
-		m.keySet().forEach((key) -> {
+		m.forEach((key, value) -> {
 			if (key instanceof String) {
-				content.put((String) key, m.get(key));
+				content.put((String) key, value);
 			} else {
 				throw new InvalidTypeException("String", key.getClass().getSimpleName());
 			}
@@ -210,15 +210,15 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	@Override
 	public int size(boolean recursive) {
 		if (recursive) {
-			int[] size = new int[] { 0 };
-			content.keySet().forEach((key) -> {
+			int size = 0;
+			for (Object key : content.keySet()) {
 				if (content.get(key) instanceof JsonElement) {
-					size[0] += ((JsonElement) content.get(key)).size(recursive);
+					size += ((JsonElement) content.get(key)).size(recursive);
 				} else {
-					size[0]++;
+					size++;
 				}
-			});
-			return size[0];
+			}
+			return size;
 		} else {
 			return content.size();
 		}
@@ -226,19 +226,19 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 
 	@Override
 	public String toString() {
-		String[] ret = new String[] { "{" };
-		content.keySet().forEach(key -> {
-			ret[0] += "\"";
-			ret[0] += key;
-			ret[0] += "\":";
-			ret[0] += contentToString(content.get(key));
-			ret[0] += ",";
-		});
-		if (ret[0].endsWith(",")) {
-			ret[0] = ret[0].substring(0, ret[0].length() - 1);
+		String ret = "{";
+		for (String s : content.keySet()) {
+			ret += "\"";
+			ret += s;
+			ret += "\":";
+			ret += contentToString(content.get(s));
+			ret += ",";
 		}
-		ret[0] += "}";
-		return ret[0];
+		if (ret.endsWith(",")) {
+			ret = ret.substring(0, ret.length() - 1);
+		}
+		ret += "}";
+		return ret;
 	}
 
 	@Override
@@ -249,18 +249,19 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	@Override
 	public JsonObject clone(boolean recursive) {
 		JsonObject clone = new JsonObject();
-		content.keySet().forEach((key) -> {
+		for (String key : content.keySet()) {
 			try {
-				if (recursive && content.get(key) instanceof JsonElement
-						&& ((JsonElement) content.get(key)).supportsClone()) {
-					clone.add(key, ((JsonElement) content.get(key)).clone(recursive));
+				Object value = content.get(key);
+				if (recursive && value instanceof JsonElement
+						&& ((JsonElement) value).supportsClone()) {
+					clone.add(key, ((JsonElement) value).clone(recursive));
 				} else {
-					clone.add(key, content.get(key));
+					clone.add(key, value);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		});
+		}
 		return clone;
 	}
 

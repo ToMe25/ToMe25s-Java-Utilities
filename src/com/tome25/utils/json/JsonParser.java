@@ -47,15 +47,16 @@ public class JsonParser {
 					value += (v ? ":" : "") + pair[i];
 					v = true;
 				}
-				if (value.contains("\\\"")) {
-					value = value.replaceAll("\\\\\"", "\"");
-				}
-				if(value.contains("\\\\")) {
-					value = value.replaceAll("\\\\\\\\", "\\");
-				}
 				key = key.substring(1, key.length() - 1);
 				if (value.contains("\"")) {
-					json.put(key, value.substring(1, value.length() - 1));
+					value = value.substring(1, value.length() - 1);
+					if (value.contains("\\\"")) {
+						value = value.replaceAll("\\\\\"", "\"");
+					}
+					if (value.contains("\\\\")) {
+						value = value.replaceAll("\\\\\\\\", "\\\\");
+					}
+					json.put(key, value);
 				} else {
 					json.put(key, Integer.parseInt(value));
 				}

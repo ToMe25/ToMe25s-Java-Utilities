@@ -1,5 +1,7 @@
 # Changelog
 
+## [v1.0.148](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.148) (2020-07-21)
+
 ## [v1.0.147](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.147) (2020-07-21)
 
 ## [v1.0.146](https://github.com/ToMe25/ToMe25s-Java-Utilities/tree/v1.0.146) (2020-07-21)

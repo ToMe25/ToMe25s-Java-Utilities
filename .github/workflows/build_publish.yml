@@ -69,7 +69,7 @@ jobs:
       id: update_changelog
       uses: rcmachado/changelog-action@v1
       with:
-        args: init --output CHANGELOG.md --compare-url https://github.com/ToMe25/ToMe25s-Java-Utilities/compare/abcdef...HEAD
+        args: init --output CHANGELOG.md --compare-url https://github.com/ToMe25/ToMe25s-Java-Utilities/compare/1ac7b63...HEAD
 
     - name: Commit and Push changes
       id: commit

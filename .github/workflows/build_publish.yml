@@ -59,13 +59,7 @@ jobs:
 
     - name: Generate version changelog
       id: changelog
-      uses: heinrichreimer/github-changelog-generator-action@v2.1.1
-      with:
-        onlyLastTag: true
-        stripHeaders: true
-        stripGeneratorNotice: true
-        token: ${{ secrets.GITHUB_TOKEN }}
-        releaseBranch: master
+      run: echo "::set-output name=changelog::$(git log ${{ steps.tag_dry.outputs.previous_tag }}..HEAD --no-merges --oneline)"
 
     - name: Update changelog file
       id: update_changelog

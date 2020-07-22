@@ -71,6 +71,12 @@ jobs:
       id: update_changelog
       uses: srepollock/changelog-generator-action@master
 
+    - name: Move changelog file into repo
+      id: move_changelog
+      run: |
+        rm CHANGELOG.md
+        mv /home/runner/work/_temp/_github_home/CHANGELOG.md ./CHANGELOG.md
+
     - name: Commit and Push changes
       id: commit
       if: ${{ always() }}

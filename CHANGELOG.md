@@ -9,4 +9,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - First commit
 
-[Unreleased]: https://github.com/ToMe25/ToMe25s-Java-Utilities/compare/abcdef...HEAD
+[Unreleased]: https://github.com/ToMe25/ToMe25s-Java-Utilities/compare/1ac7b63...HEAD

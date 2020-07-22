@@ -63,6 +63,7 @@ jobs:
         stripHeaders: true
         stripGeneratorNotice: true
         token: ${{ secrets.GITHUB_TOKEN }}
+        releaseBranch: master
 
     - name: Update changelog file
       id: update_changelog

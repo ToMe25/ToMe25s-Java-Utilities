@@ -25,15 +25,15 @@ public class JsonArray implements JsonElement, List<Object> {
 	private List<Object> content = new ArrayList<Object>();
 
 	/**
-	 * creates a new empty Json Array.
+	 * Creates a new empty Json Array.
 	 */
 	public JsonArray() {
 	}
 
 	/**
-	 * creates a new Json Array and initializes it with the given content.
+	 * Creates a new Json Array and initializes it with the given content.
 	 * 
-	 * @param content the content for the new json list/array.
+	 * @param content the content for the new Json list/array.
 	 */
 	public JsonArray(Object... content) {
 		for (Object obj : content) {
@@ -41,6 +41,11 @@ public class JsonArray implements JsonElement, List<Object> {
 		}
 	}
 
+	/**
+	 * Creates a new Json Array and initializes it with the given content.
+	 * 
+	 * @param content the content for the new Json list/array.
+	 */
 	public JsonArray(Collection<Object> content) {
 		this.content.addAll(content);
 	}
@@ -142,7 +147,7 @@ public class JsonArray implements JsonElement, List<Object> {
 	}
 
 	/**
-	 * checks whether this Json contains the given object, either as key if the type
+	 * Checks whether this Json contains the given object, either as key if the type
 	 * matches, or as value.
 	 * 
 	 * @param o the object to look for
@@ -272,7 +277,7 @@ public class JsonArray implements JsonElement, List<Object> {
 	}
 
 	/**
-	 * adds all the given objects to this array.
+	 * Adds all the given objects to this array.
 	 * 
 	 * @param obj the objects to add.
 	 */
@@ -472,7 +477,7 @@ public class JsonArray implements JsonElement, List<Object> {
 	}
 
 	/**
-	 * compares the two given objects if they implement Comparable, and are
+	 * Compares the two given objects if they implement {@link Comparable}, and are
 	 * compatible types. can only return 1, 0 or -1. returns 0 if the objects can't
 	 * be compared.
 	 * 
@@ -510,7 +515,7 @@ public class JsonArray implements JsonElement, List<Object> {
 	}
 
 	/**
-	 * gets the last object from this list.
+	 * Gets the last object from this list.
 	 * 
 	 * @return the last object from this list.
 	 */
@@ -519,7 +524,7 @@ public class JsonArray implements JsonElement, List<Object> {
 	}
 
 	/**
-	 * gets the first object from this list.
+	 * Gets the first object from this list.
 	 * 
 	 * @return the first object from this list.
 	 */

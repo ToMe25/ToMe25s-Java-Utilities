@@ -6,7 +6,7 @@ import java.nio.charset.Charset;
 import java.text.ParseException;
 
 /**
- * A parser to convert strings to {@link JsonObject}'s and {@link JsonArray}'s.
+ * A parser to convert strings to {@link JsonObject}s and {@link JsonArray}s.
  * 
  * @author ToMe25
  *
@@ -14,8 +14,8 @@ import java.text.ParseException;
 public class JsonParser {
 
 	/**
-	 * This method parses the given String to a JsonObject. Faster but not as
-	 * reliable as the slower one.
+	 * This method parses the given String to a {@link JsonObject}. Faster but not
+	 * as reliable as the slower one.
 	 * 
 	 * Supported object types inside the Json: Integer and String.
 	 * 
@@ -23,8 +23,8 @@ public class JsonParser {
 	 * it to this library there were multiple character that could make it crash or
 	 * break out of String values.
 	 * 
-	 * @param str the String to parse
-	 * @return the Json Object parsed from String s
+	 * @param str the String to parse.
+	 * @return the {@link JsonObject} parsed from String str.
 	 * @throws ParseException if something goes wrong while parsing.
 	 */
 	public static JsonObject parseStringFast(String str) throws ParseException {
@@ -66,10 +66,11 @@ public class JsonParser {
 	}
 
 	/**
-	 * This method parses the given string to a JsonObject, or JsonArray.
+	 * This method parses the given string to a {@link JsonObject}, or
+	 * {@link JsonArray}.
 	 * 
 	 * Supported object types inside the Json: Integer, Long, Double, Boolean,
-	 * String, Json Objects and Json Arrays/Lists.
+	 * String, {@link JsonObject} and {@link JsonArray}.
 	 * 
 	 * This parser will handle numbers as double if they contain a dot, as long if
 	 * they are too big(or too small) to be a integer, and as an integer in any
@@ -80,7 +81,7 @@ public class JsonParser {
 	 * crash or break out of String values, tho i know of none with this version.
 	 * 
 	 * @param str the string to parse.
-	 * @return the json object parsed from the given string.
+	 * @return the {@link JsonElement} parsed from the given string.
 	 * @throws ParseException if something goes wrong while parsing.
 	 */
 	public static JsonElement parseString(String str) throws ParseException {
@@ -88,10 +89,11 @@ public class JsonParser {
 	}
 
 	/**
-	 * This method parses the given byte array to a JsonObject, or JsonArray.
+	 * This method parses the given byte array to a {@link JsonObject}, or
+	 * {@link JsonArray}.
 	 * 
 	 * Supported object types inside the Json: Integer, Long, Double, Boolean,
-	 * String, Json Objects and Json Arrays/Lists.
+	 * String, {@link JsonObject} and {@link JsonArray}.
 	 * 
 	 * This parser will handle numbers as double if they contain a dot, as long if
 	 * they are too big(or too small) to be a integer, and as an integer in any
@@ -102,7 +104,7 @@ public class JsonParser {
 	 * crash or break out of String values, tho i know of none with this version.
 	 * 
 	 * @param byteArr the byte array to parse.
-	 * @return the json object parsed from the given string.
+	 * @return the {@link JsonElement} parsed from the given byte array.
 	 * @throws ParseException if something goes wrong while parsing.
 	 */
 	public static JsonElement parseByteArray(byte[] byteArr) throws ParseException {
@@ -110,10 +112,11 @@ public class JsonParser {
 	}
 
 	/**
-	 * This method parses the given byte array to a JsonObject, or JsonArray.
+	 * This method parses the given byte array to a {@link JsonObject}, or
+	 * {@link JsonArray}.
 	 * 
 	 * Supported object types inside the Json: Integer, Long, Double, Boolean,
-	 * String, Json Objects and Json Arrays/Lists.
+	 * String, {@link JsonObject} and {@link JsonArray}.
 	 * 
 	 * This parser will handle numbers as double if they contain a dot, as long if
 	 * they are too big(or too small) to be a integer, and as an integer in any
@@ -124,9 +127,10 @@ public class JsonParser {
 	 * crash or break out of String values, tho i know of none with this version.
 	 * 
 	 * @param byteArr the byte array to parse.
-	 * @param charset the name of the charset to use for the conversion to a
-	 *                character array. set to null to use the default charset.
-	 * @return the json object parsed from the given string.
+	 * @param charset the name of the {@link Charset} to use for the conversion to a
+	 *                character array. Set to null to use the default
+	 *                {@link Charset}.
+	 * @return the {@link JsonElement} parsed from the given byte array.
 	 * @throws ParseException if something goes wrong while parsing.
 	 */
 	public static JsonElement parseByteArray(byte[] byteArr, String charset) throws ParseException {
@@ -143,10 +147,11 @@ public class JsonParser {
 	}
 
 	/**
-	 * This method parses the given character array to a JsonObject, or JsonArray.
+	 * This method parses the given char array to a {@link JsonObject}, or
+	 * {@link JsonArray}.
 	 * 
 	 * Supported object types inside the Json: Integer, Long, Double, Boolean,
-	 * String, Json Objects and Json Arrays/Lists.
+	 * String, {@link JsonObject} and {@link JsonArray}.
 	 * 
 	 * This parser will handle numbers as double if they contain a dot, as long if
 	 * they are too big(or too small) to be a integer, and as an integer in any
@@ -157,7 +162,7 @@ public class JsonParser {
 	 * crash or break out of String values, tho i know of none with this version.
 	 * 
 	 * @param charArr the character array to parse.
-	 * @return the json object parsed from the given char array.
+	 * @return the {@link JsonElement} parsed from the given char array.
 	 * @throws ParseException if something goes wrong while parsing.
 	 */
 	public static JsonElement parseCharArray(char[] charArr) throws ParseException {
@@ -373,7 +378,7 @@ public class JsonParser {
 	}
 
 	/**
-	 * builds an object of any type that is neither string nor json.
+	 * Builds an object of any type that is neither string nor Json.
 	 * 
 	 * @param buffer the buffer to build the object from.
 	 * @param offset the offset in the string to parse, used for error handling.

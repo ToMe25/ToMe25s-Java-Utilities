@@ -35,8 +35,8 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	/**
 	 * Creates a new Json Object and initializes it with the given key value pair.
 	 * 
-	 * @param key   the key to represent value in the new json object.
-	 * @param value a value to add to the new json object.
+	 * @param key   the key to represent value in the new Json object.
+	 * @param value a value to add to the new Json object.
 	 */
 	public JsonObject(String key, Object value) {
 		content.put(key, value);
@@ -45,7 +45,7 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	/**
 	 * Creates a new Json Object and initializes it with the given content.
 	 * 
-	 * @param content the content for the new json object.
+	 * @param content the content for the new Json object.
 	 */
 	public JsonObject(Map<String, Object> content) {
 		this.content.putAll(content);
@@ -71,8 +71,8 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	 * @param key   the Key to add.
 	 * @param value the value to set for key.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for JsonObjects, Integer for
-	 *                              JsonArrays)
+	 *                              this object(String for {@link JsonObject}s,
+	 *                              Integer for {@link JsonArray}s).
 	 * @return the previous value associated with key, or null if there was no
 	 *         mapping for key.
 	 */
@@ -85,6 +85,15 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 		}
 	}
 
+	/**
+	 * Adds the given values to the given keys replacing the current ones if
+	 * existing.
+	 * 
+	 * @param m mappings to be stored in this json.
+	 * @throws InvalidTypeException if the key type doesn't match the key type for
+	 *                              this object(String for {@link JsonObject}s,
+	 *                              Integer for {@link JsonArray}s).
+	 */
 	@Override
 	public void putAll(Map<? extends Object, ? extends Object> m) {
 		m.forEach((key, value) -> {
@@ -111,8 +120,8 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	 * 
 	 * @param key the key to remove.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for JsonObjects, Integer for
-	 *                              JsonArrays)
+	 *                              this object(String for {@link JsonObject}s,
+	 *                              Integer for {@link JsonArray}s).
 	 * @return the previous value associated with key, or null if there was no
 	 *         mapping for key.
 	 */
@@ -137,10 +146,10 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	/**
 	 * Gets the value for the given key.
 	 * 
-	 * @param key the key to get the value for.
+	 * @param key the key to look for.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for JsonObjects, Integer for
-	 *                              JsonArrays)
+	 *                              this object(String for {@link JsonObject}s,
+	 *                              Integer for {@link JsonArray}s).
 	 * @return the value for the given key.
 	 */
 	@Override
@@ -162,9 +171,9 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	}
 
 	/**
-	 * returns this jsons Keys.
+	 * Returns this Jsons Keys.
 	 * 
-	 * @return this jsons Keys.
+	 * @return this Jsons Keys.
 	 */
 	public Set<String> getKeySet() {
 		return content.keySet();
@@ -180,13 +189,13 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	}
 
 	/**
-	 * returns true if this Json contains the given key.
+	 * Returns true if this Json contains the given key.
 	 * 
 	 * @param key the key to look for.
-	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for JsonObjects, Integer for
-	 *                              JsonArrays)
 	 * @return whether this Json contains the given key.
+	 * @throws InvalidTypeException if the key type doesn't match the key type for
+	 *                              this object(String for {@link JsonObject}s,
+	 *                              Integer for {@link JsonArray}s).
 	 */
 	@Override
 	public boolean containsKey(Object key) {
@@ -197,6 +206,12 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 		}
 	}
 
+	/**
+	 * Returns true if this Json contains the given value.
+	 * 
+	 * @param value the value to look for.
+	 * @return this Json contains the given value.
+	 */
 	@Override
 	public boolean containsValue(Object value) {
 		return content.containsValue(value);
@@ -252,8 +267,7 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 		for (String key : content.keySet()) {
 			try {
 				Object value = content.get(key);
-				if (recursive && value instanceof JsonElement
-						&& ((JsonElement) value).supportsClone()) {
+				if (recursive && value instanceof JsonElement && ((JsonElement) value).supportsClone()) {
 					clone.add(key, ((JsonElement) value).clone(recursive));
 				} else {
 					clone.add(key, value);
@@ -509,7 +523,7 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	}
 
 	/**
-	 * compares the two given objects if they implement Comparable, and are
+	 * Compares the two given objects if they implement {@link Comparable}, and are
 	 * compatible types. can only return 1, 0 or -1. returns 0 if the objects can't
 	 * be compared.
 	 * 

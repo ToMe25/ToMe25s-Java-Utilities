@@ -2,6 +2,7 @@ package com.tome25.utils.json;
 
 import java.io.Externalizable;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ import com.tome25.utils.exception.InvalidKeyException;
 import com.tome25.utils.exception.InvalidTypeException;
 
 /**
- * The interface all the json object types implement.
+ * The interface all the Json object types implement.
  * 
  * @author ToMe25
  *
@@ -23,8 +24,8 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	 * @param value the value to add for key.
 	 * @throws InvalidKeyException  when there already an Object with this Key.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for JsonObjects, Integer for
-	 *                              JsonArrays)
+	 *                              this object(String for {@link JsonObject}s,
+	 *                              Integer for {@link JsonArray}s).
 	 * @return depends on the implementation.
 	 */
 	public Object add(Object key, Object value) throws InvalidKeyException, InvalidTypeException;
@@ -36,9 +37,10 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	 * @param key   the Key to add.
 	 * @param value the value to set for key.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for JsonObjects, Integer for
-	 *                              JsonArrays)
-	 * @return the previous value associated with key.
+	 *                              this object(String for {@link JsonObject}s,
+	 *                              Integer for {@link JsonArray}s).
+	 * @return the previous value associated with key, or null if there was no
+	 *         mapping for key.
 	 */
 	public Object put(Object key, Object value) throws InvalidTypeException;
 
@@ -48,8 +50,8 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	 * 
 	 * @param m mappings to be stored in this json.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for JsonObjects, Integer for
-	 *                              JsonArrays).
+	 *                              this object(String for {@link JsonObject}s,
+	 *                              Integer for {@link JsonArray}s).
 	 */
 	public void putAll(Map<? extends Object, ? extends Object> m) throws InvalidTypeException;
 
@@ -60,8 +62,8 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	 * @param key   the Key to add.
 	 * @param value the value to set for key.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for JsonObjects, Integer for
-	 *                              JsonArrays)
+	 *                              this object(String for {@link JsonObject}s,
+	 *                              Integer for {@link JsonArray}s).
 	 * @return the previous value associated with key.
 	 */
 	public Object set(Object key, Object value) throws InvalidTypeException;
@@ -70,67 +72,67 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	 * Adds the given values to the given keys replacing the current ones if
 	 * existing.
 	 * 
-	 * @param m mappings to be stored in this json.
+	 * @param m mappings to be stored in this Json.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for JsonObjects, Integer for
-	 *                              JsonArrays).
+	 *                              this object(String for {@link JsonObject}s,
+	 *                              Integer for {@link JsonArray}s).
 	 */
 	public void setAll(Map<? extends Object, ? extends Object> m) throws InvalidTypeException;
 
 	/**
-	 * if key is true this removes the object to the key o from this Json, if not it
+	 * If key is true this removes the object to the key o from this Json, if not it
 	 * removes the value o from this Json.
 	 * 
 	 * @param o   the object to remove.
 	 * @param key whether the object is key or value.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for JsonObjects, Integer for
-	 *                              JsonArrays)
+	 *                              this object(String for {@link JsonObject}s,
+	 *                              Integer for {@link JsonArray}s).
 	 */
 	public void remove(Object o, boolean key) throws InvalidTypeException;
 
 	/**
-	 * gets the value for the given key.
+	 * Gets the value for the given key.
 	 * 
 	 * @param key the key to look for.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for JsonObjects, Integer for
-	 *                              JsonArrays)
+	 *                              this object(String for {@link JsonObject}s,
+	 *                              Integer for {@link JsonArray}s).
 	 * @return the value for the given key.
 	 */
 	public Object get(Object key) throws InvalidTypeException;
 
 	/**
-	 * gets the value for the given key if its a string, or a string representation
+	 * Gets the value for the given key if its a string, or a string representation
 	 * of that value if it isn't.
 	 * 
 	 * @param key the key to look for.
 	 * @return the value for the given key if its a string, or a string
 	 *         representation of that value if it isn't.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for JsonObjects, Integer for
-	 *                              JsonArrays)
+	 *                              this object(String for {@link JsonObject}s,
+	 *                              Integer for {@link JsonArray}s).
 	 */
 	public String getString(Object key) throws InvalidTypeException;
 
 	/**
-	 * returns this jsons Values.
+	 * Gets this Jsons Values.
 	 * 
-	 * @return this jsons Values.
+	 * @return this Jsons Values.
 	 */
 	public default Collection<Object> getValues() {
 		return values();
 	}
 
 	/**
-	 * returns this jsons Values.
+	 * Gets this Jsons Values.
 	 * 
-	 * @return this jsons Values.
+	 * @return this Jsons Values.
 	 */
 	public Collection<Object> values();
 
 	/**
-	 * checks whether this Json contains the given object, either as key if the type
+	 * Checks whether this Json contains the given object, either as key if the type
 	 * matches, or as value.
 	 * 
 	 * @param o the object to look for.
@@ -139,18 +141,18 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	public boolean contains(Object o);
 
 	/**
-	 * returns true if this Json contains the given key.
+	 * Returns true if this Json contains the given key.
 	 * 
 	 * @param key the key to look for.
 	 * @return whether this Json contains the given key.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for JsonObjects, Integer for
-	 *                              JsonArrays)
+	 *                              this object(String for {@link JsonObject}s,
+	 *                              Integer for {@link JsonArray}s).
 	 */
 	public boolean containsKey(Object key) throws InvalidTypeException;
 
 	/**
-	 * returns true if this Json contains the given value.
+	 * Returns true if this Json contains the given value.
 	 * 
 	 * @param value the value to look for.
 	 * @return this Json contains the given value.
@@ -158,7 +160,7 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	public boolean containsValue(Object value);
 
 	/**
-	 * gets the size of this object. Not recursive.
+	 * Gets the size of this object. Not recursive.
 	 * 
 	 * @return the size of this object.
 	 */
@@ -167,8 +169,8 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	}
 
 	/**
-	 * gets the size of this object. if recursive is enabled this counts all sub
-	 * json elements as their size instead of one.
+	 * Gets the size of this object. If recursive is true this counts all sub Json
+	 * elements as their size instead of one.
 	 * 
 	 * @param recursive whether to recursively count the size.
 	 * @return the size of this object.
@@ -194,12 +196,26 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	/**
 	 * Returns a string representation of this element as byte array.
 	 * 
-	 * @param charset the name of the charset to use to convert the string to a byte
-	 *                array.
+	 * @param charset the name of the {@link Charset} to use to convert the string
+	 *                to a byte array.
 	 * @return a String representation of this element as byte array.
-	 * @throws UnsupportedEncodingException If the named charset is not supported.
+	 * @throws UnsupportedEncodingException If the named {@link Charset} is not
+	 *                                      supported.
 	 */
 	public default byte[] toByteArray(String charset) throws UnsupportedEncodingException {
+		return toString().getBytes(charset);
+	}
+
+	/**
+	 * Returns a string representation of this element as byte array.
+	 * 
+	 * @param charset the {@link Charset} to use to convert the string to a byte
+	 *                array.
+	 * @return a String representation of this element as byte array.
+	 * @throws UnsupportedEncodingException If the named {@link Charset} is not
+	 *                                      supported.
+	 */
+	public default byte[] toByteArray(Charset charset) throws UnsupportedEncodingException {
 		return toString().getBytes(charset);
 	}
 
@@ -224,12 +240,26 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	/**
 	 * Returns a string representation of this element as byte array.
 	 * 
-	 * @param charset the name of the charset to use to convert the string to a byte
-	 *                array.
+	 * @param charset the name of the {@link Charset} to use to convert the string
+	 *                to a byte array.
 	 * @return a String representation of this element as byte array.
-	 * @throws UnsupportedEncodingException If the named charset is not supported.
+	 * @throws UnsupportedEncodingException If the named {@link Charset} is not
+	 *                                      supported.
 	 */
 	public default byte[] getBytes(String charset) throws UnsupportedEncodingException {
+		return toByteArray(charset);
+	}
+
+	/**
+	 * Returns a string representation of this element as byte array.
+	 * 
+	 * @param charset the {@link Charset} to use to convert the string to a byte
+	 *                array.
+	 * @return a String representation of this element as byte array.
+	 * @throws UnsupportedEncodingException If the named {@link Charset} is not
+	 *                                      supported.
+	 */
+	public default byte[] getBytes(Charset charset) throws UnsupportedEncodingException {
 		return toByteArray(charset);
 	}
 
@@ -243,7 +273,7 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	}
 
 	/**
-	 * Creates and returns a copy of this Json Object. Recursive.
+	 * Creates and returns a copy of this Json. Recursive.
 	 * 
 	 * @return a copy of this Json Object.
 	 * @throws CloneNotSupportedException if this element can't be cloned.
@@ -251,7 +281,7 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	public JsonElement clone() throws CloneNotSupportedException;
 
 	/**
-	 * Creates and returns a copy of this Json Object.
+	 * Creates and returns a copy of this Json.
 	 * 
 	 * @param recursive whether Jsons inside this Json object should get cloned as
 	 *                  well.
@@ -269,14 +299,14 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	public boolean equals(Object obj);
 
 	/**
-	 * Checks whether this json is empty.
+	 * Checks whether this Json is empty.
 	 * 
-	 * @return whether this json is empty.
+	 * @return whether this Json is empty.
 	 */
 	public boolean isEmpty();
 
 	/**
-	 * Clears this json.
+	 * Clears this Json.
 	 */
 	public void clear();
 
@@ -292,70 +322,70 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	}
 
 	/**
-	 * returns a new JsonElement containing the changes from the given JsonElement
+	 * Returns a new JsonElement containing the changes from the given JsonElement
 	 * to this one. Recursive. This marks removed values by setting them to null, so
 	 * it will not fully work with JsonElements containing null objects.
 	 * 
-	 * @param from the previous JsonElement
+	 * @param from the previous JsonElement.
 	 * @return a new JsonElement containing the changes from the given JsonElement
 	 *         to this one.
 	 * @throws UnsupportedOperationException if this JsonElement doesn't support
-	 *                                       generating a changes json.
+	 *                                       generating a changes Json.
 	 */
 	public default JsonElement changes(JsonElement from) throws UnsupportedOperationException {
 		return changes(from, true);
 	}
 
 	/**
-	 * returns a new JsonElement containing the changes from the given JsonElement
+	 * Returns a new JsonElement containing the changes from the given JsonElement
 	 * to this one. This marks removed values by setting them to null, so it will
 	 * not fully work with JsonElements containing null objects.
 	 * 
-	 * @param from      the previous JsonElement
+	 * @param from      the previous JsonElement.
 	 * @param recursive whether changed JsonElements inside this one should get
 	 *                  checked for changes too, or just cloned from this one.
 	 * @return a new JsonElement containing the changes from the given JsonElement
 	 *         to this one.
 	 * @throws UnsupportedOperationException if this JsonElement doesn't support
-	 *                                       generating a changes json.
+	 *                                       generating a changes Json.
 	 */
 	public JsonElement changes(JsonElement from, boolean recursive) throws UnsupportedOperationException;
 
 	/**
-	 * returns a new JsonElement containing the values of the given JsonElement with
+	 * Returns a new JsonElement containing the values of the given JsonElement with
 	 * the changes contained in this JsonElement applied. Recursive. This marks
 	 * removed values by setting them to null, so it will not fully work with
 	 * JsonElements containing null objects.
 	 * 
-	 * @param from the previous JsonElement
+	 * @param from the previous JsonElement.
 	 * @return a new JsonElement containing the values of the given JsonElement with
 	 *         the changes contained in this JsonElement applied.
 	 * @throws UnsupportedOperationException if this JsonElement doesn't support
-	 *                                       generating a changes json.
+	 *                                       generating a changes Json.
 	 */
 	public default JsonElement reconstruct(JsonElement from) throws UnsupportedOperationException {
 		return reconstruct(from, true);
 	}
 
 	/**
-	 * returns a new JsonElement containing the values of the given JsonElement with
+	 * Returns a new JsonElement containing the values of the given JsonElement with
 	 * the changes contained in this JsonElement applied. This marks removed values
 	 * by setting them to null, so it will not fully work with JsonElements
 	 * containing null objects.
 	 * 
-	 * @param from      the previous JsonElement
+	 * @param from      the previous JsonElement.
 	 * @param recursive whether changedJsonElements inside this one should get
 	 *                  reconstructed too, or just cloned from this one.
 	 * @return a new JsonElement containing the values of the given JsonElement with
 	 *         the changes contained in this JsonElement applied.
 	 * @throws UnsupportedOperationException if this JsonElement doesn't support
-	 *                                       generating a changes json.
+	 *                                       generating a changes Json.
 	 */
 	public JsonElement reconstruct(JsonElement from, boolean recursive);
 
 	/**
-	 * converts the given object to a string in the way intended for jsons to match
-	 * the json specifications.
+	 * Converts the given object to a string in the way intended for Jsons to match
+	 * the Json specifications.
 	 * 
 	 * @param content the object to get the string representation for.
 	 * @return a string representation of the given object.

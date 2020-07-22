@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 /**
  * 
  * A utility class to improve logging. Used to trace the System Outputs, and to
- * get custom Loggers logging to the System Output.
+ * get custom {@link Logger}s logging to the System Output.
  * 
  * @author ToMe25
  *
@@ -31,8 +31,9 @@ public class LogTracer {
 	private static final PrintStream DEFAULT_OUT = System.out;
 
 	/**
-	 * Sets System Output and Error Stream to a TracingMultiPrintStream with the old
-	 * Stream and a File Output Stream to the log file.
+	 * Sets System Output and Error Stream to a {@link LoggingPrintStream} printing
+	 * to a {@link Logger} logging to the old Stream and a {@link FileOutputStream}
+	 * to the log file.
 	 * 
 	 * @param log the file to log the System Error Stream to.
 	 */
@@ -41,8 +42,9 @@ public class LogTracer {
 	}
 
 	/**
-	 * Sets System Output and Error Stream to a TracingMultiPrintStream with the old
-	 * Stream and a File Output Stream to their respective file.
+	 * Sets System Output and Error Stream to a {@link LoggingPrintStream} printing
+	 * to a {@link Logger} logging to the old Stream and a {@link FileOutputStream}
+	 * to the log file.
 	 * 
 	 * @param errorLog  the file to log the System Error Stream to.
 	 * @param outputLog the file to log the System Output Stream to.
@@ -52,8 +54,9 @@ public class LogTracer {
 	}
 
 	/**
-	 * Sets System Output and Error Stream to a TracingMultiPrintStream with the old
-	 * Stream and a File Output Stream to the log file.
+	 * Sets System Output and Error Stream to a {@link LoggingPrintStream} printing
+	 * to a {@link Logger} logging to the old Stream and a {@link FileOutputStream}
+	 * to the log file.
 	 * 
 	 * @param log the file to log the System Error Stream to.
 	 */
@@ -62,8 +65,9 @@ public class LogTracer {
 	}
 
 	/**
-	 * Sets System Output and Error Stream to a TracingMultiPrintStream with the old
-	 * Stream and a File Output Stream to their respective file.
+	 * Sets System Output and Error Stream to a {@link LoggingPrintStream} printing
+	 * to a {@link Logger} logging to the old Stream and a {@link FileOutputStream}
+	 * to their respective file.
 	 * 
 	 * @param errorLog  the file to log the System Error Stream to. set to null to
 	 *                  disable changing System.err.
@@ -96,10 +100,11 @@ public class LogTracer {
 	}
 
 	/**
-	 * Sets System Output and Error Stream to a TracingMultiPrintStream with the old
-	 * Stream and the Output Streams from additionalStreams.
+	 * Sets System Output and Error Stream to a {@link LoggingPrintStream} printing
+	 * to a {@link Logger} logging to the old Stream and the {@link OutputStream}s
+	 * from additionalStreams.
 	 * 
-	 * @param additionalStreams the Output Streams to add to System.out
+	 * @param additionalStreams the {@link OutputStream}s to add to System.out
 	 */
 	public static void traceOutputs(OutputStream... additionalStreams) {
 		traceError(additionalStreams);
@@ -107,8 +112,9 @@ public class LogTracer {
 	}
 
 	/**
-	 * Sets System Error Stream to a TracingMultiPrintStream with the old System
-	 * Error Stream and the Output Streams from additionalStreams.
+	 * Sets System Error Stream to a {@link LoggingPrintStream} printing to a
+	 * {@link Logger} logging to the old Stream and the {@link OutputStream}s from
+	 * additionalStreams.
 	 * 
 	 * @param additionalStreams the Output Streams to add to System.err
 	 */
@@ -121,8 +127,9 @@ public class LogTracer {
 	}
 
 	/**
-	 * Sets System Output to a TracingMultiPrintStream with the old System Output
-	 * and the Output Streams from additionalStreams.
+	 * Sets System Output to a {@link LoggingPrintStream} printing to a
+	 * {@link Logger} logging to the old Stream and the {@link OutputStream}s from
+	 * additionalStreams.
 	 * 
 	 * @param additionalStreams the Output Streams to add to System.out
 	 */
@@ -146,11 +153,11 @@ public class LogTracer {
 	}
 
 	/**
-	 * gets a Logger that logs log levels info and below to System.out, and warning
+	 * Gets a {@link Logger} that logs records with log {@link Level} info or below to System.out, and warning
 	 * and above to System.err, with the give custom name.
 	 * 
-	 * @param name the name of the logger to get.
-	 * @return the logger for the given name.
+	 * @param name the name of the {@link Logger} to get.
+	 * @return the {@link Logger} for the given name.
 	 */
 	public static Logger getLogger(String name) {
 		Logger logger = Logger.getLogger(name);
@@ -170,8 +177,8 @@ public class LogTracer {
 	}
 
 	/**
-	 * gets a Logger that logs log levels info and below to System.out, and warning
-	 * and above to System.err, with the give custom name.
+	 * Gets a {@link Logger} that logs records with log {@link Level} info or below to System.out, and warning
+	 * or above to System.err, with the give custom name.
 	 * 
 	 * @return the global logger.
 	 */
@@ -198,9 +205,9 @@ public class LogTracer {
 	}
 
 	/**
-	 * gets the System Error Logger.
+	 * Gets the System Error {@link Logger}.
 	 * 
-	 * @return the system error logger.
+	 * @return the system error {@link Logger}.
 	 */
 	public static Logger getError() {
 		if (error != null) {
@@ -225,9 +232,9 @@ public class LogTracer {
 	}
 
 	/**
-	 * gets the System Output Logger.
+	 * Gets the System Output {@link Logger}.
 	 * 
-	 * @return the system output logger.
+	 * @return the system output {@link Logger}.
 	 */
 	public static Logger getOutput() {
 		if (output != null) {
@@ -252,12 +259,12 @@ public class LogTracer {
 	}
 
 	/**
-	 * gets the first stack trace element in the thread calling this method from the
+	 * Gets the first {@link StackTraceElement} in the {@link Thread} calling this method from the
 	 * given class.
 	 * 
 	 * @param callerName the name of the class to look for.
-	 * @return the StackTraceElement of the searched class, or null, if there was no
-	 *         StackTraceElement from that class.
+	 * @return the {@link StackTraceElement} of the searched class, or null, if there was no
+	 *         {@link StackTraceElement} from that class.
 	 */
 	public static StackTraceElement getCallerStackTraceElement(final String callerName) {
 		StackTraceElement callerFrame = null;

@@ -10,7 +10,8 @@ import java.util.Locale;
 
 /**
  * 
- * A Standard PrintStream except it can write to multiple OutputStreams.
+ * A Standard {@link PrintStream} except it can write to multiple
+ * {@link OutputStream}s.
  * 
  * @author ToMe25
  *
@@ -19,6 +20,11 @@ public class MultiPrintStream extends PrintStream {
 
 	private PrintStream[] streams;
 
+	/**
+	 * Creates a new MultiPrintStream, printing to the given {@link OutputStream}s.
+	 * 
+	 * @param outputStreams the {@link OutputStream}s to print to.
+	 */
 	public MultiPrintStream(OutputStream... outputStreams) {
 		super(outputStreams.length > 0 ? outputStreams[0] : null);
 		streams = new PrintStream[outputStreams.length];
@@ -34,11 +40,11 @@ public class MultiPrintStream extends PrintStream {
 	}
 
 	/**
-	 * Adds the given OutputStream to the List of Output Streams that is being used
-	 * as Output.
+	 * Adds the given {@link OutputStream} to the List of {@link OutputStream}s that
+	 * is being printed to.
 	 * 
-	 * @param out the OutputStream to add.
-	 * @return this MultiPrintStream
+	 * @param out the {@link OutputStream} to add.
+	 * @return this MultiPrintStream.
 	 */
 	public MultiPrintStream addOutputStream(OutputStream out) {
 		streams = Arrays.copyOf(streams, streams.length + 1);
@@ -51,9 +57,9 @@ public class MultiPrintStream extends PrintStream {
 	}
 
 	/**
-	 * returns a list of all used OutputStreams.
+	 * returns a list of all used {@link OutputStream}s.
 	 * 
-	 * @return a new list of all used OutputStreams.
+	 * @return a new list of all used {@link OutputStream}s.
 	 */
 	public List<OutputStream> getOutputStreams() {
 		List<OutputStream> list = new ArrayList<OutputStream>();

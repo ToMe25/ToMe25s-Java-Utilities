@@ -8,8 +8,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * A PrintStream that writes everything to a Logger, everything written into it
- * after the last newline will be buffered until the next newline or flush.
+ * A {@link PrintStream} that writes everything to a {@link Logger}. Everything
+ * written into it after the last newline will be buffered until the next
+ * newline or flush.
  * 
  * @author ToMe25
  *
@@ -29,19 +30,22 @@ public class LoggingPrintStream extends PrintStream {
 	}
 
 	/**
-	 * Creates a new LoggingPrintStream with a custom logger and log level info.
+	 * Creates a new LoggingPrintStream with a custom {@link Logger} and log
+	 * {@link Level} info.
 	 * 
-	 * @param logger the logger to print the input to.
+	 * @param logger the {@link Logger} to print the input to.
 	 */
 	public LoggingPrintStream(Logger logger) {
 		this(logger, Level.INFO);
 	}
 
 	/**
-	 * Creates a new LoggingPrintStream with a custom logger and log level.
+	 * Creates a new LoggingPrintStream with a custom {@link Logger} and log
+	 * {@link Level}.
 	 * 
-	 * @param logger   logger the logger to print the input to.
-	 * @param logLevel the log level to use when printing the input to logger.
+	 * @param logger   the {@link Logger} to print the input to.
+	 * @param logLevel the log {@link Level} to use when printing the input to
+	 *                 {@link Logger}.
 	 */
 	public LoggingPrintStream(Logger logger, Level logLevel) {
 		super((OutputStream) System.err);
@@ -50,18 +54,18 @@ public class LoggingPrintStream extends PrintStream {
 	}
 
 	/**
-	 * returns the Logger this LoggingPrintStream writes to.
+	 * returns the {@link Logger} this LoggingPrintStream writes to.
 	 * 
-	 * @return the Logger this LoggingPrintStream writes to.
+	 * @return the {@link Logger} this LoggingPrintStream writes to.
 	 */
 	public Logger getLogger() {
 		return log;
 	}
 
 	/**
-	 * returns the log level this LoggingPrintStream writes to.
+	 * returns the log {@link Level} this LoggingPrintStream writes to.
 	 * 
-	 * @return the log level this LoggingPrintStream writes to.
+	 * @return the log {@link Level} this LoggingPrintStream writes to.
 	 */
 	public Level getLogLevel() {
 		return lvl;
@@ -252,11 +256,11 @@ public class LoggingPrintStream extends PrintStream {
 	}
 
 	/**
-	 * returns the StackTraceElement that contains the method writing the current
-	 * message.
+	 * returns the {@link StackTraceElement} that contains the method writing the
+	 * current message.
 	 * 
-	 * @return the StackTraceElement that contains the method writing the current
-	 *         message.
+	 * @return the {@link StackTraceElement} that contains the method writing the
+	 *         current message.
 	 */
 	private StackTraceElement getWriter() {
 		StackTraceElement[] trace = Thread.currentThread().getStackTrace();
@@ -275,7 +279,7 @@ public class LoggingPrintStream extends PrintStream {
 	}
 
 	/**
-	 * Checks whether the given array contains the give string.
+	 * Checks whether the given array contains the given string.
 	 * 
 	 * @param array the array to search in.
 	 * @param str   the string to search.

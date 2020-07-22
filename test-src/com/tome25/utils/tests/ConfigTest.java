@@ -20,6 +20,9 @@ public class ConfigTest {
 	public void configTest() throws IOException {
 		// test the basics of the config system.
 		File cfgFile = new File("Config");
+		if (cfgFile.exists()) {
+			deleteDirectory(cfgFile);
+		}
 		Config cfg = new Config(false, cfgFile, false);
 		cfg.addConfig("Test.cfg", "testString", "\\Hello\"World:?\\",
 				"This is a Test config option to test the Config class.");
@@ -80,6 +83,9 @@ public class ConfigTest {
 	public void configWatcherTest() throws IOException, InterruptedException {
 		// test the basics of the config watcher.
 		File cfgFile = new File("Config");
+		if (cfgFile.exists()) {
+			deleteDirectory(cfgFile);
+		}
 		final boolean[] changed = new boolean[] { false };
 		Config cfg = new Config(true, cfgFile, true, (file) -> changed[0] = true);
 		cfg.addConfig("Watcher.cfg", "StringTest", "Some Random String",
@@ -114,6 +120,20 @@ public class ConfigTest {
 		}
 		assertEquals("Some Changed String", cfg.getConfig("StringTest"));
 		cfg.delete();
+	}
+
+	private void deleteDirectory(File dir) {
+		File[] files = dir.listFiles();
+		if (files != null) {
+			for (File f : files) {
+				if (f.isDirectory()) {
+					deleteDirectory(f);
+				} else {
+					f.delete();
+				}
+			}
+		}
+		dir.delete();
 	}
 
 }

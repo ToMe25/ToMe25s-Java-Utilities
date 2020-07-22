@@ -2,7 +2,7 @@
 # after that it will push the modified builds and javadoc back to the github reporitory, it will also create a new github release.
 # For more information see https://github.com/mathieudutour/github-tag-action#usage,
 # https://github.com/actions/setup-java#apache-maven-with-a-settings-path,
-# https://github.com/marketplace/actions/generate-changelog#example-usage,
+# https://github.com/rcmachado/changelog-action#example-usage,
 # https://github.com/EndBug/add-and-commit#usage,
 # https://github.com/actions/upload-artifact#upload-using-a-wildcard-pattern
 # and https://github.com/actions/upload-release-asset#example-workflow---upload-a-release-asset
@@ -67,9 +67,9 @@ jobs:
 
     - name: Update changelog file
       id: update_changelog
-      uses: heinrichreimer/github-changelog-generator-action@v2.1.1
+      uses: rcmachado/changelog-action@v1
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        args: init --output CHANGELOG.md
 
     - name: Commit and Push changes
       id: commit

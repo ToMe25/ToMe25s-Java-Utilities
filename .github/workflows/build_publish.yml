@@ -67,7 +67,7 @@ jobs:
 
     - name: Update changelog file
       id: update_changelog
-      uses: srepollock/changelog-generator@master
+      uses: srepollock/changelog-generator-action@master
 
     - name: Commit and Push changes
       id: commit

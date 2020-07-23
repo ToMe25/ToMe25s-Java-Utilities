@@ -20,8 +20,8 @@ public class VersionControl {
 	private static int[] versionArray;
 
 	/**
-	 * gets this libraries build number, if this is still in a Jar, if not this will
-	 * return 0;
+	 * Gets this libraries build number, if this is still in its Jar, if not this
+	 * will return 0;
 	 * 
 	 * @return the build number.
 	 */
@@ -87,7 +87,7 @@ public class VersionControl {
 
 	/**
 	 * Gets this libraries version number split into its components, if this is
-	 * still in a Jar, if not this will return [1, 0]. the used format is [MAJOR,
+	 * still in its Jar, if not this will return [1, 0]. the used format is [MAJOR,
 	 * MINOR, BUILD].
 	 * 
 	 * @return the version number.
@@ -110,7 +110,7 @@ public class VersionControl {
 	}
 
 	/**
-	 * Gets this libraries version number as a string, if this is still in a Jar, if
+	 * Gets this libraries version number as a string, if this is still in its Jar, if
 	 * not this will return 1.0. the used format is "MAJOR.MINOR.BUILD".
 	 * 
 	 * @return the version number.
@@ -145,7 +145,7 @@ public class VersionControl {
 	}
 
 	/**
-	 * Set the currently used version of a library. This sets both the String, and
+	 * Sets the currently used version of a library. This sets both the String, and
 	 * the Array.
 	 * 
 	 * @param name          the name of the library.
@@ -167,7 +167,7 @@ public class VersionControl {
 	}
 
 	/**
-	 * Set the currently used version of a library. This sets both the String, and
+	 * Sets the currently used version of a library. This sets both the String, and
 	 * the Array.
 	 * 
 	 * @param name         the name of the library.

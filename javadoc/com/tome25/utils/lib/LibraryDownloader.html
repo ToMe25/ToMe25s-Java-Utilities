@@ -152,7 +152,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <tr class="rowColor">
 <td class="colFirst"><code>private boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryDownloader.html#executable">executable</a></span></code>
-<div class="block">whether the target file should get set to executable after the download
+<div class="block">Whether the target file should get set to executable after the download
  finished.</div>
 </td>
 </tr>
@@ -181,7 +181,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <tr class="rowColor">
 <td class="colFirst"><code>private boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryDownloader.html#targetDir">targetDir</a></span></code>
-<div class="block">whether target is a directory and the file should be put in it, or the file
+<div class="block">Whether target is a directory and the file should be put in it, or the file
  where the download should be saved.</div>
 </td>
 </tr>
@@ -212,7 +212,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;defaultUrlStorage,
                  boolean&nbsp;overrideTarget,
                  boolean&nbsp;makeExecutable)</code>
-<div class="block">Creates a new Library Downloader that reads all URLs from urlStorage, and
+<div class="block">Creates a new LibraryDownloader that reads all URLs from urlStorage, and
  tries them until one is valid, as long as they are separated by a ',' or a
  ';'.</div>
 </td>
@@ -223,7 +223,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                  <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;target,
                  boolean&nbsp;overrideTarget,
                  boolean&nbsp;makeExecutable)</code>
-<div class="block">Creates a new Library Downloader that reads all URLs from urlStorage, and
+<div class="block">Creates a new LibraryDownloader that reads all URLs from urlStorage, and
  tries them until one is valid, as long as they are separated by a ',' or a
  ';'.</div>
 </td>
@@ -235,7 +235,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;contentTypeCheck,
                  boolean&nbsp;overrideTarget,
                  boolean&nbsp;makeExecutable)</code>
-<div class="block">Creates a new Library Downloader that reads all URLs from urlStorage, and
+<div class="block">Creates a new LibraryDownloader that reads all URLs from urlStorage, and
  tries them until one is valid, as long as they are separated by a ',' or a
  ';'.</div>
 </td>
@@ -246,7 +246,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;contentTypeCheck,
                  boolean&nbsp;overrideTarget,
                  boolean&nbsp;makeExecutable)</code>
-<div class="block">Creates a new Library Downloader that reads all URLs from urlStorage, and
+<div class="block">Creates a new LibraryDownloader that reads all URLs from urlStorage, and
  tries them until one is valid, as long as they are separated by a ',' or a
  ';'.</div>
 </td>
@@ -255,7 +255,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryDownloader.html#LibraryDownloader-java.util.List-boolean-boolean-">LibraryDownloader</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&gt;&nbsp;urls,
                  boolean&nbsp;overrideTarget,
                  boolean&nbsp;makeExecutable)</code>
-<div class="block">Creates a new Library Downloader downloading a Jar file from the first valid
+<div class="block">Creates a new LibraryDownloader downloading a Jar file from the first valid
  of a list of URLs, this will download the file into a directory named libs in
  the same directory where the file containing this class is, and give it the
  name of the file on from the URL.</div>
@@ -266,7 +266,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                  <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;target,
                  boolean&nbsp;overrideTarget,
                  boolean&nbsp;makeExecutable)</code>
-<div class="block">Creates a new Library Downloader downloading a Jar file from the first valid
+<div class="block">Creates a new LibraryDownloader downloading a Jar file from the first valid
  of a list of URLs.</div>
 </td>
 </tr>
@@ -276,8 +276,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;contentTypeCheck,
                  boolean&nbsp;overrideTarget,
                  boolean&nbsp;makeExecutable)</code>
-<div class="block">Creates a new Library Downloader downloading from the first url of a list
- that is accepted by contentTypeCheck and responds without errors.</div>
+<div class="block">Creates a new LibraryDownloader downloading from the first URL of a list that
+ is accepted by contentTypeCheck and responds without errors.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -285,8 +285,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;contentTypeCheck,
                  boolean&nbsp;overrideTarget,
                  boolean&nbsp;makeExecutable)</code>
-<div class="block">Creates a new Library Downloader downloading from the first url of a list
- that is accepted by contentTypeCheck and responds without errors, this will
+<div class="block">Creates a new LibraryDownloader downloading from the first URL of a list that
+ is accepted by contentTypeCheck and responds without errors, this will
  download the file into a directory named libs in the same directory where the
  file containing this class is, and give it the name of the file on from the
  URL.</div>
@@ -296,7 +296,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryDownloader.html#LibraryDownloader-java.net.URL-boolean-boolean-">LibraryDownloader</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&nbsp;url,
                  boolean&nbsp;overrideTarget,
                  boolean&nbsp;makeExecutable)</code>
-<div class="block">Creates a new Library Downloader downloading a jar file from a single URL,
+<div class="block">Creates a new LibraryDownloader downloading a jar file from a single URL,
  this will download the file into a directory named libs in the same directory
  where the file containing this class is, and give it the name of the file on
  from the URL.</div>
@@ -307,7 +307,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                  <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;target,
                  boolean&nbsp;overrideTarget,
                  boolean&nbsp;makeExecutable)</code>
-<div class="block">Creates a new Library Downloader downloading a jar file from a single URL.</div>
+<div class="block">Creates a new LibraryDownloader downloading a jar file from a single URL.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -316,7 +316,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;contentTypeCheck,
                  boolean&nbsp;overrideTarget,
                  boolean&nbsp;makeExecutable)</code>
-<div class="block">Creates a new Library Downloader downloading from a single URL if the content
+<div class="block">Creates a new LibraryDownloader downloading from a single URL if the content
  type of that web site is accepted by contentTypeCheck.</div>
 </td>
 </tr>
@@ -325,7 +325,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;contentTypeCheck,
                  boolean&nbsp;overrideTarget,
                  boolean&nbsp;makeExecutable)</code>
-<div class="block">Creates a new Library Downloader downloading a jar file from a single URL,
+<div class="block">Creates a new LibraryDownloader downloading a jar file from a single URL,
  this will download the file into a directory named libs in the same directory
  where the file containing this class is, and give it the name of the file on
  from the URL.</div>
@@ -349,21 +349,21 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryDownloader.html#downloadFile--">downloadFile</a></span>()</code>
-<div class="block">downloads the file from the first working url from the urls set in the
+<div class="block">Downloads the file from the first working URL from the URLs set in the
  constructor.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryDownloader.html#downloadFile-java.util.function.Consumer-">downloadFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a>&gt;&nbsp;exceptionHandler)</code>
-<div class="block">downloads the file from the first working url from the urls set in the
+<div class="block">Downloads the file from the first working URL from the URLs set in the
  constructor.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryDownloader.html#downloadFile-java.net.URL-">downloadFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&nbsp;url)</code>
-<div class="block">downloads the file from the given url.</div>
+<div class="block">Downloads the file from the given URL.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -398,39 +398,39 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryDownloader.html#getBytesDownloaded--">getBytesDownloaded</a></span>()</code>
-<div class="block">returns the amount of bytes that are already downloaded.</div>
+<div class="block">Returns the amount of bytes that are already downloaded.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryDownloader.html#getDownloadSize--">getDownloadSize</a></span>()</code>
-<div class="block">returns the size of the file to download in bytes.</div>
+<div class="block">Returns the size of the file to download in bytes.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryDownloader.html#getDownloadUrl--">getDownloadUrl</a></span>()</code>
-<div class="block">returns the URL that got used for the download, after all redirects.</div>
+<div class="block">Returns the URL that got used for the download, after all redirects.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>double</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryDownloader.html#getPercentDownloaded--">getPercentDownloaded</a></span>()</code>
-<div class="block">returns the percentage of the file that is already downloaded.</div>
+<div class="block">Returns the percentage of the file that is already downloaded.</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>private static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryDownloader.html#readUrlStorage-java.io.File-java.lang.String-">readUrlStorage</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;urlStorage,
               <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;defaultUrlStorage)</code>
-<div class="block">reads all URLs from the given file, as long as they are separated by a ',' or
+<div class="block">Reads all URLs from the given file, as long as they are separated by a ',' or
  a ';'.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>private static &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryDownloader.html#toList-T...-">toList</a></span>(T...&nbsp;objects)</code>
-<div class="block">creates a new ArrayList and adds all the given objects to it.</div>
+<div class="block">Creates a new <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util"><code>ArrayList</code></a> and adds all the given objects to it.</div>
 </td>
 </tr>
 </table>
@@ -526,7 +526,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>executable</h4>
 <pre>private&nbsp;boolean executable</pre>
-<div class="block">whether the target file should get set to executable after the download
+<div class="block">Whether the target file should get set to executable after the download
  finished.</div>
 </li>
 </ul>
@@ -537,7 +537,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>targetDir</h4>
 <pre>private&nbsp;boolean targetDir</pre>
-<div class="block">whether target is a directory and the file should be put in it, or the file
+<div class="block">Whether target is a directory and the file should be put in it, or the file
  where the download should be saved.</div>
 </li>
 </ul>
@@ -586,7 +586,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;defaultUrlStorage,
                          boolean&nbsp;overrideTarget,
                          boolean&nbsp;makeExecutable)</pre>
-<div class="block">Creates a new Library Downloader that reads all URLs from urlStorage, and
+<div class="block">Creates a new LibraryDownloader that reads all URLs from urlStorage, and
  tries them until one is valid, as long as they are separated by a ',' or a
  ';'. This ignores lines starting with a '#'. If the file doesn't exists it
  creates it with defaultUrlStorage as its content. If defaultUrlStorage is
@@ -616,7 +616,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                          <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;contentTypeCheck,
                          boolean&nbsp;overrideTarget,
                          boolean&nbsp;makeExecutable)</pre>
-<div class="block">Creates a new Library Downloader that reads all URLs from urlStorage, and
+<div class="block">Creates a new LibraryDownloader that reads all URLs from urlStorage, and
  tries them until one is valid, as long as they are separated by a ',' or a
  ';'. This ignores lines starting with a '#'. If the file doesn't exists it
  creates it with defaultUrlStorage as its content. If defaultUrlStorage is
@@ -644,7 +644,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                          <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;target,
                          boolean&nbsp;overrideTarget,
                          boolean&nbsp;makeExecutable)</pre>
-<div class="block">Creates a new Library Downloader that reads all URLs from urlStorage, and
+<div class="block">Creates a new LibraryDownloader that reads all URLs from urlStorage, and
  tries them until one is valid, as long as they are separated by a ',' or a
  ';'. This ignores lines starting with a '#'. If the file doesn't exists it
  creates it with defaultUrlStorage as its content. If defaultUrlStorage is
@@ -680,7 +680,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                          <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;contentTypeCheck,
                          boolean&nbsp;overrideTarget,
                          boolean&nbsp;makeExecutable)</pre>
-<div class="block">Creates a new Library Downloader that reads all URLs from urlStorage, and
+<div class="block">Creates a new LibraryDownloader that reads all URLs from urlStorage, and
  tries them until one is valid, as long as they are separated by a ',' or a
  ';'. This ignores lines starting with a '#'. If the file doesn't exists it
  creates it with defaultUrlStorage as its content. If defaultUrlStorage is
@@ -711,7 +711,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <pre>public&nbsp;LibraryDownloader(<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&nbsp;url,
                          boolean&nbsp;overrideTarget,
                          boolean&nbsp;makeExecutable)</pre>
-<div class="block">Creates a new Library Downloader downloading a jar file from a single URL,
+<div class="block">Creates a new LibraryDownloader downloading a jar file from a single URL,
  this will download the file into a directory named libs in the same directory
  where the file containing this class is, and give it the name of the file on
  from the URL.
@@ -738,7 +738,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                          <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;contentTypeCheck,
                          boolean&nbsp;overrideTarget,
                          boolean&nbsp;makeExecutable)</pre>
-<div class="block">Creates a new Library Downloader downloading a jar file from a single URL,
+<div class="block">Creates a new LibraryDownloader downloading a jar file from a single URL,
  this will download the file into a directory named libs in the same directory
  where the file containing this class is, and give it the name of the file on
  from the URL.</div>
@@ -763,7 +763,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                          <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;target,
                          boolean&nbsp;overrideTarget,
                          boolean&nbsp;makeExecutable)</pre>
-<div class="block">Creates a new Library Downloader downloading a jar file from a single URL.</div>
+<div class="block">Creates a new LibraryDownloader downloading a jar file from a single URL.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>url</code> - the URL to download a file from.</dd>
@@ -788,7 +788,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                          <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;contentTypeCheck,
                          boolean&nbsp;overrideTarget,
                          boolean&nbsp;makeExecutable)</pre>
-<div class="block">Creates a new Library Downloader downloading from a single URL if the content
+<div class="block">Creates a new LibraryDownloader downloading from a single URL if the content
  type of that web site is accepted by contentTypeCheck.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -815,7 +815,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <pre>public&nbsp;LibraryDownloader(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&gt;&nbsp;urls,
                          boolean&nbsp;overrideTarget,
                          boolean&nbsp;makeExecutable)</pre>
-<div class="block">Creates a new Library Downloader downloading a Jar file from the first valid
+<div class="block">Creates a new LibraryDownloader downloading a Jar file from the first valid
  of a list of URLs, this will download the file into a directory named libs in
  the same directory where the file containing this class is, and give it the
  name of the file on from the URL.
@@ -842,8 +842,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                          <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;contentTypeCheck,
                          boolean&nbsp;overrideTarget,
                          boolean&nbsp;makeExecutable)</pre>
-<div class="block">Creates a new Library Downloader downloading from the first url of a list
- that is accepted by contentTypeCheck and responds without errors, this will
+<div class="block">Creates a new LibraryDownloader downloading from the first URL of a list that
+ is accepted by contentTypeCheck and responds without errors, this will
  download the file into a directory named libs in the same directory where the
  file containing this class is, and give it the name of the file on from the
  URL.</div>
@@ -868,7 +868,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                          <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;target,
                          boolean&nbsp;overrideTarget,
                          boolean&nbsp;makeExecutable)</pre>
-<div class="block">Creates a new Library Downloader downloading a Jar file from the first valid
+<div class="block">Creates a new LibraryDownloader downloading a Jar file from the first valid
  of a list of URLs.
  
  Valid content types are application/jar, application/java-archive,
@@ -898,8 +898,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
                          <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html?is-external=true" title="class or interface in java.util.function">Predicate</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;contentTypeCheck,
                          boolean&nbsp;overrideTarget,
                          boolean&nbsp;makeExecutable)</pre>
-<div class="block">Creates a new Library Downloader downloading from the first url of a list
- that is accepted by contentTypeCheck and responds without errors.</div>
+<div class="block">Creates a new LibraryDownloader downloading from the first URL of a list that
+ is accepted by contentTypeCheck and responds without errors.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>urls</code> - the List of URLs to download a file from.</dd>
@@ -931,7 +931,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>downloadFile</h4>
 <pre>public&nbsp;boolean&nbsp;downloadFile()</pre>
-<div class="block">downloads the file from the first working url from the urls set in the
+<div class="block">Downloads the file from the first working URL from the URLs set in the
  constructor.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -946,7 +946,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>downloadFile</h4>
 <pre>public&nbsp;boolean&nbsp;downloadFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a>&gt;&nbsp;exceptionHandler)</pre>
-<div class="block">downloads the file from the first working url from the urls set in the
+<div class="block">Downloads the file from the first working URL from the URLs set in the
  constructor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -964,7 +964,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <h4>downloadFile</h4>
 <pre>public&nbsp;boolean&nbsp;downloadFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&nbsp;url)
                      throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">downloads the file from the given url.</div>
+<div class="block">Downloads the file from the given URL.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>url</code> - the file to download.</dd>
@@ -985,7 +985,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <div class="block">Downloads ToMe25s-Java-Utilities from the first valid URL in the file
  ToMe25s-Java-Utilities-Download-Url.txt.
  
- The default for this file is the github download URL for
+ The default for this file is the GitHub download URL for
  ToMe25s-Java-Utilities.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -1055,7 +1055,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>getDownloadSize</h4>
 <pre>public&nbsp;int&nbsp;getDownloadSize()</pre>
-<div class="block">returns the size of the file to download in bytes.</div>
+<div class="block">Returns the size of the file to download in bytes.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the size of the file to download in bytes.</dd>
@@ -1069,7 +1069,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>getBytesDownloaded</h4>
 <pre>public&nbsp;int&nbsp;getBytesDownloaded()</pre>
-<div class="block">returns the amount of bytes that are already downloaded.</div>
+<div class="block">Returns the amount of bytes that are already downloaded.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the amount of bytes that are already downloaded.</dd>
@@ -1083,7 +1083,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>getPercentDownloaded</h4>
 <pre>public&nbsp;double&nbsp;getPercentDownloaded()</pre>
-<div class="block">returns the percentage of the file that is already downloaded.</div>
+<div class="block">Returns the percentage of the file that is already downloaded.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the percentage of the file that is already downloaded.</dd>
@@ -1097,7 +1097,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <li class="blockList">
 <h4>getDownloadUrl</h4>
 <pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&nbsp;getDownloadUrl()</pre>
-<div class="block">returns the URL that got used for the download, after all redirects.</div>
+<div class="block">Returns the URL that got used for the download, after all redirects.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the URL that got used for the download.</dd>
@@ -1114,7 +1114,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <h4>toList</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/SafeVarargs.html?is-external=true" title="class or interface in java.lang">@SafeVarargs</a>
 private static&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;toList(T...&nbsp;objects)</pre>
-<div class="block">creates a new ArrayList and adds all the given objects to it.</div>
+<div class="block">Creates a new <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util"><code>ArrayList</code></a> and adds all the given objects to it.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - the type of objects and list.</dd>
@@ -1133,7 +1133,7 @@ private static&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/doc
 <h4>readUrlStorage</h4>
 <pre>private static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net">URL</a>&gt;&nbsp;readUrlStorage(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;urlStorage,
                                         <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;defaultUrlStorage)</pre>
-<div class="block">reads all URLs from the given file, as long as they are separated by a ',' or
+<div class="block">Reads all URLs from the given file, as long as they are separated by a ',' or
  a ';'. This ignores lines starting with a '#'. If the file doesn't exists it
  creates it with defaultUrlStorage as its content. If defaultUrlStorage is
  null or empty it wont create a file, and will return an empty list.</div>
@@ -1142,7 +1142,7 @@ private static&nbsp;&lt;T&gt;&nbsp;<a href="https://docs.oracle.com/javase/8/doc
 <dd><code>urlStorage</code> - the file to read the URLs from.</dd>
 <dd><code>defaultUrlStorage</code> - the default content for urlStorage.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the urls listed in the url storage file.</dd>
+<dd>the URLs listed in the URL storage file.</dd>
 </dl>
 </li>
 </ul>

@@ -130,7 +130,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">InvalidTypeException</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></pre>
-<div class="block">A simple Exception for Invalid types.</div>
+<div class="block">A simple <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang"><code>Exception</code></a> for invalid types.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>ToMe25</dd>
@@ -178,14 +178,20 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeExce
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html#InvalidTypeException--">InvalidTypeException</a></span>()</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html#InvalidTypeException--">InvalidTypeException</a></span>()</code>
+<div class="block">Creates a new InvalidTypeException.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html#InvalidTypeException-java.lang.String-">InvalidTypeException</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html#InvalidTypeException-java.lang.String-">InvalidTypeException</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg)</code>
+<div class="block">Creates a new InvalidTypeException with the given message.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html#InvalidTypeException-java.lang.String-java.lang.String-">InvalidTypeException</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;expectedType,
-                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;receivedType)</code>&nbsp;</td>
+                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;receivedType)</code>
+<div class="block">Creates a new InvalidTypeException with a message about the given expected and received type.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -272,6 +278,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeExce
 <li class="blockList">
 <h4>InvalidTypeException</h4>
 <pre>public&nbsp;InvalidTypeException()</pre>
+<div class="block">Creates a new InvalidTypeException.</div>
 </li>
 </ul>
 <a name="InvalidTypeException-java.lang.String-">
@@ -281,6 +288,11 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeExce
 <li class="blockList">
 <h4>InvalidTypeException</h4>
 <pre>public&nbsp;InvalidTypeException(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg)</pre>
+<div class="block">Creates a new InvalidTypeException with the given message.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>msg</code> - the message for this InvalidTypeException.</dd>
+</dl>
 </li>
 </ul>
 <a name="InvalidTypeException-java.lang.String-java.lang.String-">
@@ -291,6 +303,12 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeExce
 <h4>InvalidTypeException</h4>
 <pre>public&nbsp;InvalidTypeException(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;expectedType,
                             <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;receivedType)</pre>
+<div class="block">Creates a new InvalidTypeException with a message about the given expected and received type.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>expectedType</code> - the expected type.</dd>
+<dd><code>receivedType</code> - the received type.</dd>
+</dl>
 </li>
 </ul>
 </li>

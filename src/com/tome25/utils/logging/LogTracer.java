@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 
 /**
  * 
- * A utility class to improve logging. Used to trace the System Outputs, and to
- * get custom {@link Logger}s logging to the System Output.
+ * A utility class to improve logging. Used to trace the system outputs, and to
+ * get custom {@link Logger}s logging to the system output.
  * 
  * @author ToMe25
  *
@@ -31,47 +31,49 @@ public class LogTracer {
 	private static final PrintStream DEFAULT_OUT = System.out;
 
 	/**
-	 * Sets System Output and Error Stream to a {@link LoggingPrintStream} printing
-	 * to a {@link Logger} logging to the old Stream and a {@link FileOutputStream}
-	 * to the log file.
+	 * Sets system output and error {@link PrintStream} to a
+	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
+	 * {@link PrintStream} and a {@link FileOutputStream} to the log file.
 	 * 
-	 * @param log the file to log the System Error Stream to.
+	 * @param log the file to log the system error stream to.
 	 */
 	public static void traceOutputs(String log) {
 		traceOutputs(new File(log));
 	}
 
 	/**
-	 * Sets System Output and Error Stream to a {@link LoggingPrintStream} printing
-	 * to a {@link Logger} logging to the old Stream and a {@link FileOutputStream}
-	 * to the log file.
+	 * Sets system output and error {@link PrintStream} to a
+	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
+	 * {@link PrintStream} and a {@link FileOutputStream} to their respective log
+	 * file.
 	 * 
-	 * @param errorLog  the file to log the System Error Stream to.
-	 * @param outputLog the file to log the System Output Stream to.
+	 * @param errorLog  the file to log the system error stream to.
+	 * @param outputLog the file to log the system output stream to.
 	 */
 	public static void traceOutputs(String errorLog, String outputLog) {
 		traceOutputs(new File(errorLog), new File(outputLog));
 	}
 
 	/**
-	 * Sets System Output and Error Stream to a {@link LoggingPrintStream} printing
-	 * to a {@link Logger} logging to the old Stream and a {@link FileOutputStream}
-	 * to the log file.
+	 * Sets system output and error {@link PrintStream} to a
+	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
+	 * {@link PrintStream} and a {@link FileOutputStream} to the log file.
 	 * 
-	 * @param log the file to log the System Error Stream to.
+	 * @param log the file to log the system error stream to.
 	 */
 	public static void traceOutputs(File log) {
 		traceOutputs(log, log);
 	}
 
 	/**
-	 * Sets System Output and Error Stream to a {@link LoggingPrintStream} printing
-	 * to a {@link Logger} logging to the old Stream and a {@link FileOutputStream}
-	 * to their respective file.
+	 * Sets system output and error {@link PrintStream} to a
+	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
+	 * {@link PrintStream} and a {@link FileOutputStream} to their respective log
+	 * file.
 	 * 
-	 * @param errorLog  the file to log the System Error Stream to. set to null to
+	 * @param errorLog  the file to log the system error stream to. Set to null to
 	 *                  disable changing System.err.
-	 * @param outputLog the file to log the System Output Stream to. set to null to
+	 * @param outputLog the file to log the system output stream to. Set to null to
 	 *                  disable changing System.out.
 	 */
 	public static void traceOutputs(File errorLog, File outputLog) {
@@ -100,9 +102,9 @@ public class LogTracer {
 	}
 
 	/**
-	 * Sets System Output and Error Stream to a {@link LoggingPrintStream} printing
-	 * to a {@link Logger} logging to the old Stream and the {@link OutputStream}s
-	 * from additionalStreams.
+	 * Sets system output and error {@link PrintStream} to a
+	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
+	 * {@link PrintStream} and the {@link OutputStream}s from additionalStreams.
 	 * 
 	 * @param additionalStreams the {@link OutputStream}s to add to System.out
 	 */
@@ -112,11 +114,11 @@ public class LogTracer {
 	}
 
 	/**
-	 * Sets System Error Stream to a {@link LoggingPrintStream} printing to a
-	 * {@link Logger} logging to the old Stream and the {@link OutputStream}s from
-	 * additionalStreams.
+	 * Sets system error {@link PrintStream} to a {@link LoggingPrintStream}
+	 * printing to a {@link Logger} logging to the old {@link PrintStream} and the
+	 * {@link OutputStream}s from additionalStreams.
 	 * 
-	 * @param additionalStreams the Output Streams to add to System.err
+	 * @param additionalStreams the {@link OutputStreams} to add to System.err
 	 */
 	public static void traceError(OutputStream... additionalStreams) {
 		Logger error = getError();
@@ -127,11 +129,11 @@ public class LogTracer {
 	}
 
 	/**
-	 * Sets System Output to a {@link LoggingPrintStream} printing to a
-	 * {@link Logger} logging to the old Stream and the {@link OutputStream}s from
-	 * additionalStreams.
+	 * Sets system output {@link PrintStream} to a {@link LoggingPrintStream}
+	 * printing to a {@link Logger} logging to the old {@link PrintStream} and the
+	 * {@link OutputStream}s from additionalStreams.
 	 * 
-	 * @param additionalStreams the Output Streams to add to System.out
+	 * @param additionalStreams the {@link OutputStreams} to add to System.out
 	 */
 	public static void traceOutput(OutputStream... additionalStreams) {
 		Logger output = getOutput();
@@ -153,8 +155,9 @@ public class LogTracer {
 	}
 
 	/**
-	 * Gets a {@link Logger} that logs records with log {@link Level} info or below to System.out, and warning
-	 * and above to System.err, with the give custom name.
+	 * Gets a {@link Logger} that logs {@link java.util.logging.LogRecord} with log
+	 * {@link Level} info or below to System.out, and warning and above to
+	 * System.err, with the give custom name.
 	 * 
 	 * @param name the name of the {@link Logger} to get.
 	 * @return the {@link Logger} for the given name.
@@ -177,8 +180,9 @@ public class LogTracer {
 	}
 
 	/**
-	 * Gets a {@link Logger} that logs records with log {@link Level} info or below to System.out, and warning
-	 * or above to System.err, with the give custom name.
+	 * Gets a {@link Logger} that logs {@link java.util.logging.LogRecord} with log
+	 * {@link Level} info or below to System.out, and warning or above to
+	 * System.err, with the give custom name.
 	 * 
 	 * @return the global logger.
 	 */
@@ -205,7 +209,7 @@ public class LogTracer {
 	}
 
 	/**
-	 * Gets the System Error {@link Logger}.
+	 * Gets the system error {@link Logger}.
 	 * 
 	 * @return the system error {@link Logger}.
 	 */
@@ -232,7 +236,7 @@ public class LogTracer {
 	}
 
 	/**
-	 * Gets the System Output {@link Logger}.
+	 * Gets the system output {@link Logger}.
 	 * 
 	 * @return the system output {@link Logger}.
 	 */
@@ -259,12 +263,12 @@ public class LogTracer {
 	}
 
 	/**
-	 * Gets the first {@link StackTraceElement} in the {@link Thread} calling this method from the
-	 * given class.
+	 * Gets the first {@link StackTraceElement} in the {@link Thread} calling this
+	 * method from the given class.
 	 * 
 	 * @param callerName the name of the class to look for.
-	 * @return the {@link StackTraceElement} of the searched class, or null, if there was no
-	 *         {@link StackTraceElement} from that class.
+	 * @return the {@link StackTraceElement} of the searched class, or null, if
+	 *         there was no {@link StackTraceElement} from that class.
 	 */
 	public static StackTraceElement getCallerStackTraceElement(final String callerName) {
 		StackTraceElement callerFrame = null;

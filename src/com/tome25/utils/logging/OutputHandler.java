@@ -7,8 +7,9 @@ import java.util.logging.LogRecord;
 import java.util.logging.StreamHandler;
 
 /**
- * A StreamHandler that can have a custom log level from the start. Also it
- * automatically flushes like the ConsoleHandler.
+ * A {@link StreamHandler} that can have a custom log {@link Level} from the
+ * start. Also it automatically flushes like the
+ * {@link java.util.logging.ConsoleHandler}.
  * 
  * @author ToMe25
  *
@@ -16,21 +17,21 @@ import java.util.logging.StreamHandler;
 public class OutputHandler extends StreamHandler {
 
 	/**
-	 * creates a new OutputHandler with log level info.
+	 * Creates a new OutputHandler with log {@link Level} info.
 	 * 
-	 * @param out       the OutputStream to write the messages to.
-	 * @param formatter the formatter to use for all messages.
+	 * @param out       the {@link OutputStream} to write the {@link LogRecord}s to.
+	 * @param formatter the {@link Formatter} to use for all {@link LogRecord}s.
 	 */
 	public OutputHandler(OutputStream out, Formatter formatter) {
 		this(out, Level.INFO, formatter);
 	}
 
 	/**
-	 * creates a new OutputHandler with the given log level.
+	 * Creates a new OutputHandler with the given log {@link Level}.
 	 * 
-	 * @param out       the OutputStream to write the messages to.
-	 * @param level     the minimal log level this handler should handle.
-	 * @param formatter the formatter to use for all messages.
+	 * @param out       the {@link OutputStream} to write the {@link LogRecord}s to.
+	 * @param level     the minimal log {@link Level} this handler should handle.
+	 * @param formatter the {@link Formatter} to use for all {@link LogRecord}s.
 	 */
 	public OutputHandler(OutputStream out, Level level, Formatter formatter) {
 		super(out, formatter);

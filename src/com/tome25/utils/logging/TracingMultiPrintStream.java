@@ -13,15 +13,28 @@ import com.tome25.utils.config.Config;
 
 /**
  * 
- * A Tracing Print Stream that can print to multiple Output Streams.
+ * A Tracing {@link PrintStream} that can print to multiple
+ * {@link OutputStream}s.
  * 
  * @author ToMe25
  *
  */
 public class TracingMultiPrintStream extends MultiPrintStream {
 
+	/**
+	 * Whether a timestamp of the creation of the message should be added to the
+	 * output.
+	 */
 	private boolean traceTimestamp = true;
+	/**
+	 * Whether the name of the thread printing the message should be added to the
+	 * output.
+	 */
 	private boolean traceThread = true;
+	/**
+	 * Whether the name of the class printing the message should be added to the
+	 * output.
+	 */
 	private boolean traceOutputtingClass = true;
 	/**
 	 * Whether system classes should be used as the outputting class for some text.
@@ -34,6 +47,9 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	private boolean traceSimpleClassName = true;
 	private boolean traceOutputtingMethod = true;
 	private boolean traceSystemClassMethods = false;
+	/**
+	 * Whether the line the message got caused in should be added to the output.
+	 */
 	private boolean traceLineNumber = false;
 	private int traceStartDepth = 4;
 	private Config cfg;
@@ -42,9 +58,10 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
 
 	/**
-	 * creates a new TracingMultiPrintStream printing to the give OutputStreams.
+	 * Creates a new TracingMultiPrintStream printing to the given
+	 * {@link OutputStream}s.
 	 * 
-	 * @param outs the outputstreams to print to.
+	 * @param outs the {@link OutputStream}s to print to.
 	 */
 	public TracingMultiPrintStream(OutputStream... outs) {
 		this(new File(
@@ -55,6 +72,13 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 				outs);
 	}
 
+	/**
+	 * Creates a new TracingMultiPrintStream printing to the given
+	 * {@link OutputStream}s and a custom config file.
+	 * 
+	 * @param configFile the file to store the configuration in.
+	 * @param outs       the {@link OutputStream}s to print to.
+	 */
 	public TracingMultiPrintStream(File configFile, OutputStream... outs) {
 		super(outs);
 		cfg = new Config(configFile.getParentFile(), false);
@@ -220,6 +244,11 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 		}
 	}
 
+	/**
+	 * Gets the tracing part for the start of the output.
+	 * 
+	 * @return the tracing part for the start of the output.
+	 */
 	private String getTrace() {
 		String ret = "";
 		if (traceTimestamp) {
@@ -319,11 +348,11 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	}
 
 	/**
-	 * Creates a String from the given Object and the Trace.
+	 * Creates a String from the given object and the trace.
 	 * 
 	 * @param x       the string to finish. can be a string, a byte array or a
 	 *                character array.
-	 * @param println whether to end the String with a lineSeperator
+	 * @param println whether to end the string with a lineSeperator.
 	 * @return the finished string.
 	 */
 	private String FinishStr(Object x, boolean println) {
@@ -358,11 +387,11 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	}
 
 	/**
-	 * Creates a byte[] from the given Object and the Trace.
+	 * Creates a byte[] from the given object and the trace.
 	 * 
 	 * @param x       the string to finish. can be a string, a byte array or a
 	 *                character array.
-	 * @param println whether to end the byte[] with a lineSeperator
+	 * @param println whether to end the byte[] with a lineSeperator.
 	 * @return the finished byte array.
 	 */
 	private byte[] FinishBArr(Object x, boolean println) {
@@ -370,14 +399,15 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	}
 
 	/**
-	 * Checks whether the given array contains the String str, or a String starting
-	 * with str.
+	 * Checks whether the given array contains the given string, or a string
+	 * starting with the given string.
 	 * 
-	 * @param array      the Array to Search in.
-	 * @param str        the String to Search
-	 * @param startsWith needs the String in the Array only start with str?
-	 * @return whether the given array contains the String str, or a String starting
-	 *         with str.
+	 * @param array      the array to search in.
+	 * @param str        the string to search
+	 * @param startsWith whether the string in the array needs start with given
+	 *                   string.
+	 * @return whether the given array contains the given string, or a string
+	 *         starting with the given string.
 	 */
 	private boolean ArrayContains(String[] array, String str, boolean startsWith) {
 		boolean contains = false;
@@ -398,7 +428,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	}
 
 	/**
-	 * reads the values from the given config file.
+	 * Reads the values from the given config file.
 	 * 
 	 * @param cfgFile the config file to read.
 	 */

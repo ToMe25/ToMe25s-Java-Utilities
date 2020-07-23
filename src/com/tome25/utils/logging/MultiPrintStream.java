@@ -10,7 +10,7 @@ import java.util.Locale;
 
 /**
  * 
- * A Standard {@link PrintStream} except it can write to multiple
+ * A standard {@link PrintStream} except it can write to multiple
  * {@link OutputStream}s.
  * 
  * @author ToMe25

@@ -5,8 +5,8 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
- * A Handler that splits records into System.out and System.err based on their
- * log level.
+ * A {@link Handler} that splits {@link LogRecord}s into System.out and
+ * System.err based on their log {@link java.util.logging.Level}.
  * 
  * @author ToMe25
  *
@@ -17,17 +17,20 @@ public class SplittingHandler extends Handler {
 	private final Logger output;
 
 	/**
-	 * creates a new SplittingHandler with the default loggers.
+	 * Creates a new SplittingHandler with the default output and error
+	 * {@link Logger}s.
 	 */
 	public SplittingHandler() {
 		this(LogTracer.getOutput(), LogTracer.getError());
 	}
 
 	/**
-	 * creates a new SplittingHandler with custom loggers.
+	 * Creates a new SplittingHandler with custom {@link Logger}s.
 	 * 
-	 * @param output the logger to redirect log level info and below to.
-	 * @param error  the logger to redirect log level warning and above to.
+	 * @param output the {@link Logger} to redirect log
+	 *               {@link java.util.logging.Level} info and below to.
+	 * @param error  the {@link Logger} to redirect log
+	 *               {@link java.util.logging.Level} warning and above to.
 	 */
 	public SplittingHandler(Logger output, Logger error) {
 		this.error = error;
@@ -52,10 +55,10 @@ public class SplittingHandler extends Handler {
 	}
 
 	/**
-	 * publishes the give LogRecord to all the handlers of the given Logger
+	 * Publishes the give {@link LogRecord} to all the handlers of the given {@link Logger}.
 	 * 
-	 * @param logger the logger to publish the record to.
-	 * @param record the log record to publish to logger.
+	 * @param logger the {@link Logger} to publish the {@link LogRecord} to.
+	 * @param record the {@link LogRecord} to publish to {@link Logger}.
 	 */
 	private void publish(Logger logger, LogRecord record) {
 		for (Handler handler : logger.getHandlers()) {

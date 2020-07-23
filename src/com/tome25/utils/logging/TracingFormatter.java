@@ -13,7 +13,7 @@ import java.util.logging.LogRecord;
 import com.tome25.utils.config.Config;
 
 /**
- * A custom formatter for the tracing log style.
+ * A custom {@link Formatter} for the tracing log style.
  * 
  * @author ToMe25
  *
@@ -33,6 +33,10 @@ public class TracingFormatter extends Formatter {
 	 * output.
 	 */
 	private boolean traceThread = true;
+	/**
+	 * Whether the name of the class printing the message should be added to the
+	 * output.
+	 */
 	private boolean traceClass = true;
 	/**
 	 * Whether the traced class name should be the simple class name(without
@@ -53,6 +57,9 @@ public class TracingFormatter extends Formatter {
 	private boolean traceFile = false;
 	private Config cfg;
 
+	/**
+	 * Creates a new TracingFormatter with the default config file.
+	 */
 	public TracingFormatter() {
 		this(new File(
 				new File(TracingMultiPrintStream.class.getProtectionDomain().getCodeSource().getLocation().getPath())
@@ -61,6 +68,11 @@ public class TracingFormatter extends Formatter {
 						+ "TracingFormatter.cfg"));
 	}
 
+	/**
+	 * Creates a new TracingFormatter with a custom config file.
+	 * 
+	 * @param configFile the file to store the configuration in.
+	 */
 	public TracingFormatter(File configFile) {
 		super();
 		cfg = new Config(configFile.getParentFile(), false);
@@ -133,10 +145,10 @@ public class TracingFormatter extends Formatter {
 	}
 
 	/**
-	 * returns the name of the Thread for the given id.
+	 * Returns the name of the {@link Thread} for the given id.
 	 * 
-	 * @param threadId the id of the thread which name you want.
-	 * @return the name of the Thread for the given id.
+	 * @param threadId the id of the {@link Thread} which name you want.
+	 * @return the name of the {@link Thread} for the given id.
 	 */
 	private String getThreadNameForId(int threadId) {
 		if (!THREAD_NAMES.containsKey(threadId)) {
@@ -150,7 +162,7 @@ public class TracingFormatter extends Formatter {
 	}
 
 	/**
-	 * reads the values from the given config file.
+	 * Reads the values from the given config file.
 	 * 
 	 * @param cfgFile the config file to read.
 	 */

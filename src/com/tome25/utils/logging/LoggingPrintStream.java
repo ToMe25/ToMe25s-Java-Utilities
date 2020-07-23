@@ -23,7 +23,7 @@ public class LoggingPrintStream extends PrintStream {
 	private static String lineSeparator = System.lineSeparator();
 
 	/**
-	 * Creates a new LoggingPrintStream with the global logger and log level info.
+	 * Creates a new LoggingPrintStream with the global {@link Logger} and log {@link Level} info.
 	 */
 	public LoggingPrintStream() {
 		this(Logger.getGlobal());
@@ -54,7 +54,7 @@ public class LoggingPrintStream extends PrintStream {
 	}
 
 	/**
-	 * returns the {@link Logger} this LoggingPrintStream writes to.
+	 * Returns the {@link Logger} this LoggingPrintStream writes to.
 	 * 
 	 * @return the {@link Logger} this LoggingPrintStream writes to.
 	 */
@@ -63,7 +63,7 @@ public class LoggingPrintStream extends PrintStream {
 	}
 
 	/**
-	 * returns the log {@link Level} this LoggingPrintStream writes to.
+	 * Returns the log {@link Level} this LoggingPrintStream writes to.
 	 * 
 	 * @return the log {@link Level} this LoggingPrintStream writes to.
 	 */
@@ -256,7 +256,7 @@ public class LoggingPrintStream extends PrintStream {
 	}
 
 	/**
-	 * returns the {@link StackTraceElement} that contains the method writing the
+	 * Returns the {@link StackTraceElement} that contains the method writing the
 	 * current message.
 	 * 
 	 * @return the {@link StackTraceElement} that contains the method writing the

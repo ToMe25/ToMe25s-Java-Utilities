@@ -13,7 +13,7 @@ import java.util.Map;
 import com.tome25.utils.exception.InvalidTypeException;
 
 /**
- * A standard json list/array, that can store stuff, and be converted to a
+ * A standard Json list/array, that can store stuff, and be converted to a
  * string.
  * 
  * @author ToMe25
@@ -25,15 +25,15 @@ public class JsonArray implements JsonElement, List<Object> {
 	private List<Object> content = new ArrayList<Object>();
 
 	/**
-	 * Creates a new empty Json Array.
+	 * Creates a new empty JsonArray.
 	 */
 	public JsonArray() {
 	}
 
 	/**
-	 * Creates a new Json Array and initializes it with the given content.
+	 * Creates a new JsonArray and initializes it with the given content.
 	 * 
-	 * @param content the content for the new Json list/array.
+	 * @param content the content for the new JsonArray.
 	 */
 	public JsonArray(Object... content) {
 		for (Object obj : content) {
@@ -42,9 +42,9 @@ public class JsonArray implements JsonElement, List<Object> {
 	}
 
 	/**
-	 * Creates a new Json Array and initializes it with the given content.
+	 * Creates a new JsonArray and initializes it with the given content.
 	 * 
-	 * @param content the content for the new Json list/array.
+	 * @param content the content for the new JsonArray.
 	 */
 	public JsonArray(Collection<Object> content) {
 		this.content.addAll(content);
@@ -60,9 +60,16 @@ public class JsonArray implements JsonElement, List<Object> {
 		}
 	}
 
+	/**
+	 * Adds the given object to the given index.
+	 * 
+	 * @param key   the key to add.
+	 * @param value the value to add.
+	 * @return depends on the implementation.
+	 */
 	@Override
 	public void add(int index, Object element) {
-		content.add(index, element);
+		add((Object) index, element);
 	}
 
 	@Override

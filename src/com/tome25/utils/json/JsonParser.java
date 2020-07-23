@@ -14,17 +14,17 @@ import java.text.ParseException;
 public class JsonParser {
 
 	/**
-	 * This method parses the given String to a {@link JsonObject}. Faster but not
+	 * This method parses the given string to a {@link JsonObject}. Faster but not
 	 * as reliable as the slower one.
 	 * 
 	 * Supported object types inside the Json: Integer and String.
 	 * 
 	 * WARNING: This method is not safe, over the time i worked on it before adding
 	 * it to this library there were multiple character that could make it crash or
-	 * break out of String values.
+	 * break out of string values.
 	 * 
 	 * @param str the String to parse.
-	 * @return the {@link JsonObject} parsed from String str.
+	 * @return the {@link JsonObject} parsed from the given string.
 	 * @throws ParseException if something goes wrong while parsing.
 	 */
 	public static JsonObject parseStringFast(String str) throws ParseException {
@@ -78,7 +78,7 @@ public class JsonParser {
 	 * 
 	 * WARNING: This method may not be safe, over the time i worked on it before
 	 * adding it to this library there were multiple characters that could make it
-	 * crash or break out of String values, tho i know of none with this version.
+	 * crash or break out of string values, tho i know of none with this version.
 	 * 
 	 * @param str the string to parse.
 	 * @return the {@link JsonElement} parsed from the given string.
@@ -101,7 +101,7 @@ public class JsonParser {
 	 * 
 	 * WARNING: This method may not be safe, over the time i worked on it before
 	 * adding it to this library there were multiple characters that could make it
-	 * crash or break out of String values, tho i know of none with this version.
+	 * crash or break out of string values, tho i know of none with this version.
 	 * 
 	 * @param byteArr the byte array to parse.
 	 * @return the {@link JsonElement} parsed from the given byte array.
@@ -124,7 +124,7 @@ public class JsonParser {
 	 * 
 	 * WARNING: This method may not be safe, over the time i worked on it before
 	 * adding it to this library there were multiple characters that could make it
-	 * crash or break out of String values, tho i know of none with this version.
+	 * crash or break out of string values, tho i know of none with this version.
 	 * 
 	 * @param byteArr the byte array to parse.
 	 * @param charset the name of the {@link Charset} to use for the conversion to a
@@ -159,7 +159,7 @@ public class JsonParser {
 	 * 
 	 * WARNING: This method may not be safe, over the time i worked on it before
 	 * adding it to this library there were multiple characters that could make it
-	 * crash or break out of String values, tho i know of none with this version.
+	 * crash or break out of string values, tho i know of none with this version.
 	 * 
 	 * @param charArr the character array to parse.
 	 * @return the {@link JsonElement} parsed from the given char array.

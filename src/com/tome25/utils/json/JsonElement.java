@@ -18,11 +18,11 @@ import com.tome25.utils.exception.InvalidTypeException;
 public interface JsonElement extends Iterable<Object>, Externalizable, Comparable<JsonElement> {
 
 	/**
-	 * Adds the Value with the given key if there are no Object with this Key.
+	 * Adds the value with the given key if there is no object with this key.
 	 * 
-	 * @param key   the Key to add.
+	 * @param key   the key to add.
 	 * @param value the value to add for key.
-	 * @throws InvalidKeyException  when there already an Object with this Key.
+	 * @throws InvalidKeyException  when there already an object with this key.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for {@link JsonObject}s,
 	 *                              Integer for {@link JsonArray}s).
@@ -34,7 +34,7 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	 * Adds the given value to the given key replacing the current value if it
 	 * already exists.
 	 * 
-	 * @param key   the Key to add.
+	 * @param key   the key to add.
 	 * @param value the value to set for key.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for {@link JsonObject}s,
@@ -48,7 +48,7 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	 * Adds the given values to the given keys replacing the current ones if
 	 * existing.
 	 * 
-	 * @param m mappings to be stored in this json.
+	 * @param m mappings to be stored in this Json.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
 	 *                              this object(String for {@link JsonObject}s,
 	 *                              Integer for {@link JsonArray}s).
@@ -116,18 +116,18 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	public String getString(Object key) throws InvalidTypeException;
 
 	/**
-	 * Gets this Jsons Values.
+	 * Gets this Jsons values.
 	 * 
-	 * @return this Jsons Values.
+	 * @return this Jsons values.
 	 */
 	public default Collection<Object> getValues() {
 		return values();
 	}
 
 	/**
-	 * Gets this Jsons Values.
+	 * Gets this Jsons values.
 	 * 
-	 * @return this Jsons Values.
+	 * @return this Jsons values.
 	 */
 	public Collection<Object> values();
 
@@ -169,8 +169,8 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	}
 
 	/**
-	 * Gets the size of this object. If recursive is true this counts all sub Json
-	 * elements as their size instead of one.
+	 * Gets the size of this object. If recursive is true this counts all sub
+	 * JsonElements as their size instead of one.
 	 * 
 	 * @param recursive whether to recursively count the size.
 	 * @return the size of this object.
@@ -275,7 +275,7 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	/**
 	 * Creates and returns a copy of this Json. Recursive.
 	 * 
-	 * @return a copy of this Json Object.
+	 * @return a copy of this Json object.
 	 * @throws CloneNotSupportedException if this element can't be cloned.
 	 */
 	public JsonElement clone() throws CloneNotSupportedException;
@@ -330,7 +330,7 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	 * @return a new JsonElement containing the changes from the given JsonElement
 	 *         to this one.
 	 * @throws UnsupportedOperationException if this JsonElement doesn't support
-	 *                                       generating a changes Json.
+	 *                                       generating a changes JsonElement.
 	 */
 	public default JsonElement changes(JsonElement from) throws UnsupportedOperationException {
 		return changes(from, true);
@@ -347,7 +347,7 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	 * @return a new JsonElement containing the changes from the given JsonElement
 	 *         to this one.
 	 * @throws UnsupportedOperationException if this JsonElement doesn't support
-	 *                                       generating a changes Json.
+	 *                                       generating a changes JsonElement.
 	 */
 	public JsonElement changes(JsonElement from, boolean recursive) throws UnsupportedOperationException;
 
@@ -361,7 +361,7 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	 * @return a new JsonElement containing the values of the given JsonElement with
 	 *         the changes contained in this JsonElement applied.
 	 * @throws UnsupportedOperationException if this JsonElement doesn't support
-	 *                                       generating a changes Json.
+	 *                                       generating a changes JsonElement.
 	 */
 	public default JsonElement reconstruct(JsonElement from) throws UnsupportedOperationException {
 		return reconstruct(from, true);
@@ -374,12 +374,12 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	 * containing null objects.
 	 * 
 	 * @param from      the previous JsonElement.
-	 * @param recursive whether changedJsonElements inside this one should get
+	 * @param recursive whether changed JsonElements inside this one should get
 	 *                  reconstructed too, or just cloned from this one.
 	 * @return a new JsonElement containing the values of the given JsonElement with
 	 *         the changes contained in this JsonElement applied.
 	 * @throws UnsupportedOperationException if this JsonElement doesn't support
-	 *                                       generating a changes Json.
+	 *                                       generating a changes JsonElement.
 	 */
 	public JsonElement reconstruct(JsonElement from, boolean recursive);
 

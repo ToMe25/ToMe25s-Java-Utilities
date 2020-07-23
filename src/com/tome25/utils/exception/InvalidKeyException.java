@@ -7,7 +7,10 @@ package com.tome25.utils.exception;
  */
 public class InvalidKeyException extends RuntimeException {
 
-	private static final long serialVersionUID = -5981734076788525548L;
+	/**
+	 * Generated serial version uid.
+	 */
+	private static final long serialVersionUID = -6418300025186126303L;
 	private String message;
 	private String key;
 	private String reason;

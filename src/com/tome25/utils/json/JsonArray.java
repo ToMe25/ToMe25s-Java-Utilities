@@ -63,13 +63,12 @@ public class JsonArray implements JsonElement, List<Object> {
 	/**
 	 * Adds the given object to the given index.
 	 * 
-	 * @param key   the key to add.
+	 * @param index   the index to add the object to.
 	 * @param value the value to add.
-	 * @return depends on the implementation.
 	 */
 	@Override
-	public void add(int index, Object element) {
-		add((Object) index, element);
+	public void add(int index, Object value) {
+		add((Object) index, value);
 	}
 
 	@Override

@@ -55,7 +55,7 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	public Object add(Object key, Object value) {
 		if (key instanceof String) {
 			if (content.containsKey(key)) {
-				throw new InvalidKeyException("Key \"" + key + "\" Allready exists!");
+				throw new InvalidKeyException(String.valueOf(key), "it exists already!");
 			} else {
 				return content.put((String) key, value);
 			}

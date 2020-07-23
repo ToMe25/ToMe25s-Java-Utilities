@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10};
+var methods = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -130,7 +130,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">InvalidTypeException</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></pre>
-<div class="block">A simple <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang"><code>Exception</code></a> for invalid types.</div>
+<div class="block">A simple <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang"><code>RuntimeException</code></a> for invalid types.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>ToMe25</dd>
@@ -157,11 +157,21 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeExce
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html#expectedType">expectedType</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html#message">message</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html#receivedType">receivedType</a></span></code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private static long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html#serialVersionUID">serialVersionUID</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html#serialVersionUID">serialVersionUID</a></span></code>
+<div class="block">Generated serial version uid.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -188,9 +198,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeExce
 </td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html#InvalidTypeException-java.lang.String-java.lang.String-">InvalidTypeException</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;expectedType,
-                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;receivedType)</code>
-<div class="block">Creates a new InvalidTypeException with a message about the given expected and received type.</div>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html#InvalidTypeException-java.lang.String-java.lang.String-">InvalidTypeException</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;expected,
+                    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;received)</code>
+<div class="block">Creates a new InvalidTypeException with the given expected and received type.</div>
 </td>
 </tr>
 </table>
@@ -210,7 +220,19 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeExce
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html#getExpectedType--">getExpectedType</a></span>()</code>
+<div class="block">Gets the expected type from this exception.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html#getMessage--">getMessage</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html#getReceivedType--">getReceivedType</a></span>()</code>
+<div class="block">Gets the received type from this exception.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -248,6 +270,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeExce
 <li class="blockList">
 <h4>serialVersionUID</h4>
 <pre>private static final&nbsp;long serialVersionUID</pre>
+<div class="block">Generated serial version uid.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../constant-values.html#com.tome25.utils.exception.InvalidTypeException.serialVersionUID">Constant Field Values</a></dd>
@@ -257,10 +280,28 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeExce
 <a name="message">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>message</h4>
 <pre>private&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> message</pre>
+</li>
+</ul>
+<a name="expectedType">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>expectedType</h4>
+<pre>private&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> expectedType</pre>
+</li>
+</ul>
+<a name="receivedType">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>receivedType</h4>
+<pre>private&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> receivedType</pre>
 </li>
 </ul>
 </li>
@@ -301,13 +342,15 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeExce
 <ul class="blockListLast">
 <li class="blockList">
 <h4>InvalidTypeException</h4>
-<pre>public&nbsp;InvalidTypeException(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;expectedType,
-                            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;receivedType)</pre>
-<div class="block">Creates a new InvalidTypeException with a message about the given expected and received type.</div>
+<pre>public&nbsp;InvalidTypeException(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;expected,
+                            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;received)</pre>
+<div class="block">Creates a new InvalidTypeException with the given expected and received type.
+ The generated message will be 'Received invalid type RECEIVED, expected
+ EXPECTED.'.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>expectedType</code> - the expected type.</dd>
-<dd><code>receivedType</code> - the received type.</dd>
+<dd><code>expected</code> - the expected type.</dd>
+<dd><code>received</code> - the received type.</dd>
 </dl>
 </li>
 </ul>
@@ -322,13 +365,41 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeExce
 <a name="getMessage--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getMessage</h4>
 <pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getMessage()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true#getMessage--" title="class or interface in java.lang">getMessage</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="getExpectedType--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getExpectedType</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getExpectedType()</pre>
+<div class="block">Gets the expected type from this exception. Null if not set.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the expected type from this exception.</dd>
+</dl>
+</li>
+</ul>
+<a name="getReceivedType--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getReceivedType</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getReceivedType()</pre>
+<div class="block">Gets the received type from this exception. Null if not set.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the received type from this exception.</dd>
 </dl>
 </li>
 </ul>

@@ -514,6 +514,8 @@
 <div class="block">whether the target file should get set to executable after the download
  finished.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidTypeException.html#expectedType">expectedType</a></span> - Variable in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/lib/JarExtractor.html#extractFileFromJar-java.io.File-java.lang.String-">extractFileFromJar(File, String)</a></span> - Static method in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/JarExtractor.html" title="class in com.tome25.utils.lib">JarExtractor</a></dt>
 <dd>
 <div class="block">Extracts the file with the given name from the directory if the name contains
@@ -742,6 +744,10 @@
 <dd>
 <div class="block">Gets the System Error <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a>.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidTypeException.html#getExpectedType--">getExpectedType()</a></span> - Method in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></dt>
+<dd>
+<div class="block">Gets the expected type from this exception.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#getFirst--">getFirst()</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>
 <div class="block">Gets the first object from this list.</div>
@@ -754,6 +760,10 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/ConfigValue.html#getKey--">getKey()</a></span> - Method in class com.tome25.utils.config.<a href="com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config">ConfigValue</a></dt>
 <dd>
 <div class="block">Gets the configuration key.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidKeyException.html#getKey--">getKey()</a></span> - Method in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception">InvalidKeyException</a></dt>
+<dd>
+<div class="block">Gets the received key.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#getKeySet--">getKeySet()</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
 <dd>
@@ -825,6 +835,14 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryDownloader.html#getPercentDownloaded--">getPercentDownloaded()</a></span> - Method in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryDownloader.html" title="class in com.tome25.utils.lib">LibraryDownloader</a></dt>
 <dd>
 <div class="block">returns the percentage of the file that is already downloaded.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidKeyException.html#getReason--">getReason()</a></span> - Method in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception">InvalidKeyException</a></dt>
+<dd>
+<div class="block">Gets the reason why the key is invalid.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidTypeException.html#getReceivedType--">getReceivedType()</a></span> - Method in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></dt>
+<dd>
+<div class="block">Gets the received type from this exception.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#getString-java.lang.Object-">getString(Object)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
@@ -946,7 +964,7 @@
 <dd>&nbsp;</dd>
 <dt><a href="com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception"><span class="typeNameLink">InvalidKeyException</span></a> - Exception in <a href="com/tome25/utils/exception/package-summary.html">com.tome25.utils.exception</a></dt>
 <dd>
-<div class="block">A simple <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang"><code>Exception</code></a> for invalid keys.</div>
+<div class="block">A simple <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang"><code>RuntimeException</code></a> for invalid keys.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidKeyException.html#InvalidKeyException--">InvalidKeyException()</a></span> - Constructor for exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception">InvalidKeyException</a></dt>
 <dd>
@@ -956,9 +974,13 @@
 <dd>
 <div class="block">Creates a new InvalidKeyException with the given message.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidKeyException.html#InvalidKeyException-java.lang.String-java.lang.String-">InvalidKeyException(String, String)</a></span> - Constructor for exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception">InvalidKeyException</a></dt>
+<dd>
+<div class="block">Creates a new InvalidKeyException with the given key and reason.</div>
+</dd>
 <dt><a href="com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception"><span class="typeNameLink">InvalidTypeException</span></a> - Exception in <a href="com/tome25/utils/exception/package-summary.html">com.tome25.utils.exception</a></dt>
 <dd>
-<div class="block">A simple <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang"><code>Exception</code></a> for invalid types.</div>
+<div class="block">A simple <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang"><code>RuntimeException</code></a> for invalid types.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidTypeException.html#InvalidTypeException--">InvalidTypeException()</a></span> - Constructor for exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></dt>
 <dd>
@@ -970,7 +992,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidTypeException.html#InvalidTypeException-java.lang.String-java.lang.String-">InvalidTypeException(String, String)</a></span> - Constructor for exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></dt>
 <dd>
-<div class="block">Creates a new InvalidTypeException with a message about the given expected and received type.</div>
+<div class="block">Creates a new InvalidTypeException with the given expected and received type.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#isEmpty--">isEmpty()</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
@@ -1056,6 +1078,8 @@
 <h2 class="title">K</h2>
 <dl>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/ConfigValue.html#key">key</a></span> - Variable in class com.tome25.utils.config.<a href="com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config">ConfigValue</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidKeyException.html#key">key</a></span> - Variable in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception">InvalidKeyException</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#keySet--">keySet()</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
 <dd>&nbsp;</dd>
@@ -1469,6 +1493,10 @@
 <div class="block">reads all URLs from the given file, as long as they are separated by a ',' or
  a ';'.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidKeyException.html#reason">reason</a></span> - Variable in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception">InvalidKeyException</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidTypeException.html#receivedType">receivedType</a></span> - Variable in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#reconstruct-com.tome25.utils.json.JsonElement-">reconstruct(JsonElement)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#reconstruct-com.tome25.utils.json.JsonElement-boolean-">reconstruct(JsonElement, boolean)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
@@ -1558,7 +1586,9 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidKeyException.html#serialVersionUID">serialVersionUID</a></span> - Static variable in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception">InvalidKeyException</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidTypeException.html#serialVersionUID">serialVersionUID</a></span> - Static variable in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Generated serial version uid.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#serialVersionUID">serialVersionUID</a></span> - Static variable in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#serialVersionUID">serialVersionUID</a></span> - Static variable in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>

@@ -118,7 +118,7 @@ public class LogTracer {
 	 * printing to a {@link Logger} logging to the old {@link PrintStream} and the
 	 * {@link OutputStream}s from additionalStreams.
 	 * 
-	 * @param additionalStreams the {@link OutputStreams} to add to System.err
+	 * @param additionalStreams the {@link OutputStream}s to add to System.err
 	 */
 	public static void traceError(OutputStream... additionalStreams) {
 		Logger error = getError();
@@ -133,7 +133,7 @@ public class LogTracer {
 	 * printing to a {@link Logger} logging to the old {@link PrintStream} and the
 	 * {@link OutputStream}s from additionalStreams.
 	 * 
-	 * @param additionalStreams the {@link OutputStreams} to add to System.out
+	 * @param additionalStreams the {@link OutputStream}s to add to System.out
 	 */
 	public static void traceOutput(OutputStream... additionalStreams) {
 		Logger output = getOutput();

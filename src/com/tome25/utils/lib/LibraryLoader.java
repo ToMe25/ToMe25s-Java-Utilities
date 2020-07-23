@@ -36,8 +36,8 @@ public class LibraryLoader {
 	private static String mainArgs;
 
 	/**
-	 * Initializes a library loader, restarts your jvm if necessary, tries to
-	 * download ToMe25s-Java-Utilites, if that doesn't work it tries to extract it
+	 * Initializes a LibraryLoader, restarts your JVM if necessary, tries to
+	 * download ToMe25s-Java-Utilities, if that doesn't work it tries to extract it
 	 * from this Jar and adds it to the classpath.
 	 * 
 	 * @param args the program arguments.
@@ -47,11 +47,11 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Initializes a library loader, restarts your jvm if necessary, tries to
-	 * download ToMe25s-Java-Utilites, if that doesn't work it tries to extract it
-	 * from this Jar, adds it to the classpath, and sets the System Outputs to
-	 * TracingMultiPrintStreams printing to the log files and the previous output
-	 * streams.
+	 * Initializes a LibraryLoader, restarts your JVM if necessary, tries to
+	 * download ToMe25s-Java-Utilities, if that doesn't work it tries to extract it
+	 * from this Jar, adds it to the classpath, and sets the system outputs to
+	 * {@link com.tome25.utils.logging.LoggingPrintStream} printing to a logger
+	 * writing to the log files and the previous {@link java.io.OutputStream}s.
 	 * 
 	 * @param args    the program arguments.
 	 * @param logFile the log file for System.out and System.err. set to null to
@@ -62,29 +62,29 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Initializes a library loader, restarts your jvm if necessary, tries to
-	 * download ToMe25s-Java-Utilites, if that doesn't work it tries to extract it
-	 * from this Jar, adds it to the classpath, and sets the System Outputs to
-	 * TracingMultiPrintStreams printing to the log file and the previous output
-	 * streams.
+	 * Initializes a LibraryLoader, restarts your JVM if necessary, tries to
+	 * download ToMe25s-Java-Utilities, if that doesn't work it tries to extract it
+	 * from this Jar, adds it to the classpath, and sets the system outputs to
+	 * {@link com.tome25.utils.logging.LoggingPrintStream} printing to a logger
+	 * writing to the log files and the previous {@link java.io.OutputStream}s.
 	 * 
 	 * @param args              the program arguments.
 	 * @param logFile           the log file for System.out and System.err. set to
 	 *                          null to disable changing System.out and System.err.
 	 * @param defaultUrlStorage the default contents for the URL storage file that
-	 *                          lists the urls to try and download
-	 *                          ToMe25s-Java-Utilites from.
+	 *                          lists the URLs to try and download
+	 *                          ToMe25s-Java-Utilities from.
 	 */
 	public static void init(String[] args, File logFile, String defaultUrlStorage) {
 		init(args, logFile, logFile, defaultUrlStorage);
 	}
 
 	/**
-	 * Initializes a library loader, restarts your jvm if necessary, tries to
-	 * download ToMe25s-Java-Utilites, if that doesn't work it tries to extract it
-	 * from this Jar, adds it to the classpath, and sets the System Outputs to
-	 * TracingMultiPrintStreams printing to the log files and the previous output
-	 * streams.
+	 * Initializes a LibraryLoader, restarts your JVM if necessary, tries to
+	 * download ToMe25s-Java-Utilities, if that doesn't work it tries to extract it
+	 * from this Jar, adds it to the classpath, and sets the system outputs to
+	 * {@link com.tome25.utils.logging.LoggingPrintStream} printing to a logger
+	 * writing to the log files and the previous {@link java.io.OutputStream}s.
 	 * 
 	 * @param args          the program arguments.
 	 * @param outputLogFile the log file for System.out. set to null to disable
@@ -97,11 +97,11 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Initializes a library loader, restarts your jvm if necessary, tries to
-	 * download ToMe25s-Java-Utilites, if that doesn't work it tries to extract it
-	 * from this Jar, adds it to the classpath, and sets the System Outputs to
-	 * TracingMultiPrintStreams printing to the log files and the previous output
-	 * streams.
+	 * Initializes a LibraryLoader, restarts your JVM if necessary, tries to
+	 * download ToMe25s-Java-Utilities, if that doesn't work it tries to extract it
+	 * from this Jar, adds it to the classpath, and sets the system outputs to
+	 * {@link com.tome25.utils.logging.LoggingPrintStream} printing to a logger
+	 * writing to the log files and the previous {@link java.io.OutputStream}s.
 	 * 
 	 * @param args              the program arguments.
 	 * @param outputLogFile     the log file for System.out. set to null to disable
@@ -109,19 +109,19 @@ public class LibraryLoader {
 	 * @param errorLogFile      the log file for System.err. set to null to disable
 	 *                          changing System.err.
 	 * @param defaultUrlStorage the default contents for the URL storage file that
-	 *                          lists the urls to try and download
-	 *                          ToMe25s-Java-Utilites from.
+	 *                          lists the URLs to try and download
+	 *                          ToMe25s-Java-Utilities from.
 	 */
 	public static void init(String[] args, File outputLogFile, File errorLogFile, String defaultUrlStorage) {
 		init(args, outputLogFile, errorLogFile, defaultUrlStorage, false);
 	}
 
 	/**
-	 * Initializes a library loader, restarts your jvm if necessary, tries to
-	 * download ToMe25s-Java-Utilites, if that doesn't work it tries to extract it
-	 * from this Jar, adds it to the classpath, and sets the System Outputs to
-	 * TracingMultiPrintStreams printing to the log files and the previous output
-	 * streams.
+	 * Initializes a LibraryLoader, restarts your JVM if necessary, tries to
+	 * download ToMe25s-Java-Utilities, if that doesn't work it tries to extract it
+	 * from this Jar, adds it to the classpath, and sets the system outputs to
+	 * {@link com.tome25.utils.logging.LoggingPrintStream} printing to a logger
+	 * writing to the log files and the previous {@link java.io.OutputStream}s.
 	 * 
 	 * @param args              the program arguments.
 	 * @param outputLogFile     the log file for System.out. set to null to disable
@@ -129,8 +129,8 @@ public class LibraryLoader {
 	 * @param errorLogFile      the log file for System.err. set to null to disable
 	 *                          changing System.err.
 	 * @param defaultUrlStorage the default contents for the URL storage file that
-	 *                          lists the urls to try and download
-	 *                          ToMe25s-Java-Utilites from.
+	 *                          lists the URLs to try and download
+	 *                          ToMe25s-Java-Utilities from.
 	 * @param update            whether to download/extract the file if it already
 	 *                          exists.
 	 */
@@ -168,12 +168,12 @@ public class LibraryLoader {
 
 	/**
 	 * Creates a new LibraryLoader, it is recommended to do this at the start of
-	 * your program, as this may need to restart to jvm, which is what it needs the
+	 * your program, as this may need to restart to JVM, which is what it needs the
 	 * arguments from your main method for. Part of the Java Agent.
 	 * 
 	 * @param mainArgs the main methods arguments.
 	 * @throws IOException if this program isn't a jar or doesn't exists. And if
-	 *                     somehow creating a JarFile instance fails.
+	 *                     somehow creating a {@link JarFile} instance fails.
 	 */
 	@Deprecated
 	public LibraryLoader(String[] mainArgs) throws IOException {
@@ -244,7 +244,8 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * The premain method needed for this Agent to work. Part of the Java Agent.
+	 * The premain method needed for this Java Agent to work. Part of the Java
+	 * Agent.
 	 * 
 	 * @param args            some arguments.
 	 * @param instrumentation the instrumentation instance to use.
@@ -255,7 +256,7 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * converts a String Array to a String. entries are separated with a space.
+	 * Converts a string array to a string. Entries are separated with a space.
 	 * 
 	 * @param array the array to get the string representation of.
 	 * @return a string representation of the given string array.
@@ -367,8 +368,8 @@ public class LibraryLoader {
 	/**
 	 * Adds everything inside the libs folder to the classpath. Sadly just adding a
 	 * "*" file in the directory doesn't work in the MANIFEST.MF attribute, so this
-	 * looks for all .jar files that don't have "sources" or "javadoc in their name
-	 * in the libs direcotry. Automatically restarts this software if necessary.
+	 * looks for all .jar files that don't have "sources" or "javadoc" in their name
+	 * in the libs directory. Automatically restarts this software if necessary.
 	 */
 	public static void addLibsToClasspath() {
 		addLibsToClasspath(name -> name.endsWith(".jar") && !name.contains("sources") && !name.contains("javadoc"));
@@ -377,7 +378,7 @@ public class LibraryLoader {
 	/**
 	 * Adds everything inside the libs folder to the classpath. Sadly just adding a
 	 * "*" file in the directory doesn't work in the MANIFEST.MF attribute, so this
-	 * looks for all files maching the libraryChecker predicate. Automatically
+	 * looks for all files matching the libraryChecker predicate. Automatically
 	 * restarts this software if necessary.
 	 * 
 	 * @param libraryChecker the predicate that checks what files to add to the
@@ -400,7 +401,7 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Adds the given String to the classpath.
+	 * Adds the given string to the classpath.
 	 * 
 	 * @param path the path to add.
 	 * @return whether a restart is necessary.
@@ -411,7 +412,7 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Adds the given String to the classpath.
+	 * Adds the given string to the classpath.
 	 * 
 	 * @param path the path to add.
 	 * @return whether a restart is necessary.
@@ -422,7 +423,7 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Adds the given String to the classpath.
+	 * Adds the given string to the classpath.
 	 * 
 	 * @param path the path to add.
 	 * @return whether a restart is necessary.
@@ -497,10 +498,10 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Adds the given String to the classpath.
+	 * Adds the given string to the classpath.
 	 * 
 	 * @param path    the path to add.
-	 * @param restart whether to automatically restart this software if necessary.
+	 * @param restart whether to automatically restart this JVM if necessary.
 	 *                Requires setArgs to be run first!
 	 * @throws IOException if something goes wrong.
 	 */
@@ -509,10 +510,10 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Adds the given String to the classpath.
+	 * Adds the given string to the classpath.
 	 * 
 	 * @param path    the path to add.
-	 * @param restart whether to automatically restart this software if necessary.
+	 * @param restart whether to automatically restart this JVM if necessary.
 	 *                Requires setArgs to be run first!
 	 * @throws IOException if something goes wrong.
 	 */
@@ -521,10 +522,10 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Adds the given String to the classpath.
+	 * Adds the given string to the classpath.
 	 * 
 	 * @param path    the path to add.
-	 * @param restart whether to automatically restart this software if necessary.
+	 * @param restart whether to automatically restart this JVM if necessary.
 	 *                Requires setArgs to be run first!
 	 * @throws IOException if something goes wrong.
 	 */
@@ -535,7 +536,7 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Removes the given String from the classpath.
+	 * Removes the given string from the classpath.
 	 * 
 	 * @param path the path to remove.
 	 * @return whether a restart is necessary.
@@ -546,7 +547,7 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Removes the given String from the classpath.
+	 * Removes the given string from the classpath.
 	 * 
 	 * @param path the path to remove.
 	 * @return whether a restart is necessary.
@@ -557,7 +558,7 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Removes the given String from the classpath.
+	 * Removes the given string from the classpath.
 	 * 
 	 * @param path the path to remove.
 	 * @return whether a restart is necessary.
@@ -636,10 +637,10 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Removes the given String from the classpath.
+	 * Removes the given string from the classpath.
 	 * 
 	 * @param path    the path to remove.
-	 * @param restart whether to automatically restart this software if necessary.
+	 * @param restart whether to automatically restart this JVM if necessary.
 	 *                Requires setArgs to be run first!
 	 * @throws IOException if something goes wrong.
 	 */
@@ -648,10 +649,10 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Removes the given String from the classpath.
+	 * Removes the given string from the classpath.
 	 * 
 	 * @param path    the path to remove.
-	 * @param restart whether to automatically restart this software if necessary.
+	 * @param restart whether to automatically restart this JVM if necessary.
 	 *                Requires setArgs to be run first!
 	 * @throws IOException if something goes wrong.
 	 */
@@ -660,10 +661,10 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Removes the given String from the classpath.
+	 * Removes the given string from the classpath.
 	 * 
 	 * @param path    the path to remove.
-	 * @param restart whether to automatically restart this software if necessary.
+	 * @param restart whether to automatically restart this JVM if necessary.
 	 *                Requires setArgs to be run first!
 	 * @throws IOException if something goes wrong.
 	 */
@@ -683,7 +684,7 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * if init got used, this is the way to get its output buffer.
+	 * If init got used, this is the way to get its output buffer.
 	 * 
 	 * @return the output buffer used in init.
 	 */
@@ -701,7 +702,7 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * restarts this process. Requires setArgs to be run first!
+	 * Restarts this JVM. Requires setArgs to be run first!
 	 */
 	public static void restart() {
 		File codeSource = new File(LibraryLoader.class.getProtectionDomain().getCodeSource().getLocation().getPath());

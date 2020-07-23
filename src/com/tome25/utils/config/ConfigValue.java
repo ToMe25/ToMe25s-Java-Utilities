@@ -160,7 +160,7 @@ public class ConfigValue<T> {
 	 * Writes the ConfigValue to the given {@link FileOutputStream}.
 	 * 
 	 * @param fiout the {@link FileOutputStream} to write to.
-	 * @throws IOException if an IO Error occures while writing to the
+	 * @throws IOException if an I/O error has occurred while writing to the
 	 *                     {@link FileOutputStream}.
 	 */
 	public void writeToConfig(FileOutputStream fiout) throws IOException {

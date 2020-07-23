@@ -73,7 +73,7 @@ public class JarExtractor {
 	 * @param extractClasses whether class files should get extracted too.
 	 * @param outputDir      the directory to put the extracted files in.
 	 * @param extractedName  a function that generates the name for the extracted
-	 *                       files after extraction. this function gets the filename
+	 *                       files after extraction. This function gets the filename
 	 *                       from inside the jar including directories.
 	 * @throws IOException if an I/O error has occurred.
 	 */
@@ -112,7 +112,7 @@ public class JarExtractor {
 	 *                       put into a sub directory of outputDir or directly into
 	 *                       outputDir.
 	 * @param extractedName  a function that generates the name for the extracted
-	 *                       files after extraction. this function gets the filename
+	 *                       files after extraction. This function gets the filename
 	 *                       from inside the jar including directories if subDir is
 	 *                       enabled and just the files name if not.
 	 * @throws IOException if an I/O error has occurred.
@@ -174,7 +174,7 @@ public class JarExtractor {
 	 *                      extracted.
 	 * @param outputDir     the directory to put the extracted files in.
 	 * @param extractedName a function that generates the name for the extracted
-	 *                      files after extraction. this function gets the filename
+	 *                      files after extraction. This function gets the filename
 	 *                      from inside the jar including directories.
 	 * @throws IOException if an I/O error has occurred.
 	 */
@@ -214,7 +214,7 @@ public class JarExtractor {
 	 *                      put into a sub directory of outputDir or directly into
 	 *                      outputDir.
 	 * @param extractedName a function that generates the name for the extracted
-	 *                      files after extraction. this function gets the filename
+	 *                      files after extraction. This function gets the filename
 	 *                      from inside the jar including directories if subDir is
 	 *                      enabled and just the files name if not.
 	 * @throws IOException if an I/O error has occurred.

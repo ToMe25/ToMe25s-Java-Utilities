@@ -116,8 +116,8 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">SplittingHandler</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Handler.html?is-external=true" title="class or interface in java.util.logging">Handler</a></pre>
-<div class="block">A Handler that splits records into System.out and System.err based on their
- log level.</div>
+<div class="block">A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Handler.html?is-external=true" title="class or interface in java.util.logging"><code>Handler</code></a> that splits <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/LogRecord.html?is-external=true" title="class or interface in java.util.logging"><code>LogRecord</code></a>s into System.out and
+ System.err based on their log <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true" title="class or interface in java.util.logging"><code>Level</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>ToMe25</dd>
@@ -164,13 +164,14 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Han
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/SplittingHandler.html#SplittingHandler--">SplittingHandler</a></span>()</code>
-<div class="block">creates a new SplittingHandler with the default loggers.</div>
+<div class="block">Creates a new SplittingHandler with the default output and error
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a>s.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/SplittingHandler.html#SplittingHandler-java.util.logging.Logger-java.util.logging.Logger-">SplittingHandler</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging">Logger</a>&nbsp;output,
                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging">Logger</a>&nbsp;error)</code>
-<div class="block">creates a new SplittingHandler with custom loggers.</div>
+<div class="block">Creates a new SplittingHandler with custom <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a>s.</div>
 </td>
 </tr>
 </table>
@@ -200,7 +201,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Han
 <td class="colFirst"><code>private void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/SplittingHandler.html#publish-java.util.logging.Logger-java.util.logging.LogRecord-">publish</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging">Logger</a>&nbsp;logger,
        <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/LogRecord.html?is-external=true" title="class or interface in java.util.logging">LogRecord</a>&nbsp;record)</code>
-<div class="block">publishes the give LogRecord to all the handlers of the given Logger</div>
+<div class="block">Publishes the give <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/LogRecord.html?is-external=true" title="class or interface in java.util.logging"><code>LogRecord</code></a> to all the handlers of the given <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a>.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -269,7 +270,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Han
 <li class="blockList">
 <h4>SplittingHandler</h4>
 <pre>public&nbsp;SplittingHandler()</pre>
-<div class="block">creates a new SplittingHandler with the default loggers.</div>
+<div class="block">Creates a new SplittingHandler with the default output and error
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a>s.</div>
 </li>
 </ul>
 <a name="SplittingHandler-java.util.logging.Logger-java.util.logging.Logger-">
@@ -280,11 +282,13 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Han
 <h4>SplittingHandler</h4>
 <pre>public&nbsp;SplittingHandler(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging">Logger</a>&nbsp;output,
                         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging">Logger</a>&nbsp;error)</pre>
-<div class="block">creates a new SplittingHandler with custom loggers.</div>
+<div class="block">Creates a new SplittingHandler with custom <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a>s.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>output</code> - the logger to redirect log level info and below to.</dd>
-<dd><code>error</code> - the logger to redirect log level warning and above to.</dd>
+<dd><code>output</code> - the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a> to redirect log
+               <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true" title="class or interface in java.util.logging"><code>Level</code></a> info and below to.</dd>
+<dd><code>error</code> - the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a> to redirect log
+               <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true" title="class or interface in java.util.logging"><code>Level</code></a> warning and above to.</dd>
 </dl>
 </li>
 </ul>
@@ -343,11 +347,11 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Han
 <h4>publish</h4>
 <pre>private&nbsp;void&nbsp;publish(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging">Logger</a>&nbsp;logger,
                      <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/LogRecord.html?is-external=true" title="class or interface in java.util.logging">LogRecord</a>&nbsp;record)</pre>
-<div class="block">publishes the give LogRecord to all the handlers of the given Logger</div>
+<div class="block">Publishes the give <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/LogRecord.html?is-external=true" title="class or interface in java.util.logging"><code>LogRecord</code></a> to all the handlers of the given <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>logger</code> - the logger to publish the record to.</dd>
-<dd><code>record</code> - the log record to publish to logger.</dd>
+<dd><code>logger</code> - the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a> to publish the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/LogRecord.html?is-external=true" title="class or interface in java.util.logging"><code>LogRecord</code></a> to.</dd>
+<dd><code>record</code> - the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/LogRecord.html?is-external=true" title="class or interface in java.util.logging"><code>LogRecord</code></a> to publish to <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a>.</dd>
 </dl>
 </li>
 </ul>

@@ -135,7 +135,8 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">TracingMultiPrintStream</span>
 extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" title="class in com.tome25.utils.logging">MultiPrintStream</a></pre>
-<div class="block">A Tracing Print Stream that can print to multiple Output Streams.</div>
+<div class="block">A Tracing <a href="https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io"><code>PrintStream</code></a> that can print to multiple
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>s.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>ToMe25</dd>
@@ -176,11 +177,16 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#traceLineNumber">traceLineNumber</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#traceLineNumber">traceLineNumber</a></span></code>
+<div class="block">Whether the line the message got caused in should be added to the output.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#traceOutputtingClass">traceOutputtingClass</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#traceOutputtingClass">traceOutputtingClass</a></span></code>
+<div class="block">Whether the name of the class printing the message should be added to the
+ output.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private boolean</code></td>
@@ -209,11 +215,17 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#traceThread">traceThread</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#traceThread">traceThread</a></span></code>
+<div class="block">Whether the name of the thread printing the message should be added to the
+ output.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#traceTimestamp">traceTimestamp</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#traceTimestamp">traceTimestamp</a></span></code>
+<div class="block">Whether a timestamp of the creation of the message should be added to the
+ output.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -238,11 +250,15 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#TracingMultiPrintStream-java.io.File-java.io.OutputStream...-">TracingMultiPrintStream</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;configFile,
-                       <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>...&nbsp;outs)</code>&nbsp;</td>
+                       <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>...&nbsp;outs)</code>
+<div class="block">Creates a new TracingMultiPrintStream printing to the given
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>s and a custom config file.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#TracingMultiPrintStream-java.io.OutputStream...-">TracingMultiPrintStream</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>...&nbsp;outs)</code>
-<div class="block">creates a new TracingMultiPrintStream printing to the give OutputStreams.</div>
+<div class="block">Creates a new TracingMultiPrintStream printing to the given
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>s.</div>
 </td>
 </tr>
 </table>
@@ -279,22 +295,22 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#ArrayContains-java.lang.String:A-java.lang.String-boolean-">ArrayContains</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;array,
              <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str,
              boolean&nbsp;startsWith)</code>
-<div class="block">Checks whether the given array contains the String str, or a String starting
- with str.</div>
+<div class="block">Checks whether the given array contains the given string, or a string
+ starting with the given string.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>private byte[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#FinishBArr-java.lang.Object-boolean-">FinishBArr</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;x,
           boolean&nbsp;println)</code>
-<div class="block">Creates a byte[] from the given Object and the Trace.</div>
+<div class="block">Creates a byte[] from the given object and the trace.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>private <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#FinishStr-java.lang.Object-boolean-">FinishStr</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;x,
          boolean&nbsp;println)</code>
-<div class="block">Creates a String from the given Object and the Trace.</div>
+<div class="block">Creates a String from the given object and the trace.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
@@ -310,7 +326,9 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>private <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#getTrace--">getTrace</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#getTrace--">getTrace</a></span>()</code>
+<div class="block">Gets the tracing part for the start of the output.</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -402,7 +420,7 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>private void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#readConfig-java.io.File-">readConfig</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;cfgFile)</code>
-<div class="block">reads the values from the given config file.</div>
+<div class="block">Reads the values from the given config file.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
@@ -462,6 +480,8 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <li class="blockList">
 <h4>traceTimestamp</h4>
 <pre>private&nbsp;boolean traceTimestamp</pre>
+<div class="block">Whether a timestamp of the creation of the message should be added to the
+ output.</div>
 </li>
 </ul>
 <a name="traceThread">
@@ -471,6 +491,8 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <li class="blockList">
 <h4>traceThread</h4>
 <pre>private&nbsp;boolean traceThread</pre>
+<div class="block">Whether the name of the thread printing the message should be added to the
+ output.</div>
 </li>
 </ul>
 <a name="traceOutputtingClass">
@@ -480,6 +502,8 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <li class="blockList">
 <h4>traceOutputtingClass</h4>
 <pre>private&nbsp;boolean traceOutputtingClass</pre>
+<div class="block">Whether the name of the class printing the message should be added to the
+ output.</div>
 </li>
 </ul>
 <a name="traceSystemClasses">
@@ -528,6 +552,7 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <li class="blockList">
 <h4>traceLineNumber</h4>
 <pre>private&nbsp;boolean traceLineNumber</pre>
+<div class="block">Whether the line the message got caused in should be added to the output.</div>
 </li>
 </ul>
 <a name="traceStartDepth">
@@ -590,10 +615,11 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <li class="blockList">
 <h4>TracingMultiPrintStream</h4>
 <pre>public&nbsp;TracingMultiPrintStream(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>...&nbsp;outs)</pre>
-<div class="block">creates a new TracingMultiPrintStream printing to the give OutputStreams.</div>
+<div class="block">Creates a new TracingMultiPrintStream printing to the given
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>s.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>outs</code> - the outputstreams to print to.</dd>
+<dd><code>outs</code> - the <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>s to print to.</dd>
 </dl>
 </li>
 </ul>
@@ -605,6 +631,13 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <h4>TracingMultiPrintStream</h4>
 <pre>public&nbsp;TracingMultiPrintStream(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;configFile,
                                <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>...&nbsp;outs)</pre>
+<div class="block">Creates a new TracingMultiPrintStream printing to the given
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>s and a custom config file.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>configFile</code> - the file to store the configuration in.</dd>
+<dd><code>outs</code> - the <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>s to print to.</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -1018,6 +1051,11 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <li class="blockList">
 <h4>getTrace</h4>
 <pre>private&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getTrace()</pre>
+<div class="block">Gets the tracing part for the start of the output.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the tracing part for the start of the output.</dd>
+</dl>
 </li>
 </ul>
 <a name="FinishStr-java.lang.Object-boolean-">
@@ -1028,12 +1066,12 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <h4>FinishStr</h4>
 <pre>private&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;FinishStr(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;x,
                          boolean&nbsp;println)</pre>
-<div class="block">Creates a String from the given Object and the Trace.</div>
+<div class="block">Creates a String from the given object and the trace.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>x</code> - the string to finish. can be a string, a byte array or a
                 character array.</dd>
-<dd><code>println</code> - whether to end the String with a lineSeperator</dd>
+<dd><code>println</code> - whether to end the string with a lineSeperator.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the finished string.</dd>
 </dl>
@@ -1047,12 +1085,12 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <h4>FinishBArr</h4>
 <pre>private&nbsp;byte[]&nbsp;FinishBArr(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;x,
                           boolean&nbsp;println)</pre>
-<div class="block">Creates a byte[] from the given Object and the Trace.</div>
+<div class="block">Creates a byte[] from the given object and the trace.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>x</code> - the string to finish. can be a string, a byte array or a
                 character array.</dd>
-<dd><code>println</code> - whether to end the byte[] with a lineSeperator</dd>
+<dd><code>println</code> - whether to end the byte[] with a lineSeperator.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the finished byte array.</dd>
 </dl>
@@ -1067,16 +1105,17 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <pre>private&nbsp;boolean&nbsp;ArrayContains(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;array,
                               <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str,
                               boolean&nbsp;startsWith)</pre>
-<div class="block">Checks whether the given array contains the String str, or a String starting
- with str.</div>
+<div class="block">Checks whether the given array contains the given string, or a string
+ starting with the given string.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>array</code> - the Array to Search in.</dd>
-<dd><code>str</code> - the String to Search</dd>
-<dd><code>startsWith</code> - needs the String in the Array only start with str?</dd>
+<dd><code>array</code> - the array to search in.</dd>
+<dd><code>str</code> - the string to search</dd>
+<dd><code>startsWith</code> - whether the string in the array needs start with given
+                   string.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>whether the given array contains the String str, or a String starting
-         with str.</dd>
+<dd>whether the given array contains the given string, or a string
+         starting with the given string.</dd>
 </dl>
 </li>
 </ul>
@@ -1087,7 +1126,7 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <li class="blockList">
 <h4>readConfig</h4>
 <pre>private&nbsp;void&nbsp;readConfig(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;cfgFile)</pre>
-<div class="block">reads the values from the given config file.</div>
+<div class="block">Reads the values from the given config file.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>cfgFile</code> - the config file to read.</dd>

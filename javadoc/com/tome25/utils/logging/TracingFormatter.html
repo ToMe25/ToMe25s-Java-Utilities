@@ -116,7 +116,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">TracingFormatter</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Formatter.html?is-external=true" title="class or interface in java.util.logging">Formatter</a></pre>
-<div class="block">A custom formatter for the tracing log style.</div>
+<div class="block">A custom <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Formatter.html?is-external=true" title="class or interface in java.util.logging"><code>Formatter</code></a> for the tracing log style.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>ToMe25</dd>
@@ -153,7 +153,10 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceClass">traceClass</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceClass">traceClass</a></span></code>
+<div class="block">Whether the name of the class printing the message should be added to the
+ output.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private boolean</code></td>
@@ -216,10 +219,14 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#TracingFormatter--">TracingFormatter</a></span>()</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#TracingFormatter--">TracingFormatter</a></span>()</code>
+<div class="block">Creates a new TracingFormatter with the default config file.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#TracingFormatter-java.io.File-">TracingFormatter</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;configFile)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#TracingFormatter-java.io.File-">TracingFormatter</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;configFile)</code>
+<div class="block">Creates a new TracingFormatter with a custom config file.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -243,13 +250,13 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>private <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#getThreadNameForId-int-">getThreadNameForId</a></span>(int&nbsp;threadId)</code>
-<div class="block">returns the name of the Thread for the given id.</div>
+<div class="block">Returns the name of the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html?is-external=true" title="class or interface in java.lang"><code>Thread</code></a> for the given id.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>private void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#readConfig-java.io.File-">readConfig</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;cfgFile)</code>
-<div class="block">reads the values from the given config file.</div>
+<div class="block">Reads the values from the given config file.</div>
 </td>
 </tr>
 </table>
@@ -328,6 +335,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 <li class="blockList">
 <h4>traceClass</h4>
 <pre>private&nbsp;boolean traceClass</pre>
+<div class="block">Whether the name of the class printing the message should be added to the
+ output.</div>
 </li>
 </ul>
 <a name="traceSimpleClassName">
@@ -413,6 +422,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 <li class="blockList">
 <h4>TracingFormatter</h4>
 <pre>public&nbsp;TracingFormatter()</pre>
+<div class="block">Creates a new TracingFormatter with the default config file.</div>
 </li>
 </ul>
 <a name="TracingFormatter-java.io.File-">
@@ -422,6 +432,11 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 <li class="blockList">
 <h4>TracingFormatter</h4>
 <pre>public&nbsp;TracingFormatter(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;configFile)</pre>
+<div class="block">Creates a new TracingFormatter with a custom config file.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>configFile</code> - the file to store the configuration in.</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -452,12 +467,12 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 <li class="blockList">
 <h4>getThreadNameForId</h4>
 <pre>private&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getThreadNameForId(int&nbsp;threadId)</pre>
-<div class="block">returns the name of the Thread for the given id.</div>
+<div class="block">Returns the name of the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html?is-external=true" title="class or interface in java.lang"><code>Thread</code></a> for the given id.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>threadId</code> - the id of the thread which name you want.</dd>
+<dd><code>threadId</code> - the id of the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html?is-external=true" title="class or interface in java.lang"><code>Thread</code></a> which name you want.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the name of the Thread for the given id.</dd>
+<dd>the name of the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html?is-external=true" title="class or interface in java.lang"><code>Thread</code></a> for the given id.</dd>
 </dl>
 </li>
 </ul>
@@ -468,7 +483,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 <li class="blockList">
 <h4>readConfig</h4>
 <pre>private&nbsp;void&nbsp;readConfig(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;cfgFile)</pre>
-<div class="block">reads the values from the given config file.</div>
+<div class="block">Reads the values from the given config file.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>cfgFile</code> - the config file to read.</dd>

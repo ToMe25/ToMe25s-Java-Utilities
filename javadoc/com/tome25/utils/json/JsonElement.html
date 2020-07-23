@@ -138,7 +138,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#add-java.lang.Object-java.lang.Object-">add</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
-<div class="block">Adds the Value with the given key if there are no Object with this Key.</div>
+<div class="block">Adds the value with the given key if there is no object with this key.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -240,7 +240,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#getValues--">getValues</a></span>()</code>
-<div class="block">Gets this Jsons Values.</div>
+<div class="block">Gets this Jsons values.</div>
 </td>
 </tr>
 <tr id="i17" class="rowColor">
@@ -360,7 +360,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <tr id="i34" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#values--">values</a></span>()</code>
-<div class="block">Gets this Jsons Values.</div>
+<div class="block">Gets this Jsons values.</div>
 </td>
 </tr>
 </table>
@@ -409,15 +409,15 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)
     throws <a href="../../../../com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception">InvalidKeyException</a>,
            <a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></pre>
-<div class="block">Adds the Value with the given key if there are no Object with this Key.</div>
+<div class="block">Adds the value with the given key if there is no object with this key.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>key</code> - the Key to add.</dd>
+<dd><code>key</code> - the key to add.</dd>
 <dd><code>value</code> - the value to add for key.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>depends on the implementation.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception">InvalidKeyException</a></code> - when there already an Object with this Key.</dd>
+<dd><code><a href="../../../../com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception">InvalidKeyException</a></code> - when there already an object with this key.</dd>
 <dd><code><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></code> - if the key type doesn't match the key type for
                               this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a>s,
                               Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArray</code></a>s).</dd>
@@ -437,7 +437,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
  already exists.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>key</code> - the Key to add.</dd>
+<dd><code>key</code> - the key to add.</dd>
 <dd><code>value</code> - the value to set for key.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the previous value associated with key, or null if there was no
@@ -461,7 +461,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
  existing.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>m</code> - mappings to be stored in this json.</dd>
+<dd><code>m</code> - mappings to be stored in this Json.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></code> - if the key type doesn't match the key type for
                               this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a>s,
@@ -586,10 +586,10 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <li class="blockList">
 <h4>getValues</h4>
 <pre>default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;getValues()</pre>
-<div class="block">Gets this Jsons Values.</div>
+<div class="block">Gets this Jsons values.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>this Jsons Values.</dd>
+<dd>this Jsons values.</dd>
 </dl>
 </li>
 </ul>
@@ -600,10 +600,10 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <li class="blockList">
 <h4>values</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;values()</pre>
-<div class="block">Gets this Jsons Values.</div>
+<div class="block">Gets this Jsons values.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>this Jsons Values.</dd>
+<dd>this Jsons values.</dd>
 </dl>
 </li>
 </ul>
@@ -682,8 +682,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <li class="blockList">
 <h4>size</h4>
 <pre>int&nbsp;size(boolean&nbsp;recursive)</pre>
-<div class="block">Gets the size of this object. If recursive is true this counts all sub Json
- elements as their size instead of one.</div>
+<div class="block">Gets the size of this object. If recursive is true this counts all sub
+ JsonElements as their size instead of one.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>recursive</code> - whether to recursively count the size.</dd>
@@ -859,7 +859,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <div class="block">Creates and returns a copy of this Json. Recursive.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a copy of this Json Object.</dd>
+<dd>a copy of this Json object.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CloneNotSupportedException.html?is-external=true" title="class or interface in java.lang">CloneNotSupportedException</a></code> - if this element can't be cloned.</dd>
 </dl>
@@ -962,7 +962,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
          to this one.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></code> - if this JsonElement doesn't support
-                                       generating a changes Json.</dd>
+                                       generating a changes JsonElement.</dd>
 </dl>
 </li>
 </ul>
@@ -988,7 +988,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
          to this one.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></code> - if this JsonElement doesn't support
-                                       generating a changes Json.</dd>
+                                       generating a changes JsonElement.</dd>
 </dl>
 </li>
 </ul>
@@ -1012,7 +1012,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
          the changes contained in this JsonElement applied.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></code> - if this JsonElement doesn't support
-                                       generating a changes Json.</dd>
+                                       generating a changes JsonElement.</dd>
 </dl>
 </li>
 </ul>
@@ -1031,14 +1031,14 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>from</code> - the previous JsonElement.</dd>
-<dd><code>recursive</code> - whether changedJsonElements inside this one should get
+<dd><code>recursive</code> - whether changed JsonElements inside this one should get
                   reconstructed too, or just cloned from this one.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a new JsonElement containing the values of the given JsonElement with
          the changes contained in this JsonElement applied.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></code> - if this JsonElement doesn't support
-                                       generating a changes Json.</dd>
+                                       generating a changes JsonElement.</dd>
 </dl>
 </li>
 </ul>

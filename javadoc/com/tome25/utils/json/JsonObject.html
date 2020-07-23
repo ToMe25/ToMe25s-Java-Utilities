@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -116,7 +116,7 @@ var activeTableTab = "activeTableTab";
 <pre>public class <span class="typeNameLabel">JsonObject</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</pre>
-<div class="block">A standard json object, that can store stuff, and be converted to a string.</div>
+<div class="block">A standard Json object, that can store stuff, and be converted to a string.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>ToMe25</dd>
@@ -180,18 +180,18 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#JsonObject--">JsonObject</a></span>()</code>
-<div class="block">Creates a new empty Json Object.</div>
+<div class="block">Creates a new empty JsonObject.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#JsonObject-java.util.Map-">JsonObject</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;content)</code>
-<div class="block">Creates a new Json Object and initializes it with the given content.</div>
+<div class="block">Creates a new JsonObject and initializes it with the given content.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#JsonObject-java.lang.String-java.lang.Object-">JsonObject</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
           <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
-<div class="block">Creates a new Json Object and initializes it with the given key value pair.</div>
+<div class="block">Creates a new JsonObject and initializes it with the given key value pair.</div>
 </td>
 </tr>
 </table>
@@ -213,17 +213,24 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#add-java.lang.Object-java.lang.Object-">add</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
-<div class="block">Adds the Value with the given key if there are no Object with this Key.</div>
+<div class="block">Adds the value with the given key if there is no object with this key.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#add-java.lang.String-java.lang.Object-">add</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
+   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
+<div class="block">Adds the given key with the given value if it doesn't already exist.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#changes-com.tome25.utils.json.JsonElement-">changes</a></span>(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&nbsp;from)</code>
 <div class="block">Returns a new JsonElement containing the changes from the given JsonElement
  to this one.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#changes-com.tome25.utils.json.JsonElement-boolean-">changes</a></span>(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&nbsp;from,
        boolean&nbsp;recursive)</code>
@@ -231,25 +238,25 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
  to this one.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#clear--">clear</a></span>()</code>
 <div class="block">Clears this Json.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#clone--">clone</a></span>()</code>
 <div class="block">Creates and returns a copy of this Json.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#clone-boolean-">clone</a></span>(boolean&nbsp;recursive)</code>
 <div class="block">Creates and returns a copy of this Json.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>private int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#compare-java.lang.Object-java.lang.Object-">compare</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;obj1,
        <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;obj2)</code>
@@ -257,73 +264,73 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
  compatible types.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#compareTo-com.tome25.utils.json.JsonElement-">compareTo</a></span>(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&nbsp;o)</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#contains-java.lang.Object-">contains</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
 <div class="block">Checks whether this Json contains the given object, either as key if the type
  matches, or as value.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#containsKey-java.lang.Object-">containsKey</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>
 <div class="block">Returns true if this Json contains the given key.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#containsValue-java.lang.Object-">containsValue</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
 <div class="block">Returns true if this Json contains the given value.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#entrySet--">entrySet</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#equals-java.lang.Object-">equals</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;obj)</code>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#get-java.lang.Object-">get</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>
 <div class="block">Gets the value for the given key.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#getKeySet--">getKeySet</a></span>()</code>
-<div class="block">Returns this Jsons Keys.</div>
+<div class="block">Returns this Jsons keys.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#getString-java.lang.Object-">getString</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>
 <div class="block">Gets the value for the given key if its a string, or a string representation
  of that value if it isn't.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#isEmpty--">isEmpty</a></span>()</code>
 <div class="block">Checks whether this Json is empty.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#iterator--">iterator</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#keySet--">keySet</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#put-java.lang.Object-java.lang.Object-">put</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
@@ -331,25 +338,25 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
  already exists.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#putAll-java.util.Map-">putAll</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;m)</code>
 <div class="block">Adds the given values to the given keys replacing the current ones if
  existing.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#readExternal-java.io.ObjectInput-">readExternal</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/ObjectInput.html?is-external=true" title="class or interface in java.io">ObjectInput</a>&nbsp;in)</code>&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#reconstruct-com.tome25.utils.json.JsonElement-">reconstruct</a></span>(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&nbsp;from)</code>
 <div class="block">Returns a new JsonElement containing the values of the given JsonElement with
  the changes contained in this JsonElement applied.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#reconstruct-com.tome25.utils.json.JsonElement-boolean-">reconstruct</a></span>(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&nbsp;from,
            boolean&nbsp;recursive)</code>
@@ -357,13 +364,13 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
  the changes contained in this JsonElement applied.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#remove-java.lang.Object-">remove</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>
 <div class="block">Removes the mapping for the given key from this map if it is present.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#remove-java.lang.Object-boolean-">remove</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o,
       boolean&nbsp;key)</code>
@@ -371,7 +378,7 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
  removes the value o from this Json.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#set-java.lang.Object-java.lang.Object-">set</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
    <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;element)</code>
@@ -379,38 +386,38 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
  already exists.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#setAll-java.util.Map-">setAll</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;m)</code>
 <div class="block">Adds the given values to the given keys replacing the current ones if
  existing.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#size--">size</a></span>()</code>
 <div class="block">Gets the size of this object.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#size-boolean-">size</a></span>(boolean&nbsp;recursive)</code>
 <div class="block">Gets the size of this object.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#toString--">toString</a></span>()</code>
 <div class="block">Returns a string representation of this element.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#values--">values</a></span>()</code>
-<div class="block">Gets this Jsons Values.</div>
+<div class="block">Gets this Jsons values.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#writeExternal-java.io.ObjectOutput-">writeExternal</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/ObjectOutput.html?is-external=true" title="class or interface in java.io">ObjectOutput</a>&nbsp;out)</code>&nbsp;</td>
 </tr>
@@ -494,7 +501,7 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <li class="blockList">
 <h4>JsonObject</h4>
 <pre>public&nbsp;JsonObject()</pre>
-<div class="block">Creates a new empty Json Object.</div>
+<div class="block">Creates a new empty JsonObject.</div>
 </li>
 </ul>
 <a name="JsonObject-java.lang.String-java.lang.Object-">
@@ -505,11 +512,11 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <h4>JsonObject</h4>
 <pre>public&nbsp;JsonObject(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
                   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</pre>
-<div class="block">Creates a new Json Object and initializes it with the given key value pair.</div>
+<div class="block">Creates a new JsonObject and initializes it with the given key value pair.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>key</code> - the key to represent value in the new Json object.</dd>
-<dd><code>value</code> - a value to add to the new Json object.</dd>
+<dd><code>key</code> - the key to represent value in the new JsonObject.</dd>
+<dd><code>value</code> - a value to add to the new JsonObject.</dd>
 </dl>
 </li>
 </ul>
@@ -520,10 +527,10 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <li class="blockList">
 <h4>JsonObject</h4>
 <pre>public&nbsp;JsonObject(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;content)</pre>
-<div class="block">Creates a new Json Object and initializes it with the given content.</div>
+<div class="block">Creates a new JsonObject and initializes it with the given content.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>content</code> - the content for the new Json object.</dd>
+<dd><code>content</code> - the content for the new JsonObject.</dd>
 </dl>
 </li>
 </ul>
@@ -544,15 +551,35 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;add(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
                   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html#add-java.lang.Object-java.lang.Object-">JsonElement</a></code></span></div>
-<div class="block">Adds the Value with the given key if there are no Object with this Key.</div>
+<div class="block">Adds the value with the given key if there is no object with this key.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/json/JsonElement.html#add-java.lang.Object-java.lang.Object-">add</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>key</code> - the Key to add.</dd>
+<dd><code>key</code> - the key to add.</dd>
 <dd><code>value</code> - the value to add for key.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>depends on the implementation.</dd>
+</dl>
+</li>
+</ul>
+<a name="add-java.lang.String-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>add</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;add(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
+                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</pre>
+<div class="block">Adds the given key with the given value if it doesn't already exist.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>key</code> - the key to add.</dd>
+<dd><code>value</code> - the value to add.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>depends on the implementation.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception">InvalidKeyException</a></code> - when there already an object with this Key.</dd>
 </dl>
 </li>
 </ul>
@@ -579,8 +606,7 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
          mapping for key.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></code> - if the key type doesn't match the key type for
-                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a>s,
-                              Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArray</code></a>s).</dd>
+                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a>s).</dd>
 </dl>
 </li>
 </ul>
@@ -599,11 +625,10 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#putAll-java.util.Map-" title="class or interface in java.util">putAll</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>m</code> - mappings to be stored in this json.</dd>
+<dd><code>m</code> - mappings to be stored in this Json.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></code> - if the key type doesn't match the key type for
-                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a>s,
-                              Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArray</code></a>s).</dd>
+                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a>s).</dd>
 </dl>
 </li>
 </ul>
@@ -665,8 +690,7 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
          mapping for key.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></code> - if the key type doesn't match the key type for
-                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a>s,
-                              Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArray</code></a>s).</dd>
+                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a>s).</dd>
 </dl>
 </li>
 </ul>
@@ -709,8 +733,7 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <dd>the value for the given key.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></code> - if the key type doesn't match the key type for
-                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a>s,
-                              Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArray</code></a>s).</dd>
+                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a>s).</dd>
 </dl>
 </li>
 </ul>
@@ -742,10 +765,10 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <li class="blockList">
 <h4>getKeySet</h4>
 <pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getKeySet()</pre>
-<div class="block">Returns this Jsons Keys.</div>
+<div class="block">Returns this Jsons keys.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>this Jsons Keys.</dd>
+<dd>this Jsons keys.</dd>
 </dl>
 </li>
 </ul>
@@ -788,8 +811,7 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <dd>whether this Json contains the given key.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></code> - if the key type doesn't match the key type for
-                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a>s,
-                              Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArray</code></a>s).</dd>
+                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a>s).</dd>
 </dl>
 </li>
 </ul>
@@ -840,8 +862,8 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <h4>size</h4>
 <pre>public&nbsp;int&nbsp;size(boolean&nbsp;recursive)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html#size-boolean-">JsonElement</a></code></span></div>
-<div class="block">Gets the size of this object. If recursive is true this counts all sub Json
- elements as their size instead of one.</div>
+<div class="block">Gets the size of this object. If recursive is true this counts all sub
+ JsonElements as their size instead of one.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/json/JsonElement.html#size-boolean-">size</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></code></dd>
@@ -886,7 +908,7 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a copy of this Json Object.</dd>
+<dd>a copy of this Json object.</dd>
 </dl>
 </li>
 </ul>
@@ -1003,14 +1025,14 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <h4>values</h4>
 <pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;values()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html#values--">JsonElement</a></code></span></div>
-<div class="block">Gets this Jsons Values.</div>
+<div class="block">Gets this Jsons values.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/json/JsonElement.html#values--">values</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true#values--" title="class or interface in java.util">values</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>this Jsons Values.</dd>
+<dd>this Jsons values.</dd>
 </dl>
 </li>
 </ul>
@@ -1115,7 +1137,7 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <dd><code><a href="../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-boolean-">reconstruct</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>from</code> - the previous JsonElement.</dd>
-<dd><code>recursive</code> - whether changedJsonElements inside this one should get
+<dd><code>recursive</code> - whether changed JsonElements inside this one should get
                   reconstructed too, or just cloned from this one.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a new JsonElement containing the values of the given JsonElement with

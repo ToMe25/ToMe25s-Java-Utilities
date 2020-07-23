@@ -10,7 +10,7 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 
 /**
- * A configuration handler.
+ * A configuration file handler.
  * 
  * @author ToMe25
  *
@@ -67,8 +67,8 @@ public class Config {
 	 * @param read      whether the config file should be automatically read on
 	 *                  addition of options.
 	 * @param configDir the directory to put config files in.
-	 * @param watch     whether to watch the config dir, and update config options
-	 *                  on change.
+	 * @param watch     whether to watch the config directory, and update config
+	 *                  options on change.
 	 */
 	public Config(boolean read, File configDir, boolean watch) {
 		this(read, configDir, watch, null);
@@ -80,8 +80,8 @@ public class Config {
 	 * @param read      whether the config file should be automatically read on
 	 *                  addition of options.
 	 * @param configDir the directory to put config files in.
-	 * @param watch     whether to watch the config dir, and update config options
-	 *                  on change.
+	 * @param watch     whether to watch the config directory, and update config
+	 *                  options on change.
 	 * @param callback  a consumer to call with the changed file when a file
 	 *                  changes. can be null.
 	 */
@@ -104,10 +104,10 @@ public class Config {
 	}
 
 	/**
-	 * gets the Config value for the given Name.
+	 * Gets the config value for the given Name.
 	 * 
 	 * @param name the name of the config option to get.
-	 * @return the Config value for the given Name.
+	 * @return the config value for the given Name.
 	 */
 	public Object getConfig(String name) {
 		if (cfg.containsKey(name)) {
@@ -119,7 +119,7 @@ public class Config {
 	}
 
 	/**
-	 * adds a config option to be read from the given config file.
+	 * Adds a config option to be read from the given config file.
 	 * 
 	 * @param <T>          the option type.
 	 * @param config       the config file to read this config option from.
@@ -132,13 +132,13 @@ public class Config {
 	}
 
 	/**
-	 * adds a config option to be read from the given config file.
+	 * Adds a config option to be read from the given config file.
 	 * 
 	 * @param <T>          the option type.
 	 * @param config       the config file to read this config option from.
 	 * @param name         the key for this config option.
 	 * @param defaultValue this config options default value.
-	 * @param comments     a list of comments to add to this config option. every
+	 * @param comments     a list of comments to add to this config option. Every
 	 *                     string will get its own line.
 	 */
 	public <T> void addConfig(String config, String name, T defaultValue, String... comments) {
@@ -151,13 +151,13 @@ public class Config {
 	}
 
 	/**
-	 * adds a config option to be read from the given config file.
+	 * Adds a config option to be read from the given config file.
 	 * 
 	 * @param <T>          the option type.
 	 * @param config       the config file to read this config option from.
 	 * @param name         the key for this config option.
 	 * @param defaultValue this config options default value.
-	 * @param comments     a list of comments to add to this config option. every
+	 * @param comments     a list of comments to add to this Config option. Every
 	 *                     string will get its own line.
 	 */
 	public <T> void addConfig(File config, String name, T defaultValue, String... comments) {
@@ -170,7 +170,7 @@ public class Config {
 	}
 
 	/**
-	 * adds a config option to be read from the given config file.
+	 * Adds a config option to be read from the given config file.
 	 * 
 	 * @param <T>          the option type.
 	 * @param config       the config file to read this config option from.
@@ -195,7 +195,7 @@ public class Config {
 	}
 
 	/**
-	 * sets the Config value for the given Name the the given Value.
+	 * Sets the config value for the given name the the given value.
 	 * 
 	 * @param <T>   the option type.
 	 * @param name  the name of the config option to get.
@@ -217,7 +217,7 @@ public class Config {
 	}
 
 	/**
-	 * reads the Config.
+	 * Reads this Config from the files.
 	 */
 	public void readConfig() {
 		sortConfig();
@@ -234,7 +234,7 @@ public class Config {
 	}
 
 	/**
-	 * reads the given config file.
+	 * Reads all {@link ConfigValue}s from the given config file.
 	 * 
 	 * @param file the file to read.
 	 */
@@ -288,7 +288,7 @@ public class Config {
 	}
 
 	/**
-	 * Writes all config options in the given file to the disk.
+	 * Writes all {@link ConfigValue}s in the given file to that file.
 	 * 
 	 * @param config the file to write.
 	 */
@@ -342,7 +342,7 @@ public class Config {
 	 * Deletes all used config files, and the config directory, if it is empty.
 	 */
 	public void delete() {
-		if(watcher != null) {
+		if (watcher != null) {
 			watcher.stop();
 		}
 		sortedConfig.keySet().forEach(file -> file.delete());

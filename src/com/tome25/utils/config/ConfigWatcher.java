@@ -10,7 +10,7 @@ import java.nio.file.WatchService;
 import java.util.function.Consumer;
 
 /**
- * A thread that watches a config directory.
+ * A {@link Thread} that watches a config directory.
  * 
  * @author ToMe25
  *
@@ -89,7 +89,7 @@ public class ConfigWatcher implements Runnable {
 	}
 
 	/**
-	 * Stops this ConfigWatcher thread.
+	 * Stops this ConfigWatcher {@link Thread}.
 	 */
 	public void stop() {
 		running = false;

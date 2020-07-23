@@ -9,7 +9,7 @@ import com.tome25.utils.json.JsonElement;
 import com.tome25.utils.json.JsonParser;
 
 /**
- * A utility class that stores config values.
+ * A utility class that stores {@link Config} values.
  * 
  * @author ToMe25
  *
@@ -27,14 +27,14 @@ public class ConfigValue<T> {
 	private final String description;
 
 	/**
-	 * Initializes a new ConfigValue Object
+	 * Initializes a new ConfigValue object.
 	 * 
-	 * @param cfg          the Configuration File
-	 * @param key          the Configuration Key
-	 * @param defaultValue the default Value
-	 * @param description  the Description for this Config Object
-	 * @throws NullPointerException if key is null
-	 * @throws InvalidTypeException if the given type is invalid
+	 * @param cfg          the configuration file.
+	 * @param key          the configuration key.
+	 * @param defaultValue the configuration default value.
+	 * @param description  the description for this ConfigValue object.
+	 * @throws NullPointerException if key is null.
+	 * @throws InvalidTypeException if the given type is invalid.
 	 */
 	public ConfigValue(File cfg, String key, T defaultValue, String description)
 			throws NullPointerException, InvalidTypeException {
@@ -53,53 +53,63 @@ public class ConfigValue<T> {
 	}
 
 	/**
-	 * @return the Configuration File
+	 * Gets the configuration file.
+	 * 
+	 * @return the configuration file.
 	 */
 	public File getCfg() {
 		return cfg;
 	}
 
 	/**
-	 * @return the Config key
+	 * Gets the configuration key.
+	 * 
+	 * @return the configuration key.
 	 */
 	public String getKey() {
 		return key;
 	}
 
 	/**
-	 * gets this values type as a String
+	 * Gets this ConfigValues type as a string.
 	 * 
-	 * @return the type
+	 * @return this ConfigValues type as a string.
 	 */
 	public String getTypeString() {
 		return type.getSimpleName();
 	}
 
 	/**
-	 * gets this values type as a Class
+	 * Gets this ConfigValues type as a {@link Class}.
 	 * 
-	 * @return the type
+	 * @return this ConfigValues type as a {@link Class}.
 	 */
 	public Class<?> getTypeClass() {
 		return type;
 	}
 
 	/**
-	 * @return the value
+	 * Gets this ConfigValues value.
+	 * 
+	 * @return this ConfigValues value.
 	 */
 	public T getValue() {
 		return value;
 	}
 
 	/**
-	 * @param value the value to set
+	 * Sets this ConfigValues value.
+	 * 
+	 * @param value the value to set.
 	 */
 	public void setValue(T value) {
 		this.value = value;
 	}
 
 	/**
-	 * @param value the value to set(will be parsed to the type you have selected)
+	 * Sets this ConfigValues value.
+	 * 
+	 * @param value the value to set(will be parsed to the type you have selected).
 	 */
 	@SuppressWarnings("unchecked")
 	public void setValue(String value) {
@@ -129,25 +139,29 @@ public class ConfigValue<T> {
 	}
 
 	/**
-	 * @return the default Value
+	 * Gets this ConfigValues default value.
+	 * 
+	 * @return this ConfigValues default value.
 	 */
 	public T getDefaultValue() {
 		return defaultValue;
 	}
 
 	/**
-	 * @return the description
+	 * Gets this ConfigValues description.
+	 * 
+	 * @return this ConfigValues description.
 	 */
 	public String getDescription() {
 		return description;
 	}
 
 	/**
-	 * Writes the Config Option to the given FileOutputStream.
+	 * Writes the ConfigValue to the given {@link FileOutputStream}.
 	 * 
-	 * @param fiout the File OutputStream to write
-	 * @throws IOException if an IO Error Occures while writing to the
-	 *                     FileOutputStream
+	 * @param fiout the {@link FileOutputStream} to write to.
+	 * @throws IOException if an IO Error occures while writing to the
+	 *                     {@link FileOutputStream}.
 	 */
 	public void writeToConfig(FileOutputStream fiout) throws IOException {
 		String comment = String.format("# %s%n# Default: %s", description, defaultValue);
@@ -157,22 +171,22 @@ public class ConfigValue<T> {
 	}
 
 	/**
-	 * Checks if the given Type is valid(ignoring case)
+	 * Checks if the given type is valid(ignoring case).
 	 * 
-	 * @param type the type to check
-	 * @return is type valid?
+	 * @param type the type to check.
+	 * @return whether the type is valid.
 	 */
 	public static boolean validType(String type) {
 		return validType(type, true);
 	}
 
 	/**
-	 * Checks if the given Type is valid. A type is valid if it is the simple name
+	 * Checks if the given type is valid. A type is valid if it is the simple name
 	 * of a class in the validTypes array.
 	 * 
-	 * @param type       the type to check
-	 * @param ignoreCase ingnore case while checking?
-	 * @return is type valid?
+	 * @param type       the type to check.
+	 * @param ignoreCase whether the check should be case sensitive.
+	 * @return whether the type is valid.
 	 */
 	public static boolean validType(String type, boolean ignoreCase) {
 		for (Class<?> cls : validTypes) {
@@ -184,11 +198,11 @@ public class ConfigValue<T> {
 	}
 
 	/**
-	 * Checks if the given Type is valid. A type is valid if it is a class in the
+	 * Checks if the given type is valid. A type is valid if it is a class in the
 	 * validTypes array or a subclass of one of those.
 	 * 
-	 * @param type the type to check
-	 * @return is type valid?
+	 * @param type the type to check.
+	 * @return whether the type is valid.
 	 */
 	public static boolean validType(Class<?> type) {
 		for (Class<?> cls : validTypes) {
@@ -209,7 +223,7 @@ public class ConfigValue<T> {
 	}
 
 	/**
-	 * resets the error state of this value.
+	 * Resets the error state of this value.
 	 */
 	public void clearError() {
 		error = false;

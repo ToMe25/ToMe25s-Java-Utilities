@@ -32,6 +32,7 @@ hs_err_pid*
 
 # maven
 /target/
+settings.xml
 
 # Config file
 *.cfg

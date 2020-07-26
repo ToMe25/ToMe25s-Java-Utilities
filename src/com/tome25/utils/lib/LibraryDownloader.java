@@ -45,6 +45,9 @@ public class LibraryDownloader {
 
 	private List<URL> urls;
 	private File target;
+        /**
+         * The predicate checking whether a content type is valid.
+         */
 	private Predicate<String> typeCheck;
 	private boolean override;
 	/**
@@ -382,7 +385,7 @@ public class LibraryDownloader {
 				((HttpURLConnection) connection).setInstanceFollowRedirects(false);
 			}
 		}
-		if (typeCheck.test(connection.getContentType())) {
+		if (typeCheck.test(String.valueOf(connection.getContentType()))) {
 			if (targetDir) {
 				if (url.getFile().contains("?")) {
 					target = new File(target,

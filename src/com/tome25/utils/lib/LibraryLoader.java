@@ -139,19 +139,27 @@ public class LibraryLoader {
 		ByteArrayOutputStream buf = new ByteArrayOutputStream();
 		PrintStream pb = new PrintStream(buf);
 		File codeSource = new File(LibraryLoader.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-		if (update || !new File(new File(codeSource.getParent(), "libs"), "ToMe25s-Java-Utilities.jar").exists()) {
+                boolean missing = !new File(new File(codeSource.getParent(), "libs"), "ToMe25s-Java-Utilities.jar").exists();
+                boolean created = false;
+		if (missing || update) {
 			LibraryDownloader downloader = new LibraryDownloader(
 					new File(codeSource.getParent(), "ToMe25s-Java-Utilities-Download-Url.txt"), defaultUrlStorage,
 					true, true);
 			if (downloader.downloadFile()) {
 				pb.format("Successfully downloaded ToMe25s-Java-Utilites from %s.%n",
 						downloader.getDownloadUrl().toString());
-			} else {
-				JarExtractor.extractThis(codeSource);
+                        	created = missing;
+			} else if (JarExtractor.extractThis(codeSource)) {
+                        	pb.format("Successfully extracted ToMe25s-Java-Utilites from %s.%n",
+						codeSource.toString());
+                        	created = missing;
 			}
 		}
 		setArgs(args);
 		addLibsToClasspath();
+                if (created) {
+                	restart();
+                }
 		try {
 			com.tome25.utils.logging.LogTracer.traceOutputs(outputLogFile, errorLogFile);// importing this would cause
 																							// it to crash on loading.

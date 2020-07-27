@@ -411,9 +411,11 @@ public class JarExtractor {
 	 * it into the libs directory next to this jar.
 	 * 
 	 * @param jarFile the jar file to extract the file from.
+         * @return Whether the file where this library should be extracted to exists,
+         *                  after trying to extract it.
 	 */
-	public static void extractThis(File jarFile) {
-		extractThis(jarFile, new File(jarFile.getParent(), "libs"));
+	public static boolean extractThis(File jarFile) {
+		return extractThis(jarFile, new File(jarFile.getParent(), "libs"));
 	}
 
 	/**
@@ -422,9 +424,11 @@ public class JarExtractor {
 	 * 
 	 * @param jarFile   the jar file to extract the file from.
 	 * @param outputDir the directory to put the extracted files in.
+         * @return Whether the file where this library should be extracted to exists,
+         *                  after trying to extract it.
 	 */
-	public static void extractThis(File jarFile, File outputDir) {
-		extractThis(jarFile, outputDir, false);
+	public static boolean extractThis(File jarFile, File outputDir) {
+		return extractThis(jarFile, outputDir, false);
 	}
 
 	/**
@@ -436,13 +440,18 @@ public class JarExtractor {
 	 * @param subDir    whether files in a directory inside the jar should get put
 	 *                  into a sub directory of outputDir or directly into
 	 *                  outputDir.
+         * @return Whether the file where this library should be extracted to exists,
+         *                  after trying to extract it. Always returns false if this
+         *                  library is in a directory inside the archive it gets extracted
+         *                  from and subDir is enabled.
 	 */
-	public static void extractThis(File jarFile, File outputDir, boolean subDir) {
+	public static boolean extractThis(File jarFile, File outputDir, boolean subDir) {
 		try {
 			extractJar(jarFile, (s) -> s.endsWith("ToMe25s-Java-Utilities.jar"), outputDir, subDir);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+                return new File(outputDir, "ToMe25s-Java-Utilities.jar").exists();
 	}
 
 }

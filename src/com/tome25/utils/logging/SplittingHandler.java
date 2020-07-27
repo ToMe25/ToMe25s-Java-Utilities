@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 /**
  * A {@link Handler} that splits {@link LogRecord}s into System.out and
- * System.err based on their log {@link java.util.logging.Level}.
+ * System.err based on their log {@link java.util.logging.Level Level}.
  * 
  * @author ToMe25
  *
@@ -28,9 +28,9 @@ public class SplittingHandler extends Handler {
 	 * Creates a new SplittingHandler with custom {@link Logger}s.
 	 * 
 	 * @param output the {@link Logger} to redirect log
-	 *               {@link java.util.logging.Level} info and below to.
+	 *               {@link java.util.logging.Level Level} info and below to.
 	 * @param error  the {@link Logger} to redirect log
-	 *               {@link java.util.logging.Level} warning and above to.
+	 *               {@link java.util.logging.Level Level} warning and above to.
 	 */
 	public SplittingHandler(Logger output, Logger error) {
 		this.error = error;

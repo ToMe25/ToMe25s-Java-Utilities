@@ -281,11 +281,11 @@ public interface JsonElement extends Iterable<Object>, Externalizable, Comparabl
 	public JsonElement clone() throws CloneNotSupportedException;
 
 	/**
-	 * Creates and returns a copy of this Json.
+	 * Creates and returns a copy of this JsonElement.
 	 * 
-	 * @param recursive whether Jsons inside this Json object should get cloned as
+	 * @param recursive whether Jsons inside this Json should get cloned as
 	 *                  well.
-	 * @return a copy of this Json Object.
+	 * @return a copy of this JsonElement.
 	 * @throws CloneNotSupportedException if this element can't be cloned
 	 */
 	public JsonElement clone(boolean recursive) throws CloneNotSupportedException;

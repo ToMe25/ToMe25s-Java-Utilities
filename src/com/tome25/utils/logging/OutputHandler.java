@@ -9,7 +9,7 @@ import java.util.logging.StreamHandler;
 /**
  * A {@link StreamHandler} that can have a custom log {@link Level} from the
  * start. Also it automatically flushes like the
- * {@link java.util.logging.ConsoleHandler}.
+ * {@link java.util.logging.ConsoleHandler ConsoleHandler}.
  * 
  * @author ToMe25
  *

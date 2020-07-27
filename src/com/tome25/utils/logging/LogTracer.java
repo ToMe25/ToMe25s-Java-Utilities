@@ -155,7 +155,7 @@ public class LogTracer {
 	}
 
 	/**
-	 * Gets a {@link Logger} that logs {@link java.util.logging.LogRecord} with log
+	 * Gets a {@link Logger} that logs {@link java.util.logging.LogRecord LogRecord} with log
 	 * {@link Level} info or below to System.out, and warning and above to
 	 * System.err, with the give custom name.
 	 * 
@@ -180,7 +180,7 @@ public class LogTracer {
 	}
 
 	/**
-	 * Gets a {@link Logger} that logs {@link java.util.logging.LogRecord} with log
+	 * Gets a {@link Logger} that logs {@link java.util.logging.LogRecord LogRecord} with log
 	 * {@link Level} info or below to System.out, and warning or above to
 	 * System.err, with the give custom name.
 	 * 

@@ -387,11 +387,11 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	}
 
 	/**
-	 * Creates a byte[] from the given object and the trace.
+	 * Creates a byte array from the given object and the trace.
 	 * 
-	 * @param x       the string to finish. can be a string, a byte array or a
+	 * @param x       the string to finish. Can be a string, a byte array or a
 	 *                character array.
-	 * @param println whether to end the byte[] with a lineSeperator.
+	 * @param println whether to end the byte array with a lineSeperator.
 	 * @return the finished byte array.
 	 */
 	private byte[] FinishBArr(Object x, boolean println) {

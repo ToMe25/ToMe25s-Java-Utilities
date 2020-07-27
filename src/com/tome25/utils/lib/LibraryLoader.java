@@ -10,7 +10,10 @@ import java.io.PrintStream;
 import java.lang.instrument.Instrumentation;
 import java.lang.management.ManagementFactory;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
@@ -33,7 +36,7 @@ public class LibraryLoader {
 
 	private static Instrumentation instrumentation;
 	private static byte[] buffer;
-	private static String mainArgs;
+	private static String[] mainArgs;
 
 	/**
 	 * Initializes a LibraryLoader, restarts your JVM if necessary, tries to
@@ -182,6 +185,7 @@ public class LibraryLoader {
 	 * @param mainArgs the main methods arguments.
 	 * @throws IOException if this program isn't a jar or doesn't exists. And if
 	 *                     somehow creating a {@link JarFile} instance fails.
+         * @deprecated use the non java agent library loading instead.
 	 */
 	@Deprecated
 	public LibraryLoader(String[] mainArgs) throws IOException {
@@ -257,6 +261,7 @@ public class LibraryLoader {
 	 * 
 	 * @param args            some arguments.
 	 * @param instrumentation the instrumentation instance to use.
+         * @deprecated use the non java agent library loading instead.
 	 */
 	@Deprecated
 	public static void premain(String args, Instrumentation instrumentation) {
@@ -269,6 +274,7 @@ public class LibraryLoader {
 	 * @param array the array to get the string representation of.
 	 * @return a string representation of the given string array.
 	 */
+        @Deprecated
 	private static String stringArrayToString(String[] array) {
 		String string = "";
 		for (String str : array) {
@@ -285,6 +291,7 @@ public class LibraryLoader {
 	 * 
 	 * @param library the jar archive that should get added to the classpath.
 	 * @throws IOException if an I/O error has occurred.
+         * @deprecated use the non java agent library loading instead.
 	 */
 	@Deprecated
 	public void addJarToClasspath(String library) throws IOException {
@@ -296,6 +303,7 @@ public class LibraryLoader {
 	 * 
 	 * @param library the jar archive that should get added to the classpath.
 	 * @throws IOException if an I/O error has occurred.
+         * @deprecated use the non java agent library loading instead.
 	 */
 	@Deprecated
 	public void addJarToClasspath(File library) throws IOException {
@@ -306,6 +314,7 @@ public class LibraryLoader {
 	 * Adds the given library jar to the classpath. Part of the Java Agent.
 	 * 
 	 * @param library the jar archive that should get added to the classpath.
+         * @deprecated use the non java agent library loading instead.
 	 */
 	@Deprecated
 	public void addJarToClasspath(JarFile library) {
@@ -318,6 +327,7 @@ public class LibraryLoader {
 	 * 
 	 * @param libDir the directory containing the libraries.
 	 * @throws IOException if an I/O error has occurred.
+         * @deprecated use the non java agent library loading instead.
 	 */
 	@Deprecated
 	public void addJarsToClasspath(String libDir) throws IOException {
@@ -329,6 +339,7 @@ public class LibraryLoader {
 	 * 
 	 * @param libDir the directory containing the libraries.
 	 * @throws IOException if an I/O error has occurred.
+         * @deprecated use the non java agent library loading instead.
 	 */
 	@Deprecated
 	public void addJarsToClasspath(File libDir) throws IOException {
@@ -688,7 +699,7 @@ public class LibraryLoader {
 	 * @param args the arguments of the main method.
 	 */
 	public static void setArgs(String[] args) {
-		mainArgs = stringArrayToString(args);
+		mainArgs = args;
 	}
 
 	/**
@@ -704,8 +715,19 @@ public class LibraryLoader {
 	 * Returns the previously set main method arguments.
 	 * 
 	 * @return the previously set main method arguments.
+         * @deprecated use {@link getMainArgsArray} instead.
 	 */
+        @Deprecated
 	public static String getMainArgs() {
+		return stringArrayToString(mainArgs);
+	}
+
+	/**
+	 * Returns the previously set main method arguments.
+	 * 
+	 * @return the previously set main method arguments.
+	 */
+	public static String[] getMainArgsArray() {
 		return mainArgs;
 	}
 
@@ -714,9 +736,13 @@ public class LibraryLoader {
 	 */
 	public static void restart() {
 		File codeSource = new File(LibraryLoader.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-		ProcessBuilder pb = new ProcessBuilder("java", "-jar", codeSource.getAbsolutePath(),
-				stringArrayToString(ManagementFactory.getRuntimeMXBean().getInputArguments().toArray(new String[0])),
-				mainArgs);
+                List<String> command = new ArrayList<String>();
+                command.add("java");
+                command.add("-jar");
+                command.add(codeSource.getAbsolutePath());
+                command.addAll(ManagementFactory.getRuntimeMXBean().getInputArguments());
+                command.addAll(Arrays.asList(getMainArgsArray()));
+		ProcessBuilder pb = new ProcessBuilder(command);
 		pb.inheritIO();
 		try {
 			pb.start();

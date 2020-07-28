@@ -81,12 +81,61 @@ public class TracingFormatter extends Formatter {
 
 	@Override
 	public String format(LogRecord record) {
-		StringBuffer buf = new StringBuffer(180);
+		String trace = getTrace(record);
+		StringBuffer buffer = new StringBuffer(200);
+		String message = formatMessage(record);
+		buffer.append(traceMessage(message, trace));
+		Throwable throwable = record.getThrown();
+		if (throwable != null) {
+			StringWriter sink = new StringWriter();
+			PrintWriter printer = new PrintWriter(sink, true);
+			throwable.printStackTrace(printer);
+			printer.close();
+			buffer.append(traceMessage(sink.toString(), trace));
+		}
+		return buffer.toString();
+	}
+
+	/**
+	 * Adds the given trace block to the begining of every line in the given message.
+	 * 
+	 * @param message the message to add the trace block to.
+	 * @param trace the trace block.
+	 * @return the traced message.
+	 */
+	private String traceMessage(String message, String trace) {
+		if (message == null || message.isEmpty()) {
+			return message;
+		}
+		StringBuffer buffer = new StringBuffer(200);
+		for (String line:message.split(System.lineSeparator())) {
+			if(line.isEmpty()) {
+				buffer.append(System.lineSeparator());
+			} else if(line.trim().isEmpty()) {
+				buffer.append(line);
+				buffer.append(System.lineSeparator());
+			} else {
+				buffer.append(trace);
+				buffer.append(line);
+				buffer.append(System.lineSeparator());
+			}
+		}
+		return buffer.toString();
+	}
+
+	/**
+	 * Gets the trace block for the begining of a new line.
+	 * 
+	 * @param record the {@link LogRecord} for which to get the trace.
+	 * @return the trace block.
+	 */
+	private String getTrace(LogRecord record) {
+		StringBuffer buffer = new StringBuffer(75);
 		if (traceTimestamp) {
-			buf.append(String.format("[%s] ", DATE_FORMAT.format(new Date(record.getMillis()))));
+			buffer.append(String.format("[%s] ", DATE_FORMAT.format(new Date(record.getMillis()))));
 		}
 		if (traceThread) {
-			buf.append(String.format("[%s] ", getThreadNameForId(record.getThreadID())));
+			buffer.append(String.format("[%s] ", getThreadNameForId(record.getThreadID())));
 		}
 		if (traceLogger || traceLevel) {
 			String trace = "";
@@ -99,7 +148,7 @@ public class TracingFormatter extends Formatter {
 				}
 				trace += record.getLevel().getName();
 			}
-			buf.append(String.format("[%s] ", trace));
+			buffer.append(String.format("[%s] ", trace));
 		}
 		if (traceClass || traceMethod) {
 			String trace = "";
@@ -114,7 +163,7 @@ public class TracingFormatter extends Formatter {
 				}
 				trace += record.getSourceMethodName();
 			}
-			buf.append(String.format("[%s] ", trace));
+			buffer.append(String.format("[%s] ", trace));
 		}
 		if (traceFile || traceLine) {
 			String trace = "";
@@ -128,25 +177,12 @@ public class TracingFormatter extends Formatter {
 				}
 				trace += traceElement.getLineNumber();
 			}
-			buf.append(String.format("[%s] ", trace));
+			buffer.append(String.format("[%s] ", trace));
 		}
-		if (buf.length() > 0) {
-			buf.replace(buf.length() - 1, buf.length(), ": ");
+		if (buffer.length() > 0) {
+			buffer.replace(buffer.length() - 1, buffer.length(), ": ");
 		}
-		buf.append(formatMessage(record));
-		Throwable throwable = record.getThrown();
-		if (throwable != null) {
-			StringWriter sink = new StringWriter();
-			PrintWriter printer = new PrintWriter(sink, true);
-			if (record.getMessage() != null && !record.getMessage().isEmpty()) {
-				printer.println();
-			}
-			throwable.printStackTrace(printer);
-			printer.close();
-			buf.append(sink.toString());
-		}
-		buf.append(System.lineSeparator());
-		return buf.toString();
+		return buffer.toString();
 	}
 
 	/**

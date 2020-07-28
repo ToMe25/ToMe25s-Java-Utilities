@@ -137,7 +137,12 @@ public class TracingFormatter extends Formatter {
 		Throwable throwable = record.getThrown();
 		if (throwable != null) {
 			StringWriter sink = new StringWriter();
-			throwable.printStackTrace(new PrintWriter(sink, true));
+			PrintWriter printer = new PrintWriter(sink, true);
+			if (record.getMessage() != null && !record.getMessage().isEmpty()) {
+				printer.println();
+			}
+			throwable.printStackTrace(printer);
+			printer.close();
 			buf.append(sink.toString());
 		}
 		buf.append(System.lineSeparator());

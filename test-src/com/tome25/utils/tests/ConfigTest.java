@@ -30,8 +30,8 @@ public class ConfigTest {
 		cfg.addConfig("Test.cfg", "testDouble", Double.MAX_VALUE, "A double for test purposes.");
 		cfg.readConfig();
 		assertEquals("\\Hello\"World:?\\", cfg.getConfig("testString"));
-		assertEquals(32123, cfg.getConfig("testInt"));
-		assertEquals(Double.MAX_VALUE, cfg.getConfig("testDouble"));
+		assertEquals(32123, (int) cfg.getConfig("testInt"));
+		assertEquals(Double.MAX_VALUE, (double) cfg.getConfig("testDouble"), 0);
 		// test the handling of changed values.
 		FileInputStream fIn = new FileInputStream(new File(cfgFile, "Test.cfg"));
 		byte[] buffer = new byte[fIn.available()];
@@ -44,19 +44,19 @@ public class ConfigTest {
 		fOut.close();
 		cfg.readConfig();
 		assertEquals("\\Hello\"Pond:?\\", cfg.getConfig("testString"));
-		assertEquals(Integer.MAX_VALUE, cfg.getConfig("testInt"));
+		assertEquals(Integer.MAX_VALUE, (int) cfg.getConfig("testInt"));
 		// test the setting of values.
 		cfg.setConfig("testDouble", Integer.MAX_VALUE / Math.PI);
 		cfg.readConfig();
-		assertEquals(Integer.MAX_VALUE / Math.PI, cfg.getConfig("testDouble"));
+		assertEquals(Integer.MAX_VALUE / Math.PI, (double) cfg.getConfig("testDouble"), 0);
 		// test the handling of another config file.
 		cfg.addConfig("test.txt", "testString2", "Some random test String!", "Some random test String!");
 		cfg.readConfig();
 		assertEquals("Some random test String!", cfg.getConfig("testString2"));
 		// test float handling.
-		cfg.addConfig("test.txt", "floatTest", Float.MAX_EXPONENT, "A float test.");
+		cfg.addConfig("test.txt", "floatTest", (float) Float.MAX_EXPONENT, "A float test.");
 		cfg.readConfig();
-		assertEquals(Float.MAX_EXPONENT, cfg.getConfig("floatTest"));
+		assertEquals(Float.MAX_EXPONENT, (float) cfg.getConfig("floatTest"), 0);
 		// test json handling.
 		cfg.addConfig("Test.cfg", "testJson", new JsonObject("someTest", "Test String"), "a test json object.");
 		cfg.addConfig("Test.cfg", "testJsonArray", new JsonArray("Test", 123, "some random test", Double.MIN_VALUE),
@@ -73,7 +73,7 @@ public class ConfigTest {
 		System.err.println(
 				"The following ClassCastException and NumberFormatException are excepted to happen during this test, and not a problem!");
 		cfg.readConfig();
-		assertEquals(Integer.MIN_VALUE, cfg.getConfig("int"));
+		assertEquals(Integer.MIN_VALUE, (int) cfg.getConfig("int"));
 		assertEquals(new JsonObject("key", "value"), cfg.getConfig("json"));
 		// delete config files.
 		cfg.delete();

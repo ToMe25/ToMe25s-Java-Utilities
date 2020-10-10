@@ -109,9 +109,10 @@ public class Config {
 	 * @param name the name of the config option to get.
 	 * @return the config value for the given Name.
 	 */
-	public Object getConfig(String name) {
+	@SuppressWarnings("unchecked")
+	public <T> T getConfig(String name) {
 		if (cfg.containsKey(name)) {
-			return cfg.get(name).getValue();
+			return (T) cfg.get(name).getValue();
 		} else {
 			System.err.printf("Couldn't find Config Value %s!%n", name);
 			return null;

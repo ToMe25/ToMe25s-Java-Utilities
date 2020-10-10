@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.InvalidPathException;
+import java.nio.file.NotDirectoryException;
 import java.util.Enumeration;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -225,9 +227,7 @@ public class JarExtractor {
 			outputDir.mkdirs();
 		}
 		if (!outputDir.isDirectory()) {
-			throw new IOException(
-					String.format("File %s is not a directory, but would need to be one for the unpacking "
-							+ "of this jar archive to work.", outputDir));
+			throw new NotDirectoryException(outputDir.toString());
 		}
 		JarFile jar = new JarFile(jarFile);
 		Enumeration<JarEntry> entries = jar.entries();
@@ -240,14 +240,17 @@ public class JarExtractor {
 				String name = subDir ? entry.getName()
 						: entry.getName().substring(entry.getName().lastIndexOf(File.separatorChar) + 1);
 				File output = new File(outputDir, extractedName.apply(name));
+				if (!output.toPath().normalize().startsWith(outputDir.toPath())) {
+					jar.close();
+					throw new InvalidPathException(output.toPath().normalize().toString(),
+							"A bad zip entry would result in a file getting extracted to this location.");
+				}
 				if (!output.getParentFile().exists()) {
 					output.getParentFile().mkdirs();
 				}
 				if (!output.getParentFile().isDirectory()) {
 					jar.close();
-					throw new IOException(
-							String.format("File %s is not a directory, but would need to be one for the unpacking "
-									+ "of this jar archive to work.", output.getParent()));
+					throw new NotDirectoryException(output.getParent());
 				}
 				FileOutputStream fiout = new FileOutputStream(output);
 				InputStream jarin = jar.getInputStream(entry);
@@ -411,8 +414,8 @@ public class JarExtractor {
 	 * it into the libs directory next to this jar.
 	 * 
 	 * @param jarFile the jar file to extract the file from.
-         * @return Whether the file where this library should be extracted to exists,
-         *                  after trying to extract it.
+	 * @return Whether the file where this library should be extracted to exists,
+	 *         after trying to extract it.
 	 */
 	public static boolean extractThis(File jarFile) {
 		return extractThis(jarFile, new File(jarFile.getParent(), "libs"));
@@ -424,8 +427,8 @@ public class JarExtractor {
 	 * 
 	 * @param jarFile   the jar file to extract the file from.
 	 * @param outputDir the directory to put the extracted files in.
-         * @return Whether the file where this library should be extracted to exists,
-         *                  after trying to extract it.
+	 * @return Whether the file where this library should be extracted to exists,
+	 *         after trying to extract it.
 	 */
 	public static boolean extractThis(File jarFile, File outputDir) {
 		return extractThis(jarFile, outputDir, false);
@@ -440,10 +443,10 @@ public class JarExtractor {
 	 * @param subDir    whether files in a directory inside the jar should get put
 	 *                  into a sub directory of outputDir or directly into
 	 *                  outputDir.
-         * @return Whether the file where this library should be extracted to exists,
-         *                  after trying to extract it. Always returns false if this
-         *                  library is in a directory inside the archive it gets extracted
-         *                  from and subDir is enabled.
+	 * @return Whether the file where this library should be extracted to exists,
+	 *         after trying to extract it. Always returns false if this library is
+	 *         in a directory inside the archive it gets extracted from and subDir
+	 *         is enabled.
 	 */
 	public static boolean extractThis(File jarFile, File outputDir, boolean subDir) {
 		try {
@@ -451,7 +454,7 @@ public class JarExtractor {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-                return new File(outputDir, "ToMe25s-Java-Utilities.jar").exists();
+		return new File(outputDir, "ToMe25s-Java-Utilities.jar").exists();
 	}
 
 }

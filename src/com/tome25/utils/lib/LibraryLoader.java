@@ -715,7 +715,7 @@ public class LibraryLoader {
 	 * Returns the previously set main method arguments.
 	 * 
 	 * @return the previously set main method arguments.
-         * @deprecated use {@link getMainArgsArray} instead.
+         * @deprecated use {@link #getMainArgsArray} instead.
 	 */
         @Deprecated
 	public static String getMainArgs() {

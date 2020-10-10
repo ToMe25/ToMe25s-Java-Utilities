@@ -1,6 +1,7 @@
 package com.tome25.utils.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -115,10 +116,32 @@ public class ConfigTest {
 				waitTime += 5;
 			}
 			Thread.sleep(10);
-			assertTrue(String.format("The ConfigWatcher didn't detect any changes in the may allowed wait time of %ds.",
+			assertTrue(String.format("The ConfigWatcher didn't detect any changes in the max allowed wait time of %ds.",
 					maxWaitTime / 1000), changed[0]);
 		}
-		assertEquals("Some Changed String", cfg.getConfig("StringTest"));
+		assertEquals("The string read from the config file does not match.", "Some Changed String",
+				cfg.getConfig("StringTest"));
+		// test config watcher handling of files changed by Config.
+		changed[0] = false;
+		cfg.addConfig("Watcher.cfg", "intTest", 123, "A random integer here to test the ConfigWatcher");
+		cfg.setConfig("intTest", Integer.MIN_VALUE);
+		if (os.contains("mac") || os.contains("darwin")) {
+			System.out.println("Skipping ConfigWatcher test because it doesn't work in macos.");
+		} else {
+			// skip waiting for the config watcher, as that doesn't work on macos anyways.
+			final int maxWaitTime = 5000;
+			int waitTime = 0;
+			while (!changed[0] && waitTime < maxWaitTime) {
+				Thread.sleep(5);
+				waitTime += 5;
+			}
+			Thread.sleep(10);
+			assertFalse(
+					String.format("The ConfigWatcher detected changes after %dms, while it shouldn't have.", waitTime),
+					changed[0]);
+		}
+		assertEquals("The integer from the config did not match the value its set value.", Integer.MIN_VALUE,
+				(int) cfg.getConfig("intTest"));
 		cfg.delete();
 	}
 

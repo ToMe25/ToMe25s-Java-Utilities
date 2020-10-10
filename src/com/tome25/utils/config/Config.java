@@ -287,8 +287,9 @@ public class Config {
 							while (value.startsWith(" ")) {
 								value = value.substring(1);
 							}
-							changed = changed || !value.equals(c.getValue());
+							Object oldValue = c.getValue();
 							c.setValue(value);
+							changed = changed || !oldValue.equals(c.getValue());
 							error = error || c.isError();
 							c.clearError();
 							missing.remove(c);

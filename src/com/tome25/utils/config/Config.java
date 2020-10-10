@@ -106,6 +106,7 @@ public class Config {
 	/**
 	 * Gets the config value for the given Name.
 	 * 
+	 * @param <T>  the option type.
 	 * @param name the name of the config option to get.
 	 * @return the config value for the given Name.
 	 */

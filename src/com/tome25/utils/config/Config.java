@@ -9,6 +9,10 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
+import javax.naming.ConfigurationException;
+
+import com.tome25.utils.exception.InvalidTypeException;
+
 /**
  * A configuration file handler.
  * 
@@ -82,8 +86,8 @@ public class Config {
 	 * @param configDir the directory to put config files in.
 	 * @param watch     whether to watch the config directory, and update config
 	 *                  options on change.
-	 * @param callback  a consumer to call with the changed file when a file
-	 *                  changes. can be null.
+	 * @param callback  a consumer to call with the changed file when a files config
+	 *                  values change.
 	 */
 	public Config(boolean read, File configDir, boolean watch, Consumer<File> callback) {
 		configDir = configDir.getAbsoluteFile();
@@ -95,8 +99,7 @@ public class Config {
 			}
 			watcher = new ConfigWatcher(configDir, file -> {
 				sortConfig();
-				readConfigFile(file);
-				if (callback != null) {
+				if (readConfigFile(file) && callback != null) {
 					callback.accept(file);
 				}
 			});
@@ -109,14 +112,16 @@ public class Config {
 	 * @param <T>  the option type.
 	 * @param name the name of the config option to get.
 	 * @return the config value for the given Name.
+	 * @throws RuntimeException caused by {@link ConfigurationException} if there is
+	 *                          no config option with the given name.
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T getConfig(String name) {
 		if (cfg.containsKey(name)) {
 			return (T) cfg.get(name).getValue();
 		} else {
-			System.err.printf("Couldn't find Config Value %s!%n", name);
-			return null;
+			throw new RuntimeException(
+					new ConfigurationException(String.format("Couldn't find Config Value %s!", name)));
 		}
 	}
 
@@ -128,6 +133,8 @@ public class Config {
 	 * @param name         the key for this config option.
 	 * @param defaultValue this config options default value.
 	 * @param comment      a comment to add to this config option.
+	 * @throws RuntimeException caused by {@link ConfigurationException} if a config
+	 *                          option with the given name already exists.
 	 */
 	public <T> void addConfig(String config, String name, T defaultValue, String comment) {
 		addConfig(new File(cfgDir, config), name, defaultValue, comment);
@@ -142,6 +149,8 @@ public class Config {
 	 * @param defaultValue this config options default value.
 	 * @param comments     a list of comments to add to this config option. Every
 	 *                     string will get its own line.
+	 * @throws RuntimeException caused by {@link ConfigurationException} if a config
+	 *                          option with the given name already exists.
 	 */
 	public <T> void addConfig(String config, String name, T defaultValue, String... comments) {
 		String comment = "";
@@ -161,6 +170,8 @@ public class Config {
 	 * @param defaultValue this config options default value.
 	 * @param comments     a list of comments to add to this Config option. Every
 	 *                     string will get its own line.
+	 * @throws RuntimeException caused by {@link ConfigurationException} if a config
+	 *                          option with the given name already exists.
 	 */
 	public <T> void addConfig(File config, String name, T defaultValue, String... comments) {
 		String comment = "";
@@ -179,20 +190,19 @@ public class Config {
 	 * @param name         the key for this config option.
 	 * @param defaultValue this config options default value.
 	 * @param comment      a comment to add to this config option.
+	 * @throws RuntimeException caused by {@link ConfigurationException} if a config
+	 *                          option with the given name already exists.
 	 */
 	public <T> void addConfig(File config, String name, T defaultValue, String comment) {
-		try {
-			if (cfg.containsKey(name)) {
-				System.err.printf("There is already a Config Option with name %s!%n", name);
-			} else {
-				cfg.put(name, new ConfigValue<T>(config, name, defaultValue, comment));
-			}
-			if (read) {
-				sortConfig();
-				readConfigFile(config);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (cfg.containsKey(name)) {
+			throw new RuntimeException(
+					new ConfigurationException(String.format("There is already a Config Option with name %s!", name)));
+		} else {
+			cfg.put(name, new ConfigValue<T>(config, name, defaultValue, comment));
+		}
+		if (read) {
+			sortConfig();
+			readConfigFile(config);
 		}
 	}
 
@@ -202,6 +212,10 @@ public class Config {
 	 * @param <T>   the option type.
 	 * @param name  the name of the config option to get.
 	 * @param value the value to set the config option to.
+	 * @throws RuntimeException     caused by {@link ConfigurationException} if
+	 *                              there is no config option with the given name.
+	 * @throws InvalidTypeException if the type of the config option with the give
+	 *                              name does not match the type of the give value.
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> void setConfig(String name, T value) {
@@ -210,40 +224,47 @@ public class Config {
 				((ConfigValue<T>) cfg.get(name)).setValue(value);
 				createConfig(cfg.get(name).getCfg());
 			} else {
-				System.err.printf("The config value with name %s is of type %s not %s!%n", name,
-						cfg.get(name).getTypeClass().getName(), value.getClass().getName());
+				throw new InvalidTypeException(String.format("The config value with name %s is of type %s not %s!",
+						name, cfg.get(name).getTypeClass().getName(), value.getClass().getName()));
 			}
 		} else {
-			System.err.printf("Couldn't find Config Value %s!%n", name);
+			throw new RuntimeException(
+					new ConfigurationException(String.format("Couldn't find Config Value %s!", name)));
 		}
 	}
 
 	/**
 	 * Reads this Config from the files.
+	 * 
+	 * @return whether any of the config options changed.
 	 */
-	public void readConfig() {
+	public boolean readConfig() {
 		sortConfig();
+		boolean changed = false;
 		try {
 			if (!cfgDir.exists() || !cfgDir.isDirectory()) {
 				cfgDir.mkdirs();
 			}
 			for (File f : sortedConfig.keySet()) {
-				readConfigFile(f);
+				changed = readConfigFile(f) || changed;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return changed;
 	}
 
 	/**
 	 * Reads all {@link ConfigValue}s from the given config file.
 	 * 
 	 * @param file the file to read.
+	 * @return whether any of the config options changed.
 	 */
-	public void readConfigFile(File file) {
+	public boolean readConfigFile(File file) {
+		boolean changed = false;
 		try {
 			if (!sortedConfig.containsKey(file)) {
-				return;
+				return false;
 			}
 			if (!file.exists()) {
 				createConfig(file);
@@ -266,6 +287,7 @@ public class Config {
 							while (value.startsWith(" ")) {
 								value = value.substring(1);
 							}
+							changed = changed || !value.equals(c.getValue());
 							c.setValue(value);
 							error = error || c.isError();
 							c.clearError();
@@ -287,6 +309,7 @@ public class Config {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return changed;
 	}
 
 	/**

@@ -274,13 +274,13 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>void</code></td>
+<td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#readConfig--">readConfig</a></span>()</code>
 <div class="block">Reads this Config from the files.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>void</code></td>
+<td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/config/Config.html#readConfigFile-java.io.File-">readConfigFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file)</code>
 <div class="block">Reads all <a href="../../../../com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config"><code>ConfigValue</code></a>s from the given config file.</div>
 </td>
@@ -467,8 +467,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dd><code>configDir</code> - the directory to put config files in.</dd>
 <dd><code>watch</code> - whether to watch the config directory, and update config
                   options on change.</dd>
-<dd><code>callback</code> - a consumer to call with the changed file when a file
-                  changes. can be null.</dd>
+<dd><code>callback</code> - a consumer to call with the changed file when a files config
+                  values change.</dd>
 </dl>
 </li>
 </ul>
@@ -495,6 +495,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dd><code>name</code> - the name of the config option to get.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the config value for the given Name.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - caused by <a href="https://docs.oracle.com/javase/8/docs/api/javax/naming/ConfigurationException.html?is-external=true" title="class or interface in javax.naming"><code>ConfigurationException</code></a> if there is
+                          no config option with the given name.</dd>
 </dl>
 </li>
 </ul>
@@ -519,6 +522,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dd><code>name</code> - the key for this config option.</dd>
 <dd><code>defaultValue</code> - this config options default value.</dd>
 <dd><code>comment</code> - a comment to add to this config option.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - caused by <a href="https://docs.oracle.com/javase/8/docs/api/javax/naming/ConfigurationException.html?is-external=true" title="class or interface in javax.naming"><code>ConfigurationException</code></a> if a config
+                          option with the given name already exists.</dd>
 </dl>
 </li>
 </ul>
@@ -544,6 +550,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dd><code>defaultValue</code> - this config options default value.</dd>
 <dd><code>comments</code> - a list of comments to add to this config option. Every
                      string will get its own line.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - caused by <a href="https://docs.oracle.com/javase/8/docs/api/javax/naming/ConfigurationException.html?is-external=true" title="class or interface in javax.naming"><code>ConfigurationException</code></a> if a config
+                          option with the given name already exists.</dd>
 </dl>
 </li>
 </ul>
@@ -569,6 +578,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dd><code>defaultValue</code> - this config options default value.</dd>
 <dd><code>comments</code> - a list of comments to add to this Config option. Every
                      string will get its own line.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - caused by <a href="https://docs.oracle.com/javase/8/docs/api/javax/naming/ConfigurationException.html?is-external=true" title="class or interface in javax.naming"><code>ConfigurationException</code></a> if a config
+                          option with the given name already exists.</dd>
 </dl>
 </li>
 </ul>
@@ -593,6 +605,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dd><code>name</code> - the key for this config option.</dd>
 <dd><code>defaultValue</code> - this config options default value.</dd>
 <dd><code>comment</code> - a comment to add to this config option.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - caused by <a href="https://docs.oracle.com/javase/8/docs/api/javax/naming/ConfigurationException.html?is-external=true" title="class or interface in javax.naming"><code>ConfigurationException</code></a> if a config
+                          option with the given name already exists.</dd>
 </dl>
 </li>
 </ul>
@@ -613,6 +628,11 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - the name of the config option to get.</dd>
 <dd><code>value</code> - the value to set the config option to.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code> - caused by <a href="https://docs.oracle.com/javase/8/docs/api/javax/naming/ConfigurationException.html?is-external=true" title="class or interface in javax.naming"><code>ConfigurationException</code></a> if
+                              there is no config option with the given name.</dd>
+<dd><code><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></code> - if the type of the config option with the give
+                              name does not match the type of the give value.</dd>
 </dl>
 </li>
 </ul>
@@ -622,8 +642,12 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>readConfig</h4>
-<pre>public&nbsp;void&nbsp;readConfig()</pre>
+<pre>public&nbsp;boolean&nbsp;readConfig()</pre>
 <div class="block">Reads this Config from the files.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>whether any of the config options changed.</dd>
+</dl>
 </li>
 </ul>
 <a name="readConfigFile-java.io.File-">
@@ -632,11 +656,13 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="blockList">
 <li class="blockList">
 <h4>readConfigFile</h4>
-<pre>public&nbsp;void&nbsp;readConfigFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file)</pre>
+<pre>public&nbsp;boolean&nbsp;readConfigFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file)</pre>
 <div class="block">Reads all <a href="../../../../com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config"><code>ConfigValue</code></a>s from the given config file.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>file</code> - the file to read.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>whether any of the config options changed.</dd>
 </dl>
 </li>
 </ul>

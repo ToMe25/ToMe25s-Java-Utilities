@@ -321,36 +321,44 @@ public class Config {
 	 */
 	private void createConfig(File config) {
 		try {
-			File dir = config.getParentFile();
-			if (!dir.exists() || !dir.isDirectory()) {
-				dir.mkdirs();
-			}
-			config.createNewFile();
-			config.setReadable(true, true);
-			config.setWritable(true, true);
-			try {
-				// This line has it's own try catch Block because sometimes this Program hasn't
-				// the Permissions to do that.
-				config.setExecutable(false, false);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			FileOutputStream fiout = new FileOutputStream(config);
-			fiout.write(String.format("# The %s Configuration for %s.%n",
-					config.getName().substring(0, config.getName().lastIndexOf('.')),
-					new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getName())
-					.getBytes());
-			fiout.flush();
-			if (sortedConfig == null) {
-				sortConfig();
-			}
-			HashMap<File, List<ConfigValue<?>>> sortedCopy = new HashMap<File, List<ConfigValue<?>>>(sortedConfig);
-			for (ConfigValue<?> c : sortedCopy.get(config)) {
-				c.writeToConfig(fiout);
-				fiout.write(System.lineSeparator().getBytes());
+			synchronized (config) {
+				File dir = config.getParentFile();
+				if (!dir.exists() || !dir.isDirectory()) {
+					dir.mkdirs();
+				}
+				if (config.exists() && !config.isFile()) {
+					config.delete();
+				}
+				if (!config.exists()) {
+					config.createNewFile();
+				}
+				config.setReadable(true, true);
+				config.setWritable(true, true);
+				try {
+					// This line has it's own try catch Block because sometimes this Program hasn't
+					// the Permissions to do that.
+					config.setExecutable(false, false);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				FileOutputStream fiout = new FileOutputStream(config);
+				fiout.write(String.format("# The %s Configuration for %s.%n",
+						config.getName().substring(0, config.getName().lastIndexOf('.')),
+						new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath())
+								.getName())
+						.getBytes());
 				fiout.flush();
+				if (sortedConfig == null) {
+					sortConfig();
+				}
+				HashMap<File, List<ConfigValue<?>>> sortedCopy = new HashMap<File, List<ConfigValue<?>>>(sortedConfig);
+				for (ConfigValue<?> c : new ArrayList<ConfigValue<?>>(sortedCopy.get(config))) {
+					c.writeToConfig(fiout);
+					fiout.write(System.lineSeparator().getBytes());
+					fiout.flush();
+				}
+				fiout.close();
 			}
-			fiout.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -142,6 +142,7 @@ public class ConfigTest {
 		}
 		assertEquals("The integer from the config did not match the value its set value.", Integer.MIN_VALUE,
 				(int) cfg.getConfig("intTest"));
+		// delete config files.
 		cfg.delete();
 	}
 

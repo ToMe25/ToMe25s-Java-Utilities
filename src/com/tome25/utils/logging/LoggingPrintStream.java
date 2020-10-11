@@ -100,12 +100,49 @@ public class LoggingPrintStream extends PrintStream {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((buffer == null) ? 0 : buffer.hashCode());
+		result = prime * result + ((log == null) ? 0 : log.hashCode());
+		result = prime * result + ((lvl == null) ? 0 : lvl.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
-		if ((obj instanceof LoggingPrintStream)) {
-			LoggingPrintStream obj1 = (LoggingPrintStream) obj;
-			return log.equals(obj1.log) && lvl.equals(obj1.lvl) && buffer.equals(obj1.buffer);
+		if (this == obj) {
+			return true;
 		}
-		return false;
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		LoggingPrintStream other = (LoggingPrintStream) obj;
+		if (buffer == null) {
+			if (other.buffer != null) {
+				return false;
+			}
+		} else if (!buffer.equals(other.buffer)) {
+			return false;
+		}
+		if (log == null) {
+			if (other.log != null) {
+				return false;
+			}
+		} else if (!log.equals(other.log)) {
+			return false;
+		}
+		if (lvl == null) {
+			if (other.lvl != null) {
+				return false;
+			}
+		} else if (!lvl.equals(other.lvl)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

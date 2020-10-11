@@ -35,9 +35,9 @@ public class LibraryDownloader {
 			"application/octet-stream", "application/download", "application/force-download" };
 	private static final Predicate<String> JAR_CONTENT_TYPE_CHECKER = (s) -> Arrays.asList(JAR_CONTENT_TYPES)
 			.contains(s);
-        /**
-         * The default content of the file that defines where to download this library.
-         */
+	/**
+	 * The default content of the file that defines where to download this library.
+	 */
 	protected static final String DEFAULT_TOME25S_JAVA_UTILITIES_URL_STORAGE = String
 			.format("# The URL(s) to try and download ToMe25's-Java-Utilities from.%n"
 					+ "# Entries are separated with a ',', they will be tried from start to end.%n"
@@ -45,9 +45,9 @@ public class LibraryDownloader {
 
 	private List<URL> urls;
 	private File target;
-        /**
-         * The predicate checking whether a content type is valid.
-         */
+	/**
+	 * The predicate checking whether a content type is valid.
+	 */
 	private Predicate<String> typeCheck;
 	private boolean override;
 	/**

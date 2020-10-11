@@ -87,7 +87,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: build
-        path: target/ToMe25s-Java-Utilities-*.jar
+        path: target/tome25s-java-utilities-*.jar
 
     - name: Create release
       id: release

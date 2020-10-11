@@ -10,7 +10,8 @@ import java.nio.file.WatchService;
 import java.util.function.Consumer;
 
 /**
- * A {@link Thread} that watches a config directory.
+ * A {@link Thread} that watches a config directory. Should any file change it
+ * will notify the {@link Config}.
  * 
  * @author ToMe25
  *
@@ -94,6 +95,48 @@ public class ConfigWatcher implements Runnable {
 	public void stop() {
 		running = false;
 		thread.interrupt();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((consumer == null) ? 0 : consumer.hashCode());
+		result = prime * result + (running ? 1231 : 1237);
+		result = prime * result + ((toWatch == null) ? 0 : toWatch.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		ConfigWatcher other = (ConfigWatcher) obj;
+		if (consumer == null) {
+			if (other.consumer != null) {
+				return false;
+			}
+		} else if (!consumer.equals(other.consumer)) {
+			return false;
+		}
+		if (running != other.running) {
+			return false;
+		}
+		if (toWatch == null) {
+			if (other.toWatch != null) {
+				return false;
+			}
+		} else if (!toWatch.equals(other.toWatch)) {
+			return false;
+		}
+		return true;
 	}
 
 }

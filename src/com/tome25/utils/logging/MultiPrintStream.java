@@ -110,21 +110,29 @@ public class MultiPrintStream extends PrintStream {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(streams);
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
-		if ((obj instanceof MultiPrintStream)) {
-			MultiPrintStream obj1 = (MultiPrintStream) obj;
-			if (streams.length == obj1.streams.length) {
-				int i = 0;
-				while (i < streams.length) {
-					if (!streams[i].equals(obj1.streams[i])) {
-						return false;
-					}
-					i++;
-				}
-				return super.equals(obj);
-			}
+		if (this == obj) {
+			return true;
 		}
-		return false;
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		MultiPrintStream other = (MultiPrintStream) obj;
+		if (!Arrays.equals(streams, other.streams)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

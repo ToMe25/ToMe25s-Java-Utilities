@@ -142,8 +142,8 @@ public class LibraryLoader {
 		ByteArrayOutputStream buf = new ByteArrayOutputStream();
 		PrintStream pb = new PrintStream(buf);
 		File codeSource = new File(LibraryLoader.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-                boolean missing = !new File(new File(codeSource.getParent(), "libs"), "ToMe25s-Java-Utilities.jar").exists();
-                boolean created = false;
+		boolean missing = !new File(new File(codeSource.getParent(), "libs"), "ToMe25s-Java-Utilities.jar").exists();
+		boolean created = false;
 		if (missing || update) {
 			LibraryDownloader downloader = new LibraryDownloader(
 					new File(codeSource.getParent(), "ToMe25s-Java-Utilities-Download-Url.txt"), defaultUrlStorage,
@@ -151,18 +151,17 @@ public class LibraryLoader {
 			if (downloader.downloadFile()) {
 				pb.format("Successfully downloaded ToMe25s-Java-Utilites from %s.%n",
 						downloader.getDownloadUrl().toString());
-                        	created = missing;
+				created = missing;
 			} else if (JarExtractor.extractThis(codeSource)) {
-                        	pb.format("Successfully extracted ToMe25s-Java-Utilites from %s.%n",
-						codeSource.toString());
-                        	created = missing;
+				pb.format("Successfully extracted ToMe25s-Java-Utilites from %s.%n", codeSource.toString());
+				created = missing;
 			}
 		}
 		setArgs(args);
 		addLibsToClasspath();
-                if (created) {
-                	restart();
-                }
+		if (created) {
+			restart();
+		}
 		try {
 			com.tome25.utils.logging.LogTracer.traceOutputs(outputLogFile, errorLogFile);// importing this would cause
 																							// it to crash on loading.
@@ -185,7 +184,7 @@ public class LibraryLoader {
 	 * @param mainArgs the main methods arguments.
 	 * @throws IOException if this program isn't a jar or doesn't exists. And if
 	 *                     somehow creating a {@link JarFile} instance fails.
-         * @deprecated use the non java agent library loading instead.
+	 * @deprecated use the non java agent library loading instead.
 	 */
 	@Deprecated
 	public LibraryLoader(String[] mainArgs) throws IOException {
@@ -261,7 +260,7 @@ public class LibraryLoader {
 	 * 
 	 * @param args            some arguments.
 	 * @param instrumentation the instrumentation instance to use.
-         * @deprecated use the non java agent library loading instead.
+	 * @deprecated use the non java agent library loading instead.
 	 */
 	@Deprecated
 	public static void premain(String args, Instrumentation instrumentation) {
@@ -273,8 +272,9 @@ public class LibraryLoader {
 	 * 
 	 * @param array the array to get the string representation of.
 	 * @return a string representation of the given string array.
+	 * @deprecated use {@link java.util.Arrays#toString(Object[])} instead.
 	 */
-        @Deprecated
+	@Deprecated
 	private static String stringArrayToString(String[] array) {
 		String string = "";
 		for (String str : array) {
@@ -291,7 +291,7 @@ public class LibraryLoader {
 	 * 
 	 * @param library the jar archive that should get added to the classpath.
 	 * @throws IOException if an I/O error has occurred.
-         * @deprecated use the non java agent library loading instead.
+	 * @deprecated use the non java agent library loading instead.
 	 */
 	@Deprecated
 	public void addJarToClasspath(String library) throws IOException {
@@ -303,7 +303,7 @@ public class LibraryLoader {
 	 * 
 	 * @param library the jar archive that should get added to the classpath.
 	 * @throws IOException if an I/O error has occurred.
-         * @deprecated use the non java agent library loading instead.
+	 * @deprecated use the non java agent library loading instead.
 	 */
 	@Deprecated
 	public void addJarToClasspath(File library) throws IOException {
@@ -314,7 +314,7 @@ public class LibraryLoader {
 	 * Adds the given library jar to the classpath. Part of the Java Agent.
 	 * 
 	 * @param library the jar archive that should get added to the classpath.
-         * @deprecated use the non java agent library loading instead.
+	 * @deprecated use the non java agent library loading instead.
 	 */
 	@Deprecated
 	public void addJarToClasspath(JarFile library) {
@@ -327,7 +327,7 @@ public class LibraryLoader {
 	 * 
 	 * @param libDir the directory containing the libraries.
 	 * @throws IOException if an I/O error has occurred.
-         * @deprecated use the non java agent library loading instead.
+	 * @deprecated use the non java agent library loading instead.
 	 */
 	@Deprecated
 	public void addJarsToClasspath(String libDir) throws IOException {
@@ -339,7 +339,7 @@ public class LibraryLoader {
 	 * 
 	 * @param libDir the directory containing the libraries.
 	 * @throws IOException if an I/O error has occurred.
-         * @deprecated use the non java agent library loading instead.
+	 * @deprecated use the non java agent library loading instead.
 	 */
 	@Deprecated
 	public void addJarsToClasspath(File libDir) throws IOException {
@@ -715,9 +715,9 @@ public class LibraryLoader {
 	 * Returns the previously set main method arguments.
 	 * 
 	 * @return the previously set main method arguments.
-         * @deprecated use {@link #getMainArgsArray} instead.
+	 * @deprecated use {@link #getMainArgsArray} instead.
 	 */
-        @Deprecated
+	@Deprecated
 	public static String getMainArgs() {
 		return stringArrayToString(mainArgs);
 	}
@@ -736,12 +736,12 @@ public class LibraryLoader {
 	 */
 	public static void restart() {
 		File codeSource = new File(LibraryLoader.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-                List<String> command = new ArrayList<String>();
-                command.add("java");
-                command.add("-jar");
-                command.add(codeSource.getAbsolutePath());
-                command.addAll(ManagementFactory.getRuntimeMXBean().getInputArguments());
-                command.addAll(Arrays.asList(getMainArgsArray()));
+		List<String> command = new ArrayList<String>();
+		command.add("java");
+		command.add("-jar");
+		command.add(codeSource.getAbsolutePath());
+		command.addAll(ManagementFactory.getRuntimeMXBean().getInputArguments());
+		command.addAll(Arrays.asList(getMainArgsArray()));
 		ProcessBuilder pb = new ProcessBuilder(command);
 		pb.inheritIO();
 		try {

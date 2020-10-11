@@ -468,4 +468,34 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 		traceStartDepth = (int) cfg.getConfig("traceStartDepth");
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((cfg == null) ? 0 : cfg.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		TracingMultiPrintStream other = (TracingMultiPrintStream) obj;
+		if (cfg == null) {
+			if (other.cfg != null) {
+				return false;
+			}
+		} else if (!cfg.equals(other.cfg)) {
+			return false;
+		}
+		return true;
+	}
+
 }

@@ -287,26 +287,33 @@ public class JsonObject implements JsonElement, Map<Object, Object> {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((content == null) ? 0 : content.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof JsonObject) {
-			JsonObject json = (JsonObject) obj;
-			if (content.size() != json.size()) {
-				return false;
-			}
-			for (String key : content.keySet()) {
-				if (!json.contains(key)) {
-					return false;
-				} else if (get(key) == null ^ json.get(key) == null) {
-					return false;
-				} else if (get(key) == json.get(key)) {
-					continue;
-				} else if (!get(key).equals(json.get(key))) {
-					return false;
-				}
-			}
+		if (this == obj) {
 			return true;
 		}
-		return false;
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		JsonObject other = (JsonObject) obj;
+		if (content == null) {
+			if (other.content != null) {
+				return false;
+			}
+		} else if (!content.equals(other.content)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

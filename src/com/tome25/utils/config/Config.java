@@ -14,7 +14,8 @@ import javax.naming.ConfigurationException;
 import com.tome25.utils.exception.InvalidTypeException;
 
 /**
- * A configuration file handler.
+ * A configuration file handler. This class handles reading from and writing to
+ * configuration files, automatically handling value types.
  * 
  * @author ToMe25
  *
@@ -373,5 +374,63 @@ public class Config {
 		}
 		sortedConfig.keySet().forEach(file -> file.delete());
 		cfgDir.delete();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cfg == null) ? 0 : cfg.hashCode());
+		result = prime * result + ((cfgDir == null) ? 0 : cfgDir.hashCode());
+		result = prime * result + (read ? 1231 : 1237);
+		result = prime * result + ((sortedConfig == null) ? 0 : sortedConfig.hashCode());
+		result = prime * result + ((watcher == null) ? 0 : watcher.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Config other = (Config) obj;
+		if (cfg == null) {
+			if (other.cfg != null) {
+				return false;
+			}
+		} else if (!cfg.equals(other.cfg)) {
+			return false;
+		}
+		if (cfgDir == null) {
+			if (other.cfgDir != null) {
+				return false;
+			}
+		} else if (!cfgDir.equals(other.cfgDir)) {
+			return false;
+		}
+		if (read != other.read) {
+			return false;
+		}
+		if (sortedConfig == null) {
+			if (other.sortedConfig != null) {
+				return false;
+			}
+		} else if (!sortedConfig.equals(other.sortedConfig)) {
+			return false;
+		}
+		if (watcher == null) {
+			if (other.watcher != null) {
+				return false;
+			}
+		} else if (!watcher.equals(other.watcher)) {
+			return false;
+		}
+		return true;
 	}
 }

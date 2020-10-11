@@ -63,7 +63,7 @@ public class JsonArray implements JsonElement, List<Object> {
 	/**
 	 * Adds the given object to the given index.
 	 * 
-	 * @param index   the index to add the object to.
+	 * @param index the index to add the object to.
 	 * @param value the value to add.
 	 */
 	@Override
@@ -241,20 +241,33 @@ public class JsonArray implements JsonElement, List<Object> {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((content == null) ? 0 : content.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof JsonArray) {
-			JsonArray json = (JsonArray) obj;
-			if (content.size() != json.size()) {
-				return false;
-			}
-			for (Object value : content) {
-				if (!json.contains(value)) {
-					return false;
-				}
-			}
+		if (this == obj) {
 			return true;
 		}
-		return false;
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		JsonArray other = (JsonArray) obj;
+		if (content == null) {
+			if (other.content != null) {
+				return false;
+			}
+		} else if (!content.equals(other.content)) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

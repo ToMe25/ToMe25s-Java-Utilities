@@ -21,7 +21,7 @@ import com.tome25.utils.exception.InvalidTypeException;
  * @author ToMe25
  *
  */
-public class JsonObject implements JsonElement, Map<Object, Object> {
+public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 
 	private static final long serialVersionUID = 8864863917582360165L;
 	private Map<String, Object> content = new HashMap<String, Object>();

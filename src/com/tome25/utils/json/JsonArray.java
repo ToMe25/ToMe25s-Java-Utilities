@@ -19,7 +19,7 @@ import com.tome25.utils.exception.InvalidTypeException;
  * @author ToMe25
  *
  */
-public class JsonArray implements JsonElement, List<Object> {
+public class JsonArray implements JsonElement, List<Object>, Cloneable {
 
 	private static final long serialVersionUID = 5205197497094672807L;
 	private List<Object> content = new ArrayList<Object>();

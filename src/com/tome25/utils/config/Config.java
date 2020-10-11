@@ -341,7 +341,11 @@ public class Config {
 					new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getName())
 					.getBytes());
 			fiout.flush();
-			for (ConfigValue<?> c : sortedConfig.get(config)) {
+			if (sortedConfig == null) {
+				sortConfig();
+			}
+			HashMap<File, List<ConfigValue<?>>> sortedCopy = new HashMap<File, List<ConfigValue<?>>>(sortedConfig);
+			for (ConfigValue<?> c : sortedCopy.get(config)) {
 				c.writeToConfig(fiout);
 				fiout.write(System.lineSeparator().getBytes());
 				fiout.flush();

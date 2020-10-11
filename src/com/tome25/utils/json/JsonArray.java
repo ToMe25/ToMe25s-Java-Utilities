@@ -143,7 +143,7 @@ public class JsonArray implements JsonElement, List<Object>, Cloneable {
 		if (key instanceof Integer) {
 			return content.get((int) key).toString();
 		} else {
-			throw new InvalidTypeException("String", key.getClass().getSimpleName());
+			throw new InvalidTypeException("Integer", key.getClass().getSimpleName());
 		}
 	}
 

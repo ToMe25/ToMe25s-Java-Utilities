@@ -9,7 +9,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import com.tome25.utils.config.Config;
 import com.tome25.utils.json.JsonArray;
@@ -17,14 +19,14 @@ import com.tome25.utils.json.JsonObject;
 
 public class ConfigTest {
 
+	@Rule
+	public TemporaryFolder tempFolder = new TemporaryFolder();
+
 	@Test
 	public void configTest() throws IOException {
 		// test the basics of the config system.
-		File cfgFile = new File("Config");
-		if (cfgFile.exists()) {
-			deleteDirectory(cfgFile);
-		}
-		Config cfg = new Config(false, cfgFile, false);
+		File cfgFolder = tempFolder.newFolder("ToMe25s-Java-Utilities-Config-Test");
+		Config cfg = new Config(false, cfgFolder, false);
 		cfg.addConfig("Test.cfg", "testString", "\\Hello\"World:?\\",
 				"This is a Test config option to test the Config class.");
 		cfg.addConfig("Test.cfg", "testInt", 32123, "A Test integer");
@@ -34,13 +36,13 @@ public class ConfigTest {
 		assertEquals(32123, (int) cfg.getConfig("testInt"));
 		assertEquals(Double.MAX_VALUE, (double) cfg.getConfig("testDouble"), 0);
 		// test the handling of changed values.
-		FileInputStream fIn = new FileInputStream(new File(cfgFile, "Test.cfg"));
+		FileInputStream fIn = new FileInputStream(new File(cfgFolder, "Test.cfg"));
 		byte[] buffer = new byte[fIn.available()];
 		fIn.read(buffer);
 		fIn.close();
 		String config = new String(buffer);
 		config = config.replaceAll("World", "Pond").replaceAll("32123", "" + Integer.MAX_VALUE);
-		FileOutputStream fOut = new FileOutputStream(new File(cfgFile, "Test.cfg"));
+		FileOutputStream fOut = new FileOutputStream(new File(cfgFolder, "Test.cfg"));
 		fOut.write(config.getBytes());
 		fOut.close();
 		cfg.readConfig();
@@ -68,7 +70,7 @@ public class ConfigTest {
 		// test wrong subclass handling.
 		cfg.addConfig("wrong.cfg", "int", Integer.MIN_VALUE, "Some random test.");
 		cfg.addConfig("wrong.cfg", "json", new JsonObject("key", "value"), "Some random test.");
-		fOut = new FileOutputStream(new File(cfgFile, "wrong.cfg"));
+		fOut = new FileOutputStream(new File(cfgFolder, "wrong.cfg"));
 		fOut.write("json: [123, 321]\nint: Test".getBytes());
 		fOut.close();
 		System.err.println(
@@ -76,29 +78,27 @@ public class ConfigTest {
 		cfg.readConfig();
 		assertEquals(Integer.MIN_VALUE, (int) cfg.getConfig("int"));
 		assertEquals(new JsonObject("key", "value"), cfg.getConfig("json"));
-		// delete config files.
+		// test delete config files.
 		cfg.delete();
+		assertFalse("Deleting the config files failed!", new File(cfgFolder, "Test.cfg").exists());
 	}
 
 	@Test
 	public void configWatcherTest() throws IOException, InterruptedException {
 		// test the basics of the config watcher.
-		File cfgFile = new File("Config");
-		if (cfgFile.exists()) {
-			deleteDirectory(cfgFile);
-		}
+		File cfgFolder = tempFolder.newFolder("ToMe25s-Java-Utilities-Config-Test");
 		final boolean[] changed = new boolean[] { false };
-		Config cfg = new Config(true, cfgFile, true, (file) -> changed[0] = true);
+		Config cfg = new Config(true, cfgFolder, true, (file) -> changed[0] = true);
 		cfg.addConfig("Watcher.cfg", "StringTest", "Some Random String",
 				"A String that definitifly wont get changed...");
 		assertEquals("Some Random String", cfg.getConfig("StringTest"));
-		FileInputStream fIn = new FileInputStream(new File(cfgFile, "Watcher.cfg"));
+		FileInputStream fIn = new FileInputStream(new File(cfgFolder, "Watcher.cfg"));
 		byte[] buffer = new byte[fIn.available()];
 		fIn.read(buffer);
 		fIn.close();
 		String config = new String(buffer);
 		config = config.replace("Random", "Changed").replaceAll("wont", "will");
-		FileOutputStream fOut = new FileOutputStream(new File(cfgFile, "Watcher.cfg"));
+		FileOutputStream fOut = new FileOutputStream(new File(cfgFolder, "Watcher.cfg"));
 		Thread.sleep(50);// Wait for the ConfigWatcher to finish initializing.
 		fOut.write(config.getBytes());
 		fOut.flush();
@@ -116,8 +116,10 @@ public class ConfigTest {
 				waitTime += 5;
 			}
 			Thread.sleep(10);
-			assertTrue(String.format("The ConfigWatcher didn't detect any changes in the max allowed wait time of %ds.",
-					maxWaitTime / 1000), changed[0]);
+			assertTrue(
+					String.format("The ConfigWatcher didn't detect any changes in the max allowed wait time of %ds."
+							+ " This can sometimes just happen randomly. but thats rare.", maxWaitTime / 1000),
+					changed[0]);
 		}
 		assertEquals("The string read from the config file does not match.", "Some Changed String",
 				cfg.getConfig("StringTest"));
@@ -136,28 +138,13 @@ public class ConfigTest {
 				waitTime += 5;
 			}
 			Thread.sleep(10);
-			assertFalse(
-					String.format("The ConfigWatcher detected changes after %dms, while it shouldn't have.", waitTime),
-					changed[0]);
+			assertFalse(String.format("The ConfigWatcher detected changes after %dms, while it shouldn't have."
+					+ " This can sometimes just happen randomly, but thats rare.", waitTime), changed[0]);
 		}
 		assertEquals("The integer from the config did not match the value its set value.", Integer.MIN_VALUE,
 				(int) cfg.getConfig("intTest"));
 		// delete config files.
 		cfg.delete();
-	}
-
-	private void deleteDirectory(File dir) {
-		File[] files = dir.listFiles();
-		if (files != null) {
-			for (File f : files) {
-				if (f.isDirectory()) {
-					deleteDirectory(f);
-				} else {
-					f.delete();
-				}
-			}
-		}
-		dir.delete();
 	}
 
 }

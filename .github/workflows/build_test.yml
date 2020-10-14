@@ -40,4 +40,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: build-java-${{ matrix.java }}-${{ matrix.os }}
-        path: target/ToMe25s-Java-Utilities-*.jar
+        path: target/tome25s-java-utilities-*.jar

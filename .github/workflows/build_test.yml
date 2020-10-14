@@ -24,14 +24,17 @@ jobs:
 
     steps:
     - name: Checkout repository
+      id: checkout
       uses: actions/checkout@v2
 
-    - name: Set up JDK 1.8
+    - name: Set up JDK ${{ matrix.java }}
+      id: java_setup
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java }}
 
     - name: Build with Maven
+      id: build
       run: mvn -B package --file pom.xml
 
     - name: Upload artifacts

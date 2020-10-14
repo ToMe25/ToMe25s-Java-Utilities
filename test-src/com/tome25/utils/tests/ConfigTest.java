@@ -78,7 +78,7 @@ public class ConfigTest {
 		cfg.readConfig();
 		assertEquals(Integer.MIN_VALUE, (int) cfg.getConfig("int"));
 		assertEquals(new JsonObject("key", "value"), cfg.getConfig("json"));
-		// test delete config files.
+		// test config file deletion.
 		cfg.delete();
 		assertFalse("Deleting the config files failed!", new File(cfgFolder, "Test.cfg").exists());
 	}

@@ -174,13 +174,26 @@ public class JsonParser {
 		String key = null;
 		String buffer = null;
 		short layer = 0;
-		short offset = 0;
+		int offset = 0;
 		for (char c : charArr) {
+			if (c == '{') {
+				json = new JsonObject();
+				break;
+			} else if (c == '[') {
+				json = new JsonArray();
+				break;
+			} else if (c != ' ') {
+				throw new ParseException(String.format("Missing curly or square bracket at the start of the json '%s'!",
+						new String(charArr)), offset);
+			}
+			offset++;
+		}
+		offset++;
+		while (offset < charArr.length) {
+			char c = charArr[offset];
 			switch (c) {
 			case '{':
-				if (json == null) {
-					json = new JsonObject();
-				} else if (buildString) {
+				if (buildString) {
 					buffer += c;
 				} else if (buildJson) {
 					buffer += c;
@@ -228,6 +241,11 @@ public class JsonParser {
 			case ':':
 				if (buildString || buildJson) {
 					buffer += c;
+				} else if (json instanceof JsonArray) {
+					throw new ParseException(
+							String.format("Found key value pair with key \"%s\" while parsing JsonArray '%s'!",
+									json.get(json.size() - 1), new String(charArr)),
+							offset);
 				}
 				break;
 
@@ -236,12 +254,13 @@ public class JsonParser {
 					buffer += c;
 				} else if (buildOther) {
 					if (json instanceof JsonArray) {
-						((JsonArray) json).add(buildOther(buffer, offset));
+						((JsonArray) json).add(buildOther(buffer, charArr, offset));
 					} else {
 						if (key == null) {
-							throw new ParseException(String.format("Missing key for value \"%s\"!", buffer), offset);
+							throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!", buffer,
+									new String(charArr)), offset - buffer.length());
 						}
-						json.add(key, buildOther(buffer, offset));
+						json.add(key, buildOther(buffer, charArr, offset));
 						key = null;
 					}
 					buffer = null;
@@ -263,8 +282,8 @@ public class JsonParser {
 							((JsonArray) json).add(subjson);
 						} else {
 							if (key == null) {
-								throw new ParseException(String.format("Missing key for value \"%s\"!", buffer),
-										offset);
+								throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!",
+										buffer, new String(charArr)), offset - buffer.length());
 							}
 							json.add(key, subjson);
 							key = null;
@@ -278,25 +297,34 @@ public class JsonParser {
 						return json;
 					}
 					if (json instanceof JsonArray) {
-						((JsonArray) json).add(buildOther(buffer, offset));
+						((JsonArray) json).add(buildOther(buffer, charArr, offset));
 					} else {
 						if (key == null) {
-							throw new ParseException(String.format("Missing key for value \"%s\"!", buffer), offset);
+							throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!", buffer,
+									new String(charArr)), offset - buffer.length());
 						}
-						json.add(key, buildOther(buffer, offset));
+						json.add(key, buildOther(buffer, charArr, offset));
 						key = null;
 					}
 					buffer = null;
 					buildOther = false;
+					if (json instanceof JsonArray) {
+						throw new ParseException(
+								String.format("JsonArray '%s' ended with a curly bracket!", new String(charArr)),
+								offset);
+					} else {
+						return json;
+					}
+				} else if (json instanceof JsonArray) {
+					throw new ParseException(
+							String.format("JsonArray '%s' ended with a curly bracket!", new String(charArr)), offset);
 				} else {
 					return json;
 				}
 				break;
 
 			case '[':
-				if (json == null) {
-					json = new JsonArray();
-				} else if (buildString) {
+				if (buildString) {
 					buffer += c;
 				} else if (buildJson) {
 					buffer += c;
@@ -318,12 +346,13 @@ public class JsonParser {
 					}
 					if (layer <= 0) {
 						JsonElement subjson = parseString(buffer);
-						if (key == null) {
-							throw new ParseException(String.format("Missing key for value \"%s\"!", buffer), offset);
-						}
 						if (json instanceof JsonArray) {
 							((JsonArray) json).add(subjson);
 						} else {
+							if (key == null) {
+								throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!",
+										buffer, new String(charArr)), offset - buffer.length());
+							}
 							json.add(key, subjson);
 							key = null;
 						}
@@ -336,16 +365,27 @@ public class JsonParser {
 						return json;
 					}
 					if (json instanceof JsonArray) {
-						((JsonArray) json).add(buildOther(buffer, offset));
+						((JsonArray) json).add(buildOther(buffer, charArr, offset));
 					} else {
 						if (key == null) {
-							throw new ParseException(String.format("Missing key for value \"%s\"!", buffer), offset);
+							throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!", buffer,
+									new String(charArr)), offset - buffer.length());
 						}
-						json.add(key, buildOther(buffer, offset));
+						json.add(key, buildOther(buffer, charArr, offset));
 						key = null;
 					}
 					buffer = null;
 					buildOther = false;
+					if (json instanceof JsonObject) {
+						throw new ParseException(
+								String.format("JsonObject '%s' ended with a square bracket!", new String(charArr)),
+								offset);
+					} else {
+						return json;
+					}
+				} else if (json instanceof JsonObject) {
+					throw new ParseException(
+							String.format("JsonObject '%s' ended with a square bracket!", new String(charArr)), offset);
 				} else {
 					return json;
 				}
@@ -374,18 +414,22 @@ public class JsonParser {
 			}
 			offset++;
 		}
-		return json;
+		throw new ParseException(String.format("Json '%s' is missing the %s bracket at the end!", new String(charArr),
+				json instanceof JsonObject ? "curly" : "square"), offset);
+
 	}
 
 	/**
 	 * Builds an object of any type that is neither string nor Json.
 	 * 
-	 * @param buffer the buffer to build the object from.
-	 * @param offset the offset in the string to parse, used for error handling.
+	 * @param buffer  the buffer to build the object from.
+	 * @param charArr the full Json character array, FOR USE IN ERROR HANDLING ONLY.
+	 * @param offset  the offset in the string to parse, FOR USE IN ERROR HANDLING
+	 *                ONLY.
 	 * @return the built object.
 	 * @throws ParseException if something goes wrong while parsing.
 	 */
-	private static Object buildOther(String buffer, int offset) throws ParseException {
+	private static Object buildOther(String buffer, char[] charArr, int offset) throws ParseException {
 		buffer = buffer.trim();
 		try {
 			if (buffer.contains(".")) {
@@ -406,7 +450,9 @@ public class JsonParser {
 			} else if (buffer.equalsIgnoreCase("null")) {
 				return null;
 			} else {
-				throw new ParseException("type for value \"" + buffer + "\" Unknown!", offset);
+				throw new ParseException(
+						String.format("Type for value \"%s\" is unknown in json '%s'!", buffer, new String(charArr)),
+						offset - buffer.length());
 			}
 		}
 	}

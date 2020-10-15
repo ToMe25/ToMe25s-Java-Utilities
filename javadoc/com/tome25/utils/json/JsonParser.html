@@ -153,7 +153,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>private static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonParser.html#buildOther-java.lang.String-int-">buildOther</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;buffer,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonParser.html#buildOther-java.lang.String-char:A-int-">buildOther</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;buffer,
+          char[]&nbsp;charArr,
           int&nbsp;offset)</code>
 <div class="block">Builds an object of any type that is neither string nor Json.</div>
 </td>
@@ -386,20 +387,23 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </dl>
 </li>
 </ul>
-<a name="buildOther-java.lang.String-int-">
+<a name="buildOther-java.lang.String-char:A-int-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>buildOther</h4>
 <pre>private static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;buildOther(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;buffer,
+                                 char[]&nbsp;charArr,
                                  int&nbsp;offset)
                           throws <a href="https://docs.oracle.com/javase/8/docs/api/java/text/ParseException.html?is-external=true" title="class or interface in java.text">ParseException</a></pre>
 <div class="block">Builds an object of any type that is neither string nor Json.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>buffer</code> - the buffer to build the object from.</dd>
-<dd><code>offset</code> - the offset in the string to parse, used for error handling.</dd>
+<dd><code>charArr</code> - the full Json character array, FOR USE IN ERROR HANDLING ONLY.</dd>
+<dd><code>offset</code> - the offset in the string to parse, FOR USE IN ERROR HANDLING
+                ONLY.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the built object.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>

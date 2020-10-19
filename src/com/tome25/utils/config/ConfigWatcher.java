@@ -8,6 +8,9 @@ import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
+
+import com.tome25.utils.logging.LogTracer;
 
 /**
  * A {@link Thread} that watches a config directory. Should any file change it
@@ -19,6 +22,7 @@ import java.util.function.Consumer;
 public class ConfigWatcher implements Runnable {
 
 	private static final ThreadGroup WATCHERS_THREAD_GROUP = new ThreadGroup("Config-Watchers");
+	private static final Logger LOGGER = LogTracer.getLogger("Config-Watcher");
 	private final Thread thread;
 	private static int nr = 0;
 	private final Path toWatch;
@@ -50,7 +54,7 @@ public class ConfigWatcher implements Runnable {
 		thread.start();
 		String os = System.getProperty("os.name").toLowerCase();
 		if (os.contains("mac") || os.contains("darwin")) {
-			System.out.println(
+			LOGGER.warning(
 					"Warning: Watching for file or directory changes is neither reliable, nor fast on Mac OS X!");
 		}
 	}

@@ -296,7 +296,7 @@ public class LogTracer {
 	 * maybe before other classes changed it.
 	 */
 	public static void resetOut() {
-		System.setErr(DEFAULT_OUT);
+		System.setOut(DEFAULT_OUT);
 	}
 
 }

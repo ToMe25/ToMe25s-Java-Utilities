@@ -35,7 +35,7 @@ jobs:
 
     - name: Build with Maven
       id: build
-      run: mvn -B -X package --file pom.xml
+      run: mvn -B package --file pom.xml
 
     - name: Upload artifacts
       id: artifacts_upload

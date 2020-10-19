@@ -88,7 +88,12 @@ public class ConfigTest {
 		// test the basics of the config watcher.
 		File cfgFolder = tempFolder.newFolder("ToMe25s-Java-Utilities-Config-Test");
 		final boolean[] changed = new boolean[] { false };
-		Config cfg = new Config(true, cfgFolder, true, (file) -> changed[0] = true);
+		Config cfg = null;
+		try {
+			cfg = new Config(true, cfgFolder, true, (file) -> changed[0] = true);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 		cfg.addConfig("Watcher.cfg", "StringTest", "Some Random String",
 				"A String that definitifly wont get changed...");
 		assertEquals("Some Random String", cfg.getConfig("StringTest"));

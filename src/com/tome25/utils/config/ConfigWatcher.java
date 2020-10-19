@@ -22,7 +22,7 @@ import com.tome25.utils.logging.LogTracer;
 public class ConfigWatcher implements Runnable {
 
 	private static final ThreadGroup WATCHERS_THREAD_GROUP = new ThreadGroup("Config-Watchers");
-	private static final Logger LOGGER = LogTracer.getLogger("Config-Watcher");
+	private static Logger logger;
 	private final Thread thread;
 	private static int nr = 0;
 	private final Path toWatch;
@@ -51,12 +51,15 @@ public class ConfigWatcher implements Runnable {
 		nr++;
 		this.toWatch = toWatch;
 		this.consumer = consumer;
-		thread.start();
+		if (logger == null) {
+			logger = LogTracer.getLogger("Config-Watcher");
+		}
 		String os = System.getProperty("os.name").toLowerCase();
 		if (os.contains("mac") || os.contains("darwin")) {
-			LOGGER.warning(
+			logger.warning(
 					"Warning: Watching for file or directory changes is neither reliable, nor fast on Mac OS X!");
 		}
+		thread.start();
 	}
 
 	@Override

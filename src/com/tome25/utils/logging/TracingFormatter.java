@@ -75,7 +75,7 @@ public class TracingFormatter extends Formatter {
 	 */
 	public TracingFormatter(File configFile) {
 		super();
-		cfg = new Config(configFile.getParentFile(), false);
+		cfg = new Config(false, configFile.getParentFile(), false);
 		readConfig(configFile);
 	}
 

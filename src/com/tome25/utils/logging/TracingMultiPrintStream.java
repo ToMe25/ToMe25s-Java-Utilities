@@ -81,7 +81,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	 */
 	public TracingMultiPrintStream(File configFile, OutputStream... outs) {
 		super(outs);
-		cfg = new Config(configFile.getParentFile(), false);
+		cfg = new Config(false, configFile.getParentFile(), false);
 		readConfig(configFile);
 	}
 

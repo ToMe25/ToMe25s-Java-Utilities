@@ -123,6 +123,7 @@ public class ConfigTest {
 		}
 		assertEquals("The string read from the config file does not match.", "Some Changed String",
 				cfg.getConfig("StringTest"));
+		Thread.sleep(50);
 		// test config watcher handling of files changed by Config.
 		changed[0] = false;
 		cfg.addConfig("Watcher.cfg", "intTest", 123, "A random integer here to test the ConfigWatcher");

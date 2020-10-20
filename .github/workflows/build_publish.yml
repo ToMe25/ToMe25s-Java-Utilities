@@ -3,7 +3,8 @@
 # For more information see https://github.com/mathieudutour/github-tag-action#usage,
 # https://github.com/actions/setup-java#apache-maven-with-a-settings-path,
 # https://github.com/EndBug/add-and-commit#usage,
-# https://github.com/actions/upload-artifact#upload-using-a-wildcard-pattern
+# https://github.com/github/codeql-action#usage,
+# https://github.com/actions/upload-artifact#upload-using-a-wildcard-pattern,
 # and https://github.com/actions/upload-release-asset#example-workflow---upload-a-release-asset
 
 name: Maven Build and Publish
@@ -74,6 +75,20 @@ jobs:
         tag: ${{ steps.tag_dry.outputs.new_tag }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+
+    - name: Initialize CodeQL
+      id: init-cql
+      uses: github/codeql-action/init@v1
+      with:
+        languages: 'java'
+
+    - name: Autobuild
+      id: autobuild
+      uses: github/codeql-action/autobuild@v1
+
+    - name: Perform CodeQL Analysis
+      id: analyze
+      uses: github/codeql-action/analyze@v1
 
     - name: Publish to Github Packages
       id: publish

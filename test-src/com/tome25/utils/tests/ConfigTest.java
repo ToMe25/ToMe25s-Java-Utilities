@@ -139,8 +139,9 @@ public class ConfigTest {
 				waitTime += 5;
 			}
 			Thread.sleep(10);
-			assertFalse(String.format("The ConfigWatcher detected changes after %dms, while it shouldn't have."
-					+ " This can sometimes just happen randomly, but thats rare.", waitTime), changed[0]);
+			assertFalse(
+					String.format("The ConfigWatcher detected changes after %dms, while it shouldn't have.", waitTime),
+					changed[0]);
 		}
 		assertEquals("The integer from the config did not match the value its set value.", Integer.MIN_VALUE,
 				(int) cfg.getConfig("intTest"));

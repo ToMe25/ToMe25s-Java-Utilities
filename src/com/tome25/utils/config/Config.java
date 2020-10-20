@@ -341,23 +341,29 @@ public class Config {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				FileOutputStream fiout = new FileOutputStream(config);
-				fiout.write(String.format("# The %s Configuration for %s.%n",
-						config.getName().substring(0, config.getName().lastIndexOf('.')),
-						new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath())
-								.getName())
-						.getBytes());
-				fiout.flush();
 				if (sortedConfig == null) {
 					sortConfig();
 				}
-				HashMap<File, List<ConfigValue<?>>> sortedCopy = new HashMap<File, List<ConfigValue<?>>>(sortedConfig);
-				for (ConfigValue<?> c : new ArrayList<ConfigValue<?>>(sortedCopy.get(config))) {
-					c.writeToConfig(fiout);
-					fiout.write(System.lineSeparator().getBytes());
-					fiout.flush();
+				if (sortedConfig.isEmpty()) {
+					sortConfig();
 				}
-				fiout.close();
+				HashMap<File, List<ConfigValue<?>>> sortedCopy = new HashMap<File, List<ConfigValue<?>>>(sortedConfig);
+				if (sortedCopy.containsKey(config)) {
+					FileOutputStream fiout = new FileOutputStream(config);
+					fiout.write(String.format("# The %s Configuration for %s.%n",
+							config.getName().substring(0, config.getName().lastIndexOf('.')),
+							new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath())
+									.getName())
+							.getBytes());
+					fiout.flush();
+					List<ConfigValue<?>> configCopy = new ArrayList<ConfigValue<?>>(sortedCopy.get(config));
+					for (ConfigValue<?> c : configCopy) {
+						c.writeToConfig(fiout);
+						fiout.write(System.lineSeparator().getBytes());
+						fiout.flush();
+					}
+					fiout.close();
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

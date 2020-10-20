@@ -296,4 +296,11 @@ public class ConfigValue<T> {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return String.format(
+				"ConfigValue[file=%s, key=%s, type=%s, value=%s, error=%s, defaultValue=%s, description=%s]", cfg, key,
+				type, value, error, defaultValue, description);
+	}
+
 }

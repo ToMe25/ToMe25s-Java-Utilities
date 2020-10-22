@@ -45,6 +45,12 @@ jobs:
       id: bump_mvn
       run: mvn -B versions:set -D newVersion=${{ steps.tag_dry.outputs.new_version }}
 
+    - name: Initialize CodeQL
+      id: init-cql
+      uses: github/codeql-action/init@v1
+      with:
+        languages: 'java'
+
     - name: Build with Maven
       id: build
       run: mvn -B package --file pom.xml
@@ -76,12 +82,6 @@ jobs:
         tag: ${{ steps.tag_dry.outputs.new_tag }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-
-    - name: Initialize CodeQL
-      id: init-cql
-      uses: github/codeql-action/init@v1
-      with:
-        languages: 'java'
 
     - name: Perform CodeQL Analysis
       id: analyze

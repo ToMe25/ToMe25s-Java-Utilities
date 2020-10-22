@@ -64,8 +64,7 @@ public class ConfigWatcher implements Runnable {
 
 	@Override
 	public void run() {
-		try {
-			final WatchService watcher = FileSystems.getDefault().newWatchService();
+		try (WatchService watcher = FileSystems.getDefault().newWatchService()) {
 			toWatch.register(watcher, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_MODIFY,
 					StandardWatchEventKinds.ENTRY_DELETE);
 			while (running) {
@@ -102,6 +101,11 @@ public class ConfigWatcher implements Runnable {
 	public void stop() {
 		running = false;
 		thread.interrupt();
+		try {
+			thread.join(500);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

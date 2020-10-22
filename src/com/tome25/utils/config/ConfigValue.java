@@ -45,7 +45,7 @@ public class ConfigValue<T> {
 		if (!validType(type)) {
 			throw new InvalidTypeException("Type " + type.getName() + " isn't valid.");
 		}
-		this.cfg = cfg;
+		this.cfg = cfg.getAbsoluteFile();
 		this.key = key;
 		this.defaultValue = defaultValue;
 		this.value = defaultValue;
@@ -164,8 +164,8 @@ public class ConfigValue<T> {
 	 *                     {@link FileOutputStream}.
 	 */
 	public void writeToConfig(FileOutputStream fiout) throws IOException {
-		String comment = String.format("# %s%n# Default: %s", description, defaultValue);
-		String toWrite = comment + System.lineSeparator() + key + ": " + value + System.lineSeparator();
+		String comment = String.format("# %s%n# Default: %s%n", description, defaultValue);
+		String toWrite = comment + key + ": " + value + System.lineSeparator();
 		fiout.write(toWrite.getBytes());
 		fiout.flush();
 	}

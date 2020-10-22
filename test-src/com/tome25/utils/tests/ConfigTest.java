@@ -89,17 +89,17 @@ public class ConfigTest {
 		File cfgFolder = tempFolder.newFolder("ToMe25s-Java-Utilities-Config-Test");
 		final boolean[] changed = new boolean[] { false };
 		Config cfg = new Config(true, cfgFolder, true, (file) -> changed[0] = true);
-		cfg.addConfig("Watcher.cfg", "StringTest", "Some Random String",
-				"A String that definitifly wont get changed...");
-		assertEquals("Some Random String", cfg.getConfig("StringTest"));
+		cfg.addConfig("Watcher.cfg", "stringTest", "Some Random String",
+				"A String that definitely wont get changed...");
+		assertEquals("Some Random String", cfg.getConfig("stringTest"));
 		FileInputStream fIn = new FileInputStream(new File(cfgFolder, "Watcher.cfg"));
 		byte[] buffer = new byte[fIn.available()];
 		fIn.read(buffer);
 		fIn.close();
 		String config = new String(buffer);
-		config = config.replace("Random", "Changed").replaceAll("wont", "will");
+		config = config.replace("Random", "Changed").replace("wont", "will");
 		FileOutputStream fOut = new FileOutputStream(new File(cfgFolder, "Watcher.cfg"));
-		Thread.sleep(50);// Wait for the ConfigWatcher to finish initializing.
+		Thread.sleep(100);// Wait for the ConfigWatcher to finish initializing.
 		fOut.write(config.getBytes());
 		fOut.flush();
 		fOut.close();
@@ -121,9 +121,8 @@ public class ConfigTest {
 							+ " This can sometimes just happen randomly. but thats rare.", maxWaitTime / 1000),
 					changed[0]);
 		}
-		assertEquals("The string read from the config file does not match.", "Some Changed String",
-				cfg.getConfig("StringTest"));
-		Thread.sleep(50);
+		assertEquals("The string read from the file doesn't match.", "Some Changed String",
+				cfg.getConfig("stringTest"));
 		// test config watcher handling of files changed by Config.
 		changed[0] = false;
 		cfg.addConfig("Watcher.cfg", "intTest", 123, "A random integer here to test the ConfigWatcher");
@@ -143,8 +142,20 @@ public class ConfigTest {
 					String.format("The ConfigWatcher detected changes after %dms, while it shouldn't have.", waitTime),
 					changed[0]);
 		}
-		assertEquals("The integer from the config did not match the value its set value.", Integer.MIN_VALUE,
+		assertEquals("The integer read from the file doesn't match.", Integer.MIN_VALUE,
 				(int) cfg.getConfig("intTest"));
+		// test setting a bunch of config options quickly
+		cfg.addConfig("Watcher.cfg", "doubleTest", 0.1, "Some double used for testing.");
+		for (int i = 0; i < 10; i++) {
+			cfg.setConfig("stringTest", "Some String " + i);
+			cfg.setConfig("intTest", i);
+			cfg.setConfig("doubleTest", 1.0 / (i + 1));
+			assertEquals("The string read from the file doesn't match.", "Some String " + i,
+					cfg.getConfig("stringTest"));
+			assertEquals("The integer read from the file doesn't match.", i, (int) cfg.getConfig("intTest"));
+			assertEquals("The double read from the file doesn't match.", 1.0 / (i + 1),
+					(double) cfg.getConfig("doubleTest"), 0);
+		}
 		// delete config files.
 		cfg.delete();
 	}

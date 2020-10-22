@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
 import javax.naming.ConfigurationException;
@@ -24,6 +25,7 @@ public class Config {
 
 	private Map<String, ConfigValue<?>> cfg = new HashMap<String, ConfigValue<?>>();
 	private Map<File, List<ConfigValue<?>>> sortedConfig = new HashMap<File, List<ConfigValue<?>>>();
+	private Map<File, ReentrantLock> fileLocks = new HashMap<File, ReentrantLock>();
 	private File cfgDir;
 	private boolean read;
 	private ConfigWatcher watcher;
@@ -222,8 +224,19 @@ public class Config {
 	public <T> void setConfig(String name, T value) {
 		if (cfg.containsKey(name)) {
 			if (cfg.get(name).getTypeClass().equals(value.getClass())) {
-				((ConfigValue<T>) cfg.get(name)).setValue(value);
-				createConfig(cfg.get(name).getCfg());
+				ConfigValue<T> val = (ConfigValue<T>) cfg.get(name);
+				File config = val.getCfg();
+				if (!fileLocks.containsKey(config.getAbsoluteFile())) {
+					fileLocks.put(config.getAbsoluteFile(), new ReentrantLock(true));
+				}
+				ReentrantLock lock = fileLocks.get(config.getAbsoluteFile());
+				lock.lock();
+				boolean changed = !val.getValue().equals(value);
+				val.setValue(value);
+				if (changed) {
+					createConfig(config);
+				}
+				lock.unlock();
 			} else {
 				throw new InvalidTypeException(String.format("The config value with name %s is of type %s not %s!",
 						name, cfg.get(name).getTypeClass().getName(), value.getClass().getName()));
@@ -267,6 +280,11 @@ public class Config {
 			if (!sortedConfig.containsKey(file)) {
 				return false;
 			}
+			if (!fileLocks.containsKey(file.getAbsoluteFile())) {
+				fileLocks.put(file.getAbsoluteFile(), new ReentrantLock(true));
+			}
+			ReentrantLock lock = fileLocks.get(file.getAbsoluteFile());
+			lock.lock();
 			if (!file.exists()) {
 				createConfig(file);
 			}
@@ -276,12 +294,11 @@ public class Config {
 			}
 			sc.close();
 			sc = new Scanner(file);
-			List<ConfigValue<?>> missing = new ArrayList<ConfigValue<?>>();
-			missing.addAll(sortedConfig.get(file));
+			List<ConfigValue<?>> missing = new ArrayList<ConfigValue<?>>(sortedConfig.get(file));
 			boolean error = false;
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
-				if (!line.startsWith("#")) {
+				if (!line.startsWith("#") && !line.trim().isEmpty()) {
 					for (ConfigValue<?> c : sortedConfig.get(file)) {
 						if (line.replaceAll(" ", "").startsWith(c.getKey() + ":")) {
 							String value = line.replaceFirst(c.getKey(), "").replaceFirst(":", "");
@@ -301,13 +318,14 @@ public class Config {
 			sc.close();
 			if (error) {
 				createConfig(file);
-			} else {
+			} else if (!missing.isEmpty()) {
 				FileOutputStream fiout = new FileOutputStream(file, true);
 				for (ConfigValue<?> c : missing) {
 					c.writeToConfig(fiout);
 				}
 				fiout.close();
 			}
+			lock.unlock();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -321,50 +339,54 @@ public class Config {
 	 */
 	private void createConfig(File config) {
 		try {
-			synchronized (config) {
-				File dir = config.getParentFile();
-				if (!dir.exists() || !dir.isDirectory()) {
-					dir.mkdirs();
-				}
-				if (config.exists() && !config.isFile()) {
-					config.delete();
-				}
-				if (!config.exists()) {
-					config.createNewFile();
-				}
-				config.setReadable(true, true);
-				config.setWritable(true, true);
-				try {
-					// This line has it's own try catch Block because sometimes this Program hasn't
-					// the Permissions to do that.
-					config.setExecutable(false, false);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				if (sortedConfig == null) {
-					sortConfig();
-				}
-				if (sortedConfig.isEmpty()) {
-					sortConfig();
-				}
-				HashMap<File, List<ConfigValue<?>>> sortedCopy = new HashMap<File, List<ConfigValue<?>>>(sortedConfig);
-				if (sortedCopy.containsKey(config)) {
-					FileOutputStream fiout = new FileOutputStream(config);
-					fiout.write(String.format("# The %s Configuration for %s.%n",
-							config.getName().substring(0, config.getName().lastIndexOf('.')),
-							new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath())
-									.getName())
-							.getBytes());
-					fiout.flush();
-					List<ConfigValue<?>> configCopy = new ArrayList<ConfigValue<?>>(sortedCopy.get(config));
-					for (ConfigValue<?> c : configCopy) {
-						c.writeToConfig(fiout);
-						fiout.write(System.lineSeparator().getBytes());
-						fiout.flush();
-					}
-					fiout.close();
-				}
+			config = config.getAbsoluteFile();
+			if (!fileLocks.containsKey(config.getAbsoluteFile())) {
+				fileLocks.put(config.getAbsoluteFile(), new ReentrantLock(true));
 			}
+			ReentrantLock lock = fileLocks.get(config.getAbsoluteFile());
+			lock.lock();
+			File dir = config.getParentFile();
+			if (!dir.exists() || !dir.isDirectory()) {
+				dir.mkdirs();
+			}
+			if (config.exists() && !config.isFile()) {
+				config.delete();
+			}
+			if (!config.exists()) {
+				config.createNewFile();
+			}
+			config.setReadable(true, true);
+			config.setWritable(true, true);
+			try {
+				// This line has it's own try catch Block because sometimes this Program hasn't
+				// the Permissions to do that.
+				config.setExecutable(false, false);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if (sortedConfig == null) {
+				sortConfig();
+			}
+			if (sortedConfig.isEmpty()) {
+				sortConfig();
+			}
+			if (sortedConfig.containsKey(config)) {
+				FileOutputStream fiout = new FileOutputStream(config);
+				fiout.write(String.format("# The %s Configuration for %s.%n",
+						config.getName().substring(0, config.getName().lastIndexOf('.')),
+						new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath())
+								.getName())
+						.getBytes());
+				fiout.flush();
+				List<ConfigValue<?>> configCopy = new ArrayList<ConfigValue<?>>(sortedConfig.get(config));
+				for (ConfigValue<?> c : configCopy) {
+					c.writeToConfig(fiout);
+					fiout.write(System.lineSeparator().getBytes());
+					fiout.flush();
+				}
+				fiout.close();
+			}
+			lock.unlock();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -54,6 +54,8 @@ jobs:
     - name: Build with Maven
       id: build
       run: mvn -B package --file pom.xml
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
 
     - name: Move artifacts into repository
       id: artifacts_move
@@ -151,4 +153,3 @@ jobs:
         asset_path: ./ToMe25s-Java-Utilities-javadoc.jar
         asset_name: ToMe25s-Java-Utilities-javadoc.jar
         asset_content_type: application/java-archive
-        

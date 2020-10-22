@@ -65,7 +65,13 @@ jobs:
 
     - name: Generate version changelog
       id: changelog
-      run: echo "::set-output name=changelog::$(git log ${{ steps.tag_dry.outputs.previous_tag }}..HEAD --no-merges --format="%h %s%+b")"
+      run: |
+        changelog=$(git log ${{ steps.tag_dry.outputs.previous_tag }}..HEAD --no-merges --format="%h %s%+b")
+        changelog="${changelog//'%'/'%25'}"
+        changelog="${changelog//$'\n'/'%0A'}"
+        changelog="${changelog//$'\r'/'%0D'}"
+        echo $changelog
+        echo "::set-output name=changelog::$changelog"
 
     - name: Commit and Push changes
       id: commit

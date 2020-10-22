@@ -396,13 +396,14 @@ public class Config {
 	 * Sorts the {@link ConfigValue}s by the file they are stored in.
 	 */
 	private void sortConfig() {
-		sortedConfig.clear();
+		Map<File, List<ConfigValue<?>>> sort = new HashMap<File, List<ConfigValue<?>>>();
 		for (ConfigValue<?> c : cfg.values()) {
-			if (!sortedConfig.containsKey(c.getCfg())) {
-				sortedConfig.put(c.getCfg(), new ArrayList<ConfigValue<?>>());
+			if (!sort.containsKey(c.getCfg())) {
+				sort.put(c.getCfg(), new ArrayList<ConfigValue<?>>());
 			}
-			sortedConfig.get(c.getCfg()).add(c);
+			sort.get(c.getCfg()).add(c);
 		}
+		sortedConfig = sort;
 	}
 
 	/**

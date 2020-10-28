@@ -128,67 +128,31 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><span class="typeNameLabel">JsonElement.</span><code><span class="memberNameLink"><a href="../../../../../com/tome25/utils/json/JsonElement.html#add-java.lang.Object-java.lang.Object-">add</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
-   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
-<div class="block">Adds the value with the given key if there is no object with this key.</div>
+<td class="colFirst"><code>default &lt;T&gt;&nbsp;<a href="../../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;T&gt;</code></td>
+<td class="colLast"><span class="typeNameLabel">JsonElement.</span><code><span class="memberNameLink"><a href="../../../../../com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-com.tome25.utils.json.JsonElement-">changes</a></span>(<a href="../../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;?&gt;&nbsp;from,
+       <a href="../../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;T&gt;&nbsp;to)</code>
+<div class="block">A utility method to call to.<a href="../../../../../com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-"><code>changes</code></a>(from).</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="typeNameLabel">JsonElement.</span><code><span class="memberNameLink"><a href="../../../../../com/tome25/utils/json/JsonElement.html#containsKey-java.lang.Object-">containsKey</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>
-<div class="block">Returns true if this Json contains the given key.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><span class="typeNameLabel">JsonElement.</span><code><span class="memberNameLink"><a href="../../../../../com/tome25/utils/json/JsonElement.html#get-java.lang.Object-">get</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>
 <div class="block">Gets the value for the given key.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><span class="typeNameLabel">JsonElement.</span><code><span class="memberNameLink"><a href="../../../../../com/tome25/utils/json/JsonElement.html#getString-java.lang.Object-">getString</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>
-<div class="block">Gets the value for the given key if its a string, or a string representation
- of that value if it isn't.</div>
-</td>
-</tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><span class="typeNameLabel">JsonElement.</span><code><span class="memberNameLink"><a href="../../../../../com/tome25/utils/json/JsonElement.html#put-java.lang.Object-java.lang.Object-">put</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
-   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
-<div class="block">Adds the given value to the given key replacing the current value if it
- already exists.</div>
+<td class="colFirst"><code>default &lt;T&gt;&nbsp;<a href="../../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;T&gt;</code></td>
+<td class="colLast"><span class="typeNameLabel">JsonElement.</span><code><span class="memberNameLink"><a href="../../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-com.tome25.utils.json.JsonElement-">reconstruct</a></span>(<a href="../../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;?&gt;&nbsp;from,
+           <a href="../../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;T&gt;&nbsp;changes)</code>
+<div class="block">A utility method to call to.<a href="../../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-"><code>reconstruct</code></a>(from).</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">JsonElement.</span><code><span class="memberNameLink"><a href="../../../../../com/tome25/utils/json/JsonElement.html#putAll-java.util.Map-">putAll</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;m)</code>
-<div class="block">Adds the given values to the given keys replacing the current ones if
- existing.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">JsonElement.</span><code><span class="memberNameLink"><a href="../../../../../com/tome25/utils/json/JsonElement.html#remove-java.lang.Object-boolean-">remove</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o,
       boolean&nbsp;key)</code>
 <div class="block">If key is true this removes the object to the key o from this Json, if not it
  removes the value o from this Json.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><span class="typeNameLabel">JsonElement.</span><code><span class="memberNameLink"><a href="../../../../../com/tome25/utils/json/JsonElement.html#set-java.lang.Object-java.lang.Object-">set</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
-   <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
-<div class="block">Adds the given value to the given key replacing the current value if it
- already exists.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">JsonElement.</span><code><span class="memberNameLink"><a href="../../../../../com/tome25/utils/json/JsonElement.html#setAll-java.util.Map-">setAll</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,? extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;m)</code>
-<div class="block">Adds the given values to the given keys replacing the current ones if
- existing.</div>
 </td>
 </tr>
 </tbody>

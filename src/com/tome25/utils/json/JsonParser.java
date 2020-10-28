@@ -84,7 +84,7 @@ public class JsonParser {
 	 * @return the {@link JsonElement} parsed from the given string.
 	 * @throws ParseException if something goes wrong while parsing.
 	 */
-	public static JsonElement parseString(String str) throws ParseException {
+	public static JsonElement<?> parseString(String str) throws ParseException {
 		return parseCharArray(str.toCharArray());
 	}
 
@@ -107,7 +107,7 @@ public class JsonParser {
 	 * @return the {@link JsonElement} parsed from the given byte array.
 	 * @throws ParseException if something goes wrong while parsing.
 	 */
-	public static JsonElement parseByteArray(byte[] byteArr) throws ParseException {
+	public static JsonElement<?> parseByteArray(byte[] byteArr) throws ParseException {
 		return parseByteArray(byteArr, null);
 	}
 
@@ -133,7 +133,7 @@ public class JsonParser {
 	 * @return the {@link JsonElement} parsed from the given byte array.
 	 * @throws ParseException if something goes wrong while parsing.
 	 */
-	public static JsonElement parseByteArray(byte[] byteArr, String charset) throws ParseException {
+	public static JsonElement<?> parseByteArray(byte[] byteArr, String charset) throws ParseException {
 		Charset cSet;
 		if (charset == null || charset.isEmpty()) {
 			cSet = Charset.defaultCharset();
@@ -165,8 +165,8 @@ public class JsonParser {
 	 * @return the {@link JsonElement} parsed from the given char array.
 	 * @throws ParseException if something goes wrong while parsing.
 	 */
-	public static JsonElement parseCharArray(char[] charArr) throws ParseException {
-		JsonElement json = null;
+	public static JsonElement<?> parseCharArray(char[] charArr) throws ParseException {
+		JsonElement<?> json = null;
 		boolean buildString = false;
 		boolean buildJson = false;
 		boolean buildOther = false;
@@ -227,7 +227,7 @@ public class JsonParser {
 						key = buffer;
 						buffer = null;
 					} else {
-						json.add(key, buffer);
+						((JsonObject) json).add(key, buffer);
 						key = null;
 						buffer = null;
 					}
@@ -260,7 +260,7 @@ public class JsonParser {
 							throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!", buffer,
 									new String(charArr)), offset - buffer.length());
 						}
-						json.add(key, buildOther(buffer, charArr, offset));
+						((JsonObject) json).add(key, buildOther(buffer, charArr, offset));
 						key = null;
 					}
 					buffer = null;
@@ -277,7 +277,7 @@ public class JsonParser {
 						layer--;
 					}
 					if (layer <= 0) {
-						JsonElement subjson = parseString(buffer);
+						JsonElement<?> subjson = parseString(buffer);
 						if (json instanceof JsonArray) {
 							((JsonArray) json).add(subjson);
 						} else {
@@ -285,7 +285,7 @@ public class JsonParser {
 								throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!",
 										buffer, new String(charArr)), offset - buffer.length());
 							}
-							json.add(key, subjson);
+							((JsonObject) json).add(key, subjson);
 							key = null;
 						}
 						buffer = null;
@@ -303,7 +303,7 @@ public class JsonParser {
 							throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!", buffer,
 									new String(charArr)), offset - buffer.length());
 						}
-						json.add(key, buildOther(buffer, charArr, offset));
+						((JsonObject) json).add(key, buildOther(buffer, charArr, offset));
 						key = null;
 					}
 					buffer = null;
@@ -345,7 +345,7 @@ public class JsonParser {
 						layer--;
 					}
 					if (layer <= 0) {
-						JsonElement subjson = parseString(buffer);
+						JsonElement<?> subjson = parseString(buffer);
 						if (json instanceof JsonArray) {
 							((JsonArray) json).add(subjson);
 						} else {
@@ -353,7 +353,7 @@ public class JsonParser {
 								throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!",
 										buffer, new String(charArr)), offset - buffer.length());
 							}
-							json.add(key, subjson);
+							((JsonObject) json).add(key, subjson);
 							key = null;
 						}
 						buffer = null;
@@ -371,7 +371,7 @@ public class JsonParser {
 							throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!", buffer,
 									new String(charArr)), offset - buffer.length());
 						}
-						json.add(key, buildOther(buffer, charArr, offset));
+						((JsonObject) json).add(key, buildOther(buffer, charArr, offset));
 						key = null;
 					}
 					buffer = null;

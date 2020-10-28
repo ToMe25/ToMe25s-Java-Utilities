@@ -19,7 +19,7 @@ import com.tome25.utils.exception.InvalidTypeException;
  * @author ToMe25
  *
  */
-public class JsonArray implements JsonElement, List<Object>, Cloneable {
+public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable {
 
 	private static final long serialVersionUID = 5205197497094672807L;
 	private List<Object> content = new ArrayList<Object>();
@@ -51,13 +51,9 @@ public class JsonArray implements JsonElement, List<Object>, Cloneable {
 	}
 
 	@Override
-	public Object add(Object key, Object value) {
-		if (key instanceof Integer) {
-			content.add((int) key, value);
-			return null;
-		} else {
-			throw new InvalidTypeException("Integer", key.getClass().getSimpleName());
-		}
+	public Object add(Integer key, Object value) {
+		content.add((int) key, value);
+		return null;
 	}
 
 	/**
@@ -68,7 +64,7 @@ public class JsonArray implements JsonElement, List<Object>, Cloneable {
 	 */
 	@Override
 	public void add(int index, Object value) {
-		add((Object) index, value);
+		add((Integer) index, value);
 	}
 
 	@Override
@@ -77,33 +73,20 @@ public class JsonArray implements JsonElement, List<Object>, Cloneable {
 	}
 
 	@Override
-	public Object put(Object key, Object value) {
-		if (key instanceof Integer) {
-			return content.set((int) key, value);
-		} else {
-			throw new InvalidTypeException("Integer", key.getClass().getSimpleName());
-		}
+	public Object put(Integer key, Object value) {
+		return content.set((int) key, value);
 	}
 
 	@Override
-	public void putAll(Map<? extends Object, ? extends Object> m) {
+	public void putAll(Map<? extends Integer, ? extends Object> m) {
 		m.forEach((key, value) -> {
-			if (key instanceof Integer) {
-				content.set((Integer) key, value);
-			} else {
-				throw new InvalidTypeException("Integer", key.getClass().getSimpleName());
-			}
+			content.set((Integer) key, value);
 		});
 	}
 
 	@Override
-	public Object set(Object key, Object element) {
+	public Object set(Integer key, Object element) {
 		return put(key, element);
-	}
-
-	@Override
-	public void setAll(Map<? extends Object, ? extends Object> m) {
-		putAll(m);
 	}
 
 	@Override
@@ -111,6 +94,7 @@ public class JsonArray implements JsonElement, List<Object>, Cloneable {
 		return content.remove(index);
 	}
 
+	@Override
 	public boolean remove(Object value) {
 		return content.remove(value);
 	}
@@ -139,12 +123,8 @@ public class JsonArray implements JsonElement, List<Object>, Cloneable {
 	}
 
 	@Override
-	public String getString(Object key) {
-		if (key instanceof Integer) {
-			return content.get((int) key).toString();
-		} else {
-			throw new InvalidTypeException("Integer", key.getClass().getSimpleName());
-		}
+	public String getString(Integer key) {
+		return content.get(key).toString();
 	}
 
 	@Override
@@ -193,7 +173,7 @@ public class JsonArray implements JsonElement, List<Object>, Cloneable {
 			int[] size = new int[] { 0 };
 			content.forEach((value) -> {
 				if (value instanceof JsonElement) {
-					size[0] += ((JsonElement) value).size(recursive);
+					size[0] += ((JsonElement<?>) value).size(recursive);
 				} else {
 					size[0]++;
 				}
@@ -228,8 +208,8 @@ public class JsonArray implements JsonElement, List<Object>, Cloneable {
 		JsonArray clone = new JsonArray();
 		content.forEach((value) -> {
 			try {
-				if (recursive && value instanceof JsonElement && ((JsonElement) value).supportsClone()) {
-					clone.add(((JsonElement) value).clone(recursive));
+				if (recursive && value instanceof JsonElement && ((JsonElement<?>) value).supportsClone()) {
+					clone.add(((JsonElement<?>) value).clone(recursive));
 				} else {
 					clone.add(value);
 				}
@@ -362,27 +342,20 @@ public class JsonArray implements JsonElement, List<Object>, Cloneable {
 	}
 
 	@Override
-	public JsonArray changes(JsonElement from) {
+	public JsonArray changes(JsonElement<Integer> from) {
 		return changes(from, true);
 	}
 
 	@Override
-	public JsonArray changes(JsonElement from, boolean recursive) {
-		if (!(from instanceof JsonArray)) {
-			if (supportsClone()) {
-				return clone(true);
-			} else {
-				return this;
-			}
-		}
+	public JsonArray changes(JsonElement<Integer> from, boolean recursive) {
 		JsonArray last = (JsonArray) from;
 		JsonArray changes = new JsonArray();
 		int[] index = new int[] { 0 };
 		content.forEach((value) -> {
 			try {
 				if (!last.contains(value)) {
-					if (value instanceof JsonElement && ((JsonElement) value).supportsClone()) {
-						JsonObject val = new JsonObject("val", (JsonElement) value).clone(true);
+					if (value instanceof JsonElement && ((JsonElement<?>) value).supportsClone()) {
+						JsonObject val = new JsonObject("val", (JsonElement<?>) value).clone(true);
 						val.put("after", index[0]);
 						changes.add(val);
 					} else {
@@ -408,19 +381,12 @@ public class JsonArray implements JsonElement, List<Object>, Cloneable {
 	}
 
 	@Override
-	public JsonArray reconstruct(JsonElement from) {
+	public JsonArray reconstruct(JsonElement<Integer> from) {
 		return reconstruct(from, true);
 	}
 
 	@Override
-	public JsonArray reconstruct(JsonElement from, boolean recursive) {
-		if (!(from instanceof JsonArray) || equals(from)) {
-			if (supportsClone()) {
-				return clone(true);
-			} else {
-				return this;
-			}
-		}
+	public JsonArray reconstruct(JsonElement<Integer> from, boolean recursive) {
 		JsonArray last = (JsonArray) from;
 		JsonArray reconstructed = new JsonArray(last);
 		int[] offset = new int[] { 0 };
@@ -461,7 +427,7 @@ public class JsonArray implements JsonElement, List<Object>, Cloneable {
 	}
 
 	@Override
-	public int compareTo(JsonElement o) {
+	public int compareTo(JsonElement<?> o) {
 		if (this.equals(o)) {
 			return 0;
 		}
@@ -509,8 +475,8 @@ public class JsonArray implements JsonElement, List<Object>, Cloneable {
 			Class<?> class1 = obj1.getClass();
 			Class<?> class2 = obj2.getClass();
 			if (class1.isAssignableFrom(class2)) {
-				@SuppressWarnings({ "unchecked", "rawtypes" })
-				int diff = ((Comparable) obj1).compareTo((Comparable) obj2);
+				@SuppressWarnings({ "unchecked" })
+				int diff = ((Comparable<Comparable<?>>) obj1).compareTo((Comparable<?>) obj2);
 				if (diff > 0) {
 					return 1;
 				} else if (diff < 0) {
@@ -519,8 +485,8 @@ public class JsonArray implements JsonElement, List<Object>, Cloneable {
 					return 0;
 				}
 			} else if (class2.isAssignableFrom(class1)) {
-				@SuppressWarnings({ "unchecked", "rawtypes" })
-				int diff = ((Comparable) obj2).compareTo((Comparable) obj1);
+				@SuppressWarnings({ "unchecked" })
+				int diff = ((Comparable<Comparable<?>>) obj2).compareTo((Comparable<?>) obj1);
 				if (diff > 0) {
 					return -1;
 				} else if (diff < 0) {
@@ -549,6 +515,11 @@ public class JsonArray implements JsonElement, List<Object>, Cloneable {
 	 */
 	public Object getFirst() {
 		return content.get(0);
+	}
+
+	@Override
+	public Class<Integer> getKeyType() {
+		return Integer.class;
 	}
 
 }

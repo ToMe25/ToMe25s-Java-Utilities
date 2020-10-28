@@ -29,11 +29,11 @@ public class JsonTest extends AbstractBenchmark {
 	public void fastParsingTest() throws ParseException {
 		// test whether the basic most things work
 		String jsonString = "{\"testString\":\"parsing test\",\"testInt\":123}";
-		JsonElement json = new JsonObject("testString", "parsing test");
+		JsonObject json = new JsonObject("testString", "parsing test");
 		json.put("testInt", 123);
 		assertEquals(jsonString, json.toString());
 		// test whether the fast parser works
-		JsonElement parsedJson = JsonParser.parseStringFast(jsonString);
+		JsonElement<?> parsedJson = JsonParser.parseStringFast(jsonString);
 		assertEquals(json, parsedJson);
 		// test a string ending with double quotes at the end as that was a problem in
 		// the past
@@ -53,13 +53,13 @@ public class JsonTest extends AbstractBenchmark {
 	public void parsingTest() throws ParseException, CloneNotSupportedException, UnsupportedEncodingException {
 		// test whether the basic most things work
 		String jsonString = "{\"testString\":\"Just a simple Test\",\"testInt\":51223,\"testJson\":{\"simple\":\"json\"}}";
-		JsonElement simpleJson = new JsonObject("simple", "json");
-		JsonElement json = new JsonObject("testString", "Just a simple Test");
+		JsonObject simpleJson = new JsonObject("simple", "json");
+		JsonObject json = new JsonObject("testString", "Just a simple Test");
 		json.add("testInt", 51223);
 		json.add("testJson", simpleJson);
 		assertEquals(jsonString, json.toString());
 		// test the parser with some basic things
-		JsonElement parsedJson = JsonParser.parseString(jsonString);
+		JsonElement<?> parsedJson = JsonParser.parseString(jsonString);
 		assertEquals(json, parsedJson);
 		// test other numeric values
 		json.put("testDouble", 123.45);
@@ -91,10 +91,10 @@ public class JsonTest extends AbstractBenchmark {
 		assertEquals(json, parsedJson);
 		// test basic json array functions
 		String jsonArrayString = "[1,\"test\",531.12,{\"simple\":\"json\"}]";
-		JsonElement jsonArray = new JsonArray(1, "test", 531.12, simpleJson);
+		JsonArray jsonArray = new JsonArray(1, "test", 531.12, simpleJson);
 		assertEquals(jsonArrayString, jsonArray.toString());
 		// test the parser with arrays
-		JsonElement parsedJsonArray = JsonParser.parseString(jsonArrayString);
+		JsonElement<?> parsedJsonArray = JsonParser.parseString(jsonArrayString);
 		assertEquals(jsonArray, parsedJsonArray);
 		// test json array order
 		assertEquals(jsonArray.get(2), parsedJsonArray.get(2));
@@ -141,18 +141,18 @@ public class JsonTest extends AbstractBenchmark {
 		assertEquals(((JsonArray) jsonArray).getLast(), ((JsonArray) parsedJsonArray).getLast());
 		// test parsing a string starting and ending with spaces
 		jsonString = "    {\"test\": " + jsonString + "}  ";
-		json = JsonParser.parseString(jsonString);
+		parsedJson = JsonParser.parseString(jsonString);
 		jsonString = jsonString.replaceAll(": ", ":").replaceAll("  ", "");
-		assertEquals(jsonString, json.toString());
+		assertEquals(jsonString, parsedJson.toString());
 	}
 
 	@Test
 	public void cloningTest() throws CloneNotSupportedException {
 		// test the basics of the json object clone function
-		JsonElement simpleJson = new JsonObject("simple", "json");
-		JsonElement json = new JsonObject("testString", "test");
+		JsonObject simpleJson = new JsonObject("simple", "json");
+		JsonObject json = new JsonObject("testString", "test");
 		json.add("testJson", simpleJson);
-		JsonElement clonedJson = json.clone();
+		JsonObject clonedJson = json.clone();
 		assertEquals(json, clonedJson);
 		// test that the clone isn't the same instance as the original
 		assertFalse(json == clonedJson);
@@ -163,8 +163,8 @@ public class JsonTest extends AbstractBenchmark {
 		clonedJson = json.clone(false);
 		assertTrue(simpleJson == clonedJson.get("testJson"));
 		// test the basics of the json array clone function
-		JsonElement jsonArray = new JsonArray(1, "test", 531.12, simpleJson);
-		JsonElement clonedJsonArray = jsonArray.clone();
+		JsonArray jsonArray = new JsonArray(1, "test", 531.12, simpleJson);
+		JsonArray clonedJsonArray = jsonArray.clone();
 		assertEquals(jsonArray, clonedJsonArray);
 		// test that the clone isn't the same instance as the original
 		assertFalse(jsonArray == clonedJsonArray);
@@ -179,17 +179,17 @@ public class JsonTest extends AbstractBenchmark {
 	@Test
 	public void deduplcationTest() throws CloneNotSupportedException {
 		// test the basic deduplication functionality
-		JsonElement json1 = new JsonObject("stringTest", "String Test");
+		JsonObject json1 = new JsonObject("stringTest", "String Test");
 		json1.add("longTest", Integer.MAX_VALUE * 5l);
 		json1.add("doubleTest", 654.321);
-		JsonElement json2 = json1.clone();
+		JsonObject json2 = json1.clone();
 		((JsonObject) json2).remove("doubleTest");
 		json2.add("intTest", 468);
-		JsonElement deduplicatedJson = new JsonObject("doubleTest", null);
+		JsonObject deduplicatedJson = new JsonObject("doubleTest", null);
 		deduplicatedJson.add("intTest", 468);
 		assertEquals(deduplicatedJson, json2.changes(json1));
 		// test reconstruction
-		JsonElement reconstructedJson = deduplicatedJson.reconstruct(json1);
+		JsonObject reconstructedJson = deduplicatedJson.reconstruct(json1);
 		assertEquals(json2, reconstructedJson);
 		// test deduplication of subjsons
 		json1.add("jsonTest", json2);
@@ -208,7 +208,7 @@ public class JsonTest extends AbstractBenchmark {
 		reconstructedJson = deduplicatedJson.reconstruct(json1, false);
 		assertEquals(json2, reconstructedJson);
 		// test deduplication and reconstruction of a json containing a json array
-		JsonElement jsonArray = new JsonArray("array", 123);
+		JsonArray jsonArray = new JsonArray("array", 123);
 		json1.add("arrayTest", jsonArray);
 		jsonArray = jsonArray.clone();
 		((JsonArray) jsonArray).addAll(Integer.MAX_VALUE * 2l, "test");
@@ -224,13 +224,13 @@ public class JsonTest extends AbstractBenchmark {
 		reconstructedJson = deduplicatedJson.reconstruct(json1);
 		assertEquals(json2, reconstructedJson);
 		// test basic deduplication of json arrays
-		JsonElement jsonArray1 = new JsonArray(json1.values());
-		JsonElement jsonArray2 = jsonArray1.clone();
+		JsonArray jsonArray1 = new JsonArray(json1.values());
+		JsonArray jsonArray2 = jsonArray1.clone();
 		((JsonArray) jsonArray2).remove(3);
 		((JsonArray) jsonArray2).add(1, "test");
-		JsonElement deduplicatedJsonArray = jsonArray2.changes(jsonArray1);
+		JsonArray deduplicatedJsonArray = jsonArray2.changes(jsonArray1);
 		assertNotEquals(jsonArray2, deduplicatedJsonArray);
-		JsonElement reconstructedJsonArray = deduplicatedJsonArray.reconstruct(jsonArray1);
+		JsonArray reconstructedJsonArray = deduplicatedJsonArray.reconstruct(jsonArray1);
 		assertEquals(jsonArray2, reconstructedJsonArray);
 		// test deduplication of json arrays with a changed subjson
 		jsonArray1.add(0, "test");
@@ -249,7 +249,7 @@ public class JsonTest extends AbstractBenchmark {
 		PipedInputStream pIn = new PipedInputStream(pOut);
 		ObjectOutputStream oOut = new ObjectOutputStream(pOut);
 		ObjectInputStream oIn = new ObjectInputStream(pIn);
-		JsonElement json = new JsonObject("stringTest", "Test String &2$?");
+		JsonObject json = new JsonObject("stringTest", "Test String &2$?");
 		json.add("longTest", Integer.MAX_VALUE * 2l);
 		json.add("jsonTest", json.clone());
 		json.remove("longTest", true);
@@ -265,7 +265,7 @@ public class JsonTest extends AbstractBenchmark {
 		deserialzedJson = oIn.readObject();
 		assertEquals(json, deserialzedJson);
 		// test json array serialization
-		JsonElement jsonArray = new JsonArray(json.values());
+		JsonArray jsonArray = new JsonArray(json.values());
 		((JsonArray) jsonArray).addAll(123, 456, 789);
 		oOut.writeObject(jsonArray.clone());// clone the json because otherwise the caching will prevent it from getting
 											// written multiple times.
@@ -278,16 +278,16 @@ public class JsonTest extends AbstractBenchmark {
 	@Test
 	public void compareTest() throws CloneNotSupportedException {
 		// test json object comparison
-		JsonElement json1 = new JsonObject("testString", "Some Random String!");
+		JsonObject json1 = new JsonObject("testString", "Some Random String!");
 		json1.add("testInt", 321456);
 		json1.add("testJson", ((JsonObject) json1).clone());
-		JsonElement json2 = ((JsonObject) json1).clone();
+		JsonObject json2 = ((JsonObject) json1).clone();
 		json2.put("testInt", 2);
 		assertNotEquals(0, json1.compareTo(json2));
 		assertEquals(json1.compareTo(json2), -json2.compareTo(json1));
 		// test comparing json arrays
-		JsonElement jsonArray1 = new JsonArray("testString", json1, 321234, "TesT StrinG");
-		JsonElement jsonArray2 = jsonArray1.clone();
+		JsonArray jsonArray1 = new JsonArray("testString", json1, 321234, "TesT StrinG");
+		JsonArray jsonArray2 = jsonArray1.clone();
 		((JsonArray) jsonArray2).add("test");
 		assertNotEquals(0, jsonArray1.compareTo(jsonArray2));
 		assertEquals(jsonArray1.compareTo(jsonArray2), -jsonArray2.compareTo(jsonArray1));

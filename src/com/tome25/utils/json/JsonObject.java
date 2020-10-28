@@ -21,7 +21,7 @@ import com.tome25.utils.exception.InvalidTypeException;
  * @author ToMe25
  *
  */
-public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
+public class JsonObject implements JsonElement<String>, Map<String, Object>, Cloneable {
 
 	private static final long serialVersionUID = 8864863917582360165L;
 	private Map<String, Object> content = new HashMap<String, Object>();
@@ -52,28 +52,12 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 	}
 
 	@Override
-	public Object add(Object key, Object value) {
-		if (key instanceof String) {
-			if (content.containsKey(key)) {
-				throw new InvalidKeyException(String.valueOf(key), "it exists already!");
-			} else {
-				return content.put((String) key, value);
-			}
-		} else {
-			throw new InvalidTypeException("String", key.getClass().getSimpleName());
-		}
-	}
-
-	/**
-	 * Adds the given key with the given value if it doesn't already exist.
-	 * 
-	 * @param key   the key to add.
-	 * @param value the value to add.
-	 * @throws InvalidKeyException when there already an object with this Key.
-	 * @return depends on the implementation.
-	 */
 	public Object add(String key, Object value) {
-		return add((Object) key, value);
+		if (content.containsKey(key)) {
+			throw new InvalidKeyException(String.valueOf(key), "it exists already!");
+		} else {
+			return content.put((String) key, value);
+		}
 	}
 
 	/**
@@ -82,18 +66,12 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 	 * 
 	 * @param key   the Key to add.
 	 * @param value the value to set for key.
-	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for {@link JsonObject}s).
 	 * @return the previous value associated with key, or null if there was no
 	 *         mapping for key.
 	 */
 	@Override
-	public Object put(Object key, Object value) {
-		if (key instanceof String) {
-			return content.put((String) key, value);
-		} else {
-			throw new InvalidTypeException("String", key.getClass().getSimpleName());
-		}
+	public Object put(String key, Object value) {
+		return content.put(key, value);
 	}
 
 	/**
@@ -101,28 +79,15 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 	 * existing.
 	 * 
 	 * @param m mappings to be stored in this Json.
-	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for {@link JsonObject}s).
 	 */
 	@Override
-	public void putAll(Map<? extends Object, ? extends Object> m) {
-		m.forEach((key, value) -> {
-			if (key instanceof String) {
-				content.put((String) key, value);
-			} else {
-				throw new InvalidTypeException("String", key.getClass().getSimpleName());
-			}
-		});
+	public void putAll(Map<? extends String, ? extends Object> m) {
+		content.putAll(m);
 	}
 
 	@Override
-	public Object set(Object key, Object element) {
+	public Object set(String key, Object element) {
 		return put(key, element);
-	}
-
-	@Override
-	public void setAll(Map<? extends Object, ? extends Object> m) {
-		putAll(m);
 	}
 
 	/**
@@ -170,12 +135,8 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 	}
 
 	@Override
-	public String getString(Object key) {
-		if (key instanceof String) {
-			return content.get(key).toString();
-		} else {
-			throw new InvalidTypeException("String", key.getClass().getSimpleName());
-		}
+	public String getString(String key) {
+		return content.get(key).toString();
 	}
 
 	/**
@@ -235,7 +196,7 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 			int size = 0;
 			for (Object key : content.keySet()) {
 				if (content.get(key) instanceof JsonElement) {
-					size += ((JsonElement) content.get(key)).size(recursive);
+					size += ((JsonElement<?>) content.get(key)).size(recursive);
 				} else {
 					size++;
 				}
@@ -274,8 +235,8 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 		for (String key : content.keySet()) {
 			try {
 				Object value = content.get(key);
-				if (recursive && value instanceof JsonElement && ((JsonElement) value).supportsClone()) {
-					clone.add(key, ((JsonElement) value).clone(recursive));
+				if (recursive && value instanceof JsonElement && ((JsonElement<?>) value).supportsClone()) {
+					clone.add(key, ((JsonElement<?>) value).clone(recursive));
 				} else {
 					clone.add(key, value);
 				}
@@ -322,10 +283,8 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 	}
 
 	@Override
-	public Set<Entry<Object, Object>> entrySet() {
-		Map<Object, Object> converter = new HashMap<Object, Object>();
-		converter.putAll(content);
-		return converter.entrySet();
+	public Set<Entry<String, Object>> entrySet() {
+		return content.entrySet();
 	}
 
 	@Override
@@ -334,10 +293,8 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 	}
 
 	@Override
-	public Set<Object> keySet() {
-		Set<Object> converter = new HashSet<Object>();
-		converter.addAll(content.keySet());
-		return converter;
+	public Set<String> keySet() {
+		return content.keySet();
 	}
 
 	@Override
@@ -347,23 +304,18 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 
 	@Override
 	public Iterator<Object> iterator() {
-		return keySet().iterator();
+		Set<Object> objectSet = new HashSet<Object>();
+		objectSet.addAll(keySet());
+		return objectSet.iterator();
 	}
 
 	@Override
-	public JsonObject changes(JsonElement from) {
+	public JsonObject changes(JsonElement<String> from) {
 		return changes(from, true);
 	}
 
 	@Override
-	public JsonObject changes(JsonElement from, boolean recursive) {
-		if (!(from instanceof JsonObject)) {
-			if (supportsClone()) {
-				return clone(true);
-			} else {
-				return this;
-			}
-		}
+	public JsonObject changes(JsonElement<String> from, boolean recursive) {
 		JsonObject last = (JsonObject) from;
 		JsonObject changes = new JsonObject();
 		content.keySet().forEach((key) -> {
@@ -371,11 +323,13 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 				if (last.containsKey(key)) {
 					if (content.get(key) != null && !content.get(key).equals(last.get(key))) {
 						if (content.get(key) instanceof JsonElement && last.get(key) instanceof JsonElement) {
-							if (recursive && ((JsonElement) content.get(key)).supportsChanges()
-									&& ((JsonElement) last.get(key)).supportsChanges()) {
-								changes.add(key, ((JsonElement) content.get(key)).changes((JsonElement) last.get(key)));
-							} else if (((JsonElement) content.get(key)).supportsClone()) {
-								changes.add(key, ((JsonElement) content.get(key)).clone(true));
+							JsonElement<?> value = (JsonElement<?>) content.get(key);
+							JsonElement<?> lastValue = (JsonElement<?>) last.get(key);
+							if (recursive && value.supportsChanges() && lastValue.supportsChanges()
+									&& value.getKeyType().equals(lastValue.getKeyType())) {
+								changes.add(key, changes(lastValue, value));
+							} else if (((JsonElement<?>) content.get(key)).supportsClone()) {
+								changes.add(key, ((JsonElement<?>) content.get(key)).clone(true));
 							} else {
 								changes.add(key, content.get(key));
 							}
@@ -384,8 +338,8 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 						}
 					}
 				} else if (content.get(key) instanceof JsonElement
-						&& ((JsonElement) content.get(key)).supportsClone()) {
-					changes.add(key, ((JsonElement) content.get(key)).clone(true));
+						&& ((JsonElement<?>) content.get(key)).supportsClone()) {
+					changes.add(key, ((JsonElement<?>) content.get(key)).clone(true));
 				} else {
 					changes.add(key, content.get(key));
 				}
@@ -402,19 +356,12 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 	}
 
 	@Override
-	public JsonObject reconstruct(JsonElement from) {
+	public JsonObject reconstruct(JsonElement<String> from) {
 		return reconstruct(from, true);
 	}
 
 	@Override
-	public JsonObject reconstruct(JsonElement from, boolean recursive) {
-		if (!(from instanceof JsonObject) || equals(from)) {
-			if (supportsClone()) {
-				return clone(true);
-			} else {
-				return this;
-			}
-		}
+	public JsonObject reconstruct(JsonElement<String> from, boolean recursive) {
 		JsonObject last = (JsonObject) from;
 		JsonObject reconstructed = new JsonObject();
 		content.keySet().forEach((key) -> {
@@ -422,12 +369,13 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 				if (last.containsKey(key)) {
 					if (content.get(key) != null && !content.get(key).equals(last.get(key))) {
 						if (content.get(key) instanceof JsonElement && last.get(key) instanceof JsonElement) {
-							if (recursive && ((JsonElement) content.get(key)).supportsChanges()
-									&& ((JsonElement) last.get(key)).supportsChanges()) {
-								reconstructed.add(key,
-										((JsonElement) content.get(key)).reconstruct((JsonElement) last.get(key)));
-							} else if (((JsonElement) content.get(key)).supportsClone()) {
-								reconstructed.add(key, ((JsonElement) content.get(key)).clone(true));
+							JsonElement<?> value = (JsonElement<?>) content.get(key);
+							JsonElement<?> lastValue = (JsonElement<?>) last.get(key);
+							if (recursive && value.supportsChanges() && lastValue.supportsChanges()
+									&& value.getKeyType().equals(lastValue.getKeyType())) {
+								reconstructed.add(key, reconstruct(lastValue, value));
+							} else if (((JsonElement<?>) content.get(key)).supportsClone()) {
+								reconstructed.add(key, ((JsonElement<?>) content.get(key)).clone(true));
 							} else {
 								reconstructed.add(key, content.get(key));
 							}
@@ -436,15 +384,15 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 						}
 					} else if (content.get(key) != null) {
 						if (content.get(key) instanceof JsonElement
-								&& ((JsonElement) content.get(key)).supportsClone()) {
-							reconstructed.add(key, ((JsonElement) content.get(key)).clone(true));
+								&& ((JsonElement<?>) content.get(key)).supportsClone()) {
+							reconstructed.add(key, ((JsonElement<?>) content.get(key)).clone(true));
 						} else {
 							reconstructed.add(key, content.get(key));
 						}
 					}
 				} else if (content.get(key) instanceof JsonElement
-						&& ((JsonElement) content.get(key)).supportsClone()) {
-					reconstructed.add(key, ((JsonElement) content.get(key)).clone(true));
+						&& ((JsonElement<?>) content.get(key)).supportsClone()) {
+					reconstructed.add(key, ((JsonElement<?>) content.get(key)).clone(true));
 				} else {
 					reconstructed.add(key, content.get(key));
 				}
@@ -455,8 +403,8 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 		last.keySet().forEach((key) -> {
 			if (!content.containsKey(key)) {
 				try {
-					if (last.get(key) instanceof JsonElement && ((JsonElement) last.get(key)).supportsClone()) {
-						reconstructed.add(key, ((JsonElement) last.get(key)).clone(true));
+					if (last.get(key) instanceof JsonElement && ((JsonElement<?>) last.get(key)).supportsClone()) {
+						reconstructed.add(key, ((JsonElement<?>) last.get(key)).clone(true));
 					} else {
 						reconstructed.add(key, last.get(key));
 					}
@@ -487,7 +435,7 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 	}
 
 	@Override
-	public int compareTo(JsonElement o) {
+	public int compareTo(JsonElement<?> o) {
 		if (this.equals(o)) {
 			return 0;
 		}
@@ -495,16 +443,17 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 		List<Object> diffs1 = new ArrayList<Object>();
 		List<Object> diffs2 = new ArrayList<Object>();
 		if (o instanceof JsonObject) {
+			JsonObject jo = (JsonObject) o;
 			content.keySet().forEach((key) -> {
-				if (o.containsKey(key)) {
-					difference[0] += compare(content.get(key), o.get(key));
+				if (jo.containsKey(key)) {
+					difference[0] += compare(content.get(key), jo.get(key));
 				} else {
 					diffs1.add(content.get(key));
 				}
 			});
-			((JsonObject) o).keySet().forEach((key) -> {
+			jo.keySet().forEach((key) -> {
 				if (!content.containsKey(key)) {
-					diffs2.add(o.get(key));
+					diffs2.add(jo.get(key));
 				}
 			});
 		} else {
@@ -551,7 +500,7 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 			Class<?> class2 = obj2.getClass();
 			if (class1.isAssignableFrom(class2)) {
 				@SuppressWarnings({ "unchecked", "rawtypes" })
-				int diff = ((Comparable) obj1).compareTo((Comparable) obj2);
+				int diff = ((Comparable<Comparable>) obj1).compareTo((Comparable<?>) obj2);
 				if (diff > 0) {
 					return 1;
 				} else if (diff < 0) {
@@ -561,7 +510,7 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 				}
 			} else if (class2.isAssignableFrom(class1)) {
 				@SuppressWarnings({ "unchecked", "rawtypes" })
-				int diff = ((Comparable) obj2).compareTo((Comparable) obj1);
+				int diff = ((Comparable<Comparable>) obj2).compareTo((Comparable<?>) obj1);
 				if (diff > 0) {
 					return -1;
 				} else if (diff < 0) {
@@ -572,6 +521,11 @@ public class JsonObject implements JsonElement, Map<Object, Object>, Cloneable {
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	public Class<String> getKeyType() {
+		return String.class;
 	}
 
 }

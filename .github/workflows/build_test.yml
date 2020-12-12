@@ -46,3 +46,11 @@ jobs:
       with:
         name: build-java-${{ matrix.java }}-${{ matrix.os }}
         path: target/tome25s-java-utilities-*.jar
+
+    - name: Upload maven dump
+      id: upload_dump
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: maven-dump-java-${{ matrix.java }}-${{ matrix.os }}
+        path: target/surefire-reports/*.dump

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -52,8 +53,9 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	 */
 	private boolean traceLineNumber = false;
 	private int traceStartDepth = 4;
-	private Config cfg;
 	private boolean endLineSeperator = true;
+	private Config cfg;
+
 	private static final String LINE_SEPARATOR = System.lineSeparator();
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
 
@@ -64,12 +66,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	 * @param outs the {@link OutputStream}s to print to.
 	 */
 	public TracingMultiPrintStream(OutputStream... outs) {
-		this(new File(
-				new File(TracingMultiPrintStream.class.getProtectionDomain().getCodeSource().getLocation().getPath())
-						.getParent(),
-				LogTracer.classNameToSimpleClassName(Thread.currentThread().getStackTrace()[2].getClassName())
-						+ "TracingMultiPrintStream.cfg"),
-				outs);
+		this(null, outs);
 	}
 
 	/**
@@ -81,8 +78,41 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	 */
 	public TracingMultiPrintStream(File configFile, OutputStream... outs) {
 		super(outs);
-		cfg = new Config(false, configFile.getParentFile(), false);
-		readConfig(configFile);
+		if (configFile == null) {
+			URL resource = Thread.currentThread().getContextClassLoader().getResource("");
+			if (resource == null) {
+				StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+				for (Thread thread : Thread.getAllStackTraces().keySet()) {
+					if (thread.getId() == 1) {
+						stackTrace = Thread.getAllStackTraces().get(thread);
+						break;
+					}
+				}
+				try {
+					Class<?> mainClass = Class.forName(stackTrace[stackTrace.length - 1].getClassName());
+					configFile = new File(mainClass.getProtectionDomain().getCodeSource().getLocation().getPath());
+					configFile = configFile.getParentFile();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				configFile = new File(resource.getPath());
+			}
+			String caller = "";
+			for (StackTraceElement trace : Thread.currentThread().getStackTrace()) {
+				if (caller == "") {
+					caller = trace.getClassName();
+					continue;
+				}
+				caller = trace.getClassName();
+				if (caller != TracingMultiPrintStream.class.getName()) {
+					break;
+				}
+			}
+			configFile = new File(configFile,
+					LogTracer.classNameToSimpleClassName(caller) + "TracingMultiPrintStream.cfg");
+		}
+		initConfig(configFile);
 	}
 
 	@Override
@@ -250,6 +280,10 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	 * @return the tracing part for the start of the output.
 	 */
 	private String getTrace() {
+		if (!cfg.isInitialized()) {
+			cfg.readConfig();
+			readConfig();
+		}
 		String ret = "";
 		if (traceTimestamp) {
 			ret += "[" + DATE_FORMAT.format(new Date()) + "]";
@@ -428,12 +462,12 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	}
 
 	/**
-	 * Reads the values from the given config file.
+	 * Initializes the config object and reads its values from the config file.
 	 * 
 	 * @param cfgFile the config file to read.
 	 */
-	private void readConfig(File cfgFile) {
-		// init config
+	private void initConfig(File cfgFile) {
+		cfg = new Config(false, cfgFile.getParentFile(), true, cfg -> readConfig());
 		cfg.addConfig(cfgFile, "traceTimestamp", traceTimestamp,
 				"Whether the beginning of every line of output should contain a timestamp.");
 		cfg.addConfig(cfgFile, "traceThread", traceThread,
@@ -455,7 +489,12 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 				"Whether the beginning of every line of output should contain the number of the line writing it.");
 		cfg.addConfig(cfgFile, "traceStartDepth", traceStartDepth,
 				"How deep into the Stacktrace the tracer should start looking for informations.");
-		// read config
+	}
+
+	/**
+	 * Reads the values from the given config file.
+	 */
+	private void readConfig() {
 		cfg.readConfig();
 		traceTimestamp = (boolean) cfg.getConfig("traceTimestamp");
 		traceThread = (boolean) cfg.getConfig("traceThread");
@@ -473,6 +512,16 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((cfg == null) ? 0 : cfg.hashCode());
+		result = prime * result + (endLineSeperator ? 1231 : 1237);
+		result = prime * result + (traceLineNumber ? 1231 : 1237);
+		result = prime * result + (traceOutputtingClass ? 1231 : 1237);
+		result = prime * result + (traceOutputtingMethod ? 1231 : 1237);
+		result = prime * result + (traceSimpleClassName ? 1231 : 1237);
+		result = prime * result + traceStartDepth;
+		result = prime * result + (traceSystemClassMethods ? 1231 : 1237);
+		result = prime * result + (traceSystemClasses ? 1231 : 1237);
+		result = prime * result + (traceThread ? 1231 : 1237);
+		result = prime * result + (traceTimestamp ? 1231 : 1237);
 		return result;
 	}
 
@@ -493,6 +542,36 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 				return false;
 			}
 		} else if (!cfg.equals(other.cfg)) {
+			return false;
+		}
+		if (endLineSeperator != other.endLineSeperator) {
+			return false;
+		}
+		if (traceLineNumber != other.traceLineNumber) {
+			return false;
+		}
+		if (traceOutputtingClass != other.traceOutputtingClass) {
+			return false;
+		}
+		if (traceOutputtingMethod != other.traceOutputtingMethod) {
+			return false;
+		}
+		if (traceSimpleClassName != other.traceSimpleClassName) {
+			return false;
+		}
+		if (traceStartDepth != other.traceStartDepth) {
+			return false;
+		}
+		if (traceSystemClassMethods != other.traceSystemClassMethods) {
+			return false;
+		}
+		if (traceSystemClasses != other.traceSystemClasses) {
+			return false;
+		}
+		if (traceThread != other.traceThread) {
+			return false;
+		}
+		if (traceTimestamp != other.traceTimestamp) {
 			return false;
 		}
 		return true;

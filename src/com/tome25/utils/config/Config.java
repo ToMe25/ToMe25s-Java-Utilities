@@ -26,50 +26,67 @@ public class Config {
 	private Map<String, ConfigValue<?>> cfg = new HashMap<String, ConfigValue<?>>();
 	private Map<File, List<ConfigValue<?>>> sortedConfig = new HashMap<File, List<ConfigValue<?>>>();
 	private Map<File, ReentrantLock> fileLocks = new HashMap<File, ReentrantLock>();
-	private File cfgDir;
+	private final File cfgDir;
 	private boolean read;
+	private boolean initialized;
+	private String softwareName;
+	private final Consumer<File> callback;
 	private ConfigWatcher watcher;
 
 	/**
-	 * Creates a new Config.
+	 * Creates a new Config object.
 	 */
 	public Config() {
 		this(true);
 	}
 
 	/**
-	 * Creates a new Config.
+	 * Creates a new Config object.
 	 * 
 	 * @param read whether the config file should be automatically read on addition
 	 *             of options.
 	 */
 	public Config(boolean read) {
-		this(new File(Config.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParentFile(),
-				read);
+		this(true, null);
 	}
 
 	/**
-	 * Creates a new Config.
+	 * Creates a new Config object. Null arguments will be replaced with
+	 * automatically detected values.
 	 * 
 	 * @param configDir the directory to put config files in.
 	 */
 	public Config(File configDir) {
-		this(configDir, true);
+		this(true, configDir);
 	}
 
 	/**
-	 * Creates a new Config.
+	 * Creates a new Config object. Null arguments will be replaced with
+	 * automatically detected values.
 	 * 
-	 * @param configDir the directory to put config files in.
 	 * @param read      whether the config file should be automatically read on
 	 *                  addition of options.
+	 * @param configDir the directory to put config files in.
 	 */
-	public Config(File configDir, boolean read) {
+	public Config(boolean read, File configDir) {
 		this(read, configDir, true);
 	}
 
 	/**
-	 * Creates a new Config.
+	 * Creates a new Config object. Null arguments will be replaced with
+	 * automatically detected values.
+	 * 
+	 * @param configDir the directory to put config files in.
+	 * @param watch     whether to watch the config directory, and update config
+	 *                  options on change.
+	 */
+	public Config(File configDir, boolean watch) {
+		this(true, configDir, watch);
+	}
+
+	/**
+	 * Creates a new Config object. Null arguments will be replaced with
+	 * automatically detected values.
 	 * 
 	 * @param read      whether the config file should be automatically read on
 	 *                  addition of options.
@@ -78,7 +95,23 @@ public class Config {
 	 *                  options on change.
 	 */
 	public Config(boolean read, File configDir, boolean watch) {
-		this(read, configDir, watch, null);
+		this(read, configDir, watch, (String) null);
+	}
+
+	/**
+	 * Creates a new Config object. Null arguments will be replaced with
+	 * automatically detected values.
+	 * 
+	 * @param read         whether the config file should be automatically read on
+	 *                     addition of options.
+	 * @param configDir    the directory to put config files in.
+	 * @param watch        whether to watch the config directory, and update config
+	 *                     options on change.
+	 * @param softwareName the name of the software using this, to be used in the
+	 *                     config description.
+	 */
+	public Config(boolean read, File configDir, boolean watch, String softwareName) {
+		this(read, configDir, watch, null, softwareName);
 	}
 
 	/**
@@ -93,19 +126,57 @@ public class Config {
 	 *                  values change.
 	 */
 	public Config(boolean read, File configDir, boolean watch, Consumer<File> callback) {
+		this(read, configDir, watch, callback, null);
+	}
+
+	/**
+	 * Creates a new Config object. Null arguments will be replaced with
+	 * automatically detected values.
+	 * 
+	 * @param read         whether the config file should be automatically read on
+	 *                     addition of options.
+	 * @param configDir    the directory to put config files in.
+	 * @param watch        whether to watch the config directory, and update config
+	 *                     options on change.
+	 * @param callback     a consumer to call with the changed file when a files
+	 *                     config values change.
+	 * @param softwareName the name of the software using this, to be used in the
+	 *                     config description.
+	 */
+	public Config(boolean read, File configDir, boolean watch, Consumer<File> callback, String softwareName) {
+		if (configDir == null) {
+			configDir = new File(Thread.currentThread().getContextClassLoader().getResource("").getPath(), "config");
+		}
 		configDir = configDir.getAbsoluteFile();
 		cfgDir = configDir;
 		this.read = read;
-		if (watch) {
-			if (!configDir.exists()) {
-				configDir.mkdirs();
+		if (softwareName == null) {
+			try {
+				StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+				for (Thread thread : Thread.getAllStackTraces().keySet()) {
+					if (thread.getId() == 1) {
+						stackTrace = Thread.getAllStackTraces().get(thread);
+						break;
+					}
+				}
+				Class<?> mainClass = Class.forName(stackTrace[stackTrace.length - 1].getClassName());
+				softwareName = new File(mainClass.getProtectionDomain().getCodeSource().getLocation().getPath())
+						.getName();
+			} catch (Exception e) {
+				e.printStackTrace();
+				softwareName = "unknown";
 			}
-			watcher = new ConfigWatcher(configDir, file -> {
+		}
+		this.softwareName = softwareName;
+		if (watch) {
+			this.callback = file -> {
 				sortConfig();
 				if (readConfigFile(file) && callback != null) {
 					callback.accept(file);
 				}
-			});
+			};
+		} else {
+			this.callback = null;
 		}
 	}
 
@@ -265,6 +336,11 @@ public class Config {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		if (watcher == null && callback != null) {
+			watcher = new ConfigWatcher(cfgDir, callback);
+		}
+		initialized = true;
 		return changed;
 	}
 
@@ -358,8 +434,8 @@ public class Config {
 			config.setReadable(true, true);
 			config.setWritable(true, true);
 			try {
-				// This line has it's own try catch Block because sometimes this Program hasn't
-				// the Permissions to do that.
+				// This line has it's own try catch Block because sometimes this Program doesn't
+				// have the Permissions to do that.
 				config.setExecutable(false, false);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -372,10 +448,9 @@ public class Config {
 			}
 			if (sortedConfig.containsKey(config)) {
 				FileOutputStream fiout = new FileOutputStream(config);
-				fiout.write(String.format("# The %s Configuration for %s.%n",
-						config.getName().substring(0, config.getName().lastIndexOf('.')),
-						new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath())
-								.getName())
+				fiout.write(String
+						.format("# The %s Configuration for %s.%n",
+								config.getName().substring(0, config.getName().lastIndexOf('.')), softwareName)
 						.getBytes());
 				fiout.flush();
 				List<ConfigValue<?>> configCopy = new ArrayList<ConfigValue<?>>(sortedConfig.get(config));
@@ -407,6 +482,15 @@ public class Config {
 	}
 
 	/**
+	 * Checks whether this config was read already, since its creation.
+	 * 
+	 * @return whether the config is fully initialized.
+	 */
+	public boolean isInitialized() {
+		return initialized;
+	}
+
+	/**
 	 * Deletes all used config files, and the config directory, if it is empty.
 	 */
 	public void delete() {
@@ -421,9 +505,13 @@ public class Config {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((callback == null) ? 0 : callback.hashCode());
 		result = prime * result + ((cfg == null) ? 0 : cfg.hashCode());
 		result = prime * result + ((cfgDir == null) ? 0 : cfgDir.hashCode());
+		result = prime * result + ((fileLocks == null) ? 0 : fileLocks.hashCode());
+		result = prime * result + (initialized ? 1231 : 1237);
 		result = prime * result + (read ? 1231 : 1237);
+		result = prime * result + ((softwareName == null) ? 0 : softwareName.hashCode());
 		result = prime * result + ((sortedConfig == null) ? 0 : sortedConfig.hashCode());
 		result = prime * result + ((watcher == null) ? 0 : watcher.hashCode());
 		return result;
@@ -441,6 +529,13 @@ public class Config {
 			return false;
 		}
 		Config other = (Config) obj;
+		if (callback == null) {
+			if (other.callback != null) {
+				return false;
+			}
+		} else if (!callback.equals(other.callback)) {
+			return false;
+		}
 		if (cfg == null) {
 			if (other.cfg != null) {
 				return false;
@@ -455,7 +550,24 @@ public class Config {
 		} else if (!cfgDir.equals(other.cfgDir)) {
 			return false;
 		}
+		if (fileLocks == null) {
+			if (other.fileLocks != null) {
+				return false;
+			}
+		} else if (!fileLocks.equals(other.fileLocks)) {
+			return false;
+		}
+		if (initialized != other.initialized) {
+			return false;
+		}
 		if (read != other.read) {
+			return false;
+		}
+		if (softwareName == null) {
+			if (other.softwareName != null) {
+				return false;
+			}
+		} else if (!softwareName.equals(other.softwareName)) {
 			return false;
 		}
 		if (sortedConfig == null) {

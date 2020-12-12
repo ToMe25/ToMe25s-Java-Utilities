@@ -3,6 +3,7 @@ package com.tome25.utils.logging;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -61,11 +62,7 @@ public class TracingFormatter extends Formatter {
 	 * Creates a new TracingFormatter with the default config file.
 	 */
 	public TracingFormatter() {
-		this(new File(
-				new File(TracingMultiPrintStream.class.getProtectionDomain().getCodeSource().getLocation().getPath())
-						.getParent(),
-				LogTracer.classNameToSimpleClassName(Thread.currentThread().getStackTrace()[2].getClassName())
-						+ "TracingFormatter.cfg"));
+		this(null);
 	}
 
 	/**
@@ -75,8 +72,41 @@ public class TracingFormatter extends Formatter {
 	 */
 	public TracingFormatter(File configFile) {
 		super();
-		cfg = new Config(false, configFile.getParentFile(), false);
-		readConfig(configFile);
+		if (configFile == null) {
+			URL resource = Thread.currentThread().getContextClassLoader().getResource("");
+			if (resource == null) {
+				StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+				for (Thread thread : Thread.getAllStackTraces().keySet()) {
+					if (thread.getId() == 1) {
+						stackTrace = Thread.getAllStackTraces().get(thread);
+						break;
+					}
+				}
+				try {
+					Class<?> mainClass = Class.forName(stackTrace[stackTrace.length - 1].getClassName());
+					configFile = new File(mainClass.getProtectionDomain().getCodeSource().getLocation().getPath());
+					configFile = configFile.getParentFile();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				configFile = new File(resource.getPath());
+			}
+			configFile = new File(configFile, "config");
+			String caller = "";
+			for (StackTraceElement trace : Thread.currentThread().getStackTrace()) {
+				if (caller == "") {
+					caller = trace.getClassName();
+					continue;
+				}
+				caller = trace.getClassName();
+				if (caller != TracingFormatter.class.getName() && caller != LogTracer.class.getName()) {
+					break;
+				}
+			}
+			configFile = new File(configFile, LogTracer.classNameToSimpleClassName(caller) + "TracingFormatter.cfg");
+		}
+		initConfig(configFile);
 	}
 
 	@Override
@@ -97,10 +127,11 @@ public class TracingFormatter extends Formatter {
 	}
 
 	/**
-	 * Adds the given trace block to the begining of every line in the given message.
+	 * Adds the given trace block to the begining of every line in the given
+	 * message.
 	 * 
 	 * @param message the message to add the trace block to.
-	 * @param trace the trace block.
+	 * @param trace   the trace block.
 	 * @return the traced message.
 	 */
 	private String traceMessage(String message, String trace) {
@@ -108,10 +139,10 @@ public class TracingFormatter extends Formatter {
 			return message;
 		}
 		StringBuffer buffer = new StringBuffer(200);
-		for (String line:message.split(System.lineSeparator())) {
-			if(line.isEmpty()) {
+		for (String line : message.split(System.lineSeparator())) {
+			if (line.isEmpty()) {
 				buffer.append(System.lineSeparator());
-			} else if(line.trim().isEmpty()) {
+			} else if (line.trim().isEmpty()) {
 				buffer.append(line);
 				buffer.append(System.lineSeparator());
 			} else {
@@ -130,6 +161,10 @@ public class TracingFormatter extends Formatter {
 	 * @return the trace block.
 	 */
 	private String getTrace(LogRecord record) {
+		if (!cfg.isInitialized()) {
+			cfg.readConfig();
+			readConfig();
+		}
 		StringBuffer buffer = new StringBuffer(75);
 		if (traceTimestamp) {
 			buffer.append(String.format("[%s] ", DATE_FORMAT.format(new Date(record.getMillis()))));
@@ -159,13 +194,17 @@ public class TracingFormatter extends Formatter {
 			}
 			if (traceMethod) {
 				if (traceClass) {
-					trace += ".";
+					trace += '.';
 				}
 				trace += record.getSourceMethodName();
 			}
+			if (traceLine && !traceFile) {
+				trace += ':';
+				trace += LogTracer.getCallerStackTraceElement(record.getSourceClassName()).getLineNumber();
+			}
 			buffer.append(String.format("[%s] ", trace));
 		}
-		if (traceFile || traceLine) {
+		if (traceFile || (traceLine && !(traceClass || traceMethod))) {
 			String trace = "";
 			StackTraceElement traceElement = LogTracer.getCallerStackTraceElement(record.getSourceClassName());
 			if (traceFile) {
@@ -203,12 +242,12 @@ public class TracingFormatter extends Formatter {
 	}
 
 	/**
-	 * Reads the values from the given config file.
+	 * Initializes the config object and reads its values from the config file.
 	 * 
 	 * @param cfgFile the config file to read.
 	 */
-	private void readConfig(File cfgFile) {
-		// init config
+	private void initConfig(File cfgFile) {
+		cfg = new Config(false, cfgFile.getParentFile(), true, cfg -> readConfig());
 		cfg.addConfig(cfgFile, "traceTimestamp", traceTimestamp,
 				"Whether the beginning of every line of output should contain a timestamp.");
 		cfg.addConfig(cfgFile, "traceThread", traceThread,
@@ -228,8 +267,12 @@ public class TracingFormatter extends Formatter {
 				"Whether the beginning of every line of output should contain the number of the line writing it.");
 		cfg.addConfig(cfgFile, "traceFileName", traceFile,
 				"Whether the beginning of every line of output should contain the name of the file writing it.");
-		// read config
-		cfg.readConfig();
+	}
+
+	/**
+	 * Reads the values from the given config file.
+	 */
+	private void readConfig() {
 		traceTimestamp = (boolean) cfg.getConfig("traceTimestamp");
 		traceThread = (boolean) cfg.getConfig("traceThread");
 		traceClass = (boolean) cfg.getConfig("traceOutputtingClass");
@@ -239,6 +282,72 @@ public class TracingFormatter extends Formatter {
 		traceLevel = (boolean) cfg.getConfig("traceLevel");
 		traceLine = (boolean) cfg.getConfig("traceLineNumber");
 		traceFile = (boolean) cfg.getConfig("traceFileName");
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cfg == null) ? 0 : cfg.hashCode());
+		result = prime * result + (traceClass ? 1231 : 1237);
+		result = prime * result + (traceFile ? 1231 : 1237);
+		result = prime * result + (traceLevel ? 1231 : 1237);
+		result = prime * result + (traceLine ? 1231 : 1237);
+		result = prime * result + (traceLogger ? 1231 : 1237);
+		result = prime * result + (traceMethod ? 1231 : 1237);
+		result = prime * result + (traceSimpleClassName ? 1231 : 1237);
+		result = prime * result + (traceThread ? 1231 : 1237);
+		result = prime * result + (traceTimestamp ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		TracingFormatter other = (TracingFormatter) obj;
+		if (cfg == null) {
+			if (other.cfg != null) {
+				return false;
+			}
+		} else if (!cfg.equals(other.cfg)) {
+			return false;
+		}
+		if (traceClass != other.traceClass) {
+			return false;
+		}
+		if (traceFile != other.traceFile) {
+			return false;
+		}
+		if (traceLevel != other.traceLevel) {
+			return false;
+		}
+		if (traceLine != other.traceLine) {
+			return false;
+		}
+		if (traceLogger != other.traceLogger) {
+			return false;
+		}
+		if (traceMethod != other.traceMethod) {
+			return false;
+		}
+		if (traceSimpleClassName != other.traceSimpleClassName) {
+			return false;
+		}
+		if (traceThread != other.traceThread) {
+			return false;
+		}
+		if (traceTimestamp != other.traceTimestamp) {
+			return false;
+		}
+		return true;
 	}
 
 }

@@ -91,6 +91,7 @@ public class ConfigTest {
 		Config cfg = new Config(true, cfgFolder, true, (file) -> changed[0] = true);
 		cfg.addConfig("Watcher.cfg", "stringTest", "Some Random String",
 				"A String that definitely wont get changed...");
+		cfg.readConfig();
 		assertEquals("Some Random String", cfg.getConfig("stringTest"));
 		FileInputStream fIn = new FileInputStream(new File(cfgFolder, "Watcher.cfg"));
 		byte[] buffer = new byte[fIn.available()];

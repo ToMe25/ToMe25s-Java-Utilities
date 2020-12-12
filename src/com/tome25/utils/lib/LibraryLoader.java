@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.lang.instrument.Instrumentation;
 import java.lang.management.ManagementFactory;
+import java.net.URL;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +20,7 @@ import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
+import java.util.jar.Manifest;
 
 /**
  * 
@@ -34,9 +36,12 @@ import java.util.jar.JarOutputStream;
  */
 public class LibraryLoader {
 
+	@Deprecated
 	private static Instrumentation instrumentation;
 	private static byte[] buffer;
 	private static String[] mainArgs;
+
+	private static final URL MANIFEST = getManifest();
 
 	/**
 	 * Initializes a LibraryLoader, restarts your JVM if necessary, tries to
@@ -141,19 +146,20 @@ public class LibraryLoader {
 			boolean update) {
 		ByteArrayOutputStream buf = new ByteArrayOutputStream();
 		PrintStream pb = new PrintStream(buf);
-		File codeSource = new File(LibraryLoader.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-		boolean missing = !new File(new File(codeSource.getParent(), "libs"), "ToMe25s-Java-Utilities.jar").exists();
+		File program = new File(MANIFEST.getFile().substring(5)).getParentFile().getParentFile();
+		program = new File(program.toString().substring(0, program.toString().length() - 1));
+		boolean missing = new File(new File(program.getParent(), "libs"), "ToMe25s-Java-Utilities.jar").exists();
 		boolean created = false;
 		if (missing || update) {
 			LibraryDownloader downloader = new LibraryDownloader(
-					new File(codeSource.getParent(), "ToMe25s-Java-Utilities-Download-Url.txt"), defaultUrlStorage,
+					new File(program.getParent(), "ToMe25s-Java-Utilities-Download-Url.txt"), defaultUrlStorage,
 					true, true);
 			if (downloader.downloadFile()) {
 				pb.format("Successfully downloaded ToMe25s-Java-Utilites from %s.%n",
 						downloader.getDownloadUrl().toString());
 				created = missing;
-			} else if (JarExtractor.extractThis(codeSource)) {
-				pb.format("Successfully extracted ToMe25s-Java-Utilites from %s.%n", codeSource.toString());
+			} else if (JarExtractor.extractThis(program)) {
+				pb.format("Successfully extracted ToMe25s-Java-Utilites from %s.%n", program.toString());
 				created = missing;
 			}
 		}
@@ -207,40 +213,9 @@ public class LibraryLoader {
 						this.getClass().getName());
 				File tempFile = new File(file.getParent(), "tmp.jar");
 				tempFile.deleteOnExit();
-				FileOutputStream fiout = new FileOutputStream(tempFile);
-				JarOutputStream jarOut = new JarOutputStream(fiout, jar.getManifest());
-				Enumeration<JarEntry> entries = jar.entries();
-				while (entries.hasMoreElements()) {
-					JarEntry entry = entries.nextElement();
-					if (entry.getName().equals("META-INF/MANIFEST.MF")) {
-						continue;
-					}
-					jarOut.putNextEntry(entry);
-					InputStream jarIn = jar.getInputStream(entry);
-					while (jarIn.available() > 0) {
-						jarOut.write(jarIn.read());
-					}
-					jarIn.close();
-				}
-				jarOut.close();
+				copyJar(file, tempFile, jar.getManifest());
+				copyJar(tempFile, file);
 				jar.close();
-				fiout.close();
-				jar = new JarFile(tempFile);
-				fiout = new FileOutputStream(file);
-				jarOut = new JarOutputStream(fiout);
-				entries = jar.entries();
-				while (entries.hasMoreElements()) {
-					JarEntry entry = entries.nextElement();
-					jarOut.putNextEntry(entry);
-					InputStream jarIn = jar.getInputStream(entry);
-					while (jarIn.available() > 0) {
-						jarOut.write(jarIn.read());
-					}
-					jarIn.close();
-				}
-				jarOut.close();
-				jar.close();
-				fiout.close();
 				tempFile.delete();
 			}
 			ProcessBuilder pb = new ProcessBuilder("java", "-javaagent:" + file.getAbsolutePath(), "-jar",
@@ -358,9 +333,11 @@ public class LibraryLoader {
 	 * next to this jar. Automatically restarts this software if necessary.
 	 */
 	public static void addThisToClasspath() {
-		File library = new File("libs", "ToMe25s-Java-Utilities.jar");
+		File lib = new File(MANIFEST.getFile().substring(5)).getParentFile().getParentFile().getParentFile();
+		lib = new File(lib, "libs");
+		lib = new File(lib, "ToMe25s-Java-Utilities.jar");
 		try {
-			addToClasspath(library, true);
+			addToClasspath(lib, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -376,7 +353,9 @@ public class LibraryLoader {
 		if (!library.endsWith(".jar") && !library.endsWith("*")) {
 			library += ".jar";
 		}
-		File lib = new File("libs", library);
+		File lib = new File(MANIFEST.getFile().substring(5)).getParentFile().getParentFile().getParentFile();
+		lib = new File(lib, "libs");
+		lib = new File(lib, library);
 		try {
 			addToClasspath(lib);
 		} catch (Exception e) {
@@ -404,9 +383,13 @@ public class LibraryLoader {
 	 *                       classpath.
 	 */
 	public static void addLibsToClasspath(Predicate<String> libraryChecker) {
+		if (MANIFEST == null)
+			return;
 		try {
+			File libs = new File(MANIFEST.getFile().substring(5)).getParentFile().getParentFile().getParentFile();
+			libs = new File(libs, "libs");
 			boolean restart = false;
-			for (String file : new File("libs").list()) {
+			for (String file : libs.list()) {
 				if (libraryChecker.test(file)) {
 					restart = addToClasspath(new File("libs", file)) || restart;
 				}
@@ -449,69 +432,32 @@ public class LibraryLoader {
 	 * @throws IOException if something goes wrong.
 	 */
 	public static boolean addToClasspath(String path) throws IOException {
-		File file = new File(LibraryLoader.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-		if (!file.exists()) {
+		if (MANIFEST == null) {
 			throw new FileNotFoundException(
-					"This programs Code Source doesn't exists, most likely it got deleted while running!");
-		} else if (!file.isFile()) {
-			throw new FileNotFoundException(
-					"This programs Code Source isn't a file, most likely this is run before being packaged "
+					"This programs MANIFEST.MF doesn't exist, most likely this is run before being packaged "
 							+ "into a jar, but this can't work then!");
 		}
-		file.setReadable(true);
-		file.setWritable(true);
-		file.setExecutable(true);
-		JarFile jar = new JarFile(file);
-		String classpath = "";
-		if (jar.getManifest().getMainAttributes().get(new Attributes.Name("Class-Path")) != null) {
-			classpath = (String) jar.getManifest().getMainAttributes().get(new Attributes.Name("Class-Path"));
-		}
+		File program = new File(MANIFEST.getFile().substring(5)).getParentFile().getParentFile();
+		program = new File(program.toString().substring(0, program.toString().length() - 1));
+		Manifest manifest = new Manifest(MANIFEST.openStream());
+		String classpath = manifest.getMainAttributes().getValue("Class-Path");
+		if (classpath == null)
+			classpath = "";
 		if (!classpath.contains(path)) {
 			if (!classpath.isEmpty()) {
 				classpath += ' ';
 			}
 			classpath += path;
-			jar.getManifest().getMainAttributes().put(new Attributes.Name("Class-Path"), classpath);
-			File tempFile = new File(file.getParent(), "tmp.jar");
+			manifest.getMainAttributes().putValue("Class-Path", classpath);
+			File tempFile = new File(program.getParent(), "tmp.jar");
 			tempFile.deleteOnExit();
-			FileOutputStream fiout = new FileOutputStream(tempFile);
-			JarOutputStream jarOut = new JarOutputStream(fiout, jar.getManifest());
-			Enumeration<JarEntry> entries = jar.entries();
-			while (entries.hasMoreElements()) {
-				JarEntry entry = entries.nextElement();
-				if (entry.getName().equals("META-INF/MANIFEST.MF")) {
-					continue;
-				}
-				jarOut.putNextEntry(entry);
-				InputStream jarIn = jar.getInputStream(entry);
-				while (jarIn.available() > 0) {
-					jarOut.write(jarIn.read());
-				}
-				jarIn.close();
-			}
-			jarOut.close();
-			jar.close();
-			fiout.close();
-			jar = new JarFile(tempFile);
-			fiout = new FileOutputStream(file);
-			jarOut = new JarOutputStream(fiout);
-			entries = jar.entries();
-			while (entries.hasMoreElements()) {
-				JarEntry entry = entries.nextElement();
-				jarOut.putNextEntry(entry);
-				InputStream jarIn = jar.getInputStream(entry);
-				while (jarIn.available() > 0) {
-					jarOut.write(jarIn.read());
-				}
-				jarIn.close();
-			}
-			jarOut.close();
-			jar.close();
-			fiout.close();
+			program.setWritable(true);
+			copyJar(program, tempFile, manifest);
+			copyJar(tempFile, program);
 			tempFile.delete();
+			program.setExecutable(true);
 			return true;
 		} else {
-			jar.close();
 			return false;
 		}
 	}
@@ -584,23 +530,15 @@ public class LibraryLoader {
 	 * @throws IOException if something goes wrong.
 	 */
 	public static boolean removeFromClasspath(String path) throws IOException {
-		File file = new File(LibraryLoader.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-		if (!file.exists()) {
+		if (MANIFEST == null) {
 			throw new FileNotFoundException(
-					"This programs Code Source doesn't exists, most likely it got deleted while running!");
-		} else if (!file.isFile()) {
-			throw new FileNotFoundException(
-					"This programs Code Source isn't a file, most likely this is run before being packaged "
+					"This programs MANIFEST.MF doesn't exist, most likely this is run before being packaged "
 							+ "into a jar, but this can't work then!");
 		}
-		file.setReadable(true);
-		file.setWritable(true);
-		file.setExecutable(true);
-		JarFile jar = new JarFile(file);
-		String classpath = "";
-		if (jar.getManifest().getMainAttributes().get(new Attributes.Name("Class-Path")) != null) {
-			classpath = (String) jar.getManifest().getMainAttributes().get(new Attributes.Name("Class-Path"));
-		}
+		File program = new File(MANIFEST.getFile().substring(5)).getParentFile().getParentFile();
+		program = new File(program.toString().substring(0, program.toString().length() - 1));
+		Manifest manifest = new Manifest(MANIFEST.openStream());
+		String classpath = manifest.getMainAttributes().getValue("Class-Path");
 		if (classpath.contains(path + ' ') || classpath.endsWith(path)) {
 			if (classpath.contains(path + ' ')) {
 				classpath = classpath.replaceAll(path + ' ', "");
@@ -609,48 +547,17 @@ public class LibraryLoader {
 			} else if (classpath.endsWith(path)) {
 				classpath = classpath.substring(0, classpath.length() - path.length());
 			}
-			jar.getManifest().getMainAttributes().put(new Attributes.Name("Class-Path"), classpath);
-			File tempFile = new File(file.getParent(), "tmp.jar");
+			manifest.getMainAttributes().putValue("Class-Path", classpath);
+			File tempFile = new File(program.getParent(), "tmp.jar");
 			tempFile.deleteOnExit();
-			FileOutputStream fiout = new FileOutputStream(tempFile);
-			JarOutputStream jarOut = new JarOutputStream(fiout, jar.getManifest());
-			Enumeration<JarEntry> entries = jar.entries();
-			while (entries.hasMoreElements()) {
-				JarEntry entry = entries.nextElement();
-				if (entry.getName().equals("META-INF/MANIFEST.MF")) {
-					continue;
-				}
-				jarOut.putNextEntry(entry);
-				InputStream jarIn = jar.getInputStream(entry);
-				while (jarIn.available() > 0) {
-					jarOut.write(jarIn.read());
-				}
-				jarIn.close();
-			}
-			jarOut.close();
-			jar.close();
-			fiout.close();
-			jar = new JarFile(tempFile);
-			fiout = new FileOutputStream(file);
-			jarOut = new JarOutputStream(fiout);
-			entries = jar.entries();
-			while (entries.hasMoreElements()) {
-				JarEntry entry = entries.nextElement();
-				jarOut.putNextEntry(entry);
-				InputStream jarIn = jar.getInputStream(entry);
-				while (jarIn.available() > 0) {
-					jarOut.write(jarIn.read());
-				}
-				jarIn.close();
-			}
-			jarOut.close();
-			jar.close();
-			fiout.close();
+			program.setWritable(true);
+			copyJar(program, tempFile, manifest);
+			copyJar(tempFile, program);
 			tempFile.delete();
+			program.setExecutable(true);
 			return true;
 		} else {
 			System.err.format("Couldn't remove %s from the classpath, as it wasn't there.%n", path);
-			jar.close();
 			return false;
 		}
 	}
@@ -735,11 +642,12 @@ public class LibraryLoader {
 	 * Restarts this JVM. Requires setArgs to be run first!
 	 */
 	public static void restart() {
-		File codeSource = new File(LibraryLoader.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+		File program = new File(MANIFEST.getFile().substring(5)).getParentFile().getParentFile();
+		program = new File(program.toString().substring(0, program.toString().length() - 1));
 		List<String> command = new ArrayList<String>();
 		command.add("java");
 		command.add("-jar");
-		command.add(codeSource.getAbsolutePath());
+		command.add(program.getAbsolutePath());
 		command.addAll(ManagementFactory.getRuntimeMXBean().getInputArguments());
 		command.addAll(Arrays.asList(getMainArgsArray()));
 		ProcessBuilder pb = new ProcessBuilder(command);
@@ -747,7 +655,83 @@ public class LibraryLoader {
 		try {
 			pb.start();
 			System.exit(0);
-		} catch (Exception e) {
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Gets the {@link URL} of the currently running jar file. Null if the manifest
+	 * was not found.
+	 * 
+	 * @return the {@link URL} of the currently running jar file. Null if the
+	 *         manifest was not found.
+	 */
+	private static URL getManifest() {
+		try {
+			Enumeration<URL> manifests = Thread.currentThread().getContextClassLoader()
+					.getResources("META-INF/MANIFEST.MF");
+			if (LibraryLoader.class.getPackage().getImplementationTitle() == null) {
+				System.out.println("This package has no implementation title. This is most likely because "
+						+ "it is being run in a development environment, but this function can't work then.");
+				return null;
+			}
+			while (manifests.hasMoreElements()) {
+				URL manifestLocation = manifests.nextElement();
+				Manifest manifest = new Manifest(manifestLocation.openStream());
+				if (LibraryLoader.class.getPackage().getImplementationTitle()
+						.equalsIgnoreCase(manifest.getMainAttributes().getValue("Implementation-Title"))) {
+					return manifestLocation;
+				}
+			}
+		} catch (IOException e) {
+		}
+		return null;
+	}
+
+	/**
+	 * Copies the jar file from input to output.
+	 * 
+	 * @param input  the location to copy the jar from.
+	 * @param output the location to copy the jar to.
+	 */
+	public static void copyJar(File input, File output) {
+		copyJar(input, output, null);
+	}
+
+	/**
+	 * Copies the jar file from input to output, replacing the MANIFEST.MF file with
+	 * the given one.
+	 * 
+	 * @param input    the location to copy the jar from.
+	 * @param output   the location to copy the jar to.
+	 * @param manifest the manifest of the output jar. Set to null to use the one from the input file.
+	 */
+	public static void copyJar(File input, File output, Manifest manifest) {
+		try {
+			JarFile jar = new JarFile(input);
+			if (manifest == null) {
+				manifest = jar.getManifest();
+			}
+			FileOutputStream fiout = new FileOutputStream(output);
+			JarOutputStream jarOut = new JarOutputStream(fiout, manifest);
+			Enumeration<JarEntry> entries = jar.entries();
+			while (entries.hasMoreElements()) {
+				JarEntry entry = entries.nextElement();
+				if (entry.getName().equals("META-INF/MANIFEST.MF")) {
+					continue;
+				}
+				jarOut.putNextEntry(entry);
+				InputStream jarIn = jar.getInputStream(entry);
+				while (jarIn.available() > 0) {
+					jarOut.write(jarIn.read());
+				}
+				jarIn.close();
+			}
+			jarOut.close();
+			jar.close();
+			fiout.close();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

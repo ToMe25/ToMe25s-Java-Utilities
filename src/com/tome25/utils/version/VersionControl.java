@@ -1,10 +1,7 @@
 package com.tome25.utils.version;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.jar.JarFile;
 
 /**
  * A utility class to check library versions.
@@ -117,25 +114,9 @@ public class VersionControl {
 	 */
 	public static String getVersionString() {
 		if (versionString == null) {
-			File file = new File(VersionControl.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-			JarFile jar = null;
-			if (file.isDirectory()) {
+			versionString = VersionControl.class.getPackage().getImplementationVersion();
+			if (versionString == null) {
 				versionString = "1.0";
-			} else {
-				try {
-					jar = new JarFile(file);
-				} catch (IOException e) {
-					e.printStackTrace();
-					versionString = "1.0";
-				}
-			}
-			if (!file.isDirectory()) {
-				try {
-					versionString = jar.getManifest().getMainAttributes().getValue("Implementation-Version");
-				} catch (Exception e) {
-					e.printStackTrace();
-					versionString = "1.0";
-				}
 			}
 		}
 		if (!LIBRARY_VERSION_STRINGS.containsKey("ToMe25s-Java-Utilities")) {
@@ -194,7 +175,7 @@ public class VersionControl {
 	 * is "MAJOR.MINOR.BUILD", if the library adding it didn't mess up.
 	 * 
 	 * @param name the name of the library to check.
-	 * @return the version number.
+	 * @return the version number. Null if no library with this name was found.
 	 */
 	public static String getVersionString(String name) {
 		name = name.toLowerCase();
@@ -210,14 +191,14 @@ public class VersionControl {
 	 * is "MAJOR.MINOR.BUILD", if the library adding it didn't mess up.
 	 * 
 	 * @param name the name of the library to check.
-	 * @return the version number.
+	 * @return the version number. Empty size 0 array of no library with this name was found.
 	 */
 	public static int[] getVersionArray(String name) {
 		name = name.toLowerCase();
 		if (name.equals("tome25s-java-utilities") && !LIBRARY_VERSION_ARRAYS.containsKey(name)) {
 			return getVersionArray();
 		}
-		return LIBRARY_VERSION_ARRAYS.containsKey(name) ? LIBRARY_VERSION_ARRAYS.get(name) : null;
+		return LIBRARY_VERSION_ARRAYS.containsKey(name) ? LIBRARY_VERSION_ARRAYS.get(name) : new int[0];
 	}
 
 	/**

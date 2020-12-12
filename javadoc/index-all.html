@@ -236,6 +236,8 @@
 </a>
 <h2 class="title">C</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#callback">callback</a></span> - Variable in class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#cfg">cfg</a></span> - Variable in class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/ConfigValue.html#cfg">cfg</a></span> - Variable in class com.tome25.utils.config.<a href="com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config">ConfigValue</a></dt>
@@ -344,27 +346,39 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#Config--">Config()</a></span> - Constructor for class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
 <dd>
-<div class="block">Creates a new Config.</div>
+<div class="block">Creates a new Config object.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#Config-boolean-">Config(boolean)</a></span> - Constructor for class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
 <dd>
-<div class="block">Creates a new Config.</div>
+<div class="block">Creates a new Config object.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#Config-java.io.File-">Config(File)</a></span> - Constructor for class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
 <dd>
-<div class="block">Creates a new Config.</div>
+<div class="block">Creates a new Config object.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#Config-boolean-java.io.File-">Config(boolean, File)</a></span> - Constructor for class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
+<dd>
+<div class="block">Creates a new Config object.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#Config-java.io.File-boolean-">Config(File, boolean)</a></span> - Constructor for class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
 <dd>
-<div class="block">Creates a new Config.</div>
+<div class="block">Creates a new Config object.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#Config-boolean-java.io.File-boolean-">Config(boolean, File, boolean)</a></span> - Constructor for class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
 <dd>
-<div class="block">Creates a new Config.</div>
+<div class="block">Creates a new Config object.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#Config-boolean-java.io.File-boolean-java.lang.String-">Config(boolean, File, boolean, String)</a></span> - Constructor for class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
+<dd>
+<div class="block">Creates a new Config object.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#Config-boolean-java.io.File-boolean-java.util.function.Consumer-">Config(boolean, File, boolean, Consumer&lt;File&gt;)</a></span> - Constructor for class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
 <dd>
 <div class="block">Creates a new Config.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#Config-boolean-java.io.File-boolean-java.util.function.Consumer-java.lang.String-">Config(boolean, File, boolean, Consumer&lt;File&gt;, String)</a></span> - Constructor for class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
+<dd>
+<div class="block">Creates a new Config object.</div>
 </dd>
 <dt><a href="com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config"><span class="typeNameLink">ConfigValue</span></a>&lt;<a href="com/tome25/utils/config/ConfigValue.html" title="type parameter in ConfigValue">T</a>&gt; - Class in <a href="com/tome25/utils/config/package-summary.html">com.tome25.utils.config</a></dt>
 <dd>
@@ -430,6 +444,15 @@
 <dd>
 <div class="block">Converts the given object to a string in the way intended for Jsons to match
  the Json specifications.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryLoader.html#copyJar-java.io.File-java.io.File-">copyJar(File, File)</a></span> - Static method in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryLoader.html" title="class in com.tome25.utils.lib">LibraryLoader</a></dt>
+<dd>
+<div class="block">Copies the jar file from input to output.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryLoader.html#copyJar-java.io.File-java.io.File-java.util.jar.Manifest-">copyJar(File, File, Manifest)</a></span> - Static method in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryLoader.html" title="class in com.tome25.utils.lib">LibraryLoader</a></dt>
+<dd>
+<div class="block">Copies the jar file from input to output, replacing the MANIFEST.MF file with
+ the given one.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#createConfig-java.io.File-">createConfig(File)</a></span> - Method in class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
 <dd>
@@ -526,6 +549,8 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LoggingPrintStream.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LoggingPrintStream.html" title="class in com.tome25.utils.logging">LoggingPrintStream</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/MultiPrintStream.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/MultiPrintStream.html" title="class in com.tome25.utils.logging">MultiPrintStream</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#equals-java.lang.Object-">equals(Object)</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
 <dd>&nbsp;</dd>
@@ -844,6 +869,10 @@
 <div class="block">Gets the major part of the given libraries version number, or 1 if it isn't
  available.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryLoader.html#getManifest--">getManifest()</a></span> - Static method in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryLoader.html" title="class in com.tome25.utils.lib">LibraryLoader</a></dt>
+<dd>
+<div class="block">Gets the <a href="https://docs.oracle.com/javase/8/docs/api/java/net/URL.html?is-external=true" title="class or interface in java.net"><code>URL</code></a> of the currently running jar file.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidKeyException.html#getMessage--">getMessage()</a></span> - Method in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception">InvalidKeyException</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidTypeException.html#getMessage--">getMessage()</a></span> - Method in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></dt>
@@ -980,6 +1009,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/MultiPrintStream.html#hashCode--">hashCode()</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/MultiPrintStream.html" title="class in com.tome25.utils.logging">MultiPrintStream</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#hashCode--">hashCode()</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#hashCode--">hashCode()</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -1036,8 +1067,20 @@
  <a href="com/tome25/utils/logging/LoggingPrintStream.html" title="class in com.tome25.utils.logging"><code>LoggingPrintStream</code></a> printing to a logger
  writing to the log files and the previous <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>s.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryLoader.html#instrumentation">instrumentation</a></span> - Static variable in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryLoader.html" title="class in com.tome25.utils.lib">LibraryLoader</a></dt>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#initConfig-java.io.File-">initConfig(File)</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
+<dd>
+<div class="block">Initializes the config object and reads its values from the config file.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#initConfig-java.io.File-">initConfig(File)</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
+<dd>
+<div class="block">Initializes the config object and reads its values from the config file.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#initialized">initialized</a></span> - Variable in class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryLoader.html#instrumentation">instrumentation</a></span> - Static variable in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryLoader.html" title="class in com.tome25.utils.lib">LibraryLoader</a></dt>
+<dd>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+</dd>
 <dt><a href="com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception"><span class="typeNameLink">InvalidKeyException</span></a> - Exception in <a href="com/tome25/utils/exception/package-summary.html">com.tome25.utils.exception</a></dt>
 <dd>
 <div class="block">A simple <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang"><code>RuntimeException</code></a> for invalid keys.</div>
@@ -1081,6 +1124,10 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/ConfigValue.html#isError--">isError()</a></span> - Method in class com.tome25.utils.config.<a href="com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config">ConfigValue</a></dt>
 <dd>
 <div class="block">Checks whether this value caught an error while trying to parse a value.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#isInitialized--">isInitialized()</a></span> - Method in class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
+<dd>
+<div class="block">Checks whether this config was read already, since its creation.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#iterator--">iterator()</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
@@ -1302,6 +1349,8 @@
 <h2 class="title">M</h2>
 <dl>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryLoader.html#mainArgs">mainArgs</a></span> - Static variable in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryLoader.html" title="class in com.tome25.utils.lib">LibraryLoader</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryLoader.html#MANIFEST">MANIFEST</a></span> - Static variable in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryLoader.html" title="class in com.tome25.utils.lib">LibraryLoader</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/exception/InvalidKeyException.html#message">message</a></span> - Variable in exception com.tome25.utils.exception.<a href="com/tome25/utils/exception/InvalidKeyException.html" title="class in com.tome25.utils.exception">InvalidKeyException</a></dt>
 <dd>&nbsp;</dd>
@@ -1555,11 +1604,11 @@
 <dd>
 <div class="block">Reads this Config from the files.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#readConfig-java.io.File-">readConfig(File)</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#readConfig--">readConfig()</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
 <dd>
 <div class="block">Reads the values from the given config file.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#readConfig-java.io.File-">readConfig(File)</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#readConfig--">readConfig()</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
 <dd>
 <div class="block">Reads the values from the given config file.</div>
 </dd>
@@ -1740,6 +1789,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryDownloader.html#size">size</a></span> - Variable in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryDownloader.html" title="class in com.tome25.utils.lib">LibraryDownloader</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#softwareName">softwareName</a></span> - Variable in class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#sortConfig--">sortConfig()</a></span> - Method in class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
 <dd>
 <div class="block">Sorts the <a href="com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config"><code>ConfigValue</code></a>s by the file they are stored in.</div>
@@ -1874,7 +1925,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceMessage-java.lang.String-java.lang.String-">traceMessage(String, String)</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
 <dd>
-<div class="block">Adds the given trace block to the begining of every line in the given message.</div>
+<div class="block">Adds the given trace block to the begining of every line in the given
+ message.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceMethod">traceMethod</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
 <dd>&nbsp;</dd>

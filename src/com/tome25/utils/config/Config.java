@@ -13,6 +13,7 @@ import java.util.function.Consumer;
 import javax.naming.ConfigurationException;
 
 import com.tome25.utils.exception.InvalidTypeException;
+import com.tome25.utils.lib.LibraryLoader;
 
 /**
  * A configuration file handler. This class handles reading from and writing to
@@ -30,7 +31,6 @@ public class Config {
 	private boolean read;
 	private boolean initialized;
 	private String softwareName;
-	private final Consumer<File> callback;
 	private ConfigWatcher watcher;
 
 	/**
@@ -144,40 +144,20 @@ public class Config {
 	 *                     config description.
 	 */
 	public Config(boolean read, File configDir, boolean watch, Consumer<File> callback, String softwareName) {
-		if (configDir == null) {
-			configDir = new File(Thread.currentThread().getContextClassLoader().getResource("").getPath(), "config");
-		}
+		if (configDir == null)
+			configDir = new File(LibraryLoader.getMainFile().getParent(), "config");
+
 		configDir = configDir.getAbsoluteFile();
 		cfgDir = configDir;
 		this.read = read;
+
 		if (softwareName == null) {
-			try {
-				StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-				for (Thread thread : Thread.getAllStackTraces().keySet()) {
-					if (thread.getId() == 1) {
-						stackTrace = Thread.getAllStackTraces().get(thread);
-						break;
-					}
-				}
-				Class<?> mainClass = Class.forName(stackTrace[stackTrace.length - 1].getClassName());
-				softwareName = new File(mainClass.getProtectionDomain().getCodeSource().getLocation().getPath())
-						.getName();
-			} catch (Exception e) {
-				e.printStackTrace();
-				softwareName = "unknown";
-			}
+			softwareName = LibraryLoader.getMainFile().getName();
 		}
+
 		this.softwareName = softwareName;
-		if (watch) {
-			this.callback = file -> {
-				sortConfig();
-				if (readConfigFile(file) && callback != null) {
-					callback.accept(file);
-				}
-			};
-		} else {
-			this.callback = null;
-		}
+		if (watch)
+			watch(callback);
 	}
 
 	/**
@@ -326,6 +306,7 @@ public class Config {
 	public boolean readConfig() {
 		sortConfig();
 		boolean changed = false;
+
 		try {
 			if (!cfgDir.exists() || !cfgDir.isDirectory()) {
 				cfgDir.mkdirs();
@@ -337,9 +318,6 @@ public class Config {
 			e.printStackTrace();
 		}
 
-		if (watcher == null && callback != null) {
-			watcher = new ConfigWatcher(cfgDir, callback);
-		}
 		initialized = true;
 		return changed;
 	}
@@ -501,11 +479,29 @@ public class Config {
 		cfgDir.delete();
 	}
 
+	/**
+	 * Starts watching the config files from this config watcher, notifying the
+	 * given callback if the config changed. If there already was an active
+	 * {@link ConfigWatcher} for this config it will be stopped.
+	 * 
+	 * @param callback the callback for when the config changed.
+	 */
+	public void watch(Consumer<File> callback) {
+		if (watcher != null) {
+			watcher.stop();
+		}
+		watcher = new ConfigWatcher(cfgDir, file -> {
+			sortConfig();
+			if (readConfigFile(file) && callback != null) {
+				callback.accept(file);
+			}
+		});
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((callback == null) ? 0 : callback.hashCode());
 		result = prime * result + ((cfg == null) ? 0 : cfg.hashCode());
 		result = prime * result + ((cfgDir == null) ? 0 : cfgDir.hashCode());
 		result = prime * result + ((fileLocks == null) ? 0 : fileLocks.hashCode());
@@ -529,13 +525,6 @@ public class Config {
 			return false;
 		}
 		Config other = (Config) obj;
-		if (callback == null) {
-			if (other.callback != null) {
-				return false;
-			}
-		} else if (!callback.equals(other.callback)) {
-			return false;
-		}
 		if (cfg == null) {
 			if (other.cfg != null) {
 				return false;

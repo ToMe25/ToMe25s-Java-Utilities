@@ -3,7 +3,6 @@ package com.tome25.utils.logging;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,6 +11,7 @@ import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
 import com.tome25.utils.config.Config;
+import com.tome25.utils.lib.LibraryLoader;
 
 /**
  * A custom {@link Formatter} for the tracing log style.
@@ -73,26 +73,7 @@ public class TracingFormatter extends Formatter {
 	public TracingFormatter(File configFile) {
 		super();
 		if (configFile == null) {
-			URL resource = Thread.currentThread().getContextClassLoader().getResource("");
-			if (resource == null) {
-				StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-				for (Thread thread : Thread.getAllStackTraces().keySet()) {
-					if (thread.getId() == 1) {
-						stackTrace = Thread.getAllStackTraces().get(thread);
-						break;
-					}
-				}
-				try {
-					Class<?> mainClass = Class.forName(stackTrace[stackTrace.length - 1].getClassName());
-					configFile = new File(mainClass.getProtectionDomain().getCodeSource().getLocation().getPath());
-					configFile = configFile.getParentFile();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			} else {
-				configFile = new File(resource.getPath());
-			}
-			configFile = new File(configFile, "config");
+			configFile = new File(LibraryLoader.getMainFile(), "config");
 			String caller = "";
 			for (StackTraceElement trace : Thread.currentThread().getStackTrace()) {
 				if (caller == "") {
@@ -106,7 +87,16 @@ public class TracingFormatter extends Formatter {
 			}
 			configFile = new File(configFile, LogTracer.classNameToSimpleClassName(caller) + "TracingFormatter.cfg");
 		}
+
 		initConfig(configFile);
+		new java.util.Timer().schedule(new java.util.TimerTask() {
+
+			@Override
+			public void run() {
+				cfg.watch(cfg -> readConfig());
+			}
+
+		}, 200);
 	}
 
 	@Override
@@ -161,10 +151,6 @@ public class TracingFormatter extends Formatter {
 	 * @return the trace block.
 	 */
 	private String getTrace(LogRecord record) {
-		if (!cfg.isInitialized()) {
-			cfg.readConfig();
-			readConfig();
-		}
 		StringBuffer buffer = new StringBuffer(75);
 		if (traceTimestamp) {
 			buffer.append(String.format("[%s] ", DATE_FORMAT.format(new Date(record.getMillis()))));
@@ -247,7 +233,8 @@ public class TracingFormatter extends Formatter {
 	 * @param cfgFile the config file to read.
 	 */
 	private void initConfig(File cfgFile) {
-		cfg = new Config(false, cfgFile.getParentFile(), true, cfg -> readConfig());
+		cfg = new Config(false, cfgFile.getParentFile(), false);
+
 		cfg.addConfig(cfgFile, "traceTimestamp", traceTimestamp,
 				"Whether the beginning of every line of output should contain a timestamp.");
 		cfg.addConfig(cfgFile, "traceThread", traceThread,
@@ -267,6 +254,9 @@ public class TracingFormatter extends Formatter {
 				"Whether the beginning of every line of output should contain the number of the line writing it.");
 		cfg.addConfig(cfgFile, "traceFileName", traceFile,
 				"Whether the beginning of every line of output should contain the name of the file writing it.");
+
+		cfg.readConfig();
+		readConfig();
 	}
 
 	/**

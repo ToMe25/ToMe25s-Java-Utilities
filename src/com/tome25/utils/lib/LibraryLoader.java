@@ -152,8 +152,8 @@ public class LibraryLoader {
 		boolean created = false;
 		if (missing || update) {
 			LibraryDownloader downloader = new LibraryDownloader(
-					new File(program.getParent(), "ToMe25s-Java-Utilities-Download-Url.txt"), defaultUrlStorage,
-					true, true);
+					new File(program.getParent(), "ToMe25s-Java-Utilities-Download-Url.txt"), defaultUrlStorage, true,
+					true);
 			if (downloader.downloadFile()) {
 				pb.format("Successfully downloaded ToMe25s-Java-Utilites from %s.%n",
 						downloader.getDownloadUrl().toString());
@@ -195,7 +195,7 @@ public class LibraryLoader {
 	@Deprecated
 	public LibraryLoader(String[] mainArgs) throws IOException {
 		if (instrumentation == null) {
-			File file = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+			File file = getMainFile();
 			if (!file.exists()) {
 				throw new FileNotFoundException(
 						"This programs Code Source doesn't exists, most likely it got deleted while running!");
@@ -676,6 +676,7 @@ public class LibraryLoader {
 						+ "it is being run in a development environment, but this function can't work then.");
 				return null;
 			}
+
 			while (manifests.hasMoreElements()) {
 				URL manifestLocation = manifests.nextElement();
 				Manifest manifest = new Manifest(manifestLocation.openStream());
@@ -705,7 +706,8 @@ public class LibraryLoader {
 	 * 
 	 * @param input    the location to copy the jar from.
 	 * @param output   the location to copy the jar to.
-	 * @param manifest the manifest of the output jar. Set to null to use the one from the input file.
+	 * @param manifest the manifest of the output jar. Set to null to use the one
+	 *                 from the input file.
 	 */
 	public static void copyJar(File input, File output, Manifest manifest) {
 		try {
@@ -713,6 +715,7 @@ public class LibraryLoader {
 			if (manifest == null) {
 				manifest = jar.getManifest();
 			}
+
 			FileOutputStream fiout = new FileOutputStream(output);
 			JarOutputStream jarOut = new JarOutputStream(fiout, manifest);
 			Enumeration<JarEntry> entries = jar.entries();
@@ -728,12 +731,43 @@ public class LibraryLoader {
 				}
 				jarIn.close();
 			}
+
 			jarOut.close();
 			jar.close();
 			fiout.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Gets the jar file currently being executed.
+	 * 
+	 * @return the file that is currently being executed.
+	 */
+	public static File getMainFile() {
+		File mainFile = null;
+		URL resource = Thread.currentThread().getContextClassLoader().getResource("");
+		if (resource == null) {
+			StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+			for (Thread thread : Thread.getAllStackTraces().keySet()) {
+				if (thread.getId() == 1) {
+					stackTrace = Thread.getAllStackTraces().get(thread);
+					break;
+				}
+			}
+
+			try {
+				Class<?> mainClass = Class.forName(stackTrace[stackTrace.length - 1].getClassName());
+				mainFile = new File(mainClass.getProtectionDomain().getCodeSource().getLocation().getPath());
+				mainFile = mainFile.getParentFile();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		} else {
+			mainFile = new File(resource.getPath());
+		}
+		return mainFile;
 	}
 
 }

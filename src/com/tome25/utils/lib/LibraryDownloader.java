@@ -313,8 +313,7 @@ public class LibraryDownloader {
 			boolean makeExecutable) {
 		this.urls = urls;
 		if (target == null) {
-			target = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
-			target = new File(target.getParent(), "libs");
+			target = new File(LibraryLoader.getMainFile(), "libs");
 			targetDir = true;
 		}
 		this.target = target;
@@ -475,8 +474,7 @@ public class LibraryDownloader {
 	 */
 	public static boolean downloadThis(String defaultUrls, Consumer<Exception> exceptionHandler) {
 		LibraryDownloader downloader = new LibraryDownloader(
-				new File(new File(LibraryDownloader.class.getProtectionDomain().getCodeSource().getLocation().getPath())
-						.getParent(), "ToMe25s-Java-Utilities-Download-Url.txt"),
+				new File(LibraryLoader.getMainFile().getParent(), "ToMe25s-Java-Utilities-Download-Url.txt"),
 				defaultUrls, true, true);
 		return downloader.downloadFile();
 	}

@@ -4,13 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
 import com.tome25.utils.config.Config;
+import com.tome25.utils.lib.LibraryLoader;
 
 /**
  * 
@@ -79,25 +79,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	public TracingMultiPrintStream(File configFile, OutputStream... outs) {
 		super(outs);
 		if (configFile == null) {
-			URL resource = Thread.currentThread().getContextClassLoader().getResource("");
-			if (resource == null) {
-				StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-				for (Thread thread : Thread.getAllStackTraces().keySet()) {
-					if (thread.getId() == 1) {
-						stackTrace = Thread.getAllStackTraces().get(thread);
-						break;
-					}
-				}
-				try {
-					Class<?> mainClass = Class.forName(stackTrace[stackTrace.length - 1].getClassName());
-					configFile = new File(mainClass.getProtectionDomain().getCodeSource().getLocation().getPath());
-					configFile = configFile.getParentFile();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			} else {
-				configFile = new File(resource.getPath());
-			}
+			configFile = new File(LibraryLoader.getMainFile(), "config");
 			String caller = "";
 			for (StackTraceElement trace : Thread.currentThread().getStackTrace()) {
 				if (caller == "") {
@@ -112,7 +94,16 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 			configFile = new File(configFile,
 					LogTracer.classNameToSimpleClassName(caller) + "TracingMultiPrintStream.cfg");
 		}
+
 		initConfig(configFile);
+		new java.util.Timer().schedule(new java.util.TimerTask() {
+
+			@Override
+			public void run() {
+				cfg.watch(cfg -> readConfig());
+			}
+
+		}, 200);
 	}
 
 	@Override
@@ -280,10 +271,6 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	 * @return the tracing part for the start of the output.
 	 */
 	private String getTrace() {
-		if (!cfg.isInitialized()) {
-			cfg.readConfig();
-			readConfig();
-		}
 		String ret = "";
 		if (traceTimestamp) {
 			ret += "[" + DATE_FORMAT.format(new Date()) + "]";
@@ -467,7 +454,8 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	 * @param cfgFile the config file to read.
 	 */
 	private void initConfig(File cfgFile) {
-		cfg = new Config(false, cfgFile.getParentFile(), true, cfg -> readConfig());
+		cfg = new Config(false, cfgFile.getParentFile(), false);
+
 		cfg.addConfig(cfgFile, "traceTimestamp", traceTimestamp,
 				"Whether the beginning of every line of output should contain a timestamp.");
 		cfg.addConfig(cfgFile, "traceThread", traceThread,
@@ -489,6 +477,9 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 				"Whether the beginning of every line of output should contain the number of the line writing it.");
 		cfg.addConfig(cfgFile, "traceStartDepth", traceStartDepth,
 				"How deep into the Stacktrace the tracer should start looking for informations.");
+
+		cfg.readConfig();
+		readConfig();
 	}
 
 	/**

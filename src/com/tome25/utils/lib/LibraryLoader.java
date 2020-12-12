@@ -40,6 +40,7 @@ public class LibraryLoader {
 	private static Instrumentation instrumentation;
 	private static byte[] buffer;
 	private static String[] mainArgs;
+	private static File mainFile;
 
 	private static final URL MANIFEST = getManifest();
 
@@ -746,7 +747,9 @@ public class LibraryLoader {
 	 * @return the directory containing the jar that is currently being executed.
 	 */
 	public static File getMainDir() {
-		File mainFile = null;
+		if (mainFile != null)
+			return mainFile;
+
 		URL resource = Thread.currentThread().getContextClassLoader().getResource("");
 		if (resource == null) {
 			StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
@@ -767,6 +770,7 @@ public class LibraryLoader {
 		} else {
 			mainFile = new File(resource.getPath());
 		}
+
 		return mainFile;
 	}
 

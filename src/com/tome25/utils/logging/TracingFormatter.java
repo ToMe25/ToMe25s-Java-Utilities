@@ -73,7 +73,7 @@ public class TracingFormatter extends Formatter {
 	public TracingFormatter(File configFile) {
 		super();
 		if (configFile == null) {
-			configFile = new File(LibraryLoader.getMainFile(), "config");
+			configFile = new File(LibraryLoader.getMainDir(), "config");
 			String caller = "";
 			for (StackTraceElement trace : Thread.currentThread().getStackTrace()) {
 				if (caller == "") {

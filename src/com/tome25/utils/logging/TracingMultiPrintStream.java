@@ -79,7 +79,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	public TracingMultiPrintStream(File configFile, OutputStream... outs) {
 		super(outs);
 		if (configFile == null) {
-			configFile = new File(LibraryLoader.getMainFile(), "config");
+			configFile = new File(LibraryLoader.getMainDir(), "config");
 			String caller = "";
 			for (StackTraceElement trace : Thread.currentThread().getStackTrace()) {
 				if (caller == "") {

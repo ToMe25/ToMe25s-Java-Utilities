@@ -145,14 +145,14 @@ public class Config {
 	 */
 	public Config(boolean read, File configDir, boolean watch, Consumer<File> callback, String softwareName) {
 		if (configDir == null)
-			configDir = new File(LibraryLoader.getMainFile().getParent(), "config");
+			configDir = new File(LibraryLoader.getMainDir().getParent(), "config");
 
 		configDir = configDir.getAbsoluteFile();
 		cfgDir = configDir;
 		this.read = read;
 
 		if (softwareName == null) {
-			softwareName = LibraryLoader.getMainFile().getName();
+			softwareName = LibraryLoader.getMainDir().getName();
 		}
 
 		this.softwareName = softwareName;

@@ -195,7 +195,7 @@ public class LibraryLoader {
 	@Deprecated
 	public LibraryLoader(String[] mainArgs) throws IOException {
 		if (instrumentation == null) {
-			File file = getMainFile();
+			File file = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
 			if (!file.exists()) {
 				throw new FileNotFoundException(
 						"This programs Code Source doesn't exists, most likely it got deleted while running!");
@@ -741,11 +741,11 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Gets the jar file currently being executed.
+	 * Gets the directory the jar that is currently being executed is in.
 	 * 
-	 * @return the file that is currently being executed.
+	 * @return the directory containing the jar that is currently being executed.
 	 */
-	public static File getMainFile() {
+	public static File getMainDir() {
 		File mainFile = null;
 		URL resource = Thread.currentThread().getContextClassLoader().getResource("");
 		if (resource == null) {

@@ -66,6 +66,7 @@
           <version>3.0.0-M5</version>
           <configuration>
             <trimStackTrace>false</trimStackTrace>
+            <rerunFailingTestsCount>1</rerunFailingTestsCount>
           </configuration>
         </plugin>
         <plugin>

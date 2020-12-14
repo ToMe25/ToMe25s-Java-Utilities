@@ -148,27 +148,29 @@ public class LibraryLoader {
 			boolean update) {
 		ByteArrayOutputStream buf = new ByteArrayOutputStream();
 		PrintStream pb = new PrintStream(buf);
-		File program = new File(MANIFEST.getFile().substring(5)).getParentFile().getParentFile();
-		program = new File(program.toString().substring(0, program.toString().length() - 1));
-		boolean missing = new File(new File(program.getParent(), "libs"), "ToMe25s-Java-Utilities.jar").exists();
-		boolean created = false;
-		if (missing || update) {
-			LibraryDownloader downloader = new LibraryDownloader(
-					new File(program.getParent(), "ToMe25s-Java-Utilities-Download-Url.txt"), defaultUrlStorage, true,
-					true);
-			if (downloader.downloadFile()) {
-				pb.format("Successfully downloaded ToMe25s-Java-Utilites from %s.%n",
-						downloader.getDownloadUrl().toString());
-				created = missing;
-			} else if (JarExtractor.extractThis(program)) {
-				pb.format("Successfully extracted ToMe25s-Java-Utilites from %s.%n", program.toString());
-				created = missing;
+		if (MANIFEST != null) {
+			File program = new File(MANIFEST.getFile().substring(5)).getParentFile().getParentFile();
+			program = new File(program.toString().substring(0, program.toString().length() - 1));
+			boolean missing = new File(new File(program.getParent(), "libs"), "ToMe25s-Java-Utilities.jar").exists();
+			boolean created = false;
+			if (missing || update) {
+				LibraryDownloader downloader = new LibraryDownloader(
+						new File(program.getParent(), "ToMe25s-Java-Utilities-Download-Url.txt"), defaultUrlStorage,
+						true, true);
+				if (downloader.downloadFile()) {
+					pb.format("Successfully downloaded ToMe25s-Java-Utilites from %s.%n",
+							downloader.getDownloadUrl().toString());
+					created = missing;
+				} else if (JarExtractor.extractThis(program)) {
+					pb.format("Successfully extracted ToMe25s-Java-Utilites from %s.%n", program.toString());
+					created = missing;
+				}
 			}
-		}
-		setArgs(args);
-		addLibsToClasspath();
-		if (created) {
-			restart();
+			setArgs(args);
+			addLibsToClasspath();
+			if (created) {
+				restart();
+			}
 		}
 		try {
 			com.tome25.utils.logging.LogTracer.traceOutputs(outputLogFile, errorLogFile);// importing this would cause

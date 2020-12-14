@@ -151,7 +151,7 @@ public class LibraryLoader {
 		if (MANIFEST != null) {
 			File program = new File(MANIFEST.getFile().substring(5)).getParentFile().getParentFile();
 			program = new File(program.toString().substring(0, program.toString().length() - 1));
-			boolean missing = new File(new File(program.getParent(), "libs"), "ToMe25s-Java-Utilities.jar").exists();
+			boolean missing = !new File(new File(program.getParent(), "libs"), "ToMe25s-Java-Utilities.jar").exists();
 			boolean created = false;
 			if (missing || update) {
 				LibraryDownloader downloader = new LibraryDownloader(

@@ -36,13 +36,14 @@ public class ConfigTest {
 		assertEquals(32123, (int) cfg.getConfig("testInt"));
 		assertEquals(Double.MAX_VALUE, (double) cfg.getConfig("testDouble"), 0);
 		// test the handling of changed values.
-		FileInputStream fIn = new FileInputStream(new File(cfgFolder, "Test.cfg"));
+		File cfgFile = new File(cfgFolder, "Test.cfg");
+		FileInputStream fIn = new FileInputStream(cfgFile);
 		byte[] buffer = new byte[fIn.available()];
 		fIn.read(buffer);
 		fIn.close();
 		String config = new String(buffer);
 		config = config.replaceAll("World", "Pond").replaceAll("32123", "" + Integer.MAX_VALUE);
-		FileOutputStream fOut = new FileOutputStream(new File(cfgFolder, "Test.cfg"));
+		FileOutputStream fOut = new FileOutputStream(cfgFile);
 		fOut.write(config.getBytes());
 		fOut.close();
 		cfg.readConfig();
@@ -78,9 +79,15 @@ public class ConfigTest {
 		cfg.readConfig();
 		assertEquals(Integer.MIN_VALUE, (int) cfg.getConfig("int"));
 		assertEquals(new JsonObject("key", "value"), cfg.getConfig("json"));
+		// test handling of an empty config file.
+		cfgFile.delete();
+		cfgFile.createNewFile();
+		cfg.readConfig();
+		assertEquals(535, cfgFile.length());
+		assertEquals(Integer.MAX_VALUE / Math.PI, cfg.getConfig("testDouble"), 0);
 		// test config file deletion.
 		cfg.delete();
-		assertFalse("Deleting the config files failed!", new File(cfgFolder, "Test.cfg").exists());
+		assertFalse("Deleting the config files failed!", cfgFile.exists());
 	}
 
 	@Test

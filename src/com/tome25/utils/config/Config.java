@@ -1,12 +1,13 @@
 package com.tome25.utils.config;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
@@ -342,16 +343,14 @@ public class Config {
 			if (!file.exists()) {
 				createConfig(file);
 			}
-			Scanner sc = new Scanner(file);
-			if (!sc.hasNextLine()) {
+			if (file.length() < 5) {
 				createConfig(file);
 			}
-			sc.close();
-			sc = new Scanner(file);
+			BufferedReader reader = new BufferedReader(new FileReader(file));
 			List<ConfigValue<?>> missing = new ArrayList<ConfigValue<?>>(sortedConfig.get(file));
 			boolean error = false;
-			while (sc.hasNextLine()) {
-				String line = sc.nextLine();
+			String line = reader.readLine();
+			while (line != null) {
 				if (!line.startsWith("#") && !line.trim().isEmpty()) {
 					for (ConfigValue<?> c : sortedConfig.get(file)) {
 						if (line.replaceAll(" ", "").startsWith(c.getKey() + ":")) {
@@ -368,8 +367,9 @@ public class Config {
 						}
 					}
 				}
+				line = reader.readLine();
 			}
-			sc.close();
+			reader.close();
 			if (error) {
 				createConfig(file);
 			} else if (!missing.isEmpty()) {

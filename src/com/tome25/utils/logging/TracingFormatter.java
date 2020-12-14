@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
@@ -89,7 +91,7 @@ public class TracingFormatter extends Formatter {
 		}
 
 		initConfig(configFile);
-		new java.util.Timer().schedule(new java.util.TimerTask() {
+		new Timer(true).schedule(new TimerTask() {
 
 			@Override
 			public void run() {

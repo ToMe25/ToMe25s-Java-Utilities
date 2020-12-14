@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.tome25.utils.config.Config;
 import com.tome25.utils.lib.LibraryLoader;
@@ -96,7 +98,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 		}
 
 		initConfig(configFile);
-		new java.util.Timer().schedule(new java.util.TimerTask() {
+		new Timer(true).schedule(new TimerTask() {
 
 			@Override
 			public void run() {

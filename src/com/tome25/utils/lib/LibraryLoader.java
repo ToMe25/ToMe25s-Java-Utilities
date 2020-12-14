@@ -36,13 +36,14 @@ import java.util.jar.Manifest;
  */
 public class LibraryLoader {
 
+	private static final URL MANIFEST = getManifest();
+
 	@Deprecated
 	private static Instrumentation instrumentation;
 	private static byte[] buffer;
 	private static String[] mainArgs;
 	private static File mainFile;
-
-	private static final URL MANIFEST = getManifest();
+	private static Manifest manifest;
 
 	/**
 	 * Initializes a LibraryLoader, restarts your JVM if necessary, tries to
@@ -440,7 +441,9 @@ public class LibraryLoader {
 		}
 		File program = new File(MANIFEST.getFile().substring(5)).getParentFile().getParentFile();
 		program = new File(program.toString().substring(0, program.toString().length() - 1));
-		Manifest manifest = new Manifest(MANIFEST.openStream());
+		if (manifest == null) {
+			manifest = new Manifest(MANIFEST.openStream());
+		}
 		String classpath = manifest.getMainAttributes().getValue("Class-Path");
 		if (classpath == null)
 			classpath = "";
@@ -450,13 +453,6 @@ public class LibraryLoader {
 			}
 			classpath += path;
 			manifest.getMainAttributes().putValue("Class-Path", classpath);
-			File tempFile = new File(program.getParent(), "tmp.jar");
-			tempFile.deleteOnExit();
-			program.setWritable(true);
-			copyJar(program, tempFile, manifest);
-			copyJar(tempFile, program);
-			tempFile.delete();
-			program.setExecutable(true);
 			return true;
 		} else {
 			return false;
@@ -538,7 +534,9 @@ public class LibraryLoader {
 		}
 		File program = new File(MANIFEST.getFile().substring(5)).getParentFile().getParentFile();
 		program = new File(program.toString().substring(0, program.toString().length() - 1));
-		Manifest manifest = new Manifest(MANIFEST.openStream());
+		if (manifest == null) {
+			manifest = new Manifest(MANIFEST.openStream());
+		}
 		String classpath = manifest.getMainAttributes().getValue("Class-Path");
 		if (classpath.contains(path + ' ') || classpath.endsWith(path)) {
 			if (classpath.contains(path + ' ')) {
@@ -549,13 +547,6 @@ public class LibraryLoader {
 				classpath = classpath.substring(0, classpath.length() - path.length());
 			}
 			manifest.getMainAttributes().putValue("Class-Path", classpath);
-			File tempFile = new File(program.getParent(), "tmp.jar");
-			tempFile.deleteOnExit();
-			program.setWritable(true);
-			copyJar(program, tempFile, manifest);
-			copyJar(tempFile, program);
-			tempFile.delete();
-			program.setExecutable(true);
 			return true;
 		} else {
 			System.err.format("Couldn't remove %s from the classpath, as it wasn't there.%n", path);
@@ -640,11 +631,28 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Restarts this JVM. Requires setArgs to be run first!
+	 * Restarts this JVM. Requires setArgs to be run first! Rewrites the manifest if
+	 * necessary.
 	 */
 	public static void restart() {
 		File program = new File(MANIFEST.getFile().substring(5)).getParentFile().getParentFile();
 		program = new File(program.toString().substring(0, program.toString().length() - 1));
+
+		try {
+			Manifest man = new Manifest(MANIFEST.openStream());
+			if (!man.equals(manifest)) {
+				File tempFile = new File(program.getParent(), "tmp.jar");
+				tempFile.deleteOnExit();
+				program.setWritable(true);
+				copyJar(program, tempFile, manifest);
+				copyJar(tempFile, program);
+				tempFile.delete();
+				program.setExecutable(true);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		List<String> command = new ArrayList<String>();
 		command.add("java");
 		command.add("-jar");

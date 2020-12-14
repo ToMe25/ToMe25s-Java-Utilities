@@ -9,6 +9,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -83,7 +85,7 @@ public class ConfigTest {
 		cfgFile.delete();
 		cfgFile.createNewFile();
 		cfg.readConfig();
-		assertEquals(535, cfgFile.length());
+		MatcherAssert.assertThat(cfgFile.length(), CoreMatchers.anyOf(CoreMatchers.is(535L), CoreMatchers.is(556L)));
 		assertEquals(Integer.MAX_VALUE / Math.PI, cfg.getConfig("testDouble"), 0);
 		// test config file deletion.
 		cfg.delete();

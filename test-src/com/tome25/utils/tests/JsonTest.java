@@ -33,8 +33,7 @@ import java.text.ParseException;
 import org.junit.Test;
 
 import com.carrotsearch.junitbenchmarks.AbstractBenchmark;
-import com.tome25.utils.exception.InvalidKeyException;
-import com.tome25.utils.exception.InvalidTypeException;
+import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import com.tome25.utils.json.JsonArray;
 import com.tome25.utils.json.JsonElement;
 import com.tome25.utils.json.JsonObject;
@@ -42,7 +41,14 @@ import com.tome25.utils.json.JsonParser;
 
 public class JsonTest extends AbstractBenchmark {
 
+	/**
+	 * A speed and function test for the fast json
+	 * {@link JsonParser#parseStringFast(String) parsing algorithm}.
+	 * 
+	 * @throws ParseException if the parsing somehow fails.
+	 */
 	@Test
+	@BenchmarkOptions(warmupRounds = 50, benchmarkRounds = 1000)
 	public void fastParsingTest() throws ParseException {
 		// test whether the basic most things work
 		String jsonString = "{\"testString\":\"parsing test\",\"testInt\":123}";
@@ -66,8 +72,17 @@ public class JsonTest extends AbstractBenchmark {
 		assertEquals(json, parsedJson);
 	}
 
+	/**
+	 * Tests the normal json {@link JsonParser#parseString(String) parsing
+	 * algorithm} as much as possible. Should fail if the json parsing somehow fails
+	 * to work correctly.
+	 * 
+	 * @throws ParseException               if the parsing of something fails.
+	 * @throws UnsupportedEncodingException if converting a string to a byte array
+	 *                                      with the UTF-8 encoding fails.
+	 */
 	@Test
-	public void parsingTest() throws ParseException, CloneNotSupportedException, UnsupportedEncodingException {
+	public void parsingTest() throws ParseException, UnsupportedEncodingException {
 		// test whether the basic most things work
 		String jsonString = "{\"testString\":\"Just a simple Test\",\"testInt\":51223,\"testJson\":{\"simple\":\"json\"}}";
 		JsonObject simpleJson = new JsonObject("simple", "json");
@@ -163,8 +178,11 @@ public class JsonTest extends AbstractBenchmark {
 		assertEquals(jsonString, parsedJson.toString());
 	}
 
+	/**
+	 * Tests the cloning of {@link JsonObject}s and {@link JsonArray}s.
+	 */
 	@Test
-	public void cloningTest() throws CloneNotSupportedException {
+	public void cloningTest() {
 		// test the basics of the json object clone function
 		JsonObject simpleJson = new JsonObject("simple", "json");
 		JsonObject json = new JsonObject("testString", "test");
@@ -193,14 +211,18 @@ public class JsonTest extends AbstractBenchmark {
 		assertTrue(simpleJson == clonedJsonArray.get(3));
 	}
 
+	/**
+	 * Tests the deduplication and reconstuction algorithms of {@link JsonObject}s
+	 * and {@link JsonArray}s.
+	 */
 	@Test
-	public void deduplcationTest() throws CloneNotSupportedException {
+	public void deduplcationTest() {
 		// test the basic deduplication functionality
 		JsonObject json1 = new JsonObject("stringTest", "String Test");
 		json1.add("longTest", Integer.MAX_VALUE * 5l);
 		json1.add("doubleTest", 654.321);
 		JsonObject json2 = json1.clone();
-		((JsonObject) json2).remove("doubleTest");
+		json2.remove("doubleTest");
 		json2.add("intTest", 468);
 		JsonObject deduplicatedJson = new JsonObject("doubleTest", null);
 		deduplicatedJson.add("intTest", 468);
@@ -228,7 +250,7 @@ public class JsonTest extends AbstractBenchmark {
 		JsonArray jsonArray = new JsonArray("array", 123);
 		json1.add("arrayTest", jsonArray);
 		jsonArray = jsonArray.clone();
-		((JsonArray) jsonArray).addAll(Integer.MAX_VALUE * 2l, "test");
+		jsonArray.addAll(Integer.MAX_VALUE * 2l, "test");
 		json2.add("arrayTest", jsonArray);
 		deduplicatedJson = json2.changes(json1);
 		reconstructedJson = deduplicatedJson.reconstruct(json1);
@@ -236,15 +258,15 @@ public class JsonTest extends AbstractBenchmark {
 		// test deduplication of jsons if an entire subjson got removed
 		((JsonObject) json1.get("jsonTest")).put("stringTest", "Another Test String");
 		json2 = json1.clone();
-		((JsonObject) json2).remove("jsonTest");
+		json2.remove("jsonTest");
 		deduplicatedJson = json2.changes(json1);
 		reconstructedJson = deduplicatedJson.reconstruct(json1);
 		assertEquals(json2, reconstructedJson);
 		// test basic deduplication of json arrays
 		JsonArray jsonArray1 = new JsonArray(json1.values());
 		JsonArray jsonArray2 = jsonArray1.clone();
-		((JsonArray) jsonArray2).remove(3);
-		((JsonArray) jsonArray2).add(1, "test");
+		jsonArray2.remove(3);
+		jsonArray2.add(1, "test");
 		JsonArray deduplicatedJsonArray = jsonArray2.changes(jsonArray1);
 		assertNotEquals(jsonArray2, deduplicatedJsonArray);
 		JsonArray reconstructedJsonArray = deduplicatedJsonArray.reconstruct(jsonArray1);
@@ -258,9 +280,18 @@ public class JsonTest extends AbstractBenchmark {
 		assertEquals(jsonArray2, reconstructedJsonArray);
 	}
 
+	/**
+	 * Test the serialization and deserialization of {@link JsonObject}s and
+	 * {@link JsonArray}s.
+	 * 
+	 * @throws IOException            if something with the
+	 *                                {@link PipedInputStream}s and
+	 *                                {@link PipedOutputStream}s goes wrong.
+	 * @throws ClassNotFoundException if the class of a serialized object cannot be
+	 *                                found.
+	 */
 	@Test
-	public void serializationTest() throws IOException, InvalidKeyException, InvalidTypeException,
-			CloneNotSupportedException, ClassNotFoundException {
+	public void serializationTest() throws IOException, ClassNotFoundException {
 		// test basic serialization and deserialization
 		PipedOutputStream pOut = new PipedOutputStream();
 		PipedInputStream pIn = new PipedInputStream(pOut);
@@ -270,21 +301,21 @@ public class JsonTest extends AbstractBenchmark {
 		json.add("longTest", Integer.MAX_VALUE * 2l);
 		json.add("jsonTest", json.clone());
 		json.remove("longTest", true);
-		oOut.writeObject(json.clone());// clone the json because otherwise the caching will prevent it from getting
+		oOut.writeObject(json.clone());// Clone the json because otherwise the caching will prevent it from getting
 										// written multiple times.
 		Object deserialzedJson = oIn.readObject();
 		assertEquals(json, deserialzedJson);
 		// test some more string stuff
 		json.add("backslashTest", "Test\\");
 		json.add("newlineTest", "Newline\nTest");
-		oOut.writeObject(json.clone());// clone the json because otherwise the caching will prevent it from getting
+		oOut.writeObject(json.clone());// Clone the json because otherwise the caching will prevent it from getting
 										// written multiple times.
 		deserialzedJson = oIn.readObject();
 		assertEquals(json, deserialzedJson);
 		// test json array serialization
 		JsonArray jsonArray = new JsonArray(json.values());
-		((JsonArray) jsonArray).addAll(123, 456, 789);
-		oOut.writeObject(jsonArray.clone());// clone the json because otherwise the caching will prevent it from getting
+		jsonArray.addAll(123, 456, 789);
+		oOut.writeObject(jsonArray.clone());// Clone the json because otherwise the caching will prevent it from getting
 											// written multiple times.
 		Object deserializedJsonArray = oIn.readObject();
 		assertEquals(jsonArray, deserializedJsonArray);
@@ -292,20 +323,28 @@ public class JsonTest extends AbstractBenchmark {
 		oIn.close();
 	}
 
+	/**
+	 * Tests the comparison of {@link JsonObject}s to other {@link JsonObject}s.
+	 * Also tests {@link JsonArray}s.
+	 */
 	@Test
-	public void compareTest() throws CloneNotSupportedException {
+	public void compareTest() {
 		// test json object comparison
 		JsonObject json1 = new JsonObject("testString", "Some Random String!");
 		json1.add("testInt", 321456);
-		json1.add("testJson", ((JsonObject) json1).clone());
-		JsonObject json2 = ((JsonObject) json1).clone();
+		json1.add("testJson", json1.clone());
+		JsonObject json2 = json1.clone();
 		json2.put("testInt", 2);
 		assertNotEquals(0, json1.compareTo(json2));
 		assertEquals(json1.compareTo(json2), -json2.compareTo(json1));
+		// test comparing two equal json objects
+		json1.add("testLong", Long.MIN_VALUE);
+		json2 = json1.clone();
+		assertEquals(0, json1.compareTo(json2));
 		// test comparing json arrays
 		JsonArray jsonArray1 = new JsonArray("testString", json1, 321234, "TesT StrinG");
 		JsonArray jsonArray2 = jsonArray1.clone();
-		((JsonArray) jsonArray2).add("test");
+		jsonArray2.add("test");
 		assertNotEquals(0, jsonArray1.compareTo(jsonArray2));
 		assertEquals(jsonArray1.compareTo(jsonArray2), -jsonArray2.compareTo(jsonArray1));
 		// test cross comparison
@@ -313,6 +352,10 @@ public class JsonTest extends AbstractBenchmark {
 		assertEquals(json1.compareTo(jsonArray2), -jsonArray2.compareTo(json1));
 	}
 
+	/**
+	 * Tests whether {@link JsonParser#parseString(String)} throws the correct
+	 * exceptions everywhere it should.
+	 */
 	@Test
 	public void parsingExceptionTest() {
 		// test missing start bracket
@@ -379,6 +422,139 @@ public class JsonTest extends AbstractBenchmark {
 		} catch (ParseException e) {
 			assertEquals("Parsing a Json without starting bracket returned invalid error offset!", 15,
 					e.getErrorOffset());
+		}
+	}
+
+	/**
+	 * Tests the speed of executing various actions on a {@link JsonObject}.
+	 * 
+	 * @throws ParseException if the parsing in this speed test fails.
+	 */
+	@Test
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 800)
+	public void jsonObjectSpeedTest() throws ParseException {
+		// Add 200 objects to a Json Object.
+		JsonObject json = new JsonObject();
+		for (int i = 0; i < 200; i++) {
+			if (i % 5 == 0) {
+				json.add("string" + i, "Random string number " + i);
+			} else if (i % 5 == 1) {
+				json.add("int" + i, i * 2);
+			} else if (i % 5 == 2) {
+				json.add("long" + i, ((long) i) * Integer.MAX_VALUE);
+			} else if (i % 5 == 3) {
+				json.add("double" + i, i * Math.PI);
+			} else {
+				json.add("json" + i, new JsonObject("testString", "Some random stinrg with number " + i));
+			}
+		}
+		// Iterate over the json object 50 times.
+		for (int i = 0; i < 50; i++) {
+			json.forEach((k, v) -> {
+				// Do something to prevent the compiler from removing this.
+				if (k == null || v == null) {// this should never happen!
+					throw new NullPointerException();
+				}
+			});
+		}
+		// Get 100 objects.
+		for (int i = 0; i < 100; i++) {
+			Object value;
+			if (i % 5 == 0) {
+				value = json.get("string" + i);
+			} else if (i % 5 == 1) {
+				value = json.remove("int" + i);
+			} else if (i % 5 == 2) {
+				value = json.remove("long" + i);
+			} else if (i % 5 == 3) {
+				value = json.remove("double" + i);
+			} else {
+				value = json.remove("json" + i);
+			}
+			assertNotEquals(value, null);
+		}
+		// Remove 50 objects.
+		for (int i = 0; i < 50; i++) {
+			if (i % 5 == 0) {
+				json.remove("string" + i);
+			} else if (i % 5 == 1) {
+				json.remove("int" + i);
+			} else if (i % 5 == 2) {
+				json.remove("long" + i);
+			} else if (i % 5 == 3) {
+				json.remove("double" + i);
+			} else {
+				json.remove("json" + i);
+			}
+		}
+		// Clone the json object 50 times.
+		for (int i = 0; i < 50; i++) {
+			json = json.clone();
+		}
+		// Convert json to string and parse it again 10 times.
+		for (int i = 0; i < 10; i++) {
+			json = (JsonObject) JsonParser.parseString(json.toString());
+		}
+	}
+
+	/**
+	 * Tests the speed of executing various actions on a {@link JsonArray}.
+	 * 
+	 * @throws ParseException if the parsing in this speed test fails.
+	 */
+	@Test
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 800)
+	public void jsonArraySpeedTest() throws ParseException {
+		// Add 200 objects to a Json Object.
+		JsonArray json = new JsonArray();
+		for (int i = 0; i < 200; i++) {
+			if (i % 5 == 0) {
+				json.add("Random string number " + i);
+			} else if (i % 5 == 1) {
+				json.add(i * 2);
+			} else if (i % 5 == 2) {
+				json.add(((long) i) * Integer.MAX_VALUE);
+			} else if (i % 5 == 3) {
+				json.add(i * Math.PI);
+			} else {
+				json.add(new JsonObject("testString", "Some random stinrg with number " + i));
+			}
+		}
+		// Iterate over the json object 50 times.
+		for (int i = 0; i < 50; i++) {
+			json.forEach(v -> {
+				// Do something to prevent the compiler from removing this.
+				if (v == null) {// this should never happen!
+					throw new NullPointerException();
+				}
+			});
+		}
+		// Get 100 objects.
+		for (int i = 0; i < 100; i++) {
+			Object value = json.get(i);
+			assertNotEquals(value, null);
+		}
+		// Remove 50 objects.
+		for (int i = 0; i < 50; i++) {
+			if (i % 5 == 0) {
+				json.remove("string" + i);
+			} else if (i % 5 == 1) {
+				json.remove("int" + i);
+			} else if (i % 5 == 2) {
+				json.remove("long" + i);
+			} else if (i % 5 == 3) {
+				json.remove("double" + i);
+			} else {
+				json.remove("json" + i);
+			}
+		}
+		// Clone the json object 50 times.
+		for (int i = 0; i < 50; i++) {
+			json = json.clone();
+		}
+		// Convert json to string and parse it again 10 times.
+		for (int i = 0; i < 10; i++) {
+			json = (JsonArray) JsonParser.parseString(json.toString());
 		}
 	}
 

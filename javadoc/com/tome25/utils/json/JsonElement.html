@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":18,"i2":18,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":18,"i11":6,"i12":6,"i13":18,"i14":18,"i15":18,"i16":6,"i17":6,"i18":18,"i19":6,"i20":6,"i21":6,"i22":6,"i23":18,"i24":18,"i25":6,"i26":6,"i27":6,"i28":18,"i29":18,"i30":6,"i31":18,"i32":18,"i33":18,"i34":18,"i35":18,"i36":18,"i37":6,"i38":6};
+var methods = {"i0":6,"i1":18,"i2":18,"i3":18,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":18,"i11":6,"i12":6,"i13":18,"i14":18,"i15":18,"i16":6,"i17":6,"i18":18,"i19":6,"i20":6,"i21":6,"i22":6,"i23":18,"i24":18,"i25":18,"i26":6,"i27":6,"i28":18,"i29":18,"i30":6,"i31":18,"i32":18,"i33":18,"i34":18,"i35":18,"i36":18,"i37":6,"i38":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -160,7 +160,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;</code></td>
+<td class="colFirst"><code>default <a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-boolean-">changes</a></span>(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;from,
        boolean&nbsp;recursive)</code>
 <div class="block">Returns a new JsonElement containing the changes from the given JsonElement
@@ -302,7 +302,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 </td>
 </tr>
 <tr id="i25" class="rowColor">
-<td class="colFirst"><code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;</code></td>
+<td class="colFirst"><code>default <a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-boolean-">reconstruct</a></span>(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;from,
            boolean&nbsp;recursive)</code>
 <div class="block">Returns a new JsonElement containing the values of the given JsonElement with
@@ -1043,9 +1043,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <ul class="blockList">
 <li class="blockList">
 <h4>changes</h4>
-<pre><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;changes(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;from,
-                       boolean&nbsp;recursive)
-                throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></pre>
+<pre>default&nbsp;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;changes(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;from,
+                               boolean&nbsp;recursive)
+                        throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></pre>
 <div class="block">Returns a new JsonElement containing the changes from the given JsonElement
  to this one. This marks removed values by setting them to null, so it will
  not fully work with JsonElements containing null objects.</div>
@@ -1118,8 +1118,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <ul class="blockList">
 <li class="blockList">
 <h4>reconstruct</h4>
-<pre><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;reconstruct(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;from,
-                           boolean&nbsp;recursive)</pre>
+<pre>default&nbsp;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;reconstruct(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;from,
+                                   boolean&nbsp;recursive)</pre>
 <div class="block">Returns a new JsonElement containing the values of the given JsonElement with
  the changes contained in this JsonElement applied. This marks removed values
  by setting them to null, so it will not fully work with JsonElements

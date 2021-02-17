@@ -253,7 +253,7 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 			try {
 				Object value = content.get(key);
 				if (recursive && value instanceof JsonElement && ((JsonElement<?>) value).supportsClone()) {
-					clone.add(key, ((JsonElement<?>) value).clone(recursive));
+					clone.add(key, ((JsonElement<?>) value).clone(true));
 				} else {
 					clone.add(key, value);
 				}
@@ -324,6 +324,11 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 		Set<Object> objectSet = new HashSet<Object>();
 		objectSet.addAll(keySet());
 		return objectSet.iterator();
+	}
+
+	@Override
+	public boolean supportsChanges() {
+		return true;
 	}
 
 	@Override

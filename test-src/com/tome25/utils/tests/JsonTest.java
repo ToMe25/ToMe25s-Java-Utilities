@@ -219,6 +219,7 @@ public class JsonTest extends AbstractBenchmark {
 	public void deduplcationTest() {
 		// test the basic deduplication functionality
 		JsonObject json1 = new JsonObject("stringTest", "String Test");
+		assertTrue("JsonObject no longer states that it supports changes jsons!", json1.supportsChanges());
 		json1.add("longTest", Integer.MAX_VALUE * 5l);
 		json1.add("doubleTest", 654.321);
 		JsonObject json2 = json1.clone();
@@ -248,6 +249,7 @@ public class JsonTest extends AbstractBenchmark {
 		assertEquals(json2, reconstructedJson);
 		// test deduplication and reconstruction of a json containing a json array
 		JsonArray jsonArray = new JsonArray("array", 123);
+		assertTrue("JsonArray no longer states that it supports changes jsons!", jsonArray.supportsChanges());
 		json1.add("arrayTest", jsonArray);
 		jsonArray = jsonArray.clone();
 		jsonArray.addAll(Integer.MAX_VALUE * 2l, "test");

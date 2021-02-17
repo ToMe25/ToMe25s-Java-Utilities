@@ -268,7 +268,7 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	 * @return whether this JsonElement can be cloned.
 	 */
 	public default boolean supportsClone() {
-		return true;
+		return this instanceof Cloneable;
 	}
 
 	/**
@@ -373,7 +373,7 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	 *         version.
 	 */
 	public default boolean supportsChanges() {
-		return true;
+		return false;
 	}
 
 	/**
@@ -404,7 +404,9 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	 * @throws UnsupportedOperationException if this JsonElement doesn't support
 	 *                                       generating a changes JsonElement.
 	 */
-	public JsonElement<K> changes(JsonElement<K> from, boolean recursive) throws UnsupportedOperationException;
+	default public JsonElement<K> changes(JsonElement<K> from, boolean recursive) throws UnsupportedOperationException {
+		throw new UnsupportedOperationException("This object does not support creating a changes json from it!");
+	}
 
 	/**
 	 * A utility method to call to.{@link #changes(JsonElement) changes}(from). This
@@ -455,7 +457,9 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	 * @throws UnsupportedOperationException if this JsonElement doesn't support
 	 *                                       generating a changes JsonElement.
 	 */
-	public JsonElement<K> reconstruct(JsonElement<K> from, boolean recursive);
+	default public JsonElement<K> reconstruct(JsonElement<K> from, boolean recursive) {
+		throw new UnsupportedOperationException("This object does not support creating a changes json from it!");
+	}
 
 	/**
 	 * A utility method to call to.{@link #reconstruct(JsonElement)

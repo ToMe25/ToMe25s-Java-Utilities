@@ -359,6 +359,11 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 	}
 
 	@Override
+	public boolean supportsChanges() {
+		return true;
+	}
+
+	@Override
 	public JsonArray changes(JsonElement<Integer> from) {
 		return changes(from, true);
 	}

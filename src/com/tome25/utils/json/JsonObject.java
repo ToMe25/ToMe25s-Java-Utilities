@@ -22,9 +22,9 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -41,7 +41,7 @@ import com.tome25.utils.exception.InvalidTypeException;
 public class JsonObject implements JsonElement<String>, Map<String, Object>, Cloneable {
 
 	private static final long serialVersionUID = 8864863917582360165L;
-	private Map<String, Object> content = new HashMap<String, Object>();
+	private Map<String, Object> content = new LinkedHashMap<String, Object>();
 
 	/**
 	 * Creates a new empty JsonObject.

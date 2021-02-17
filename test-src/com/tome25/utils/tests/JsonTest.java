@@ -274,7 +274,7 @@ public class JsonTest extends AbstractBenchmark {
 		// test deduplication of json arrays with a changed subjson
 		jsonArray1.add(0, "test");
 		jsonArray2 = jsonArray1.clone();
-		((JsonObject) jsonArray2.get(1)).set("longTest", 123);
+		((JsonObject) jsonArray2.get(4)).set("longTest", 123);
 		deduplicatedJsonArray = jsonArray2.changes(jsonArray1);
 		reconstructedJsonArray = deduplicatedJsonArray.reconstruct(jsonArray1);
 		assertEquals(jsonArray2, reconstructedJsonArray);

@@ -32,31 +32,32 @@ import java.text.ParseException;
 
 import org.junit.Test;
 
-import com.carrotsearch.junitbenchmarks.AbstractBenchmark;
-import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import com.tome25.utils.json.JsonArray;
 import com.tome25.utils.json.JsonElement;
 import com.tome25.utils.json.JsonObject;
 import com.tome25.utils.json.JsonParser;
 
-public class JsonTest extends AbstractBenchmark {
+public class JsonTest {
 
 	/**
-	 * A speed and function test for the fast json
+	 * A full function test for the fast json
 	 * {@link JsonParser#parseStringFast(String) parsing algorithm}.
 	 * 
 	 * @throws ParseException if the parsing somehow fails.
 	 */
 	@Test
-	@BenchmarkOptions(warmupRounds = 50, benchmarkRounds = 1000)
 	public void fastParsingTest() throws ParseException {
-		// test whether the basic most things work
-		String jsonString = "{\"testString\":\"parsing test\",\"testInt\":123}";
-		JsonObject json = new JsonObject("testString", "parsing test");
-		json.put("testInt", 123);
+		// test whether the basic most things work: string key and value
+		String jsonString = "{\"testString\":\"Parsing Test\"}";
+		JsonObject json = new JsonObject("testString", "Parsing Test");
 		assertEquals(jsonString, json.toString());
 		// test whether the fast parser works
 		JsonElement<?> parsedJson = JsonParser.parseStringFast(jsonString);
+		assertEquals(json, parsedJson);
+		// test integers in jsons
+		jsonString = "{\"testString\":\"Parsing Test\",\"testInt\":123}";
+		json.add("testInt", 123);
+		parsedJson = JsonParser.parseStringFast(jsonString);
 		assertEquals(json, parsedJson);
 		// test a string ending with double quotes at the end as that was a problem in
 		// the past
@@ -64,9 +65,13 @@ public class JsonTest extends AbstractBenchmark {
 		jsonString = json.toString();
 		parsedJson = JsonParser.parseStringFast(jsonString);
 		assertEquals(json, parsedJson);
-		// test a string ending with a backslash at the end as that was a problem in the
-		// past
+		// test a string ending with a backslash at the end as caused issues in the past
 		json.add("backslashTest", "backslash:\\");
+		jsonString = json.toString();
+		parsedJson = JsonParser.parseStringFast(jsonString);
+		assertEquals(json, parsedJson);
+		// test some more special characters
+		json.add("controlCharTest", "Test String:\\'[]{}\"^");
 		jsonString = json.toString();
 		parsedJson = JsonParser.parseStringFast(jsonString);
 		assertEquals(json, parsedJson);
@@ -424,139 +429,6 @@ public class JsonTest extends AbstractBenchmark {
 		} catch (ParseException e) {
 			assertEquals("Parsing a Json without starting bracket returned invalid error offset!", 15,
 					e.getErrorOffset());
-		}
-	}
-
-	/**
-	 * Tests the speed of executing various actions on a {@link JsonObject}.
-	 * 
-	 * @throws ParseException if the parsing in this speed test fails.
-	 */
-	@Test
-	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 800)
-	public void jsonObjectSpeedTest() throws ParseException {
-		// Add 200 objects to a Json Object.
-		JsonObject json = new JsonObject();
-		for (int i = 0; i < 200; i++) {
-			if (i % 5 == 0) {
-				json.add("string" + i, "Random string number " + i);
-			} else if (i % 5 == 1) {
-				json.add("int" + i, i * 2);
-			} else if (i % 5 == 2) {
-				json.add("long" + i, ((long) i) * Integer.MAX_VALUE);
-			} else if (i % 5 == 3) {
-				json.add("double" + i, i * Math.PI);
-			} else {
-				json.add("json" + i, new JsonObject("testString", "Some random stinrg with number " + i));
-			}
-		}
-		// Iterate over the json object 50 times.
-		for (int i = 0; i < 50; i++) {
-			json.forEach((k, v) -> {
-				// Do something to prevent the compiler from removing this.
-				if (k == null || v == null) {// this should never happen!
-					throw new NullPointerException();
-				}
-			});
-		}
-		// Get 100 objects.
-		for (int i = 0; i < 100; i++) {
-			Object value;
-			if (i % 5 == 0) {
-				value = json.get("string" + i);
-			} else if (i % 5 == 1) {
-				value = json.remove("int" + i);
-			} else if (i % 5 == 2) {
-				value = json.remove("long" + i);
-			} else if (i % 5 == 3) {
-				value = json.remove("double" + i);
-			} else {
-				value = json.remove("json" + i);
-			}
-			assertNotEquals(value, null);
-		}
-		// Remove 50 objects.
-		for (int i = 0; i < 50; i++) {
-			if (i % 5 == 0) {
-				json.remove("string" + i);
-			} else if (i % 5 == 1) {
-				json.remove("int" + i);
-			} else if (i % 5 == 2) {
-				json.remove("long" + i);
-			} else if (i % 5 == 3) {
-				json.remove("double" + i);
-			} else {
-				json.remove("json" + i);
-			}
-		}
-		// Clone the json object 50 times.
-		for (int i = 0; i < 50; i++) {
-			json = json.clone();
-		}
-		// Convert json to string and parse it again 10 times.
-		for (int i = 0; i < 10; i++) {
-			json = (JsonObject) JsonParser.parseString(json.toString());
-		}
-	}
-
-	/**
-	 * Tests the speed of executing various actions on a {@link JsonArray}.
-	 * 
-	 * @throws ParseException if the parsing in this speed test fails.
-	 */
-	@Test
-	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 800)
-	public void jsonArraySpeedTest() throws ParseException {
-		// Add 200 objects to a Json Object.
-		JsonArray json = new JsonArray();
-		for (int i = 0; i < 200; i++) {
-			if (i % 5 == 0) {
-				json.add("Random string number " + i);
-			} else if (i % 5 == 1) {
-				json.add(i * 2);
-			} else if (i % 5 == 2) {
-				json.add(((long) i) * Integer.MAX_VALUE);
-			} else if (i % 5 == 3) {
-				json.add(i * Math.PI);
-			} else {
-				json.add(new JsonObject("testString", "Some random stinrg with number " + i));
-			}
-		}
-		// Iterate over the json object 50 times.
-		for (int i = 0; i < 50; i++) {
-			json.forEach(v -> {
-				// Do something to prevent the compiler from removing this.
-				if (v == null) {// this should never happen!
-					throw new NullPointerException();
-				}
-			});
-		}
-		// Get 100 objects.
-		for (int i = 0; i < 100; i++) {
-			Object value = json.get(i);
-			assertNotEquals(value, null);
-		}
-		// Remove 50 objects.
-		for (int i = 0; i < 50; i++) {
-			if (i % 5 == 0) {
-				json.remove("string" + i);
-			} else if (i % 5 == 1) {
-				json.remove("int" + i);
-			} else if (i % 5 == 2) {
-				json.remove("long" + i);
-			} else if (i % 5 == 3) {
-				json.remove("double" + i);
-			} else {
-				json.remove("json" + i);
-			}
-		}
-		// Clone the json object 50 times.
-		for (int i = 0; i < 50; i++) {
-			json = json.clone();
-		}
-		// Convert json to string and parse it again 10 times.
-		for (int i = 0; i < 10; i++) {
-			json = (JsonArray) JsonParser.parseString(json.toString());
 		}
 	}
 

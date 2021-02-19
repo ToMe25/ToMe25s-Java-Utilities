@@ -32,13 +32,16 @@ public class JsonParser {
 
 	/**
 	 * This method parses the given string to a {@link JsonObject}. Faster but not
-	 * as reliable as the slower one.
+	 * as reliable as the slower one. Also since some optimizations this seems to no
+	 * longer be always faster, so test how much benefit it brings on a case by case
+	 * basis.
 	 * 
 	 * Supported object types inside the Json: Integer and String.
 	 * 
-	 * WARNING: This method is not safe, over the time i worked on it before adding
-	 * it to this library there were multiple character that could make it crash or
-	 * break out of string values.
+	 * WARNING: This method is not safe!!! Having a comma in a string WILL cause
+	 * this parsing to fail. Over time when i worked on this before adding it to
+	 * this library there were multiple character that could make it crash or break
+	 * out of string values.
 	 * 
 	 * @param str the String to parse.
 	 * @return the {@link JsonObject} parsed from the given string.

@@ -26,4 +26,3 @@ Things to change in the logging module.
 ## Junit Tests
 Improvemets planned for the junit tests.
  * Add a junit test to test log file writing.
- * Move the Json speed tests to their own file and split them into smaller methods.

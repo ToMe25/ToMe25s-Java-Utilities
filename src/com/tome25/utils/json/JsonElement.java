@@ -404,7 +404,7 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	 * @throws UnsupportedOperationException if this JsonElement doesn't support
 	 *                                       generating a changes JsonElement.
 	 */
-	default public JsonElement<K> changes(JsonElement<K> from, boolean recursive) throws UnsupportedOperationException {
+	public default JsonElement<K> changes(JsonElement<K> from, boolean recursive) throws UnsupportedOperationException {
 		throw new UnsupportedOperationException("This object does not support creating a changes json from it!");
 	}
 
@@ -488,18 +488,30 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	 * @param content the object to get the string representation for.
 	 * @return a string representation of the given object.
 	 */
-	public default String contentToString(Object content) {
-		String str = "";
+	@Deprecated
+	default String contentToString(Object content) {
+		StringBuilder buffer = new StringBuilder();
+		contentToString(content, buffer);
+		return buffer.toString();
+	}
+
+	/**
+	 * Writes the given object to the given {@link StringBuilder} in the way
+	 * intended for Jsons to match the Json specifications.
+	 * 
+	 * @param content the object to get the string representation for.
+	 * @param builder the {@link StringBuilder} to write the object to.
+	 */
+	default void contentToString(Object content, StringBuilder builder) {
 		if (content == null || content instanceof Boolean || content instanceof Byte || content instanceof Short
 				|| content instanceof Integer || content instanceof Float || content instanceof Double
 				|| content instanceof Long || content instanceof JsonElement) {
-			str += content;
+			builder.append(content);
 		} else {
-			str += "\"";
-			str += content.toString().replaceAll("\\\\", "\\\\\\\\").replaceAll("\\\"", "\\\\\"");
-			str += "\"";
+			builder.append('"');
+			builder.append(content.toString().replace("\\\\", "\\\\\\\\").replace("\\\"", "\\\\\""));
+			builder.append('"');
 		}
-		return str;
 	}
 
 	/**

@@ -259,7 +259,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	 * toString tests are run less often because they take forever.
 	 */
 	@Test
-	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 500)
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
 	public void objectToStringTest() {
 		// add 200 objects to a json object.
 		JsonObject json = new JsonObject();
@@ -277,7 +277,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	 * toString tests are run less often because they take forever.
 	 */
 	@Test
-	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 500)
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
 	public void arrayToStringTest() {
 		// add 200 objects to a json array.
 		JsonArray json = new JsonArray();
@@ -300,7 +300,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	 *                                found.
 	 */
 	@Test
-	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 500)
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
 	public void objectSerializationTest() throws IOException, ClassNotFoundException {
 		// create streams and json 200 value json object.
 		PipedOutputStream pOut = new PipedOutputStream();
@@ -331,7 +331,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	 *                                found.
 	 */
 	@Test
-	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 500)
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
 	public void arraySerializationTest() throws IOException, ClassNotFoundException {
 		// create streams and json 200 value json array.
 		PipedOutputStream pOut = new PipedOutputStream();

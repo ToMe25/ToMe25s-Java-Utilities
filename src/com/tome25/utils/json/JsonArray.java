@@ -203,16 +203,17 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 
 	@Override
 	public String toString() {
-		String[] ret = new String[] { "[" };
-		content.forEach(obj -> {
-			ret[0] += contentToString(obj);
-			ret[0] += ",";
-		});
-		if (ret[0].endsWith(",")) {
-			ret[0] = ret[0].substring(0, ret[0].length() - 1);
+		StringBuilder ret = new StringBuilder();
+		ret.append('[');
+		for (Object obj : content) {
+			contentToString(obj, ret);
+			ret.append(',');
 		}
-		ret[0] += "]";
-		return ret[0];
+		if (ret.length() > 1) {
+			ret.deleteCharAt(ret.length() - 1);
+		}
+		ret.append(']');
+		return ret.toString();
 	}
 
 	@Override

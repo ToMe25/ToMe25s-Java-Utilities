@@ -153,7 +153,7 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 
 	@Override
 	public String getString(String key) {
-		return content.get(key).toString();
+		return String.valueOf(content.get(key));
 	}
 
 	/**
@@ -226,19 +226,20 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 
 	@Override
 	public String toString() {
-		String ret = "{";
+		StringBuilder ret = new StringBuilder();
+		ret.append('{');
 		for (String s : content.keySet()) {
-			ret += "\"";
-			ret += s;
-			ret += "\":";
-			ret += contentToString(content.get(s));
-			ret += ",";
+			ret.append('"');
+			ret.append(s);
+			ret.append("\":");
+			contentToString(content.get(s), ret);
+			ret.append(',');
 		}
-		if (ret.endsWith(",")) {
-			ret = ret.substring(0, ret.length() - 1);
+		if (ret.length() > 1) {
+			ret.deleteCharAt(ret.length() - 1);
 		}
-		ret += "}";
-		return ret;
+		ret.append('}');
+		return ret.toString();
 	}
 
 	@Override

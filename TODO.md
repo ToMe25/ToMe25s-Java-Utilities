@@ -10,7 +10,8 @@ Some todos for the config system module.
 The todos for the json module of this library.
  * Make JsonArray deduplication able to find changed values, instead of just finding removed and added values.
  * Add a equals method to JsonArray that compares the content by order.
- * Add an interface called IJsonSerializable<JsonElement> for serializing objects to json. This interface should extend Externalizable.
+ * Add an interface called IJsonSerializable<? extends JsonElement> for serializing objects to json. This interface should extend Externalizable.
+ * Optimize writeExternal and readExternal by manually handling the value type instead of using writeObject/readObject? This might not be worth it because of incompatibilities and/or the effort of changing alot of the internal structures.
 
 ## Library Loader
 Todos for the library downloading and including module of this library.

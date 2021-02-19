@@ -31,12 +31,12 @@ import java.text.ParseException;
 public class JsonParser {
 
 	/**
-	 * This method parses the given string to a {@link JsonObject}. Faster but not
-	 * as reliable as the slower one. Also since some optimizations this seems to no
-	 * longer be always faster, so test how much benefit it brings on a case by case
-	 * basis.
+	 * This method parses the given string to a {@link JsonObject} or
+	 * {@link JsonArray}. Faster but not as reliable as the slower one. Also since
+	 * some optimizations this seems to no longer be always faster, so test how much
+	 * benefit it brings on a case by case basis.
 	 * 
-	 * Supported object types inside the Json: Integer and String.
+	 * Supported object types inside the {@link JsonElement}: Integer and String.
 	 * 
 	 * WARNING: This method is not safe!!! Having a comma in a string WILL cause
 	 * this parsing to fail. Over time when i worked on this before adding it to
@@ -44,38 +44,76 @@ public class JsonParser {
 	 * out of string values.
 	 * 
 	 * @param str the String to parse.
-	 * @return the {@link JsonObject} parsed from the given string.
+	 * @return the {@link JsonElement} parsed from the given string.
 	 * @throws ParseException if something goes wrong while parsing.
 	 */
-	public static JsonObject parseStringFast(String str) throws ParseException {
-		JsonObject json = new JsonObject();
-		if (str.contains("{") && str.contains("}")) {
-			str = str.substring(str.indexOf("{") + 1, str.lastIndexOf("}"));
-		} else if (str.contains("{")) {
-			throw new ParseException(str, str.length());
-		} else {
-			throw new ParseException(str, 0);
-		}
-		for (String s : str.split(",")) {
-			if (s.contains(":")) {
-				int sep = s.indexOf(':');
-				String key = s.substring(1, sep - 1);
-				String value = s.substring(sep + 1).trim();
-				if (value.charAt(0) == '"') {
-					value = value.substring(1, value.length() - 1);
-					if (value.contains("\\\"")) {
-						value = value.replace("\\\"", "\"");
+	public static JsonElement<?> parseStringFast(String str) throws ParseException {
+		str = str.trim();
+		if (str.charAt(0) == '{') {
+			if (str.contains("}")) {
+				JsonObject json = new JsonObject();
+				str = str.substring(1, str.lastIndexOf("}"));
+
+				int index = 0;
+				for (String s : str.split(",")) {
+					index += s.length();
+					if (s.contains(":")) {
+						int sep = s.indexOf(':');
+						String key = s.substring(1, sep - 1);
+						String value = s.substring(sep + 1).trim();
+
+						if (value.charAt(0) == '"') {
+							value = value.substring(1, value.length() - 1);
+							if (value.contains("\\\\")) {
+								value = value.replace("\\\\", "\\");
+							}
+
+							if (value.contains("\\\"")) {
+								value = value.replace("\\\"", "\"");
+							}
+							json.put(key, value);
+						} else {
+							json.put(key, Integer.parseInt(value));
+						}
+					} else {
+						throw new ParseException("Couldn't find key value separation in \"" + str + "\"!", index);
 					}
-					if (value.contains("\\\\")) {
-						value = value.replace("\\\\", "\\");
-					}
-					json.put(key, value);
-				} else {
-					json.put(key, Integer.parseInt(value));
 				}
+
+				return json;
+			} else {
+				throw new ParseException("Couldn't find a json end in \"" + str + "\"!", str.length());
 			}
+		} else if (str.charAt(0) == '[') {
+			if (str.contains("]")) {
+				JsonArray json = new JsonArray();
+				str = str.substring(1, str.lastIndexOf("]"));
+
+				for (String s : str.split(",")) {
+					s = s.trim();
+
+					if (s.charAt(0) == '"') {
+						s = s.substring(1, s.length() - 1);
+						if (s.contains("\\\\")) {
+							s = s.replace("\\\\", "\\");
+						}
+
+						if (s.contains("\\\"")) {
+							s = s.replace("\\\"", "\"");
+						}
+						json.add(s);
+					} else {
+						json.add(Integer.parseInt(s));
+					}
+				}
+
+				return json;
+			} else {
+				throw new ParseException("Couldn't find a json end in \"" + str + "\"!", str.length());
+			}
+		} else {
+			throw new ParseException("Couldn't find a json start in \"" + str + "\"!", 0);
 		}
-		return json;
 	}
 
 	/**

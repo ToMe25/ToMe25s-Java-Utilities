@@ -25,7 +25,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	 */
 	@Test
 	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
-	public void fastParsingTest() throws ParseException {
+	public void objectFastParsingTest() throws ParseException {
 		// test everything possible in one string 50 times.
 		String jsonString = "{\"string\":\"Test String?\",\"testString\":\"Test String!\\\"!51{}\\\\[]\",\"int\":5223156,\"int1\":312}";
 		for (int i = 0; i < 50; i++) {
@@ -34,16 +34,48 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	}
 
 	/**
-	 * Tests the speed of parsing the string from the fast parsing test with
-	 * {@link JsonParser#parseString(String)} 50 times.
+	 * Tests the total time of parsing a string to a {@link JsonArray} using
+	 * {@link JsonParser#parseStringFast(String)} 50 times.
 	 * 
 	 * @throws ParseException if the parsing fails.
 	 */
 	@Test
 	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
-	public void comparisonTest() throws ParseException {
+	public void arrayFastParsingTest() throws ParseException {
+		// test everything possible in one string 50 times.
+		String jsonString = "[\"string\",\"Test String?\",\"testString\",\"Test String!\\\"!51{}\\\\[]\",\"int\",5223156,\"int1\",312]";
+		for (int i = 0; i < 50; i++) {
+			JsonParser.parseStringFast(jsonString);
+		}
+	}
+
+	/**
+	 * Tests the speed of parsing the string from the fast {@link JsonObject}
+	 * parsing test with {@link JsonParser#parseString(String)} 50 times.
+	 * 
+	 * @throws ParseException if the parsing fails.
+	 */
+	@Test
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
+	public void objectComparisonTest() throws ParseException {
 		// test normal parsing with the same string the fast parsing test uses 50 times.
 		String jsonString = "{\"string\":\"Test String?\",\"testString\":\"Test String!\\\"!51{}\\\\[]\",\"int\":5223156,\"int1\":312}";
+		for (int i = 0; i < 50; i++) {
+			JsonParser.parseString(jsonString);
+		}
+	}
+
+	/**
+	 * Tests the speed of parsing the string from the fast {@link JsonArray} parsing
+	 * test with {@link JsonParser#parseString(String)} 50 times.
+	 * 
+	 * @throws ParseException if the parsing fails.
+	 */
+	@Test
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
+	public void arrayComparisonTest() throws ParseException {
+		// test normal parsing with the same string the fast parsing test uses 50 times.
+		String jsonString = "[\"string\",\"Test String?\",\"testString\",\"Test String!\\\"!51{}\\\\[]\",\"int\",5223156,\"int1\",312]";
 		for (int i = 0; i < 50; i++) {
 			JsonParser.parseString(jsonString);
 		}
@@ -262,15 +294,15 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	}
 
 	/**
-	 * Tests converting a 200 value {@link JsonObject} to a string 50 times. The
+	 * Tests converting a 100 value {@link JsonObject} to a string 50 times. The
 	 * toString tests are run less often because they take forever.
 	 */
 	@Test
 	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
 	public void objectToStringTest() {
-		// add 200 objects to a json object.
+		// add 100 objects to a json object.
 		JsonObject json = new JsonObject();
-		for (int i = 0; i < 200; i++) {
+		for (int i = 0; i < 100; i++) {
 			json.add("key" + i, "value" + i);
 		}
 		// convert the json object to string 50 times.
@@ -280,15 +312,15 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	}
 
 	/**
-	 * Tests converting a 200 value {@link JsonArray} to a string 50 times. The
+	 * Tests converting a 100 value {@link JsonArray} to a string 50 times. The
 	 * toString tests are run less often because they take forever.
 	 */
 	@Test
 	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
 	public void arrayToStringTest() {
-		// add 200 objects to a json array.
+		// add 100 objects to a json array.
 		JsonArray json = new JsonArray();
-		for (int i = 0; i < 200; i++) {
+		for (int i = 0; i < 100; i++) {
 			json.add("value" + i);
 		}
 		// convert the json array to string 50 times.

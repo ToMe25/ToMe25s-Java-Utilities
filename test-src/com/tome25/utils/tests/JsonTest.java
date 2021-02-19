@@ -75,6 +75,21 @@ public class JsonTest {
 		jsonString = json.toString();
 		parsedJson = JsonParser.parseStringFast(jsonString);
 		assertEquals(json, parsedJson);
+		// test basic json array parsing
+		jsonString = "[\"Test String\", \"Another Test String\"]";
+		JsonArray jsonArray = new JsonArray("Test String", "Another Test String");
+		parsedJson = JsonParser.parseStringFast(jsonString);
+		assertEquals(jsonArray, parsedJson);
+		// test number parsing in arrays
+		jsonArray.add("51345");
+		jsonString = jsonArray.toString();
+		parsedJson = JsonParser.parseStringFast(jsonString);
+		assertEquals(jsonArray, parsedJson);
+		// test special characters in a json array
+		jsonArray.add("Test String:\\'[]{}\"^");
+		jsonString = jsonArray.toString();
+		parsedJson = JsonParser.parseStringFast(jsonString);
+		assertEquals(jsonArray, parsedJson);
 	}
 
 	/**

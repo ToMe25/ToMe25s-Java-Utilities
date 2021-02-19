@@ -131,14 +131,14 @@ public class JsonTest {
 		JsonArray jsonArray = new JsonArray(1, "test", 531.12, simpleJson);
 		assertEquals(jsonArrayString, jsonArray.toString());
 		// test the parser with arrays
-		JsonElement<?> parsedJsonArray = JsonParser.parseString(jsonArrayString);
+		JsonArray parsedJsonArray = (JsonArray) JsonParser.parseString(jsonArrayString);
 		assertEquals(jsonArray, parsedJsonArray);
 		// test json array order
 		assertEquals(jsonArray.get(2), parsedJsonArray.get(2));
 		// test json array null handling
 		((JsonArray) jsonArray).add(null);
 		jsonArrayString = jsonArray.toString();
-		parsedJsonArray = JsonParser.parseString(jsonArrayString);
+		parsedJsonArray = (JsonArray) JsonParser.parseString(jsonArrayString);
 		assertEquals(jsonArray, parsedJsonArray);
 		// test json array subjson parsing
 		assertEquals(simpleJson, parsedJsonArray.get(3));
@@ -152,7 +152,7 @@ public class JsonTest {
 		// test parsing arrays with complex jsons inside
 		((JsonArray) jsonArray).add(json);
 		jsonArrayString = jsonArray.toString();
-		parsedJsonArray = JsonParser.parseString(jsonArrayString);
+		parsedJsonArray = (JsonArray) JsonParser.parseString(jsonArrayString);
 		assertEquals(jsonArray, parsedJsonArray);
 		// test char array parsing
 		char[] jsonCharArray = jsonString.toCharArray();
@@ -160,7 +160,7 @@ public class JsonTest {
 		assertEquals(json, parsedJson);
 		// test char array parsing for json arrays
 		char[] jsonArrayCharArray = jsonArrayString.toCharArray();
-		parsedJsonArray = JsonParser.parseCharArray(jsonArrayCharArray);
+		parsedJsonArray = (JsonArray) JsonParser.parseCharArray(jsonArrayCharArray);
 		assertEquals(jsonArray, parsedJsonArray);
 		// test byte array parsing
 		byte[] jsonByteArray = jsonString.getBytes("UTF-8");
@@ -168,11 +168,11 @@ public class JsonTest {
 		assertEquals(json, parsedJson);
 		// test json array byte array parsing
 		byte[] jsonArrayByteArray = jsonArrayString.getBytes("UTF-8");
-		parsedJsonArray = JsonParser.parseByteArray(jsonArrayByteArray, "UTF-8");
+		parsedJsonArray = (JsonArray) JsonParser.parseByteArray(jsonArrayByteArray, "UTF-8");
 		assertEquals(jsonArray, parsedJsonArray);
 		// test json array order after parsing
 		jsonArrayString = jsonArray.toString();
-		parsedJsonArray = JsonParser.parseString(jsonArrayString);
+		parsedJsonArray = (JsonArray) JsonParser.parseString(jsonArrayString);
 		assertEquals(((JsonArray) jsonArray).getFirst(), ((JsonArray) parsedJsonArray).getFirst());
 		assertEquals(((JsonArray) jsonArray).get(2), ((JsonArray) parsedJsonArray).get(2));
 		assertEquals(((JsonArray) jsonArray).getLast(), ((JsonArray) parsedJsonArray).getLast());

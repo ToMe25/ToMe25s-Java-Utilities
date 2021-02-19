@@ -58,23 +58,16 @@ public class JsonParser {
 		}
 		for (String s : str.split(",")) {
 			if (s.contains(":")) {
-				String[] pair = s.split(":");
-				String key = pair[0];
-				String value = "";
-				boolean v = false;
-				int size = pair.length;
-				for (int i = 1; i < size; i++) {
-					value += (v ? ":" : "") + pair[i];
-					v = true;
-				}
-				key = key.substring(1, key.length() - 1);
-				if (value.contains("\"")) {
+				int sep = s.indexOf(':');
+				String key = s.substring(1, sep - 1);
+				String value = s.substring(sep + 1).trim();
+				if (value.charAt(0) == '"') {
 					value = value.substring(1, value.length() - 1);
 					if (value.contains("\\\"")) {
-						value = value.replaceAll("\\\\\"", "\"");
+						value = value.replace("\\\"", "\"");
 					}
 					if (value.contains("\\\\")) {
-						value = value.replaceAll("\\\\\\\\", "\\\\");
+						value = value.replace("\\\\", "\\");
 					}
 					json.put(key, value);
 				} else {
@@ -191,8 +184,8 @@ public class JsonParser {
 		boolean buildJson = false;
 		boolean buildOther = false;
 		boolean escaped = false;
-		String key = null;
-		String buffer = null;
+		StringBuilder key = null;
+		StringBuilder buffer = null;
 		short layer = 0;
 		int offset = 0;
 		for (char c : charArr) {
@@ -214,12 +207,13 @@ public class JsonParser {
 			switch (c) {
 			case '{':
 				if (buildString) {
-					buffer += c;
+					buffer.append(c);
 				} else if (buildJson) {
-					buffer += c;
+					buffer.append(c);
 					layer++;
 				} else {
-					buffer = "{";
+					buffer = new StringBuilder();
+					buffer.append('{');
 					buildJson = true;
 					layer++;
 				}
@@ -227,40 +221,40 @@ public class JsonParser {
 
 			case '\\':
 				if (escaped || buildJson) {
-					buffer += c;
+					buffer.append(c);
 				}
 				escaped = !escaped;
 				break;
 
 			case '"':
 				if (escaped) {
-					buffer += c;
+					buffer.append(c);
 					escaped = false;
 				} else if (buildJson) {
-					buffer += c;
+					buffer.append(c);
 					buildString = !buildString;
 				} else if (buildString) {
 					if (json instanceof JsonArray) {
-						((JsonArray) json).add(buffer);
+						((JsonArray) json).add(buffer.toString());
 						buffer = null;
 					} else if (key == null) {
 						key = buffer;
 						buffer = null;
 					} else {
-						((JsonObject) json).add(key, buffer);
+						((JsonObject) json).add(key.toString(), buffer.toString());
 						key = null;
 						buffer = null;
 					}
 					buildString = false;
 				} else {
-					buffer = "";
+					buffer = new StringBuilder();
 					buildString = true;
 				}
 				break;
 
 			case ':':
 				if (buildString || buildJson) {
-					buffer += c;
+					buffer.append(c);
 				} else if (json instanceof JsonArray) {
 					throw new ParseException(
 							String.format("Found key value pair with key \"%s\" while parsing JsonArray '%s'!",
@@ -271,16 +265,16 @@ public class JsonParser {
 
 			case ',':
 				if (buildString || buildJson) {
-					buffer += c;
+					buffer.append(c);
 				} else if (buildOther) {
 					if (json instanceof JsonArray) {
-						((JsonArray) json).add(buildOther(buffer, charArr, offset));
+						((JsonArray) json).add(buildOther(buffer.toString(), charArr, offset));
 					} else {
 						if (key == null) {
-							throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!", buffer,
-									new String(charArr)), offset - buffer.length());
+							throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!",
+									buffer.toString(), new String(charArr)), offset - buffer.length());
 						}
-						((JsonObject) json).add(key, buildOther(buffer, charArr, offset));
+						((JsonObject) json).add(key.toString(), buildOther(buffer.toString(), charArr, offset));
 						key = null;
 					}
 					buffer = null;
@@ -290,40 +284,41 @@ public class JsonParser {
 
 			case '}':
 				if (buildString) {
-					buffer += c;
+					buffer.append(c);
 				} else if (buildJson) {
-					buffer += c;
+					buffer.append(c);
 					if (layer > 0) {
 						layer--;
 					}
 					if (layer <= 0) {
-						JsonElement<?> subjson = parseString(buffer);
+						JsonElement<?> subjson = parseString(buffer.toString());
 						if (json instanceof JsonArray) {
 							((JsonArray) json).add(subjson);
 						} else {
 							if (key == null) {
 								throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!",
-										buffer, new String(charArr)), offset - buffer.length());
+										buffer.toString(), new String(charArr)), offset - buffer.length());
 							}
-							((JsonObject) json).add(key, subjson);
+							((JsonObject) json).add(key.toString(), subjson);
 							key = null;
 						}
 						buffer = null;
 						buildJson = false;
 					}
 				} else if (buildOther) {
-					buffer = buffer.trim();
-					if (buffer.isEmpty()) {
+					String buf = buffer.toString();
+					buf = buf.trim();
+					if (buf.isEmpty()) {
 						return json;
 					}
 					if (json instanceof JsonArray) {
-						((JsonArray) json).add(buildOther(buffer, charArr, offset));
+						((JsonArray) json).add(buildOther(buf, charArr, offset));
 					} else {
 						if (key == null) {
-							throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!", buffer,
+							throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!", buf,
 									new String(charArr)), offset - buffer.length());
 						}
-						((JsonObject) json).add(key, buildOther(buffer, charArr, offset));
+						((JsonObject) json).add(key.toString(), buildOther(buf, charArr, offset));
 						key = null;
 					}
 					buffer = null;
@@ -345,12 +340,13 @@ public class JsonParser {
 
 			case '[':
 				if (buildString) {
-					buffer += c;
+					buffer.append(c);
 				} else if (buildJson) {
-					buffer += c;
+					buffer.append(c);
 					layer++;
 				} else {
-					buffer = "[";
+					buffer = new StringBuilder();
+					buffer.append(c);
 					buildJson = true;
 					layer++;
 				}
@@ -358,40 +354,41 @@ public class JsonParser {
 
 			case ']':
 				if (buildString) {
-					buffer += c;
+					buffer.append(c);
 				} else if (buildJson) {
-					buffer += c;
+					buffer.append(c);
 					if (layer > 0) {
 						layer--;
 					}
 					if (layer <= 0) {
-						JsonElement<?> subjson = parseString(buffer);
+						JsonElement<?> subjson = parseString(buffer.toString());
 						if (json instanceof JsonArray) {
 							((JsonArray) json).add(subjson);
 						} else {
 							if (key == null) {
 								throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!",
-										buffer, new String(charArr)), offset - buffer.length());
+										buffer.toString(), new String(charArr)), offset - buffer.length());
 							}
-							((JsonObject) json).add(key, subjson);
+							((JsonObject) json).add(key.toString(), subjson);
 							key = null;
 						}
 						buffer = null;
 						buildJson = false;
 					}
 				} else if (buildOther) {
-					buffer = buffer.trim();
-					if (buffer.isEmpty()) {
+					String buf = buffer.toString();
+					buf = buf.trim();
+					if (buf.isEmpty()) {
 						return json;
 					}
 					if (json instanceof JsonArray) {
-						((JsonArray) json).add(buildOther(buffer, charArr, offset));
+						((JsonArray) json).add(buildOther(buf, charArr, offset));
 					} else {
 						if (key == null) {
-							throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!", buffer,
+							throw new ParseException(String.format("Missing key for value \"%s\" in json '%s'!", buf,
 									new String(charArr)), offset - buffer.length());
 						}
-						((JsonObject) json).add(key, buildOther(buffer, charArr, offset));
+						((JsonObject) json).add(key.toString(), buildOther(buf, charArr, offset));
 						key = null;
 					}
 					buffer = null;
@@ -413,22 +410,23 @@ public class JsonParser {
 
 			case ' ':
 				if (buildString || buildJson) {
-					buffer += c;
+					buffer.append(c);
 				}
 				break;
 
 			case '\n':
 				if (buildString || buildJson) {
-					buffer += c;
+					buffer.append(c);
 				}
 				break;
 
 			default:
 				if (buffer == null) {
-					buffer = "" + c;
+					buffer = new StringBuilder();
+					buffer.append(c);
 					buildOther = true;
 				} else {
-					buffer += c;
+					buffer.append(c);
 				}
 				break;
 			}

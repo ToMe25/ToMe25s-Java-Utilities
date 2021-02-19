@@ -19,63 +19,70 @@ public class JsonSpeedTest extends AbstractBenchmark {
 
 	/**
 	 * Tests the total time of parsing a string to a {@link JsonObject} using
-	 * {@link JsonParser#parseStringFast(String)}.
+	 * {@link JsonParser#parseStringFast(String)} 50 times.
 	 * 
 	 * @throws ParseException if the parsing fails.
 	 */
 	@Test
 	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
 	public void fastParsingTest() throws ParseException {
-		// test everything possible in one string.
-		String jsonString = "{\"string\":\"Test String!\\\"!51{}\\\\[]\",\"int\":5223156}";
-		JsonParser.parseStringFast(jsonString);
+		// test everything possible in one string 50 times.
+		String jsonString = "{\"string\":\"Test String?\",\"testString\":\"Test String!\\\"!51{}\\\\[]\",\"int\":5223156,\"int1\":312}";
+		for (int i = 0; i < 50; i++) {
+			JsonParser.parseStringFast(jsonString);
+		}
 	}
 
 	/**
 	 * Tests the speed of parsing the string from the fast parsing test with
-	 * {@link JsonParser#parseString(String)}.
+	 * {@link JsonParser#parseString(String)} 50 times.
 	 * 
 	 * @throws ParseException if the parsing fails.
 	 */
 	@Test
 	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
 	public void comparisonTest() throws ParseException {
-		// test normal parsing with the same string the fast parsing test uses.
-		String jsonString = "{\"string\":\"Test String!\\\"!51{}\\\\[]\",\"int\":5223156}";
-		JsonParser.parseString(jsonString);
+		// test normal parsing with the same string the fast parsing test uses 50 times.
+		String jsonString = "{\"string\":\"Test String?\",\"testString\":\"Test String!\\\"!51{}\\\\[]\",\"int\":5223156,\"int1\":312}";
+		for (int i = 0; i < 50; i++) {
+			JsonParser.parseString(jsonString);
+		}
 	}
 
 	/**
 	 * Tests the speed of using {@link JsonParser#parseString(String)} to parse a
-	 * complex {@link JsonObject}.
+	 * complex {@link JsonObject} 100 times.
 	 * 
 	 * @throws ParseException if the parsing fails.
 	 */
 	@Test
 	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
 	public void objectParsingTest() throws ParseException {
-		// Test parsing a complicated json object from a string. This intentionally
-		// doesn't
-		// contain a json array.
+		// Test parsing a complicated json object from a string 100 times. This
+		// intentionally doesn't contain a json array.
 		String jsonString = "{\"string\":\"Test String: {}[]\\\"\\\\,;.-12\",\"number\":1234567890123456,"
 				+ "\"floating\":516173.616396, \"json\":{\"string\":\"There is nothing in here\", \"int\":532}}";
-		JsonParser.parseString(jsonString);
+		for (int i = 0; i < 100; i++) {
+			JsonParser.parseString(jsonString);
+		}
 	}
 
 	/**
 	 * Tests the speed of using {@link JsonParser#parseString(String)} to parse a
-	 * complex {@link JsonArray}.
+	 * complex {@link JsonArray} 100 times.
 	 * 
 	 * @throws ParseException if the parsing fails.
 	 */
 	@Test
 	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
 	public void arrayParsingTest() throws ParseException {
-		// Test parsing a complicated json array from a string. This intentionally
-		// doesn't contain a json object.
+		// Test parsing a complicated json array from a string 100 times. This
+		// intentionally doesn't contain a json object.
 		String jsonString = "[\"Test String: {}[]\\\"\\\\,;.-12\", 7348927034872342, 63907.23424,"
 				+ "[\"Some Random Test String\", 423423, 123123]]";
-		JsonParser.parseString(jsonString);
+		for (int i = 0; i < 100; i++) {
+			JsonParser.parseString(jsonString);
+		}
 	}
 
 	/**

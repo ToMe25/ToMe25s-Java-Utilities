@@ -63,7 +63,6 @@ jobs:
 
     - name: Move artifacts into repository
       id: artifacts_move
-      if: ${{ always() }}
       run: |
         for f in target/tome25s-java-utilities*.jar; do fo=${f:7}; cp "$f" $(echo "$fo" | sed -r 's/-[0-9]+\.[0-9]+\.[0-9]+-/-/g; s/-[0-9]+\.[0-9]+\.[0-9]+\././g; s/tome25s-java-utilities/ToMe25s-Java-Utilities/g'); done
         rm -rf javadoc/
@@ -81,7 +80,6 @@ jobs:
 
     - name: Commit and Push changes
       id: commit
-      if: ${{ always() }}
       uses: EndBug/add-and-commit@v4.2.0
       with:
         author_name: GitHub Action

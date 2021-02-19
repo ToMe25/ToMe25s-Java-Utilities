@@ -188,20 +188,27 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;?&gt;</code></td>
+<td class="colLast"><span class="typeNameLabel">JsonParser.</span><code><span class="memberNameLink"><a href="../../../../../com/tome25/utils/json/JsonParser.html#parseStringFast-java.lang.String-">parseStringFast</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str)</code>
+<div class="block">This method parses the given string to a <a href="../../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a> or
+ <a href="../../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArray</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>default &lt;T&gt;&nbsp;<a href="../../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;T&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">JsonElement.</span><code><span class="memberNameLink"><a href="../../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-com.tome25.utils.json.JsonElement-">reconstruct</a></span>(<a href="../../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;?&gt;&nbsp;from,
            <a href="../../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;T&gt;&nbsp;changes)</code>
 <div class="block">A utility method to call to.<a href="../../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-"><code>reconstruct</code></a>(from).</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>default <a href="../../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">JsonElement.</span><code><span class="memberNameLink"><a href="../../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-">reconstruct</a></span>(<a href="../../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;from)</code>
 <div class="block">Returns a new JsonElement containing the values of the given JsonElement with
  the changes contained in this JsonElement applied.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>default <a href="../../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">JsonElement.</span><code><span class="memberNameLink"><a href="../../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-boolean-">reconstruct</a></span>(<a href="../../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;from,
            boolean&nbsp;recursive)</code>

@@ -242,13 +242,16 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <pre>public static&nbsp;<a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a>&nbsp;parseStringFast(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;str)
                                   throws <a href="https://docs.oracle.com/javase/8/docs/api/java/text/ParseException.html?is-external=true" title="class or interface in java.text">ParseException</a></pre>
 <div class="block">This method parses the given string to a <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a>. Faster but not
- as reliable as the slower one.
+ as reliable as the slower one. Also since some optimizations this seems to no
+ longer be always faster, so test how much benefit it brings on a case by case
+ basis.
  
  Supported object types inside the Json: Integer and String.
  
- WARNING: This method is not safe, over the time i worked on it before adding
- it to this library there were multiple character that could make it crash or
- break out of string values.</div>
+ WARNING: This method is not safe!!! Having a comma in a string WILL cause
+ this parsing to fail. Over time when i worked on this before adding it to
+ this library there were multiple character that could make it crash or break
+ out of string values.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>str</code> - the String to parse.</dd>

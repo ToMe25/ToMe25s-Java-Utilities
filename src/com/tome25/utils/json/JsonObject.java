@@ -233,7 +233,6 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 			ret.append(s);
 			ret.append("\":");
 			contentToString(content.get(s), ret);
-			ret.append('"');
 			ret.append(',');
 		}
 		if (ret.length() > 1) {

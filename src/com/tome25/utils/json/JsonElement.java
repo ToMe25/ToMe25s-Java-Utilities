@@ -509,7 +509,7 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 			builder.append(content);
 		} else {
 			builder.append('"');
-			builder.append(content.toString().replace("\\\\", "\\\\\\\\").replace("\\\"", "\\\\\""));
+			builder.append(content.toString().replace("\\", "\\\\").replace("\"", "\\\""));
 			builder.append('"');
 		}
 	}

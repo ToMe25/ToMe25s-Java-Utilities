@@ -248,7 +248,7 @@ public class LibraryDownloader {
 	 */
 	public LibraryDownloader(URL url, File target, Predicate<String> contentTypeCheck, boolean overrideTarget,
 			boolean makeExecutable) {
-		this(toList(url), target, contentTypeCheck, overrideTarget, makeExecutable);
+		this(Arrays.asList(url), target, contentTypeCheck, overrideTarget, makeExecutable);
 	}
 
 	/**
@@ -530,22 +530,6 @@ public class LibraryDownloader {
 	 */
 	public URL getDownloadUrl() {
 		return downloadedFrom;
-	}
-
-	/**
-	 * Creates a new {@link ArrayList} and adds all the given objects to it.
-	 * 
-	 * @param <T>     the type of objects and list.
-	 * @param objects the objects to put into a list.
-	 * @return a new list containing all the given objects
-	 */
-	@SafeVarargs
-	private static <T> List<T> toList(T... objects) {
-		List<T> list = new ArrayList<T>();
-		for (T obj : objects) {
-			list.add(obj);
-		}
-		return list;
 	}
 
 	/**

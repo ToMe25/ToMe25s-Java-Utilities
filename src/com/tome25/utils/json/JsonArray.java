@@ -223,18 +223,26 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 
 	@Override
 	public JsonArray clone(boolean recursive) {
-		JsonArray clone = new JsonArray();
-		content.forEach((value) -> {
+		JsonArray clone = null;
+		try {
+			clone = (JsonArray) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+
+		@SuppressWarnings("unchecked")
+		final List<Object> contentClone = (List<Object>) ((ArrayList<Object>) content).clone();
+		for (int i = 0; i < content.size(); i++) {
 			try {
+				Object value = content.get(i);
 				if (recursive && value instanceof JsonElement && ((JsonElement<?>) value).supportsClone()) {
-					clone.add(((JsonElement<?>) value).clone(recursive));
-				} else {
-					clone.add(value);
+					contentClone.set(i, ((JsonElement<?>) value).clone(recursive));
 				}
-			} catch (Exception e) {
+			} catch (CloneNotSupportedException e) {
 				e.printStackTrace();
 			}
-		});
+		}
+		clone.content = contentClone;
 		return clone;
 	}
 

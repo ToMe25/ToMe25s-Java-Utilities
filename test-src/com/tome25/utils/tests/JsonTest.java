@@ -210,9 +210,9 @@ public class JsonTest {
 		JsonObject clonedJson = json.clone();
 		assertEquals(json, clonedJson);
 		// test that the clone isn't the same instance as the original
-		assertFalse(json == clonedJson);
+		assertFalse("The json object wasn't cloned!", json == clonedJson);
 		// test that the subjsons get cloned too
-		assertFalse(simpleJson == clonedJson.get("testJson"));
+		assertFalse("Subjson wasn't cloned!", simpleJson == clonedJson.get("testJson"));
 		assertEquals(simpleJson, clonedJson.get("testJson"));
 		// test cloning not recursively
 		clonedJson = json.clone(false);

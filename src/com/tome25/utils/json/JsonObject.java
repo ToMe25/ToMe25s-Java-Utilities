@@ -249,19 +249,25 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 
 	@Override
 	public JsonObject clone(boolean recursive) {
-		JsonObject clone = new JsonObject();
-		for (String key : content.keySet()) {
+		JsonObject clone = null;
+		try {
+			clone = (JsonObject) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+
+		@SuppressWarnings("unchecked")
+		LinkedHashMap<String, Object> contentClone = (LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) content).clone();
+		content.forEach((key, value) -> {
 			try {
-				Object value = content.get(key);
 				if (recursive && value instanceof JsonElement && ((JsonElement<?>) value).supportsClone()) {
-					clone.add(key, ((JsonElement<?>) value).clone(true));
-				} else {
-					clone.add(key, value);
+					contentClone.put(key, ((JsonElement<?>) value).clone(true));
 				}
-			} catch (Exception e) {
+			} catch (CloneNotSupportedException e) {
 				e.printStackTrace();
 			}
-		}
+		});
+		clone.content = contentClone;
 		return clone;
 	}
 

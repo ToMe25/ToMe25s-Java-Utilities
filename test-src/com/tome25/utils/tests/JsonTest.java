@@ -30,6 +30,7 @@ import java.io.PipedOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.text.ParseException;
+import java.util.LinkedList;
 import java.util.TreeMap;
 
 import org.junit.Test;
@@ -243,8 +244,7 @@ public class JsonTest {
 		clonedJsonArray = jsonArray.clone(false);
 		assertTrue(simpleJson == clonedJsonArray.get(3));
 		// test creating a json object with a custom map type
-		TreeMap<String, Object> map = new TreeMap<>();
-		map.putAll(json);
+		TreeMap<String, Object> map = new TreeMap<>(json);
 		json = new JsonObject(map);
 		Field content = JsonObject.class.getDeclaredField("content");
 		content.setAccessible(true);
@@ -255,6 +255,18 @@ public class JsonTest {
 		assertTrue("The type of the internal map of the clone did not match the original!",
 				content.get(clonedJson).getClass() == TreeMap.class);
 		assertFalse("The internal map was not actually cloned!", map == content.get(clonedJson));
+		// test creating a json array with a custom list type
+		LinkedList<Object> list = new LinkedList<>(jsonArray);
+		jsonArray = new JsonArray(list);
+		Field arrayContent = JsonArray.class.getDeclaredField("content");
+		arrayContent.setAccessible(true);
+		assertTrue("The given list was not used as the internal list!", list == arrayContent.get(jsonArray));
+		// test cloning a json array with a custom list type
+		clonedJsonArray = jsonArray.clone();
+		assertEquals(jsonArray, clonedJsonArray);
+		assertTrue("The type of the internal list of the clone did not match the original!",
+				arrayContent.get(clonedJsonArray).getClass() == LinkedList.class);
+		assertFalse("The internal list was not actually cloned!", list == arrayContent.get(clonedJsonArray));
 	}
 
 	/**

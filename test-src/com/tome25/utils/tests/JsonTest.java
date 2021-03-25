@@ -28,7 +28,9 @@ import java.io.ObjectOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.text.ParseException;
+import java.util.TreeMap;
 
 import org.junit.Test;
 
@@ -200,17 +202,28 @@ public class JsonTest {
 
 	/**
 	 * Tests the cloning of {@link JsonObject}s and {@link JsonArray}s.
+	 * 
+	 * @throws SecurityException        if the reflection for checking the internal
+	 *                                  map/list usage fails.
+	 * @throws NoSuchFieldException     if the reflection for checking the internal
+	 *                                  map/list usage fails.
+	 * @throws IllegalAccessException   if the reflection for checking the internal
+	 *                                  map/list usage fails.
+	 * @throws IllegalArgumentException if the reflection for checking the internal
+	 *                                  map/list usage fails.
 	 */
 	@Test
-	public void cloningTest() {
+	public void cloningTest()
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		// test the basics of the json object clone function
 		JsonObject simpleJson = new JsonObject("simple", "json");
 		JsonObject json = new JsonObject("testString", "test");
 		json.add("testJson", simpleJson);
+		json.add("testInt", 123);
 		JsonObject clonedJson = json.clone();
 		assertEquals(json, clonedJson);
 		// test that the clone isn't the same instance as the original
-		assertFalse("The json object wasn't cloned!", json == clonedJson);
+		assertFalse("The json object wasn't actually cloned!", json == clonedJson);
 		// test that the subjsons get cloned too
 		assertFalse("Subjson wasn't cloned!", simpleJson == clonedJson.get("testJson"));
 		assertEquals(simpleJson, clonedJson.get("testJson"));
@@ -222,13 +235,26 @@ public class JsonTest {
 		JsonArray clonedJsonArray = jsonArray.clone();
 		assertEquals(jsonArray, clonedJsonArray);
 		// test that the clone isn't the same instance as the original
-		assertFalse(jsonArray == clonedJsonArray);
+		assertFalse("The json array wasn't actually cloned!", jsonArray == clonedJsonArray);
 		// test that the subjsons get cloned too
-		assertFalse(simpleJson == clonedJsonArray.get(3));
+		assertFalse("Subjson wasn't cloned!", simpleJson == clonedJsonArray.get(3));
 		assertEquals(simpleJson, clonedJsonArray.get(3));
 		// test cloning not recursively
 		clonedJsonArray = jsonArray.clone(false);
 		assertTrue(simpleJson == clonedJsonArray.get(3));
+		// test creating a json object with a custom map type
+		TreeMap<String, Object> map = new TreeMap<>();
+		map.putAll(json);
+		json = new JsonObject(map);
+		Field content = JsonObject.class.getDeclaredField("content");
+		content.setAccessible(true);
+		assertTrue("The given map was not used as the internal map!", map == content.get(json));
+		// test cloning a json object with a custom map type
+		clonedJson = json.clone();
+		assertEquals(json, clonedJson);
+		assertTrue("The type of the internal map of the clone did not match the original!",
+				content.get(clonedJson).getClass() == TreeMap.class);
+		assertFalse("The internal map was not actually cloned!", map == content.get(clonedJson));
 	}
 
 	/**

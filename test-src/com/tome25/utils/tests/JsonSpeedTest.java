@@ -144,8 +144,8 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	}
 
 	/**
-	 * Tests adding 200 elements to a {@link JsonObject} and then cloning it 50
-	 * times.
+	 * Tests adding 200 key value pairs to a {@link JsonObject} and then cloning it
+	 * 50 times.
 	 */
 	@Test
 	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
@@ -172,6 +172,42 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		JsonArray json = new JsonArray();
 		for (int i = 0; i < 200; i++) {
 			json.add("value" + i);
+		}
+		// clone the object 50 times.
+		for (int i = 0; i < 50; i++) {
+			json.clone();
+		}
+	}
+
+	/**
+	 * Tests adding 200 json objects each containing one key and one value to a
+	 * {@link JsonObject} and then cloning it 50 times.
+	 */
+	@Test
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
+	public void objectRecursiveCloneTest() {
+		// add 200 objects to a json object.
+		JsonObject json = new JsonObject();
+		for (int i = 0; i < 200; i++) {
+			json.add("nr" + i, new JsonObject("key" + i, "value" + i));
+		}
+		// clone the object 50 times.
+		for (int i = 0; i < 50; i++) {
+			json.clone();
+		}
+	}
+
+	/**
+	 * Tests adding 200 lists with 2 elements to a {@link JsonArray} and then
+	 * cloning it 50 times.
+	 */
+	@Test
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
+	public void arrayRecursiveCloneTest() {
+		// add 200 objects to a json array.
+		JsonArray json = new JsonArray();
+		for (int i = 0; i < 200; i++) {
+			json.add(new JsonArray("value" + i, "value" + (i + 1)));
 		}
 		// clone the object 50 times.
 		for (int i = 0; i < 50; i++) {
@@ -294,8 +330,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	}
 
 	/**
-	 * Tests converting a 100 value {@link JsonObject} to a string 50 times. The
-	 * toString tests are run less often because they take forever.
+	 * Tests converting a 100 value {@link JsonObject} to a string 50 times.
 	 */
 	@Test
 	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
@@ -306,14 +341,13 @@ public class JsonSpeedTest extends AbstractBenchmark {
 			json.add("key" + i, "value" + i);
 		}
 		// convert the json object to string 50 times.
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 100; i++) {
 			json.toString();
 		}
 	}
 
 	/**
-	 * Tests converting a 100 value {@link JsonArray} to a string 50 times. The
-	 * toString tests are run less often because they take forever.
+	 * Tests converting a 100 value {@link JsonArray} to a string 100 times.
 	 */
 	@Test
 	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
@@ -324,7 +358,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 			json.add("value" + i);
 		}
 		// convert the json array to string 50 times.
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 100; i++) {
 			json.toString();
 		}
 	}
@@ -389,6 +423,109 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		}
 		// close oIn
 		oIn.close();
+	}
+
+	/**
+	 * Generate a changes json from two {@link JsonObject}s with 100 key value pairs
+	 * 100 times.
+	 */
+	@Test
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
+	public void objectChangesTest() {
+		// add 100 objects to two json objects.
+		JsonObject json1 = new JsonObject();
+		JsonObject json2 = new JsonObject();
+		for (int i = 0; i < 100; i++) {
+			json1.add("key" + i, "value" + i);
+			if (i % 4 == 0) {
+				json2.add("Key" + i, "value" + i);
+			} else if (i % 4 == 1) {
+				json2.add("key" + i, "value" + (i * 2));
+			} else {
+				json2.add("key" + i, "value" + i);
+			}
+		}
+		// generate the changes json 100 times.
+		for (int i = 0; i < 100; i++) {
+			json2.changes(json1);
+		}
+	}
+
+	/**
+	 * Generate a changes json from two {@link JsonArray}s with 100 values 100
+	 * times.
+	 */
+	@Test
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
+	public void arrayChangeTest() {
+		// add 100 objects to two just arrays.
+		JsonArray json1 = new JsonArray();
+		JsonArray json2 = new JsonArray();
+		for (int i = 0; i < 100; i++) {
+			json1.add("value" + i);
+			if (i % 4 == 0) {
+				json2.add("Value" + i);
+			} else if (i % 4 == 1) {
+				json2.add("value" + (i * 2));
+			} else {
+				json2.add("value" + i);
+			}
+		}
+		// generate the changes json 100 times.
+		for (int i = 0; i < 100; i++) {
+			json2.changes(json1);
+		}
+	}
+
+	/**
+	 * Reconstruct a {@link JsonObject} with 100 key value pairs based on a changes
+	 * json 50 times.
+	 */
+	@Test
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
+	public void objectReconstructTest() {
+		// add 100 objects a json object and generate a changes json.
+		JsonObject json = new JsonObject();
+		JsonObject changes = new JsonObject();
+		for (int i = 0; i < 100; i++) {
+			json.add("key" + i, "value" + i);
+			if (i % 4 == 0) {
+				changes.add("key" + i, null);
+				changes.add("Key" + i, "value" + i);
+			} else if (i % 4 == 1) {
+				changes.add("key" + i, "value" + (i * 2));
+			}
+		}
+		// reconstruct the json object 100 times.
+		for (int i = 0; i < 100; i++) {
+			changes.reconstruct(json);
+		}
+	}
+
+	/**
+	 * Reconstruct a {@link JsonArray} with 100 elements based on a changes json 100
+	 * times.
+	 */
+	@Test
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
+	public void arrayReconstructTest() {
+		// add 100 objects a json object and generate a changes json.
+		JsonArray json = new JsonArray();
+		JsonArray changes = new JsonArray();
+		for (int i = 0; i < 100; i++) {
+			json.add("value" + i);
+			if (i % 4 == 0) {
+				changes.add(new JsonObject("val", "Value" + i, "after", i));
+				changes.add(new JsonObject("rm", i));
+			} else if (i % 4 == 1) {
+				changes.add(new JsonObject("val", "value" + (i * 2), "after", i));
+				changes.add(new JsonObject("rm", i));
+			}
+		}
+		// reconstruct the json object 100 times.
+		for (int i = 0; i < 100; i++) {
+			changes.reconstruct(json);
+		}
 	}
 
 }

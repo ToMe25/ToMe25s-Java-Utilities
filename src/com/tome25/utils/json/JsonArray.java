@@ -22,11 +22,13 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import com.tome25.utils.General;
 import com.tome25.utils.exception.InvalidTypeException;
 
 /**
@@ -39,12 +41,13 @@ import com.tome25.utils.exception.InvalidTypeException;
 public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable {
 
 	private static final long serialVersionUID = 5205197497094672807L;
-	private List<Object> content = new ArrayList<Object>();
+	private List<Object> content;
 
 	/**
 	 * Creates a new empty JsonArray.
 	 */
 	public JsonArray() {
+		content = new ArrayList<>();
 	}
 
 	/**
@@ -53,8 +56,26 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 	 * @param content the content for the new JsonArray.
 	 */
 	public JsonArray(Object... content) {
+		this.content = new ArrayList<>(content.length);
 		for (Object obj : content) {
 			this.content.add(obj);
+		}
+	}
+
+	/**
+	 * Creates a new JsonArray and initializes it with the given content.
+	 * 
+	 * If the given {@link List} implements {@link Cloneable} it will be used as the
+	 * internal list, if not a new {@link ArrayList} will be used and the values
+	 * from content will be added to it.
+	 * 
+	 * @param content the content for the new JsonArray.
+	 */
+	public JsonArray(List<Object> content) {
+		if (content instanceof Cloneable) {
+			this.content = content;
+		} else {
+			this.content = new ArrayList<>(content);
 		}
 	}
 
@@ -64,7 +85,7 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 	 * @param content the content for the new JsonArray.
 	 */
 	public JsonArray(Collection<Object> content) {
-		this.content.addAll(content);
+		this.content = new ArrayList<>(content);
 	}
 
 	@Override
@@ -231,15 +252,19 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 		}
 
 		@SuppressWarnings("unchecked")
-		final List<Object> contentClone = (List<Object>) ((ArrayList<Object>) content).clone();
-		for (int i = 0; i < content.size(); i++) {
-			try {
-				Object value = content.get(i);
-				if (recursive && value instanceof JsonElement && ((JsonElement<?>) value).supportsClone()) {
-					contentClone.set(i, ((JsonElement<?>) value).clone(recursive));
+		final List<Object> contentClone = (List<Object>) General.reflectiveClone((Cloneable) content);
+		if (recursive) {
+			for (int i = 0; i < contentClone.size(); i++) {
+				Object value = contentClone.get(i);
+				if (value instanceof JsonElement && ((JsonElement<?>) value).supportsClone()) {
+					try {
+						contentClone.set(i, ((JsonElement<?>) value).clone(recursive));
+					} catch (CloneNotSupportedException e) {
+						e.printStackTrace();
+					}
+				} else if (value instanceof Cloneable) {
+					contentClone.set(i, General.reflectiveClone((Cloneable) value));
 				}
-			} catch (CloneNotSupportedException e) {
-				e.printStackTrace();
 			}
 		}
 		clone.content = contentClone;
@@ -381,30 +406,37 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 	public JsonArray changes(JsonElement<Integer> from, boolean recursive) {
 		JsonArray last = (JsonArray) from;
 		JsonArray changes = new JsonArray();
+		HashSet<Object> contentCopy;
+		contentCopy = new HashSet<>(Math.max(content.size(), last.content.size()));
+		contentCopy.addAll(last.content);
+
 		int[] index = new int[] { 0 };
-		content.forEach((value) -> {
+		for (Object value : content) {
 			try {
-				if (!last.contains(value)) {
+				if (!contentCopy.contains(value)) {
+					JsonObject val;
 					if (value instanceof JsonElement && ((JsonElement<?>) value).supportsClone()) {
-						JsonObject val = new JsonObject("val", (JsonElement<?>) value).clone(true);
-						val.put("after", index[0]);
-						changes.add(val);
+						val = new JsonObject("val", ((JsonElement<?>) value).clone(true), "after", index[0]);
+					} else if (value instanceof Cloneable) {
+						val = new JsonObject("val", General.reflectiveClone((Cloneable) value), "after", index[0]);
 					} else {
-						JsonObject val = new JsonObject("val", value);
-						val.put("after", index[0]);
-						changes.add(val);
+						val = new JsonObject("val", value, "after", index[0]);
 					}
+					changes.content.add(val);
 				} else {
 					index[0]++;
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		});
+		}
+
+		contentCopy.clear();
+		contentCopy.addAll(content);
 		index[0] = 0;
-		last.forEach((value) -> {
-			if (!content.contains(value)) {
-				changes.add(new JsonObject("rm", index[0]));
+		last.content.forEach((value) -> {
+			if (!contentCopy.contains(value)) {
+				changes.content.add(new JsonObject("rm", index[0]));
 			}
 			index[0]++;
 		});
@@ -419,22 +451,18 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 	@Override
 	public JsonArray reconstruct(JsonElement<Integer> from, boolean recursive) {
 		JsonArray last = (JsonArray) from;
-		JsonArray reconstructed = new JsonArray(last);
+		JsonArray reconstructed = last.clone();
 		int[] offset = new int[] { 0 };
-		content.forEach((change) -> {
-			try {
-				if (change instanceof JsonObject) {
-					JsonObject chg = (JsonObject) change;
-					if (chg.containsKey("rm")) {
-						reconstructed.remove(((int) chg.get("rm")) + offset[0]);
-						offset[0]--;
-					} else if (chg.containsKey("after") && chg.containsKey("val")) {
-						reconstructed.add(((int) chg.get("after")) + offset[0], chg.get("val"));
-						offset[0]++;
-					}
+		content.forEach(change -> {
+			if (change instanceof JsonObject) {
+				JsonObject chg = (JsonObject) change;
+				if (chg.containsKey("rm")) {
+					reconstructed.remove(((int) chg.get("rm")) + offset[0]);
+					offset[0]--;
+				} else if (chg.containsKey("after") && chg.containsKey("val")) {
+					reconstructed.add(((int) chg.get("after")) + offset[0], chg.get("val"));
+					offset[0]++;
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		});
 		return reconstructed;

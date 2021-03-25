@@ -272,7 +272,7 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	}
 
 	/**
-	 * Creates and returns a copy of this Json. Recursive.
+	 * Creates and returns a copy of this Json. Recursively.
 	 * 
 	 * @return a copy of this Json object.
 	 * @throws CloneNotSupportedException if this element can't be cloned.
@@ -282,7 +282,8 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	/**
 	 * Creates and returns a copy of this JsonElement.
 	 * 
-	 * @param recursive whether Jsons inside this Json should get cloned as well.
+	 * @param recursive whether objects that can be cloned inside this Json should
+	 *                  get cloned as well.
 	 * @return a copy of this JsonElement.
 	 * @throws CloneNotSupportedException if this element can't be cloned
 	 */
@@ -502,15 +503,22 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	 * @param content the object to get the string representation for.
 	 * @param builder the {@link StringBuilder} to write the object to.
 	 */
-	//TODO move me to string utils
+	// TODO move me to string utils
 	default void contentToString(Object content, StringBuilder builder) {
 		if (content == null || content instanceof Boolean || content instanceof Byte || content instanceof Short
 				|| content instanceof Integer || content instanceof Float || content instanceof Double
 				|| content instanceof Long || content instanceof JsonElement) {
 			builder.append(content);
 		} else {
+			String contentString = content.toString();
+			builder.ensureCapacity(builder.length() + contentString.length() + 2);
 			builder.append('"');
-			builder.append(content.toString().replace("\\", "\\\\").replace("\"", "\\\""));
+			for (char c:contentString.toCharArray()) {
+				if (c == '\\' || c == '"') {
+					builder.append('\\');
+				}
+				builder.append(c);
+			}
 			builder.append('"');
 		}
 	}

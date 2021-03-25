@@ -22,6 +22,7 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.tome25.utils.General;
 import com.tome25.utils.exception.InvalidKeyException;
 import com.tome25.utils.exception.InvalidTypeException;
 
@@ -41,12 +43,13 @@ import com.tome25.utils.exception.InvalidTypeException;
 public class JsonObject implements JsonElement<String>, Map<String, Object>, Cloneable {
 
 	private static final long serialVersionUID = 8864863917582360165L;
-	private Map<String, Object> content = new LinkedHashMap<String, Object>();
+	private Map<String, Object> content;
 
 	/**
 	 * Creates a new empty JsonObject.
 	 */
 	public JsonObject() {
+		content = new LinkedHashMap<>();
 	}
 
 	/**
@@ -56,16 +59,40 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 	 * @param value a value to add to the new JsonObject.
 	 */
 	public JsonObject(String key, Object value) {
+		content = new LinkedHashMap<>(1);
 		content.put(key, value);
+	}
+
+	/**
+	 * Creates a new JsonObject and initializes it with the given key value pairs.
+	 * 
+	 * @param key1   the first key to represent value in the new JsonObject.
+	 * @param value1 a value for key1 to add to the new JsonObject.
+	 * @param key2   the second key to represent value in the new JsonObject.
+	 * @param value2 a value for key2 to add to the new JsonObject.
+	 */
+	public JsonObject(String key1, Object value1, String key2, Object value2) {
+		content = new LinkedHashMap<>(2);
+		content.put(key1, value1);
+		content.put(key2, value2);
 	}
 
 	/**
 	 * Creates a new JsonObject and initializes it with the given content.
 	 * 
+	 * If the given {@link Map} implements {@link Cloneable} it will be used as the
+	 * internal map, if not a new {@link LinkedHashMap} will be used and the values
+	 * from content will be added to it.
+	 * 
 	 * @param content the content for the new JsonObject.
 	 */
 	public JsonObject(Map<String, Object> content) {
-		this.content.putAll(content);
+		if (content instanceof Cloneable) {
+			this.content = content;
+		} else {
+			this.content = new LinkedHashMap<>(content.size());
+			this.content.putAll(content);
+		}
 	}
 
 	@Override
@@ -257,16 +284,20 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 		}
 
 		@SuppressWarnings("unchecked")
-		LinkedHashMap<String, Object> contentClone = (LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) content).clone();
-		content.forEach((key, value) -> {
-			try {
-				if (recursive && value instanceof JsonElement && ((JsonElement<?>) value).supportsClone()) {
-					contentClone.put(key, ((JsonElement<?>) value).clone(true));
+		final Map<String, Object> contentClone = (Map<String, Object>) General.reflectiveClone((Cloneable) content);
+		if (recursive) {
+			content.forEach((key, value) -> {
+				if (value instanceof JsonElement && ((JsonElement<?>) value).supportsClone()) {
+					try {
+						contentClone.put(key, ((JsonElement<?>) value).clone(recursive));
+					} catch (CloneNotSupportedException e) {
+						e.printStackTrace();
+					}
+				} else if (value instanceof Cloneable) {
+					contentClone.put(key, General.reflectiveClone((Cloneable) value));
 				}
-			} catch (CloneNotSupportedException e) {
-				e.printStackTrace();
-			}
-		});
+			});
+		}
 		clone.content = contentClone;
 		return clone;
 	}
@@ -347,38 +378,57 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 	public JsonObject changes(JsonElement<String> from, boolean recursive) {
 		JsonObject last = (JsonObject) from;
 		JsonObject changes = new JsonObject();
-		content.keySet().forEach((key) -> {
+		HashMap<String, Object> lastContentCopy;
+		if (last.content instanceof HashMap) {
+			lastContentCopy = (HashMap<String, Object>) last.content;
+		} else {
+			lastContentCopy = new HashMap<>(last.content.size());
+			lastContentCopy.putAll(last.content);
+		}
+
+		content.forEach((key, value) -> {
 			try {
-				if (last.containsKey(key)) {
-					if (content.get(key) != null && !content.get(key).equals(last.get(key))) {
-						if (content.get(key) instanceof JsonElement && last.get(key) instanceof JsonElement) {
-							JsonElement<?> value = (JsonElement<?>) content.get(key);
+				if (lastContentCopy.containsKey(key)) {
+					if (value != null && !value.equals(last.get(key))) {
+						if (value instanceof JsonElement && last.get(key) instanceof JsonElement) {
+							JsonElement<?> val = (JsonElement<?>) value;
 							JsonElement<?> lastValue = (JsonElement<?>) last.get(key);
-							if (recursive && value.supportsChanges() && lastValue.supportsChanges()
-									&& value.getKeyType().equals(lastValue.getKeyType())) {
-								changes.add(key, changes(lastValue, value));
-							} else if (((JsonElement<?>) content.get(key)).supportsClone()) {
-								changes.add(key, ((JsonElement<?>) content.get(key)).clone(true));
+							if (recursive && val.supportsChanges() && lastValue.supportsChanges()
+									&& val.getKeyType().equals(lastValue.getKeyType())) {
+								changes.content.put(key, changes(lastValue, val));
+							} else if (val.supportsClone()) {
+								changes.content.put(key, val.clone(true));
 							} else {
-								changes.add(key, content.get(key));
+								changes.content.put(key, val);
 							}
+						} else if (value instanceof Cloneable) {
+							changes.content.put(key, General.reflectiveClone((Cloneable) value));
 						} else {
-							changes.add(key, content.get(key));
+							changes.content.put(key, value);
 						}
 					}
-				} else if (content.get(key) instanceof JsonElement
-						&& ((JsonElement<?>) content.get(key)).supportsClone()) {
-					changes.add(key, ((JsonElement<?>) content.get(key)).clone(true));
+				} else if (value instanceof JsonElement && ((JsonElement<?>) value).supportsClone()) {
+					changes.content.put(key, ((JsonElement<?>) value).clone(true));
+				} else if (value instanceof Cloneable) {
+					changes.content.put(key, General.reflectiveClone((Cloneable) value));
 				} else {
-					changes.add(key, content.get(key));
+					changes.content.put(key, value);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		});
-		last.keySet().forEach((key) -> {
-			if (!content.containsKey(key)) {
-				changes.add(key, null);
+
+		HashMap<String, Object> contentCopy;
+		if (content instanceof HashMap) {
+			contentCopy = (HashMap<String, Object>) content;
+		} else {
+			contentCopy = new HashMap<>(content.size());
+			contentCopy.putAll(content);
+		}
+		last.content.keySet().forEach(key -> {
+			if (!contentCopy.containsKey(key)) {
+				changes.content.put(key, null);
 			}
 		});
 		return changes;
@@ -393,52 +443,73 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 	public JsonObject reconstruct(JsonElement<String> from, boolean recursive) {
 		JsonObject last = (JsonObject) from;
 		JsonObject reconstructed = new JsonObject();
-		content.keySet().forEach((key) -> {
+		HashMap<String, Object> lastContentCopy;
+		if (last.content instanceof HashMap) {
+			lastContentCopy = (HashMap<String, Object>) last.content;
+		} else {
+			lastContentCopy = new HashMap<>(last.content.size());
+			lastContentCopy.putAll(last.content);
+		}
+
+		content.forEach((key, value) -> {
 			try {
-				if (last.containsKey(key)) {
-					if (content.get(key) != null && !content.get(key).equals(last.get(key))) {
-						if (content.get(key) instanceof JsonElement && last.get(key) instanceof JsonElement) {
-							JsonElement<?> value = (JsonElement<?>) content.get(key);
-							JsonElement<?> lastValue = (JsonElement<?>) last.get(key);
-							if (recursive && value.supportsChanges() && lastValue.supportsChanges()
-									&& value.getKeyType().equals(lastValue.getKeyType())) {
-								reconstructed.add(key, reconstruct(lastValue, value));
-							} else if (((JsonElement<?>) content.get(key)).supportsClone()) {
-								reconstructed.add(key, ((JsonElement<?>) content.get(key)).clone(true));
+				if (lastContentCopy.containsKey(key)) {
+					Object lastValue = lastContentCopy.get(key);
+					if (value != null && !value.equals(lastValue)) {
+						if (value instanceof JsonElement && lastValue instanceof JsonElement) {
+							JsonElement<?> jsonValue = (JsonElement<?>) value;
+							JsonElement<?> lastJsonValue = (JsonElement<?>) lastValue;
+							if (recursive && jsonValue.supportsChanges() && lastJsonValue.supportsChanges()
+									&& jsonValue.getKeyType().equals(lastJsonValue.getKeyType())) {
+								reconstructed.content.put(key, reconstruct(lastJsonValue, jsonValue));
+							} else if (jsonValue.supportsClone()) {
+								reconstructed.content.put(key, jsonValue.clone(true));
 							} else {
-								reconstructed.add(key, content.get(key));
+								reconstructed.content.put(key, value);
 							}
+						} else if (value instanceof Cloneable) {
+							reconstructed.content.put(key, General.reflectiveClone((Cloneable) value));
 						} else {
-							reconstructed.add(key, content.get(key));
+							reconstructed.content.put(key, value);
 						}
-					} else if (content.get(key) != null) {
-						if (content.get(key) instanceof JsonElement
-								&& ((JsonElement<?>) content.get(key)).supportsClone()) {
-							reconstructed.add(key, ((JsonElement<?>) content.get(key)).clone(true));
-						} else {
-							reconstructed.add(key, content.get(key));
-						}
+					} else if (value instanceof JsonElement && ((JsonElement<?>) value).supportsClone()) {
+						reconstructed.content.put(key, ((JsonElement<?>) value).clone(true));
+					} else if (value instanceof Cloneable) {
+						reconstructed.content.put(key, General.reflectiveClone((Cloneable) value));
+					} else if (value != null) {
+						reconstructed.content.put(key, value);
 					}
-				} else if (content.get(key) instanceof JsonElement
-						&& ((JsonElement<?>) content.get(key)).supportsClone()) {
-					reconstructed.add(key, ((JsonElement<?>) content.get(key)).clone(true));
+				} else if (value instanceof JsonElement && ((JsonElement<?>) value).supportsClone()) {
+					reconstructed.content.put(key, ((JsonElement<?>) value).clone(true));
+				} else if (value instanceof Cloneable) {
+					reconstructed.content.put(key, General.reflectiveClone((Cloneable) value));
 				} else {
-					reconstructed.add(key, content.get(key));
+					reconstructed.content.put(key, value);
 				}
-			} catch (Exception e) {
+			} catch (CloneNotSupportedException e) {
 				e.printStackTrace();
 			}
 		});
-		last.keySet().forEach((key) -> {
-			if (!content.containsKey(key)) {
-				try {
-					if (last.get(key) instanceof JsonElement && ((JsonElement<?>) last.get(key)).supportsClone()) {
-						reconstructed.add(key, ((JsonElement<?>) last.get(key)).clone(true));
-					} else {
-						reconstructed.add(key, last.get(key));
+
+		HashMap<String, Object> contentCopy;
+		if (content instanceof HashMap) {
+			contentCopy = (HashMap<String, Object>) content;
+		} else {
+			contentCopy = new HashMap<>(content.size());
+			contentCopy.putAll(content);
+		}
+		last.content.forEach((key, value) -> {
+			if (!contentCopy.containsKey(key)) {
+				if (value instanceof JsonElement && ((JsonElement<?>) value).supportsClone()) {
+					try {
+						reconstructed.content.put(key, ((JsonElement<?>) value).clone(true));
+					} catch (CloneNotSupportedException e) {
+						e.printStackTrace();
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
+				} else if (last.get(key) instanceof Cloneable) {
+					reconstructed.content.put(key, General.reflectiveClone((Cloneable) value));
+				} else {
+					reconstructed.content.put(key, value);
 				}
 			}
 		});

@@ -288,6 +288,11 @@
 <dd>
 <div class="block">Resets the error state of this value.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/General.html#clone">clone</a></span> - Static variable in class com.tome25.utils.<a href="com/tome25/utils/General.html" title="class in com.tome25.utils">General</a></dt>
+<dd>
+<div class="block">The method <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang"><code>Object.clone()</code></a> to be used by
+ <a href="com/tome25/utils/General.html#reflectiveClone-T-"><code>General.reflectiveClone(Cloneable)</code></a>.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#clone--">clone()</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#clone-boolean-">clone(boolean)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
@@ -311,6 +316,8 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/OutputHandler.html#close--">close()</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/OutputHandler.html" title="class in com.tome25.utils.logging">OutputHandler</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/SplittingHandler.html#close--">close()</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/SplittingHandler.html" title="class in com.tome25.utils.logging">SplittingHandler</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/tome25/utils/package-summary.html">com.tome25.utils</a> - package com.tome25.utils</dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/tome25/utils/config/package-summary.html">com.tome25.utils.config</a> - package com.tome25.utils.config</dt>
 <dd>&nbsp;</dd>
@@ -724,6 +731,12 @@
 </a>
 <h2 class="title">G</h2>
 <dl>
+<dt><a href="com/tome25/utils/General.html" title="class in com.tome25.utils"><span class="typeNameLink">General</span></a> - Class in <a href="com/tome25/utils/package-summary.html">com.tome25.utils</a></dt>
+<dd>
+<div class="block">A collection of common utilities that don't fit any particular package.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/General.html#General--">General()</a></span> - Constructor for class com.tome25.utils.<a href="com/tome25/utils/General.html" title="class in com.tome25.utils">General</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#get-int-">get(int)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#get-java.lang.Object-">get(Object)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
@@ -1170,6 +1183,10 @@
 <dd>
 <div class="block">Creates a new JsonArray and initializes it with the given content.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#JsonArray-java.util.List-">JsonArray(List&lt;Object&gt;)</a></span> - Constructor for class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
+<dd>
+<div class="block">Creates a new JsonArray and initializes it with the given content.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#JsonArray-java.util.Collection-">JsonArray(Collection&lt;Object&gt;)</a></span> - Constructor for class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>
 <div class="block">Creates a new JsonArray and initializes it with the given content.</div>
@@ -1189,6 +1206,10 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#JsonObject-java.lang.String-java.lang.Object-">JsonObject(String, Object)</a></span> - Constructor for class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
 <dd>
 <div class="block">Creates a new JsonObject and initializes it with the given key value pair.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#JsonObject-java.lang.String-java.lang.Object-java.lang.String-java.lang.Object-">JsonObject(String, Object, String, Object)</a></span> - Constructor for class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
+<dd>
+<div class="block">Creates a new JsonObject and initializes it with the given key value pairs.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#JsonObject-java.util.Map-">JsonObject(Map&lt;String, Object&gt;)</a></span> - Constructor for class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
 <dd>
@@ -1662,6 +1683,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#reconstruct-com.tome25.utils.json.JsonElement-boolean-">reconstruct(JsonElement&lt;String&gt;, boolean)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/General.html#reflectiveClone-T-">reflectiveClone(T)</a></span> - Static method in class com.tome25.utils.<a href="com/tome25/utils/General.html" title="class in com.tome25.utils">General</a></dt>
+<dd>
+<div class="block">Clones the given object by calling its clone method using reflection.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#remove-int-">remove(int)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#remove-java.lang.Object-">remove(Object)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>

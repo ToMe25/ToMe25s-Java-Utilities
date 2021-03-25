@@ -194,6 +194,14 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <div class="block">Creates a new JsonObject and initializes it with the given key value pair.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonObject.html#JsonObject-java.lang.String-java.lang.Object-java.lang.String-java.lang.Object-">JsonObject</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key1,
+          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value1,
+          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key2,
+          <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value2)</code>
+<div class="block">Creates a new JsonObject and initializes it with the given key value pairs.</div>
+</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -525,6 +533,26 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 </dl>
 </li>
 </ul>
+<a name="JsonObject-java.lang.String-java.lang.Object-java.lang.String-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>JsonObject</h4>
+<pre>public&nbsp;JsonObject(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key1,
+                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value1,
+                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key2,
+                  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value2)</pre>
+<div class="block">Creates a new JsonObject and initializes it with the given key value pairs.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>key1</code> - the first key to represent value in the new JsonObject.</dd>
+<dd><code>value1</code> - a value for key1 to add to the new JsonObject.</dd>
+<dd><code>key2</code> - the second key to represent value in the new JsonObject.</dd>
+<dd><code>value2</code> - a value for key2 to add to the new JsonObject.</dd>
+</dl>
+</li>
+</ul>
 <a name="JsonObject-java.util.Map-">
 <!--   -->
 </a>
@@ -532,7 +560,11 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <li class="blockList">
 <h4>JsonObject</h4>
 <pre>public&nbsp;JsonObject(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;content)</pre>
-<div class="block">Creates a new JsonObject and initializes it with the given content.</div>
+<div class="block">Creates a new JsonObject and initializes it with the given content.
+ 
+ If the given <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a> implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang"><code>Cloneable</code></a> it will be used as the
+ internal map, if not a new <a href="https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html?is-external=true" title="class or interface in java.util"><code>LinkedHashMap</code></a> will be used and the values
+ from content will be added to it.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>content</code> - the content for the new JsonObject.</dd>
@@ -862,7 +894,7 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <h4>clone</h4>
 <pre>public&nbsp;<a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a>&nbsp;clone()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html#clone--">JsonElement</a></code></span></div>
-<div class="block">Creates and returns a copy of this Json. Recursive.</div>
+<div class="block">Creates and returns a copy of this Json. Recursively.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/json/JsonElement.html#clone--">clone</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></dd>
@@ -886,7 +918,8 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/json/JsonElement.html#clone-boolean-">clone</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>recursive</code> - whether Jsons inside this Json should get cloned as well.</dd>
+<dd><code>recursive</code> - whether objects that can be cloned inside this Json should
+                  get cloned as well.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a copy of this JsonElement.</dd>
 </dl>

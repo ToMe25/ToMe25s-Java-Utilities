@@ -867,7 +867,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <h4>clone</h4>
 <pre><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;clone()
               throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CloneNotSupportedException.html?is-external=true" title="class or interface in java.lang">CloneNotSupportedException</a></pre>
-<div class="block">Creates and returns a copy of this Json. Recursive.</div>
+<div class="block">Creates and returns a copy of this Json. Recursively.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a copy of this Json object.</dd>
@@ -887,7 +887,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <div class="block">Creates and returns a copy of this JsonElement.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>recursive</code> - whether Jsons inside this Json should get cloned as well.</dd>
+<dd><code>recursive</code> - whether objects that can be cloned inside this Json should
+                  get cloned as well.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a copy of this JsonElement.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>

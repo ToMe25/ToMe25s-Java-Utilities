@@ -175,6 +175,11 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 </td>
 </tr>
 <tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonArray.html#JsonArray-java.util.List-">JsonArray</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;content)</code>
+<div class="block">Creates a new JsonArray and initializes it with the given content.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonArray.html#JsonArray-java.lang.Object...-">JsonArray</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>...&nbsp;content)</code>
 <div class="block">Creates a new JsonArray and initializes it with the given content.</div>
 </td>
@@ -591,6 +596,24 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 </dl>
 </li>
 </ul>
+<a name="JsonArray-java.util.List-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>JsonArray</h4>
+<pre>public&nbsp;JsonArray(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;content)</pre>
+<div class="block">Creates a new JsonArray and initializes it with the given content.
+ 
+ If the given <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a> implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang"><code>Cloneable</code></a> it will be used as the
+ internal list, if not a new <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util"><code>ArrayList</code></a> will be used and the values
+ from content will be added to it.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>content</code> - the content for the new JsonArray.</dd>
+</dl>
+</li>
+</ul>
 <a name="JsonArray-java.util.Collection-">
 <!--   -->
 </a>
@@ -977,7 +1000,7 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <h4>clone</h4>
 <pre>public&nbsp;<a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a>&nbsp;clone()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html#clone--">JsonElement</a></code></span></div>
-<div class="block">Creates and returns a copy of this Json. Recursive.</div>
+<div class="block">Creates and returns a copy of this Json. Recursively.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/json/JsonElement.html#clone--">clone</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;</code></dd>
@@ -1001,7 +1024,8 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/json/JsonElement.html#clone-boolean-">clone</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>recursive</code> - whether Jsons inside this Json should get cloned as well.</dd>
+<dd><code>recursive</code> - whether objects that can be cloned inside this Json should
+                  get cloned as well.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a copy of this JsonElement.</dd>
 </dl>

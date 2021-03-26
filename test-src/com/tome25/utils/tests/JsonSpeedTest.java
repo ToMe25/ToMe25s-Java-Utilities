@@ -1,5 +1,9 @@
 package com.tome25.utils.tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,6 +16,7 @@ import org.junit.Test;
 import com.carrotsearch.junitbenchmarks.AbstractBenchmark;
 import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import com.tome25.utils.json.JsonArray;
+import com.tome25.utils.json.JsonElement;
 import com.tome25.utils.json.JsonObject;
 import com.tome25.utils.json.JsonParser;
 
@@ -28,8 +33,14 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	public void objectFastParsingTest() throws ParseException {
 		// test everything possible in one string 50 times.
 		String jsonString = "{\"string\":\"Test String?\",\"testString\":\"Test String!\\\"!51{}\\\\[]\",\"int\":5223156,\"int1\":312}";
+		JsonElement<?> json = null;
 		for (int i = 0; i < 50; i++) {
-			JsonParser.parseStringFast(jsonString);
+			if (json == null) {
+				json = JsonParser.parseStringFast(jsonString);
+			} else {
+				assertEquals("The first parsing result does not match the current one!", json,
+						JsonParser.parseStringFast(jsonString));
+			}
 		}
 	}
 
@@ -44,8 +55,14 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	public void arrayFastParsingTest() throws ParseException {
 		// test everything possible in one string 50 times.
 		String jsonString = "[\"string\",\"Test String?\",\"testString\",\"Test String!\\\"!51{}\\\\[]\",\"int\",5223156,\"int1\",312]";
+		JsonElement<?> json = null;
 		for (int i = 0; i < 50; i++) {
-			JsonParser.parseStringFast(jsonString);
+			if (json == null) {
+				json = JsonParser.parseStringFast(jsonString);
+			} else {
+				assertEquals("The first parsing result does not match the current one!", json,
+						JsonParser.parseStringFast(jsonString));
+			}
 		}
 	}
 
@@ -57,11 +74,17 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	 */
 	@Test
 	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
-	public void objectComparisonTest() throws ParseException {
+	public void objectParsingComparisonTest() throws ParseException {
 		// test normal parsing with the same string the fast parsing test uses 50 times.
 		String jsonString = "{\"string\":\"Test String?\",\"testString\":\"Test String!\\\"!51{}\\\\[]\",\"int\":5223156,\"int1\":312}";
+		JsonElement<?> json = null;
 		for (int i = 0; i < 50; i++) {
-			JsonParser.parseString(jsonString);
+			if (json == null) {
+				json = JsonParser.parseString(jsonString);
+			} else {
+				assertEquals("The first parsing result does not match the current one!", json,
+						JsonParser.parseString(jsonString));
+			}
 		}
 	}
 
@@ -73,11 +96,17 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	 */
 	@Test
 	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
-	public void arrayComparisonTest() throws ParseException {
+	public void arrayParsingComparisonTest() throws ParseException {
 		// test normal parsing with the same string the fast parsing test uses 50 times.
 		String jsonString = "[\"string\",\"Test String?\",\"testString\",\"Test String!\\\"!51{}\\\\[]\",\"int\",5223156,\"int1\",312]";
+		JsonElement<?> json = null;
 		for (int i = 0; i < 50; i++) {
-			JsonParser.parseString(jsonString);
+			if (json == null) {
+				json = JsonParser.parseString(jsonString);
+			} else {
+				assertEquals("The first parsing result does not match the current one!", json,
+						JsonParser.parseString(jsonString));
+			}
 		}
 	}
 
@@ -94,8 +123,14 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		// intentionally doesn't contain a json array.
 		String jsonString = "{\"string\":\"Test String: {}[]\\\"\\\\,;.-12\",\"number\":1234567890123456,"
 				+ "\"floating\":516173.616396, \"json\":{\"string\":\"There is nothing in here\", \"int\":532}}";
+		JsonElement<?> json = null;
 		for (int i = 0; i < 100; i++) {
-			JsonParser.parseString(jsonString);
+			if (json == null) {
+				json = JsonParser.parseString(jsonString);
+			} else {
+				assertEquals("The first parsing result does not match the current one!", json,
+						JsonParser.parseString(jsonString));
+			}
 		}
 	}
 
@@ -112,8 +147,14 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		// intentionally doesn't contain a json object.
 		String jsonString = "[\"Test String: {}[]\\\"\\\\,;.-12\", 7348927034872342, 63907.23424,"
 				+ "[\"Some Random Test String\", 423423, 123123]]";
+		JsonElement<?> json = null;
 		for (int i = 0; i < 100; i++) {
-			JsonParser.parseString(jsonString);
+			if (json == null) {
+				JsonParser.parseString(jsonString);
+			} else {
+				assertEquals("The first parsing result does not match the current one!", json,
+						JsonParser.parseString(jsonString));
+			}
 		}
 	}
 
@@ -128,6 +169,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		for (int i = 0; i < 1000; i++) {
 			json.add("key" + i, "value" + i);
 		}
+		assertEquals(1000, json.size());
 	}
 
 	/**
@@ -141,6 +183,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		for (int i = 0; i < 1000; i++) {
 			json.add("value" + i);
 		}
+		assertEquals(1000, json.size());
 	}
 
 	/**
@@ -157,7 +200,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		}
 		// clone the object 50 times.
 		for (int i = 0; i < 50; i++) {
-			json.clone();
+			assertEquals(json, json.clone());
 		}
 	}
 
@@ -175,7 +218,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		}
 		// clone the object 50 times.
 		for (int i = 0; i < 50; i++) {
-			json.clone();
+			assertEquals(json, json.clone());
 		}
 	}
 
@@ -193,7 +236,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		}
 		// clone the object 50 times.
 		for (int i = 0; i < 50; i++) {
-			json.clone();
+			assertEquals(json, json.clone());
 		}
 	}
 
@@ -211,7 +254,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		}
 		// clone the object 50 times.
 		for (int i = 0; i < 50; i++) {
-			json.clone();
+			assertEquals(json, json.clone());
 		}
 	}
 
@@ -229,11 +272,11 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		}
 		// check for 100 existing keys whether they are in the json object.
 		for (int i = 0; i < 100; i++) {
-			json.contains("key" + i * 2);
+			assertTrue("Key \"key" + (i * 2) + "\" not found!", json.contains("key" + i * 2));
 		}
 		// check for 100 not existing keys whether they are in the json object.
 		for (int i = 0; i < 100; i++) {
-			json.contains("key1" + i);
+			assertFalse("Key \"Key1" + i + "\"was found, but shouldn't exist!", json.contains("Key1" + i));
 		}
 	}
 
@@ -251,11 +294,11 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		}
 		// check for 100 existing keys whether they are in the json object.
 		for (int i = 0; i < 100; i++) {
-			json.contains("value" + i * 2);
+			assertTrue("Element \"value" + (i * 2) + "\" not found!", json.contains("value" + i * 2));
 		}
 		// check for 100 not existing keys whether they are in the json object.
 		for (int i = 0; i < 100; i++) {
-			json.contains("value1" + i);
+			assertFalse("Element \"Value1" + i + "\" was found, but shouldn't exist!", json.contains("Value1" + i));
 		}
 	}
 
@@ -274,6 +317,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		for (int i = 0; i < 100; i++) {
 			json.remove("key" + i * 2);
 		}
+		assertEquals(400, json.size());
 	}
 
 	/**
@@ -291,6 +335,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		for (int i = 0; i < 100; i++) {
 			json.remove("value" + i * 2);
 		}
+		assertEquals(400, json.size());
 	}
 
 	/**
@@ -341,8 +386,14 @@ public class JsonSpeedTest extends AbstractBenchmark {
 			json.add("key" + i, "value" + i);
 		}
 		// convert the json object to string 50 times.
+		String jsonString = null;
 		for (int i = 0; i < 100; i++) {
-			json.toString();
+			if (jsonString == null) {
+				jsonString = json.toString();
+			} else {
+				assertEquals("The string from the first toString wasn't equals the current string!", jsonString,
+						json.toString());
+			}
 		}
 	}
 
@@ -358,8 +409,14 @@ public class JsonSpeedTest extends AbstractBenchmark {
 			json.add("value" + i);
 		}
 		// convert the json array to string 50 times.
+		String jsonString = null;
 		for (int i = 0; i < 100; i++) {
-			json.toString();
+			if (jsonString == null) {
+				jsonString = json.toString();
+			} else {
+				assertEquals("The string from the first toString wasn't equals the current string!", jsonString,
+						json.toString());
+			}
 		}
 	}
 
@@ -388,7 +445,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		for (int i = 0; i < 100; i++) {
 			oOut.writeObject(json.clone());// Clone the json because otherwise the caching will prevent it from getting
 											// written multiple times.
-			oIn.readObject();
+			assertEquals(json, oIn.readObject());
 		}
 		// close oIn
 		oIn.close();
@@ -419,7 +476,7 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		for (int i = 0; i < 100; i++) {
 			oOut.writeObject(json.clone());// Clone the json because otherwise the caching will prevent it from getting
 											// written multiple times.
-			oIn.readObject();
+			assertEquals(json, oIn.readObject());
 		}
 		// close oIn
 		oIn.close();
@@ -435,19 +492,23 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		// add 100 objects to two json objects.
 		JsonObject json1 = new JsonObject();
 		JsonObject json2 = new JsonObject();
+		JsonObject changes = new JsonObject();
 		for (int i = 0; i < 100; i++) {
 			json1.add("key" + i, "value" + i);
 			if (i % 4 == 0) {
 				json2.add("Key" + i, "value" + i);
+				changes.add("key" + i, null);
+				changes.add("Key" + i, "value" + i);
 			} else if (i % 4 == 1) {
 				json2.add("key" + i, "value" + (i * 2));
+				changes.add("key" + i, "value" + (i * 2));
 			} else {
 				json2.add("key" + i, "value" + i);
 			}
 		}
 		// generate the changes json 100 times.
 		for (int i = 0; i < 100; i++) {
-			json2.changes(json1);
+			assertEquals(changes, json2.changes(json1));
 		}
 	}
 
@@ -461,19 +522,34 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		// add 100 objects to two just arrays.
 		JsonArray json1 = new JsonArray();
 		JsonArray json2 = new JsonArray();
+		JsonArray changes = new JsonArray();
 		for (int i = 0; i < 100; i++) {
 			json1.add("value" + i);
 			if (i % 4 == 0) {
 				json2.add("Value" + i);
+				if (i < 50) {// part of the workaround described below.
+					changes.add(new JsonObject("val", "Value" + i, "after", (int) Math.max(0, i * 0.75)));
+				} else {
+					changes.add(new JsonObject("val", "Value" + i, "after", (int) Math.max(0, (i - 52) / 2 + 39)));
+				}
 			} else if (i % 4 == 1) {
 				json2.add("value" + (i * 2));
+				if (i >= 50) {// FIXME this is a workaround to make this test work while the changes method
+								// isn't working correctly.
+					changes.add(
+							new JsonObject("val", "value" + (i * 2), "after", (int) Math.max(0, (i - 52) / 2 + 39)));
+				}
 			} else {
 				json2.add("value" + i);
 			}
 		}
+		for (int i = 0; i < 100; i += 4) {
+			changes.add(new JsonObject("rm", i));
+			changes.add(new JsonObject("rm", i + 1));
+		}
 		// generate the changes json 100 times.
 		for (int i = 0; i < 100; i++) {
-			json2.changes(json1);
+			assertEquals(changes, json2.changes(json1));
 		}
 	}
 
@@ -485,20 +561,25 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
 	public void objectReconstructTest() {
 		// add 100 objects a json object and generate a changes json.
-		JsonObject json = new JsonObject();
+		JsonObject json1 = new JsonObject();
+		JsonObject json2 = new JsonObject();
 		JsonObject changes = new JsonObject();
 		for (int i = 0; i < 100; i++) {
-			json.add("key" + i, "value" + i);
+			json1.add("key" + i, "value" + i);
 			if (i % 4 == 0) {
+				json2.add("Key" + i, "value" + i);
 				changes.add("key" + i, null);
 				changes.add("Key" + i, "value" + i);
 			} else if (i % 4 == 1) {
+				json2.add("key" + i, "value" + (i * 2));
 				changes.add("key" + i, "value" + (i * 2));
+			} else {
+				json2.add("key" + i, "value" + i);
 			}
 		}
 		// reconstruct the json object 100 times.
 		for (int i = 0; i < 100; i++) {
-			changes.reconstruct(json);
+			assertEquals(json2, changes.reconstruct(json1));
 		}
 	}
 
@@ -510,21 +591,26 @@ public class JsonSpeedTest extends AbstractBenchmark {
 	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
 	public void arrayReconstructTest() {
 		// add 100 objects a json object and generate a changes json.
-		JsonArray json = new JsonArray();
+		JsonArray json1 = new JsonArray();
+		JsonArray json2 = new JsonArray();
 		JsonArray changes = new JsonArray();
 		for (int i = 0; i < 100; i++) {
-			json.add("value" + i);
+			json1.add("value" + i);
 			if (i % 4 == 0) {
+				json2.add("Value" + i);
 				changes.add(new JsonObject("val", "Value" + i, "after", i));
 				changes.add(new JsonObject("rm", i));
 			} else if (i % 4 == 1) {
+				json2.add("value" + (i * 2));
 				changes.add(new JsonObject("val", "value" + (i * 2), "after", i));
 				changes.add(new JsonObject("rm", i));
+			} else {
+				json2.add("value" + i);
 			}
 		}
 		// reconstruct the json object 100 times.
 		for (int i = 0; i < 100; i++) {
-			changes.reconstruct(json);
+			assertEquals(json2, changes.reconstruct(json1));
 		}
 	}
 

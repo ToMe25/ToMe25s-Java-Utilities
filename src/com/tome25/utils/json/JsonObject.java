@@ -588,8 +588,8 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 
 	/**
 	 * Compares the two given objects if they implement {@link Comparable}, and are
-	 * compatible types.<br/>
-	 * This method can only return 1, 0 or -1.<br/>
+	 * compatible types.<br>
+	 * This method can only return 1, 0 or -1.<br>
 	 * Returns 0 if the objects can't be compared.
 	 * 
 	 * @param obj1 the first object to compare.

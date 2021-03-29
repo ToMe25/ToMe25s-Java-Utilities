@@ -67,7 +67,7 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 	 * Creates a new JsonArray and initializes it with the given content.
 	 * 
 	 * If the given {@link List} implements {@link Cloneable} it will be used as the
-	 * internal list.<br/>
+	 * internal list.<br>
 	 * If not a new {@link ArrayList} will be used and the values from content will
 	 * be added to it.
 	 * 
@@ -82,7 +82,7 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 	}
 
 	/**
-	 * Creates a new JsonArray and initializes it with the given content.<br/>
+	 * Creates a new JsonArray and initializes it with the given content.<br>
 	 * This content will be added to a new {@link ArrayList} used internally.
 	 * 
 	 * @param content the content for the new JsonArray.
@@ -525,8 +525,8 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 
 	/**
 	 * Compares the two given objects if they implement {@link Comparable}, and are
-	 * compatible types.<br/>
-	 * This method can only return 1, 0 or -1.<br/>
+	 * compatible types.<br>
+	 * This method can only return 1, 0 or -1.<br>
 	 * Returns 0 if the objects can't be compared.
 	 * 
 	 * @param obj1 the first object to compare.

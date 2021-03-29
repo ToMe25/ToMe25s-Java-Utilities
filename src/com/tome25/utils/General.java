@@ -42,7 +42,7 @@ public abstract class General {
 	}
 
 	/**
-	 * Clones the given object by calling its clone method using reflection.<br/>
+	 * Clones the given object by calling its clone method using reflection.<br>
 	 * By implementing {@link Cloneable} the object marks this as a legal operation.
 	 * 
 	 * @param <T>    The type of the object to clone.

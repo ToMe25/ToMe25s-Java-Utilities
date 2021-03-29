@@ -169,7 +169,7 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	}
 
 	/**
-	 * Gets the size of this object.<br/>
+	 * Gets the size of this object.<br>
 	 * If recursive is true this counts all sub JsonElements as their size instead
 	 * of one.
 	 * 
@@ -381,7 +381,7 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 
 	/**
 	 * Returns a new JsonElement containing the changes from the given JsonElement
-	 * to this one. Recursively.<br/>
+	 * to this one. Recursively.<br>
 	 * This marks removed values by setting them to null, so it will not fully work
 	 * with JsonElements containing null objects.
 	 * 
@@ -397,7 +397,7 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 
 	/**
 	 * Returns a new JsonElement containing the changes from the given JsonElement
-	 * to this one.<br/>
+	 * to this one.<br>
 	 * This marks removed values by setting them to null, so it will not fully work
 	 * with JsonElements containing null objects.
 	 * 
@@ -414,7 +414,7 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	}
 
 	/**
-	 * A utility method to call to.{@link #changes(JsonElement) changes}(from).<br/>
+	 * A utility method to call to.{@link #changes(JsonElement) changes}(from).<br>
 	 * This requires from to have the same {@link #getKeyType() key type} as to.
 	 * 
 	 * @param <T>  the key type of the json elements.
@@ -434,7 +434,7 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 
 	/**
 	 * Returns a new JsonElement containing the values of the given JsonElement with
-	 * the changes contained in this JsonElement applied. Recursively.<br/>
+	 * the changes contained in this JsonElement applied. Recursively.<br>
 	 * This marks removed values by setting them to null, so it will not fully work
 	 * with JsonElements containing null objects.
 	 * 
@@ -450,7 +450,7 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 
 	/**
 	 * Returns a new JsonElement containing the values of the given JsonElement with
-	 * the changes contained in this JsonElement applied.<br/>
+	 * the changes contained in this JsonElement applied.<br>
 	 * This marks removed values by setting them to null, so it will not fully work
 	 * with JsonElements containing null objects.
 	 * 
@@ -468,7 +468,7 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 
 	/**
 	 * A utility method to call to.{@link #reconstruct(JsonElement)
-	 * reconstruct}(from).<br/>
+	 * reconstruct}(from).<br>
 	 * This requires from to have the same {@link #getKeyType() key type} as
 	 * changes.
 	 * 

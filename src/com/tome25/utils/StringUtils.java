@@ -27,9 +27,9 @@ import com.tome25.utils.json.JsonElement;
 public abstract class StringUtils {
 
 	/**
-	 * Converts the given object to an escaped string.<br/>
+	 * Converts the given object to an escaped string.<br>
 	 * For numbers, booleans, {@link JsonElement JsonElements} and null this just
-	 * returns the string representation of that object.<br/>
+	 * returns the string representation of that object.<br>
 	 * Everything else will be in double quotes, and all double quotes and
 	 * backslashes in the string representation of the object will be escaped.
 	 * 
@@ -45,14 +45,13 @@ public abstract class StringUtils {
 
 	/**
 	 * Writes the escaped string version of the given object to the given
-	 * {@link StringBuilder}.<br/>
+	 * {@link StringBuilder}.<br>
 	 * For numbers, booleans, {@link JsonElement JsonElements} and null this just
-	 * returns the string representation of that object.<br/>
+	 * returns the string representation of that object.<br>
 	 * Everything else will be in double quotes, and all double quotes and
 	 * backslashes in the string representation of the object will be escaped.
 	 * 
 	 * @param obj the object to get the string version of.
-	 * @return the resulting string.
 	 */
 	public static void toEscapedString(StringBuilder builder, Object obj) {
 		if (obj == null || obj instanceof Boolean || obj instanceof Number || obj instanceof JsonElement) {

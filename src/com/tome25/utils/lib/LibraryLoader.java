@@ -266,8 +266,8 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Converts a string array to a string.<br/>
-	 * Entries are separated with a space.<br/>
+	 * Converts a string array to a string.<br>
+	 * Entries are separated with a space.<br>
 	 * Copy of {@link StringUtils#arrayToString(Object[], String)}, with a fixed
 	 * separator.
 	 * 

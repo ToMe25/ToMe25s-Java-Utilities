@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":18,"i2":18,"i3":18,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":50,"i11":18,"i12":6,"i13":6,"i14":18,"i15":18,"i16":18,"i17":6,"i18":6,"i19":18,"i20":6,"i21":6,"i22":6,"i23":6,"i24":18,"i25":18,"i26":18,"i27":6,"i28":6,"i29":18,"i30":18,"i31":6,"i32":18,"i33":18,"i34":18,"i35":18,"i36":18,"i37":18,"i38":6,"i39":6};
+var methods = {"i0":6,"i1":18,"i2":18,"i3":18,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":50,"i11":50,"i12":6,"i13":6,"i14":18,"i15":18,"i16":18,"i17":6,"i18":6,"i19":18,"i20":6,"i21":6,"i22":6,"i23":6,"i24":18,"i25":18,"i26":18,"i27":6,"i28":6,"i29":18,"i30":18,"i31":6,"i32":18,"i33":18,"i34":18,"i35":18,"i36":18,"i37":18,"i38":6,"i39":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -149,7 +149,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <td class="colFirst"><code>default &lt;T&gt;&nbsp;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-com.tome25.utils.json.JsonElement-">changes</a></span>(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;?&gt;&nbsp;from,
        <a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;T&gt;&nbsp;to)</code>
-<div class="block">A utility method to call to.<a href="../../../../com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-"><code>changes</code></a>(from).</div>
+<div class="block">A utility method to call to.<a href="../../../../com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-"><code>changes</code></a>(from).<br>
+ This requires from to have the same <a href="../../../../com/tome25/utils/json/JsonElement.html#getKeyType--"><code>key type</code></a> as to.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -164,7 +165,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-boolean-">changes</a></span>(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;from,
        boolean&nbsp;recursive)</code>
 <div class="block">Returns a new JsonElement containing the changes from the given JsonElement
- to this one.</div>
+ to this one.<br>
+ This marks removed values by setting them to null, so it will not fully work
+ with JsonElements containing null objects.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
@@ -207,15 +210,18 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#contentToString-java.lang.Object-">contentToString</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;content)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use <a href="../../../../com/tome25/utils/StringUtils.html#toEscapedString-java.lang.StringBuilder-java.lang.Object-"><code>StringUtils#toEscapedString</code></a> instead.</span></div>
+</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>default void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#contentToString-java.lang.Object-java.lang.StringBuilder-">contentToString</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;content,
                <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder)</code>
-<div class="block">Writes the given object to the given <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang"><code>StringBuilder</code></a> in the way
- intended for Jsons to match the Json specifications.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">user <a href="../../../../com/tome25/utils/StringUtils.html#toEscapedString-java.lang.StringBuilder-java.lang.Object-"><code>StringUtils#toEscapedString</code></a> instead.</span></div>
+</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
@@ -251,7 +257,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#getKeyType--">getKeyType</a></span>()</code>
-<div class="block">Gets the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> for the key type of this json instance.</div>
+<div class="block">Gets the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> for the key type of this Json instance.</div>
 </td>
 </tr>
 <tr id="i18" class="altColor">
@@ -298,7 +304,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <td class="colFirst"><code>default &lt;T&gt;&nbsp;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-com.tome25.utils.json.JsonElement-">reconstruct</a></span>(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;?&gt;&nbsp;from,
            <a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;T&gt;&nbsp;changes)</code>
-<div class="block">A utility method to call to.<a href="../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-"><code>reconstruct</code></a>(from).</div>
+<div class="block">A utility method to call to.<a href="../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-"><code>reconstruct</code></a>(from).<br>
+ This requires from to have the same <a href="../../../../com/tome25/utils/json/JsonElement.html#getKeyType--"><code>key type</code></a> as
+ changes.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
@@ -313,7 +321,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-boolean-">reconstruct</a></span>(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;from,
            boolean&nbsp;recursive)</code>
 <div class="block">Returns a new JsonElement containing the values of the given JsonElement with
- the changes contained in this JsonElement applied.</div>
+ the changes contained in this JsonElement applied.<br>
+ This marks removed values by setting them to null, so it will not fully work
+ with JsonElements containing null objects.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
@@ -348,7 +358,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <tr id="i31" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonElement.html#size-boolean-">size</a></span>(boolean&nbsp;recursive)</code>
-<div class="block">Gets the size of this object.</div>
+<div class="block">Gets the size of this object.<br>
+ If recursive is true this counts all sub JsonElements as their size instead
+ of one.</div>
 </td>
 </tr>
 <tr id="i32" class="altColor">
@@ -549,8 +561,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <dd><code>key</code> - whether the object is key or value.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></code> - if the key type doesn't match the key type for
-                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a>s,
-                              Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArray</code></a>s).</dd>
+                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObjects</code></a>,
+                              Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArrays</code></a>).</dd>
 </dl>
 </li>
 </ul>
@@ -570,8 +582,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <dd>the value for the given key.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></code> - if the key type doesn't match the key type for
-                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObject</code></a>s,
-                              Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArray</code></a>s).</dd>
+                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObjects</code></a>,
+                              Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArrays</code></a>).</dd>
 </dl>
 </li>
 </ul>
@@ -693,8 +705,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <li class="blockList">
 <h4>size</h4>
 <pre>int&nbsp;size(boolean&nbsp;recursive)</pre>
-<div class="block">Gets the size of this object. If recursive is true this counts all sub
- JsonElements as their size instead of one.</div>
+<div class="block">Gets the size of this object.<br>
+ If recursive is true this counts all sub JsonElements as their size instead
+ of one.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>recursive</code> - whether to recursively count the size.</dd>
@@ -1031,8 +1044,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <pre>default&nbsp;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;changes(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;from)
                         throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></pre>
 <div class="block">Returns a new JsonElement containing the changes from the given JsonElement
- to this one. Recursive. This marks removed values by setting them to null, so
- it will not fully work with JsonElements containing null objects.</div>
+ to this one. Recursively.<br>
+ This marks removed values by setting them to null, so it will not fully work
+ with JsonElements containing null objects.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>from</code> - the previous JsonElement.</dd>
@@ -1055,8 +1069,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
                                boolean&nbsp;recursive)
                         throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></pre>
 <div class="block">Returns a new JsonElement containing the changes from the given JsonElement
- to this one. This marks removed values by setting them to null, so it will
- not fully work with JsonElements containing null objects.</div>
+ to this one.<br>
+ This marks removed values by setting them to null, so it will not fully work
+ with JsonElements containing null objects.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>from</code> - the previous JsonElement.</dd>
@@ -1080,8 +1095,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <pre>default&nbsp;&lt;T&gt;&nbsp;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;T&gt;&nbsp;changes(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;?&gt;&nbsp;from,
                                    <a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;T&gt;&nbsp;to)
                             throws <a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></pre>
-<div class="block">A utility method to call to.<a href="../../../../com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-"><code>changes</code></a>(from). This
- requires from to have the same <a href="../../../../com/tome25/utils/json/JsonElement.html#getKeyType--"><code>key type</code></a> as to.</div>
+<div class="block">A utility method to call to.<a href="../../../../com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-"><code>changes</code></a>(from).<br>
+ This requires from to have the same <a href="../../../../com/tome25/utils/json/JsonElement.html#getKeyType--"><code>key type</code></a> as to.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - the key type of the json elements.</dd>
@@ -1105,9 +1120,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <pre>default&nbsp;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;reconstruct(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;from)
                             throws <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></pre>
 <div class="block">Returns a new JsonElement containing the values of the given JsonElement with
- the changes contained in this JsonElement applied. Recursive. This marks
- removed values by setting them to null, so it will not fully work with
- JsonElements containing null objects.</div>
+ the changes contained in this JsonElement applied. Recursively.<br>
+ This marks removed values by setting them to null, so it will not fully work
+ with JsonElements containing null objects.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>from</code> - the previous JsonElement.</dd>
@@ -1129,9 +1144,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <pre>default&nbsp;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;reconstruct(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;from,
                                    boolean&nbsp;recursive)</pre>
 <div class="block">Returns a new JsonElement containing the values of the given JsonElement with
- the changes contained in this JsonElement applied. This marks removed values
- by setting them to null, so it will not fully work with JsonElements
- containing null objects.</div>
+ the changes contained in this JsonElement applied.<br>
+ This marks removed values by setting them to null, so it will not fully work
+ with JsonElements containing null objects.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>from</code> - the previous JsonElement.</dd>
@@ -1155,7 +1170,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <pre>default&nbsp;&lt;T&gt;&nbsp;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;T&gt;&nbsp;reconstruct(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;?&gt;&nbsp;from,
                                        <a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;T&gt;&nbsp;changes)
                                 throws <a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></pre>
-<div class="block">A utility method to call to.<a href="../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-"><code>reconstruct</code></a>(from). This requires from to have the same <a href="../../../../com/tome25/utils/json/JsonElement.html#getKeyType--"><code>key type</code></a> as changes.</div>
+<div class="block">A utility method to call to.<a href="../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-"><code>reconstruct</code></a>(from).<br>
+ This requires from to have the same <a href="../../../../com/tome25/utils/json/JsonElement.html#getKeyType--"><code>key type</code></a> as
+ changes.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - the key type of the json elements.</dd>
@@ -1178,7 +1195,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <h4>contentToString</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
 default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;contentToString(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;content)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use <a href="../../../../com/tome25/utils/StringUtils.html#toEscapedString-java.lang.StringBuilder-java.lang.Object-"><code>StringUtils#toEscapedString</code></a> instead.</span></div>
 <div class="block">Converts the given object to a string in the way intended for Jsons to match
  the Json specifications.</div>
 <dl>
@@ -1195,8 +1212,10 @@ default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String
 <ul class="blockList">
 <li class="blockList">
 <h4>contentToString</h4>
-<pre>default&nbsp;void&nbsp;contentToString(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;content,
-                             <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+default&nbsp;void&nbsp;contentToString(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;content,
+                                         <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">user <a href="../../../../com/tome25/utils/StringUtils.html#toEscapedString-java.lang.StringBuilder-java.lang.Object-"><code>StringUtils#toEscapedString</code></a> instead.</span></div>
 <div class="block">Writes the given object to the given <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang"><code>StringBuilder</code></a> in the way
  intended for Jsons to match the Json specifications.</div>
 <dl>
@@ -1213,10 +1232,10 @@ default&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String
 <li class="blockList">
 <h4>getKeyType</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt;&nbsp;getKeyType()</pre>
-<div class="block">Gets the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> for the key type of this json instance.</div>
+<div class="block">Gets the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> for the key type of this Json instance.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> for the key type of this json instance.</dd>
+<dd>the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> for the key type of this Json instance.</dd>
 </dl>
 </li>
 </ul>

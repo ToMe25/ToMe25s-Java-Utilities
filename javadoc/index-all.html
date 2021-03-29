@@ -216,6 +216,15 @@
 <div class="block">Checks whether the given array contains the given string, or a string
  starting with the given string.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/StringUtils.html#arrayToString-java.lang.Object:A-java.lang.String-">arrayToString(Object[], String)</a></span> - Static method in class com.tome25.utils.<a href="com/tome25/utils/StringUtils.html" title="class in com.tome25.utils">StringUtils</a></dt>
+<dd>
+<div class="block">Converts the given array to a string.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/StringUtils.html#arrayToString-java.lang.StringBuilder-java.lang.Object:A-java.lang.String-">arrayToString(StringBuilder, Object[], String)</a></span> - Static method in class com.tome25.utils.<a href="com/tome25/utils/StringUtils.html" title="class in com.tome25.utils">StringUtils</a></dt>
+<dd>
+<div class="block">Appends the string representation of the given array to the given
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang"><code>StringBuilder</code></a>.</div>
+</dd>
 </dl>
 <a name="I:B">
 <!--   -->
@@ -258,11 +267,14 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-boolean-">changes(JsonElement&lt;K&gt;, boolean)</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
 <dd>
 <div class="block">Returns a new JsonElement containing the changes from the given JsonElement
- to this one.</div>
+ to this one.<br>
+ This marks removed values by setting them to null, so it will not fully work
+ with JsonElements containing null objects.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-com.tome25.utils.json.JsonElement-">changes(JsonElement&lt;?&gt;, JsonElement&lt;T&gt;)</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
 <dd>
-<div class="block">A utility method to call to.<a href="com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-"><code>changes</code></a>(from).</div>
+<div class="block">A utility method to call to.<a href="com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-"><code>changes</code></a>(from).<br>
+ This requires from to have the same <a href="com/tome25/utils/json/JsonElement.html#getKeyType--"><code>key type</code></a> as to.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#changes-com.tome25.utils.json.JsonElement-">changes(JsonElement&lt;String&gt;)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
 <dd>&nbsp;</dd>
@@ -334,12 +346,16 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#compare-java.lang.Object-java.lang.Object-">compare(Object, Object)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>
 <div class="block">Compares the two given objects if they implement <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang"><code>Comparable</code></a>, and are
- compatible types.</div>
+ compatible types.<br>
+ This method can only return 1, 0 or -1.<br>
+ Returns 0 if the objects can't be compared.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#compare-java.lang.Object-java.lang.Object-">compare(Object, Object)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
 <dd>
 <div class="block">Compares the two given objects if they implement <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang"><code>Comparable</code></a>, and are
- compatible types.</div>
+ compatible types.<br>
+ This method can only return 1, 0 or -1.<br>
+ Returns 0 if the objects can't be compared.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#compareTo-com.tome25.utils.json.JsonElement-">compareTo(JsonElement&lt;?&gt;)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
@@ -447,12 +463,15 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#contentToString-java.lang.Object-">contentToString(Object)</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
 <dd>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="block"><span class="deprecationComment">use <a href="com/tome25/utils/StringUtils.html#toEscapedString-java.lang.StringBuilder-java.lang.Object-"><code>StringUtils#toEscapedString</code></a> instead.</span></div>
+</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#contentToString-java.lang.Object-java.lang.StringBuilder-">contentToString(Object, StringBuilder)</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
 <dd>
-<div class="block">Writes the given object to the given <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang"><code>StringBuilder</code></a> in the way
- intended for Jsons to match the Json specifications.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="block"><span class="deprecationComment">user <a href="com/tome25/utils/StringUtils.html#toEscapedString-java.lang.StringBuilder-java.lang.Object-"><code>StringUtils#toEscapedString</code></a> instead.</span></div>
+</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryLoader.html#copyJar-java.io.File-java.io.File-">copyJar(File, File)</a></span> - Static method in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryLoader.html" title="class in com.tome25.utils.lib">LibraryLoader</a></dt>
 <dd>
@@ -842,7 +861,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#getKeyType--">getKeyType()</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
 <dd>
-<div class="block">Gets the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> for the key type of this json instance.</div>
+<div class="block">Gets the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> for the key type of this Json instance.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#getKeyType--">getKeyType()</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
 <dd>&nbsp;</dd>
@@ -1189,7 +1208,8 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#JsonArray-java.util.Collection-">JsonArray(Collection&lt;Object&gt;)</a></span> - Constructor for class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>
-<div class="block">Creates a new JsonArray and initializes it with the given content.</div>
+<div class="block">Creates a new JsonArray and initializes it with the given content.<br>
+ This content will be added to a new <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util"><code>ArrayList</code></a> used internally.</div>
 </dd>
 <dt><a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json"><span class="typeNameLink">JsonElement</span></a>&lt;<a href="com/tome25/utils/json/JsonElement.html" title="type parameter in JsonElement">K</a>&gt; - Interface in <a href="com/tome25/utils/json/package-summary.html">com.tome25.utils.json</a></dt>
 <dd>
@@ -1673,11 +1693,15 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-boolean-">reconstruct(JsonElement&lt;K&gt;, boolean)</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
 <dd>
 <div class="block">Returns a new JsonElement containing the values of the given JsonElement with
- the changes contained in this JsonElement applied.</div>
+ the changes contained in this JsonElement applied.<br>
+ This marks removed values by setting them to null, so it will not fully work
+ with JsonElements containing null objects.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-com.tome25.utils.json.JsonElement-">reconstruct(JsonElement&lt;?&gt;, JsonElement&lt;T&gt;)</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
 <dd>
-<div class="block">A utility method to call to.<a href="com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-"><code>reconstruct</code></a>(from).</div>
+<div class="block">A utility method to call to.<a href="com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-"><code>reconstruct</code></a>(from).<br>
+ This requires from to have the same <a href="com/tome25/utils/json/JsonElement.html#getKeyType--"><code>key type</code></a> as
+ changes.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#reconstruct-com.tome25.utils.json.JsonElement-">reconstruct(JsonElement&lt;String&gt;)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
 <dd>&nbsp;</dd>
@@ -1685,7 +1709,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/General.html#reflectiveClone-T-">reflectiveClone(T)</a></span> - Static method in class com.tome25.utils.<a href="com/tome25/utils/General.html" title="class in com.tome25.utils">General</a></dt>
 <dd>
-<div class="block">Clones the given object by calling its clone method using reflection.</div>
+<div class="block">Clones the given object by calling its clone method using reflection.<br>
+ By implementing <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang"><code>Cloneable</code></a> the object marks this as a legal operation.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#remove-int-">remove(int)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
@@ -1817,7 +1842,9 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#size-boolean-">size(boolean)</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
 <dd>
-<div class="block">Gets the size of this object.</div>
+<div class="block">Gets the size of this object.<br>
+ If recursive is true this counts all sub JsonElements as their size instead
+ of one.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonObject.html#size--">size()</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json">JsonObject</a></dt>
 <dd>&nbsp;</dd>
@@ -1853,12 +1880,19 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/MultiPrintStream.html#streams">streams</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/MultiPrintStream.html" title="class in com.tome25.utils.logging">MultiPrintStream</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryLoader.html#stringArrayToString-java.lang.String:A-">stringArrayToString(String[])</a></span> - Static method in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryLoader.html" title="class in com.tome25.utils.lib">LibraryLoader</a></dt>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryLoader.html#stringArrayToString-java.lang.Object:A-">stringArrayToString(Object[])</a></span> - Static method in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryLoader.html" title="class in com.tome25.utils.lib">LibraryLoader</a></dt>
 <dd>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="block"><span class="deprecationComment">use <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Arrays.html?is-external=true#toString-java.lang.Object:A-" title="class or interface in java.util"><code>Arrays.toString(Object[])</code></a> instead.</span></div>
-</div>
+<div class="block">Converts a string array to a string.<br>
+ Entries are separated with a space.<br>
+ Copy of <a href="com/tome25/utils/StringUtils.html#arrayToString-java.lang.Object:A-java.lang.String-"><code>StringUtils.arrayToString(Object[], String)</code></a>, with a fixed
+ separator.</div>
 </dd>
+<dt><a href="com/tome25/utils/StringUtils.html" title="class in com.tome25.utils"><span class="typeNameLink">StringUtils</span></a> - Class in <a href="com/tome25/utils/package-summary.html">com.tome25.utils</a></dt>
+<dd>
+<div class="block">A collection of commonly used string utilities.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/StringUtils.html#StringUtils--">StringUtils()</a></span> - Constructor for class com.tome25.utils.<a href="com/tome25/utils/StringUtils.html" title="class in com.tome25.utils">StringUtils</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#subList-int-int-">subList(int, int)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#supportsChanges--">supportsChanges()</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
@@ -1912,6 +1946,23 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonElement.html#toCharArray--">toCharArray()</a></span> - Method in interface com.tome25.utils.json.<a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a></dt>
 <dd>
 <div class="block">Returns a string representation of this element as character array.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/StringUtils.html#toEscapedString-java.lang.Object-">toEscapedString(Object)</a></span> - Static method in class com.tome25.utils.<a href="com/tome25/utils/StringUtils.html" title="class in com.tome25.utils">StringUtils</a></dt>
+<dd>
+<div class="block">Converts the given object to an escaped string.<br>
+ For numbers, booleans, <a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json"><code>JsonElements</code></a> and null this just
+ returns the string representation of that object.<br>
+ Everything else will be in double quotes, and all double quotes and
+ backslashes in the string representation of the object will be escaped.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/StringUtils.html#toEscapedString-java.lang.StringBuilder-java.lang.Object-">toEscapedString(StringBuilder, Object)</a></span> - Static method in class com.tome25.utils.<a href="com/tome25/utils/StringUtils.html" title="class in com.tome25.utils">StringUtils</a></dt>
+<dd>
+<div class="block">Writes the escaped string version of the given object to the given
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang"><code>StringBuilder</code></a>.<br>
+ For numbers, booleans, <a href="com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json"><code>JsonElements</code></a> and null this just
+ returns the string representation of that object.<br>
+ Everything else will be in double quotes, and all double quotes and
+ backslashes in the string representation of the object will be escaped.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/ConfigValue.html#toString--">toString()</a></span> - Method in class com.tome25.utils.config.<a href="com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config">ConfigValue</a></dt>
 <dd>&nbsp;</dd>

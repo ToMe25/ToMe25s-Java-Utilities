@@ -171,7 +171,8 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonArray.html#JsonArray-java.util.Collection-">JsonArray</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;content)</code>
-<div class="block">Creates a new JsonArray and initializes it with the given content.</div>
+<div class="block">Creates a new JsonArray and initializes it with the given content.<br>
+ This content will be added to a new <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util"><code>ArrayList</code></a> used internally.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -244,7 +245,9 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonArray.html#changes-com.tome25.utils.json.JsonElement-boolean-">changes</a></span>(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;&nbsp;from,
        boolean&nbsp;recursive)</code>
 <div class="block">Returns a new JsonElement containing the changes from the given JsonElement
- to this one.</div>
+ to this one.<br>
+ This marks removed values by setting them to null, so it will not fully work
+ with JsonElements containing null objects.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
@@ -270,7 +273,9 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonArray.html#compare-java.lang.Object-java.lang.Object-">compare</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;obj1,
        <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;obj2)</code>
 <div class="block">Compares the two given objects if they implement <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang"><code>Comparable</code></a>, and are
- compatible types.</div>
+ compatible types.<br>
+ This method can only return 1, 0 or -1.<br>
+ Returns 0 if the objects can't be compared.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
@@ -325,7 +330,7 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonArray.html#getKeyType--">getKeyType</a></span>()</code>
-<div class="block">Gets the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> for the key type of this json instance.</div>
+<div class="block">Gets the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> for the key type of this Json instance.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -404,7 +409,9 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonArray.html#reconstruct-com.tome25.utils.json.JsonElement-boolean-">reconstruct</a></span>(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;&nbsp;from,
            boolean&nbsp;recursive)</code>
 <div class="block">Returns a new JsonElement containing the values of the given JsonElement with
- the changes contained in this JsonElement applied.</div>
+ the changes contained in this JsonElement applied.<br>
+ This marks removed values by setting them to null, so it will not fully work
+ with JsonElements containing null objects.</div>
 </td>
 </tr>
 <tr id="i36" class="altColor">
@@ -453,7 +460,9 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <tr id="i44" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/json/JsonArray.html#size-boolean-">size</a></span>(boolean&nbsp;recursive)</code>
-<div class="block">Gets the size of this object.</div>
+<div class="block">Gets the size of this object.<br>
+ If recursive is true this counts all sub JsonElements as their size instead
+ of one.</div>
 </td>
 </tr>
 <tr id="i45" class="rowColor">
@@ -606,8 +615,9 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <div class="block">Creates a new JsonArray and initializes it with the given content.
  
  If the given <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a> implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Cloneable.html?is-external=true" title="class or interface in java.lang"><code>Cloneable</code></a> it will be used as the
- internal list, if not a new <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util"><code>ArrayList</code></a> will be used and the values
- from content will be added to it.</div>
+ internal list.<br>
+ If not a new <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util"><code>ArrayList</code></a> will be used and the values from content will
+ be added to it.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>content</code> - the content for the new JsonArray.</dd>
@@ -621,7 +631,8 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <li class="blockList">
 <h4>JsonArray</h4>
 <pre>public&nbsp;JsonArray(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;content)</pre>
-<div class="block">Creates a new JsonArray and initializes it with the given content.</div>
+<div class="block">Creates a new JsonArray and initializes it with the given content.<br>
+ This content will be added to a new <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util"><code>ArrayList</code></a> used internally.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>content</code> - the content for the new JsonArray.</dd>
@@ -961,8 +972,9 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <h4>size</h4>
 <pre>public&nbsp;int&nbsp;size(boolean&nbsp;recursive)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html#size-boolean-">JsonElement</a></code></span></div>
-<div class="block">Gets the size of this object. If recursive is true this counts all sub
- JsonElements as their size instead of one.</div>
+<div class="block">Gets the size of this object.<br>
+ If recursive is true this counts all sub JsonElements as their size instead
+ of one.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/json/JsonElement.html#size-boolean-">size</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;</code></dd>
@@ -1416,8 +1428,9 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <pre>public&nbsp;<a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a>&nbsp;changes(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;&nbsp;from)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-">JsonElement</a></code></span></div>
 <div class="block">Returns a new JsonElement containing the changes from the given JsonElement
- to this one. Recursive. This marks removed values by setting them to null, so
- it will not fully work with JsonElements containing null objects.</div>
+ to this one. Recursively.<br>
+ This marks removed values by setting them to null, so it will not fully work
+ with JsonElements containing null objects.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-">changes</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;</code></dd>
@@ -1439,8 +1452,9 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
                          boolean&nbsp;recursive)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-boolean-">JsonElement</a></code></span></div>
 <div class="block">Returns a new JsonElement containing the changes from the given JsonElement
- to this one. This marks removed values by setting them to null, so it will
- not fully work with JsonElements containing null objects.</div>
+ to this one.<br>
+ This marks removed values by setting them to null, so it will not fully work
+ with JsonElements containing null objects.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/json/JsonElement.html#changes-com.tome25.utils.json.JsonElement-boolean-">changes</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;</code></dd>
@@ -1463,9 +1477,9 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <pre>public&nbsp;<a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a>&nbsp;reconstruct(<a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;&nbsp;from)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-">JsonElement</a></code></span></div>
 <div class="block">Returns a new JsonElement containing the values of the given JsonElement with
- the changes contained in this JsonElement applied. Recursive. This marks
- removed values by setting them to null, so it will not fully work with
- JsonElements containing null objects.</div>
+ the changes contained in this JsonElement applied. Recursively.<br>
+ This marks removed values by setting them to null, so it will not fully work
+ with JsonElements containing null objects.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-">reconstruct</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;</code></dd>
@@ -1487,9 +1501,9 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
                              boolean&nbsp;recursive)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-boolean-">JsonElement</a></code></span></div>
 <div class="block">Returns a new JsonElement containing the values of the given JsonElement with
- the changes contained in this JsonElement applied. This marks removed values
- by setting them to null, so it will not fully work with JsonElements
- containing null objects.</div>
+ the changes contained in this JsonElement applied.<br>
+ This marks removed values by setting them to null, so it will not fully work
+ with JsonElements containing null objects.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/json/JsonElement.html#reconstruct-com.tome25.utils.json.JsonElement-boolean-">reconstruct</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;</code></dd>
@@ -1559,8 +1573,9 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <pre>private&nbsp;int&nbsp;compare(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;obj1,
                     <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;obj2)</pre>
 <div class="block">Compares the two given objects if they implement <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang"><code>Comparable</code></a>, and are
- compatible types. can only return 1, 0 or -1. returns 0 if the objects can't
- be compared.</div>
+ compatible types.<br>
+ This method can only return 1, 0 or -1.<br>
+ Returns 0 if the objects can't be compared.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>obj1</code> - the first object to compare.</dd>
@@ -1606,12 +1621,12 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <h4>getKeyType</h4>
 <pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;&nbsp;getKeyType()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html#getKeyType--">JsonElement</a></code></span></div>
-<div class="block">Gets the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> for the key type of this json instance.</div>
+<div class="block">Gets the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> for the key type of this Json instance.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/json/JsonElement.html#getKeyType--">getKeyType</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html" title="interface in com.tome25.utils.json">JsonElement</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> for the key type of this json instance.</dd>
+<dd>the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang"><code>Class</code></a> for the key type of this Json instance.</dd>
 </dl>
 </li>
 </ul>

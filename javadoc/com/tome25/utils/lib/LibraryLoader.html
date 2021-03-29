@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":42,"i1":42,"i2":42,"i3":42,"i4":42,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":41,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":41,"i29":9,"i30":9,"i31":9,"i32":9,"i33":9,"i34":9,"i35":9,"i36":9,"i37":41};
+var methods = {"i0":42,"i1":42,"i2":42,"i3":42,"i4":42,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":41,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":41,"i29":9,"i30":9,"i31":9,"i32":9,"i33":9,"i34":9,"i35":9,"i36":9,"i37":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -486,10 +486,11 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i37" class="rowColor">
 <td class="colFirst"><code>private static <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#stringArrayToString-java.lang.String:A-">stringArrayToString</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;array)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">use <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Arrays.html?is-external=true#toString-java.lang.Object:A-" title="class or interface in java.util"><code>Arrays.toString(Object[])</code></a> instead.</span></div>
-</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/lib/LibraryLoader.html#stringArrayToString-java.lang.Object:A-">stringArrayToString</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]&nbsp;array)</code>
+<div class="block">Converts a string array to a string.<br>
+ Entries are separated with a space.<br>
+ Copy of <a href="../../../../com/tome25/utils/StringUtils.html#arrayToString-java.lang.Object:A-java.lang.String-"><code>StringUtils.arrayToString(Object[], String)</code></a>, with a fixed
+ separator.</div>
 </td>
 </tr>
 </table>
@@ -772,16 +773,17 @@ public static&nbsp;void&nbsp;premain(<a href="https://docs.oracle.com/javase/8/d
 </dl>
 </li>
 </ul>
-<a name="stringArrayToString-java.lang.String:A-">
+<a name="stringArrayToString-java.lang.Object:A-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>stringArrayToString</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
-private static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;stringArrayToString(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;array)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Arrays.html?is-external=true#toString-java.lang.Object:A-" title="class or interface in java.util"><code>Arrays.toString(Object[])</code></a> instead.</span></div>
-<div class="block">Converts a string array to a string. Entries are separated with a space.</div>
+<pre>private static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;stringArrayToString(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]&nbsp;array)</pre>
+<div class="block">Converts a string array to a string.<br>
+ Entries are separated with a space.<br>
+ Copy of <a href="../../../../com/tome25/utils/StringUtils.html#arrayToString-java.lang.Object:A-java.lang.String-"><code>StringUtils.arrayToString(Object[], String)</code></a>, with a fixed
+ separator.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>array</code> - the array to get the string representation of.</dd>

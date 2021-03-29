@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.tome25.utils.General;
+import com.tome25.utils.StringUtils;
 import com.tome25.utils.exception.InvalidKeyException;
 import com.tome25.utils.exception.InvalidTypeException;
 
@@ -139,7 +140,7 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 	 * 
 	 * @param key the key to remove.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for {@link JsonObject}s).
+	 *                              this object(String for JsonObjects).
 	 * @return the previous value associated with key, or null if there was no
 	 *         mapping for key.
 	 */
@@ -166,7 +167,7 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 	 * 
 	 * @param key the key to look for.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for {@link JsonObject}s).
+	 *                              this object(String for JsonObjects).
 	 * @return the value for the given key.
 	 */
 	@Override
@@ -207,7 +208,7 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 	 * @param key the key to look for.
 	 * @return whether this Json contains the given key.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for {@link JsonObject}s).
+	 *                              this object(String for JsonObjects).
 	 */
 	@Override
 	public boolean containsKey(Object key) {
@@ -255,13 +256,13 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
 		ret.append('{');
-		for (String s : content.keySet()) {
+		content.forEach((key, value) -> {
 			ret.append('"');
-			ret.append(s);
+			ret.append(key);
 			ret.append("\":");
-			contentToString(content.get(s), ret);
+			StringUtils.toEscapedString(ret, value);
 			ret.append(',');
-		}
+		});
 		if (ret.length() > 1) {
 			ret.deleteCharAt(ret.length() - 1);
 		}
@@ -587,8 +588,9 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 
 	/**
 	 * Compares the two given objects if they implement {@link Comparable}, and are
-	 * compatible types. can only return 1, 0 or -1. returns 0 if the objects can't
-	 * be compared.
+	 * compatible types.<br/>
+	 * This method can only return 1, 0 or -1.<br/>
+	 * Returns 0 if the objects can't be compared.
 	 * 
 	 * @param obj1 the first object to compare.
 	 * @param obj2 the second object to compare.

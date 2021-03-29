@@ -23,6 +23,7 @@ import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Map;
 
+import com.tome25.utils.StringUtils;
 import com.tome25.utils.exception.InvalidKeyException;
 import com.tome25.utils.exception.InvalidTypeException;
 
@@ -91,8 +92,8 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	 * @param o   the object to remove.
 	 * @param key whether the object is key or value.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for {@link JsonObject}s,
-	 *                              Integer for {@link JsonArray}s).
+	 *                              this object(String for {@link JsonObject JsonObjects},
+	 *                              Integer for {@link JsonArray JsonArrays}).
 	 */
 	public void remove(Object o, boolean key) throws InvalidTypeException;
 
@@ -101,8 +102,8 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	 * 
 	 * @param key the key to look for.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for {@link JsonObject}s,
-	 *                              Integer for {@link JsonArray}s).
+	 *                              this object(String for {@link JsonObject JsonObjects},
+	 *                              Integer for {@link JsonArray JsonArrays}).
 	 * @return the value for the given key.
 	 */
 	public Object get(Object key) throws InvalidTypeException;
@@ -168,8 +169,9 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	}
 
 	/**
-	 * Gets the size of this object. If recursive is true this counts all sub
-	 * JsonElements as their size instead of one.
+	 * Gets the size of this object.<br/>
+	 * If recursive is true this counts all sub JsonElements as their size instead
+	 * of one.
 	 * 
 	 * @param recursive whether to recursively count the size.
 	 * @return the size of this object.
@@ -379,8 +381,9 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 
 	/**
 	 * Returns a new JsonElement containing the changes from the given JsonElement
-	 * to this one. Recursive. This marks removed values by setting them to null, so
-	 * it will not fully work with JsonElements containing null objects.
+	 * to this one. Recursively.<br/>
+	 * This marks removed values by setting them to null, so it will not fully work
+	 * with JsonElements containing null objects.
 	 * 
 	 * @param from the previous JsonElement.
 	 * @return a new JsonElement containing the changes from the given JsonElement
@@ -394,8 +397,9 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 
 	/**
 	 * Returns a new JsonElement containing the changes from the given JsonElement
-	 * to this one. This marks removed values by setting them to null, so it will
-	 * not fully work with JsonElements containing null objects.
+	 * to this one.<br/>
+	 * This marks removed values by setting them to null, so it will not fully work
+	 * with JsonElements containing null objects.
 	 * 
 	 * @param from      the previous JsonElement.
 	 * @param recursive whether changed JsonElements inside this one should get
@@ -410,8 +414,8 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	}
 
 	/**
-	 * A utility method to call to.{@link #changes(JsonElement) changes}(from). This
-	 * requires from to have the same {@link #getKeyType() key type} as to.
+	 * A utility method to call to.{@link #changes(JsonElement) changes}(from).<br/>
+	 * This requires from to have the same {@link #getKeyType() key type} as to.
 	 * 
 	 * @param <T>  the key type of the json elements.
 	 * @param from the json from before the changes.
@@ -430,9 +434,9 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 
 	/**
 	 * Returns a new JsonElement containing the values of the given JsonElement with
-	 * the changes contained in this JsonElement applied. Recursive. This marks
-	 * removed values by setting them to null, so it will not fully work with
-	 * JsonElements containing null objects.
+	 * the changes contained in this JsonElement applied. Recursively.<br/>
+	 * This marks removed values by setting them to null, so it will not fully work
+	 * with JsonElements containing null objects.
 	 * 
 	 * @param from the previous JsonElement.
 	 * @return a new JsonElement containing the values of the given JsonElement with
@@ -446,9 +450,9 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 
 	/**
 	 * Returns a new JsonElement containing the values of the given JsonElement with
-	 * the changes contained in this JsonElement applied. This marks removed values
-	 * by setting them to null, so it will not fully work with JsonElements
-	 * containing null objects.
+	 * the changes contained in this JsonElement applied.<br/>
+	 * This marks removed values by setting them to null, so it will not fully work
+	 * with JsonElements containing null objects.
 	 * 
 	 * @param from      the previous JsonElement.
 	 * @param recursive whether changed JsonElements inside this one should get
@@ -464,8 +468,9 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 
 	/**
 	 * A utility method to call to.{@link #reconstruct(JsonElement)
-	 * reconstruct}(from). This requires from to have the same {@link #getKeyType()
-	 * key type} as changes.
+	 * reconstruct}(from).<br/>
+	 * This requires from to have the same {@link #getKeyType() key type} as
+	 * changes.
 	 * 
 	 * @param <T>     the key type of the json elements.
 	 * @param from    the json from before the changes.
@@ -486,47 +491,36 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	 * Converts the given object to a string in the way intended for Jsons to match
 	 * the Json specifications.
 	 * 
+	 * @deprecated use {@link StringUtils#toEscapedString(StringBuilder, Object)
+	 *             StringUtils#toEscapedString} instead.
+	 * 
 	 * @param content the object to get the string representation for.
 	 * @return a string representation of the given object.
 	 */
 	@Deprecated
 	default String contentToString(Object content) {
-		StringBuilder buffer = new StringBuilder();
-		contentToString(content, buffer);
-		return buffer.toString();
+		return StringUtils.toEscapedString(content);
 	}
 
 	/**
 	 * Writes the given object to the given {@link StringBuilder} in the way
 	 * intended for Jsons to match the Json specifications.
 	 * 
+	 * @deprecated user {@link StringUtils#toEscapedString(StringBuilder, Object)
+	 *             StringUtils#toEscapedString} instead.
+	 * 
 	 * @param content the object to get the string representation for.
 	 * @param builder the {@link StringBuilder} to write the object to.
 	 */
-	// TODO move me to string utils
+	@Deprecated
 	default void contentToString(Object content, StringBuilder builder) {
-		if (content == null || content instanceof Boolean || content instanceof Byte || content instanceof Short
-				|| content instanceof Integer || content instanceof Float || content instanceof Double
-				|| content instanceof Long || content instanceof JsonElement) {
-			builder.append(content);
-		} else {
-			String contentString = content.toString();
-			builder.ensureCapacity(builder.length() + contentString.length() + 2);
-			builder.append('"');
-			for (char c:contentString.toCharArray()) {
-				if (c == '\\' || c == '"') {
-					builder.append('\\');
-				}
-				builder.append(c);
-			}
-			builder.append('"');
-		}
+		StringUtils.toEscapedString(builder, content);
 	}
 
 	/**
-	 * Gets the {@link Class} for the key type of this json instance.
+	 * Gets the {@link Class} for the key type of this Json instance.
 	 * 
-	 * @return the {@link Class} for the key type of this json instance.
+	 * @return the {@link Class} for the key type of this Json instance.
 	 */
 	public Class<K> getKeyType();
 

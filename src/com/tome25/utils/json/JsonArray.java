@@ -29,6 +29,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import com.tome25.utils.General;
+import com.tome25.utils.StringUtils;
 import com.tome25.utils.exception.InvalidTypeException;
 
 /**
@@ -66,8 +67,9 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 	 * Creates a new JsonArray and initializes it with the given content.
 	 * 
 	 * If the given {@link List} implements {@link Cloneable} it will be used as the
-	 * internal list, if not a new {@link ArrayList} will be used and the values
-	 * from content will be added to it.
+	 * internal list.<br/>
+	 * If not a new {@link ArrayList} will be used and the values from content will
+	 * be added to it.
 	 * 
 	 * @param content the content for the new JsonArray.
 	 */
@@ -80,7 +82,8 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 	}
 
 	/**
-	 * Creates a new JsonArray and initializes it with the given content.
+	 * Creates a new JsonArray and initializes it with the given content.<br/>
+	 * This content will be added to a new {@link ArrayList} used internally.
 	 * 
 	 * @param content the content for the new JsonArray.
 	 */
@@ -209,7 +212,7 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 	public int size(boolean recursive) {
 		if (recursive) {
 			int[] size = new int[] { 0 };
-			content.forEach((value) -> {
+			content.forEach(value -> {
 				if (value instanceof JsonElement) {
 					size[0] += ((JsonElement<?>) value).size(recursive);
 				} else {
@@ -226,10 +229,10 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
 		ret.append('[');
-		for (Object obj : content) {
-			contentToString(obj, ret);
+		content.forEach(value -> {
+			StringUtils.toEscapedString(ret, value);
 			ret.append(',');
-		}
+		});
 		if (ret.length() > 1) {
 			ret.deleteCharAt(ret.length() - 1);
 		}
@@ -522,8 +525,9 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 
 	/**
 	 * Compares the two given objects if they implement {@link Comparable}, and are
-	 * compatible types. can only return 1, 0 or -1. returns 0 if the objects can't
-	 * be compared.
+	 * compatible types.<br/>
+	 * This method can only return 1, 0 or -1.<br/>
+	 * Returns 0 if the objects can't be compared.
 	 * 
 	 * @param obj1 the first object to compare.
 	 * @param obj2 the second object to compare.

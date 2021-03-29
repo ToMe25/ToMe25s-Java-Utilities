@@ -39,6 +39,8 @@ import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 
+import com.tome25.utils.StringUtils;
+
 /**
  * 
  * This class can add Jar Files to the classpath at runtime. You will need to
@@ -264,22 +266,25 @@ public class LibraryLoader {
 	}
 
 	/**
-	 * Converts a string array to a string. Entries are separated with a space.
+	 * Converts a string array to a string.<br/>
+	 * Entries are separated with a space.<br/>
+	 * Copy of {@link StringUtils#arrayToString(Object[], String)}, with a fixed
+	 * separator.
 	 * 
 	 * @param array the array to get the string representation of.
 	 * @return a string representation of the given string array.
-	 * @deprecated use {@link java.util.Arrays#toString(Object[])} instead.
 	 */
-	@Deprecated
-	private static String stringArrayToString(String[] array) {
-		String string = "";
-		for (String str : array) {
-			string += str + " ";
+	private static String stringArrayToString(Object[] array) {
+		StringBuilder builder = new StringBuilder();
+		for (Object obj : array) {
+			builder.append(obj);
+			builder.append(' ');
 		}
-		if (string.length() > 0) {
-			string = string.substring(0, string.length() - 1);
+
+		if (builder.length() > 0) {
+			builder.setLength(builder.length() - 1);
 		}
-		return string;
+		return builder.toString();
 	}
 
 	/**

@@ -14,6 +14,7 @@ The todos for the json module of this library.
  * Optimize writeExternal and readExternal by manually handling the value type instead of using writeObject/readObject? This might not be worth it because of incompatibilities and/or the effort of changing alot of the internal structures.
  * Consider making JsonObject an actual custom map implementation based on HashMap or LinkedHashMap storing cloning info(is JsonElement supporting clone, or is Cloneable).
  * Make JsonArray changes method able to handle the same element being in the list twice
+ * Add fancy printing(newline after commans and brackets, indenting, space after colons)
 
 ## Library Loader
 Todos for the library downloading and including module of this library.

@@ -51,7 +51,8 @@ public abstract class StringUtils {
 	 * Everything else will be in double quotes, and all double quotes and
 	 * backslashes in the string representation of the object will be escaped.
 	 * 
-	 * @param obj the object to get the string version of.
+	 * @param builder the builder to write the result to.
+	 * @param obj     the object to get the string version of.
 	 */
 	public static void toEscapedString(StringBuilder builder, Object obj) {
 		if (obj == null || obj instanceof Boolean || obj instanceof Number || obj instanceof JsonElement) {

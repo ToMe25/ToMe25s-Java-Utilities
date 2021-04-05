@@ -36,8 +36,6 @@ jobs:
     - name: Build with Maven
       id: build
       run: mvn -B package --file pom.xml
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
 
     - name: Upload artifacts
       id: artifacts_upload

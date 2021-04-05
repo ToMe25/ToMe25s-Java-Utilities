@@ -3,13 +3,7 @@
 
 name: Maven Build and Test
 
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+on: [push, pull_request]
 
 jobs:
   run-tests:
@@ -26,6 +20,8 @@ jobs:
     - name: Checkout repository
       id: checkout
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
 
     - name: Set up JDK ${{ matrix.java }}
       id: java_setup

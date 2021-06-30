@@ -649,7 +649,12 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
  <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>s and a custom config file.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>configFile</code> - the file to store the configuration in.</dd>
+<dd><code>configFile</code> - the file to store the configuration in.<br>
+                   If this is null a config file with a default name will be
+                   created in a directory called "config" in the directory the
+                   file that is currently being executed is stored in.<br>
+                   If this is a directory a config file with a default name
+                   will be created in this directory.</dd>
 <dd><code>outs</code> - the <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>s to print to.</dd>
 </dl>
 </li>

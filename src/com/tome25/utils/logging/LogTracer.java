@@ -89,9 +89,9 @@ public class LogTracer {
 	 * {@link PrintStream} and a {@link FileOutputStream} to their respective log
 	 * file.
 	 * 
-	 * @param errorLog  the file to log the system error stream to.<br/>
+	 * @param errorLog  the file to log the system error stream to.<br>
 	 *                  Set to null to disable changing {@link System#err}.
-	 * @param outputLog the file to log the system output stream to.<br/>
+	 * @param outputLog the file to log the system output stream to.<br>
 	 *                  Set to null to disable changing {@link System#out}.
 	 */
 	public static void traceOutputs(File errorLog, File outputLog) {
@@ -102,19 +102,18 @@ public class LogTracer {
 	 * Sets system output and error {@link PrintStream} to a
 	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
 	 * {@link PrintStream} and a {@link FileOutputStream} to their respective log
-	 * file.<br/>
+	 * file.<br>
 	 * With a custom location for the {@link TracingFormatter} config file.
 	 * 
-	 * @param config    The config file to use for the
-	 *                  {@link TracingFormatter}.<br/>
+	 * @param config    The config file to use for the {@link TracingFormatter}.<br>
 	 *                  If this is null a config file with a default name will be
 	 *                  created in a directory called "config" in the directory the
-	 *                  file that is currently being executed is stored in.<br/>
+	 *                  file that is currently being executed is stored in.<br>
 	 *                  If this is a directory a config file with a default name
 	 *                  will be created in this directory.
-	 * @param errorLog  the file to log the system error stream to.<br/>
+	 * @param errorLog  the file to log the system error stream to.<br>
 	 *                  Set to null to disable changing {@link System#err}.
-	 * @param outputLog the file to log the system output stream to.<br/>
+	 * @param outputLog the file to log the system output stream to.<br>
 	 *                  Set to null to disable changing {@link System#out}.
 	 */
 	public static void traceOutputs(File config, File errorLog, File outputLog) {
@@ -145,16 +144,15 @@ public class LogTracer {
 	/**
 	 * Sets system output and error {@link PrintStream} to a
 	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
-	 * {@link PrintStream} and the {@link OutputStream}s from
-	 * additionalStreams.<br/>
+	 * {@link PrintStream} and the {@link OutputStream}s from additionalStreams.<br>
 	 * With a custom location for the {@link TracingFormatter} config file.
 	 * 
 	 * @param config            The config file to use for the
-	 *                          {@link TracingFormatter}.<br/>
+	 *                          {@link TracingFormatter}.<br>
 	 *                          If this is null a config file with a default name
 	 *                          will be created in a directory called "config" in
 	 *                          the directory the file that is currently being
-	 *                          executed is stored in.<br/>
+	 *                          executed is stored in.<br>
 	 *                          If this is a directory a config file with a default
 	 *                          name will be created in this directory.
 	 * @param additionalStreams the {@link OutputStream}s to add to
@@ -185,14 +183,14 @@ public class LogTracer {
 	 * Sets system error {@link PrintStream}({@link System#err}) to a
 	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
 	 * {@link PrintStream} and a {@link FileOutputStream} writing to the given log
-	 * file.<br/>
+	 * file.<br>
 	 * With a custom location for the {@link TracingFormatter} config file.
 	 * 
 	 * @param log    the log file to write the error output to.
-	 * @param config The config file to use for the {@link TracingFormatter}.<br/>
+	 * @param config The config file to use for the {@link TracingFormatter}.<br>
 	 *               If this is null a config file with a default name will be
 	 *               created in a directory called "config" in the directory the
-	 *               file that is currently being executed is stored in.<br/>
+	 *               file that is currently being executed is stored in.<br>
 	 *               If this is a directory a config file with a default name will
 	 *               be created in this directory.
 	 * @throws FileNotFoundException if the log file exists but is a directory
@@ -231,15 +229,15 @@ public class LogTracer {
 	/**
 	 * Sets system error {@link PrintStream} to a {@link LoggingPrintStream}
 	 * printing to a {@link Logger} logging to the old {@link PrintStream} and the
-	 * given {@link OutputStream}s.<br/>
+	 * given {@link OutputStream}s.<br>
 	 * With a custom location for the {@link TracingFormatter} config file.
 	 * 
 	 * @param config            The config file to use for the
-	 *                          {@link TracingFormatter}.<br/>
+	 *                          {@link TracingFormatter}.<br>
 	 *                          If this is null a config file with a default name
 	 *                          will be created in a directory called "config" in
 	 *                          the directory the file that is currently being
-	 *                          executed is stored in.<br/>
+	 *                          executed is stored in.<br>
 	 *                          If this is a directory a config file with a default
 	 *                          name will be created in this directory.
 	 * @param additionalStreams the {@link OutputStream}s to add to
@@ -273,14 +271,14 @@ public class LogTracer {
 	 * Sets system output {@link PrintStream}({@link System#out}) to a
 	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
 	 * {@link PrintStream} and a {@link FileOutputStream} writing to the given log
-	 * file.<br/>
+	 * file.<br>
 	 * With a custom location for the {@link TracingFormatter} config file.
 	 * 
 	 * @param log    the log file to write the standard output to.
-	 * @param config The config file to use for the {@link TracingFormatter}.<br/>
+	 * @param config The config file to use for the {@link TracingFormatter}.<br>
 	 *               If this is null a config file with a default name will be
 	 *               created in a directory called "config" in the directory the
-	 *               file that is currently being executed is stored in.<br/>
+	 *               file that is currently being executed is stored in.<br>
 	 *               If this is a directory a config file with a default name will
 	 *               be created in this directory.
 	 * @throws FileNotFoundException if the log file exists but is a directory
@@ -319,15 +317,15 @@ public class LogTracer {
 	/**
 	 * Sets system output {@link PrintStream} to a {@link LoggingPrintStream}
 	 * printing to a {@link Logger} logging to the old {@link PrintStream} and the
-	 * given {@link OutputStream}s.<br/>
+	 * given {@link OutputStream}s.<br>
 	 * With a custom location for the {@link TracingFormatter} config file.
 	 * 
 	 * @param config            The config file to use for the
-	 *                          {@link TracingFormatter}.<br/>
+	 *                          {@link TracingFormatter}.<br>
 	 *                          If this is null a config file with a default name
 	 *                          will be created in a directory called "config" in
 	 *                          the directory the file that is currently being
-	 *                          executed is stored in.<br/>
+	 *                          executed is stored in.<br>
 	 *                          If this is a directory a config file with a default
 	 *                          name will be created in this directory.
 	 * @param additionalStreams the {@link OutputStream}s to add to

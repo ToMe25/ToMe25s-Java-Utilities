@@ -87,7 +87,12 @@ public class TracingFormatter extends Formatter {
 	/**
 	 * Creates a new TracingFormatter with a custom config file.
 	 * 
-	 * @param configFile the file to store the configuration in.
+	 * @param configFile the file to store the configuration in.<br>
+	 *                   If this is null a config file with a default name will be
+	 *                   created in a directory called "config" in the directory the
+	 *                   file that is currently being executed is stored in.<br>
+	 *                   If this is a directory a config file with a default name
+	 *                   will be created in this directory.
 	 */
 	public TracingFormatter(File configFile) {
 		super();

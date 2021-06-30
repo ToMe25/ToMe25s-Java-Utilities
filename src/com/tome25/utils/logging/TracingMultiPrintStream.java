@@ -92,7 +92,12 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 	 * Creates a new TracingMultiPrintStream printing to the given
 	 * {@link OutputStream}s and a custom config file.
 	 * 
-	 * @param configFile the file to store the configuration in.
+	 * @param configFile the file to store the configuration in.<br>
+	 *                   If this is null a config file with a default name will be
+	 *                   created in a directory called "config" in the directory the
+	 *                   file that is currently being executed is stored in.<br>
+	 *                   If this is a directory a config file with a default name
+	 *                   will be created in this directory.
 	 * @param outs       the {@link OutputStream}s to print to.
 	 */
 	public TracingMultiPrintStream(File configFile, OutputStream... outs) {

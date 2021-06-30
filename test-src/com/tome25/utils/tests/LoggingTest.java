@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.logging.Level;
@@ -31,6 +32,7 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 
+import com.tome25.utils.lib.LibraryLoader;
 import com.tome25.utils.logging.LogTracer;
 import com.tome25.utils.logging.LoggingPrintStream;
 import com.tome25.utils.logging.MultiPrintStream;
@@ -167,7 +169,7 @@ public class LoggingTest {
 	}
 
 	@Test
-	public void logTracerTest() {
+	public void logTracerTest() throws InterruptedException {
 		// test LogTracer.traceOutput
 		ByteArrayOutputStream baOut = new ByteArrayOutputStream();
 		SimpleFormatter formatter = new SimpleFormatter();
@@ -181,6 +183,30 @@ public class LoggingTest {
 				".*sun\\.nio\\.cs\\.StreamEncoder\\swriteBytes\\r{0,1}\\n.*\\[[^\\[]*\\]\\s\\[main\\]\\s\\[SYSOUT/[^\\[]*\\]\\s\\[LoggingTest\\.logTracerTest\\]:\\s.*\\r{0,1}\\n");
 		System.out.println("test");
 		assertTrue(baOut.toString(), outputPattern.matcher(baOut.toString()).matches());
+		// test LogTracer.traceOutput config location
+		File configFile = new File(LibraryLoader.getMainDir(), "config");
+		configFile.deleteOnExit();
+		configFile = new File(configFile, "LoggingTestTracingFormatter.cfg");
+		configFile.delete();// make sure the file doesn't exist from a previous failed run.
+		configFile.deleteOnExit();
+		LogTracer.traceOutput((File) null, lOut);
+		assertTrue("The TracingFormatter config file was either not created at all, or not in the right location.",
+				configFile.exists());
+		configFile = new File(LibraryLoader.getMainDir(), "testConfig");
+		configFile.mkdirs();
+		configFile.deleteOnExit();
+		configFile = new File(configFile, "LoggingTestTracingFormatter.cfg");
+		configFile.delete();// make sure the file doesn't exist from a previous failed run.
+		configFile.deleteOnExit();
+		LogTracer.traceOutput(configFile.getParentFile(), lOut);
+		assertTrue("The TracingFormatter config file was either not created at all, or not in the right location.",
+				configFile.exists());
+		configFile = new File(configFile.getParentFile(), "LogTracerTestTracingFormatter.cfg");
+		configFile.delete();// make sure the file doesn't exist from a previous failed run.
+		configFile.deleteOnExit();
+		LogTracer.traceOutput(configFile, lOut);
+		assertTrue("The TracingFormatter config file was either not created at all, or not in the right location.",
+				configFile.exists());
 		// reset System.out in case to not cause problems for later tests
 		System.setOut(systemOut);
 	}

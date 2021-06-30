@@ -99,6 +99,10 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 		super(outs);
 		if (configFile == null) {
 			configFile = new File(LibraryLoader.getMainDir(), "config");
+			configFile.mkdirs();
+		}
+
+		if (configFile.isDirectory()) {
 			String caller = "";
 			for (StackTraceElement trace : Thread.currentThread().getStackTrace()) {
 				if (caller == "") {

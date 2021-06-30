@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Formatter;
+import java.util.Objects;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,33 +89,45 @@ public class LogTracer {
 	 * {@link PrintStream} and a {@link FileOutputStream} to their respective log
 	 * file.
 	 * 
-	 * @param errorLog  the file to log the system error stream to. Set to null to
-	 *                  disable changing System.err.
-	 * @param outputLog the file to log the system output stream to. Set to null to
-	 *                  disable changing System.out.
+	 * @param errorLog  the file to log the system error stream to.<br/>
+	 *                  Set to null to disable changing {@link System#err}.
+	 * @param outputLog the file to log the system output stream to.<br/>
+	 *                  Set to null to disable changing {@link System#out}.
 	 */
 	public static void traceOutputs(File errorLog, File outputLog) {
-		if (errorLog != null) {
-			errorLog = errorLog.getAbsoluteFile();
-			outputLog = outputLog.getAbsoluteFile();
-			if (!errorLog.getParentFile().exists()) {
-				errorLog.getParentFile().mkdirs();
-			}
-			try {
-				traceError(new FileOutputStream(errorLog));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		traceOutputs(null, errorLog, outputLog);
+	}
+
+	/**
+	 * Sets system output and error {@link PrintStream} to a
+	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
+	 * {@link PrintStream} and a {@link FileOutputStream} to their respective log
+	 * file.<br/>
+	 * With a custom location for the {@link TracingFormatter} config file.
+	 * 
+	 * @param config    The config file to use for the
+	 *                  {@link TracingFormatter}.<br/>
+	 *                  If this is null a config file with a default name will be
+	 *                  created in a directory called "config" in the directory the
+	 *                  file that is currently being executed is stored in.<br/>
+	 *                  If this is a directory a config file with a default name
+	 *                  will be created in this directory.
+	 * @param errorLog  the file to log the system error stream to.<br/>
+	 *                  Set to null to disable changing {@link System#err}.
+	 * @param outputLog the file to log the system output stream to.<br/>
+	 *                  Set to null to disable changing {@link System#out}.
+	 */
+	public static void traceOutputs(File config, File errorLog, File outputLog) {
+		try {
+			traceError(config, errorLog);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		if (outputLog != null) {
-			if (!outputLog.getParentFile().exists()) {
-				outputLog.getParentFile().mkdirs();
-			}
-			try {
-				traceOutput(new FileOutputStream(outputLog));
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
+
+		try {
+			traceOutput(config, outputLog);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -126,36 +139,204 @@ public class LogTracer {
 	 * @param additionalStreams the {@link OutputStream}s to add to System.out
 	 */
 	public static void traceOutputs(OutputStream... additionalStreams) {
-		traceError(additionalStreams);
-		traceOutput(additionalStreams);
+		traceOutputs(null, additionalStreams);
+	}
+
+	/**
+	 * Sets system output and error {@link PrintStream} to a
+	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
+	 * {@link PrintStream} and the {@link OutputStream}s from
+	 * additionalStreams.<br/>
+	 * With a custom location for the {@link TracingFormatter} config file.
+	 * 
+	 * @param config            The config file to use for the
+	 *                          {@link TracingFormatter}.<br/>
+	 *                          If this is null a config file with a default name
+	 *                          will be created in a directory called "config" in
+	 *                          the directory the file that is currently being
+	 *                          executed is stored in.<br/>
+	 *                          If this is a directory a config file with a default
+	 *                          name will be created in this directory.
+	 * @param additionalStreams the {@link OutputStream}s to add to
+	 *                          {@link System#out} and {@link System#err}.
+	 */
+	public static void traceOutputs(File config, OutputStream... additionalStreams) {
+		traceError(config, additionalStreams);
+		traceOutput(config, additionalStreams);
+	}
+
+	/**
+	 * Sets system error {@link PrintStream}({@link System#err}) to a
+	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
+	 * {@link PrintStream} and a {@link FileOutputStream} writing to the given log
+	 * file.
+	 * 
+	 * @param log the log file to write the error output to.
+	 * @throws FileNotFoundException if the log file exists but is a directory
+	 *                               rather than a regular file, does not exist but
+	 *                               cannot be created, or cannot be opened for any
+	 *                               other reason.
+	 */
+	public static void traceError(File log) throws FileNotFoundException {
+		traceError(null, log);
+	}
+
+	/**
+	 * Sets system error {@link PrintStream}({@link System#err}) to a
+	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
+	 * {@link PrintStream} and a {@link FileOutputStream} writing to the given log
+	 * file.<br/>
+	 * With a custom location for the {@link TracingFormatter} config file.
+	 * 
+	 * @param log    the log file to write the error output to.
+	 * @param config The config file to use for the {@link TracingFormatter}.<br/>
+	 *               If this is null a config file with a default name will be
+	 *               created in a directory called "config" in the directory the
+	 *               file that is currently being executed is stored in.<br/>
+	 *               If this is a directory a config file with a default name will
+	 *               be created in this directory.
+	 * @throws FileNotFoundException if the log file exists but is a directory
+	 *                               rather than a regular file, does not exist but
+	 *                               cannot be created, or cannot be opened for any
+	 *                               other reason.
+	 */
+	public static void traceError(File config, File log) throws FileNotFoundException {
+		Objects.requireNonNull(log, "Log file can't be null! (log == null)");
+
+		log = log.getAbsoluteFile();
+		if (log.isDirectory()) {
+			throw new FileNotFoundException(
+					String.format("File \"%s\" is a directory. The log file can't be a direcotry!", log.toString()));
+		}
+
+		if (!log.getParentFile().exists()) {
+			log.getParentFile().mkdirs();
+		}
+
+		traceError(config, new FileOutputStream(log));
 	}
 
 	/**
 	 * Sets system error {@link PrintStream} to a {@link LoggingPrintStream}
 	 * printing to a {@link Logger} logging to the old {@link PrintStream} and the
-	 * {@link OutputStream}s from additionalStreams.
+	 * given {@link OutputStream}s.
 	 * 
-	 * @param additionalStreams the {@link OutputStream}s to add to System.err
+	 * @param additionalStreams the {@link OutputStream}s to add to
+	 *                          {@link System#err}.
 	 */
 	public static void traceError(OutputStream... additionalStreams) {
+		traceError(null, additionalStreams);
+	}
+
+	/**
+	 * Sets system error {@link PrintStream} to a {@link LoggingPrintStream}
+	 * printing to a {@link Logger} logging to the old {@link PrintStream} and the
+	 * given {@link OutputStream}s.<br/>
+	 * With a custom location for the {@link TracingFormatter} config file.
+	 * 
+	 * @param config            The config file to use for the
+	 *                          {@link TracingFormatter}.<br/>
+	 *                          If this is null a config file with a default name
+	 *                          will be created in a directory called "config" in
+	 *                          the directory the file that is currently being
+	 *                          executed is stored in.<br/>
+	 *                          If this is a directory a config file with a default
+	 *                          name will be created in this directory.
+	 * @param additionalStreams the {@link OutputStream}s to add to
+	 *                          {@link System#err}.
+	 */
+	public static void traceError(File config, OutputStream... additionalStreams) {
 		Logger error = getError();
 		for (OutputStream out : additionalStreams) {
-			error.addHandler(new OutputHandler(out, new TracingFormatter()));
+			error.addHandler(new OutputHandler(out, new TracingFormatter(config)));
 		}
 		System.setErr(new LoggingPrintStream(error, Level.WARNING));
 	}
 
 	/**
+	 * Sets system output {@link PrintStream}({@link System#out}) to a
+	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
+	 * {@link PrintStream} and a {@link FileOutputStream} writing to the given log
+	 * file.
+	 * 
+	 * @param log the log file to write the standard output to.
+	 * @throws FileNotFoundException if the log file exists but is a directory
+	 *                               rather than a regular file, does not exist but
+	 *                               cannot be created, or cannot be opened for any
+	 *                               other reason.
+	 */
+	public static void traceOutput(File log) throws FileNotFoundException {
+		traceOutput(null, log);
+	}
+
+	/**
+	 * Sets system output {@link PrintStream}({@link System#out}) to a
+	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
+	 * {@link PrintStream} and a {@link FileOutputStream} writing to the given log
+	 * file.<br/>
+	 * With a custom location for the {@link TracingFormatter} config file.
+	 * 
+	 * @param log    the log file to write the standard output to.
+	 * @param config The config file to use for the {@link TracingFormatter}.<br/>
+	 *               If this is null a config file with a default name will be
+	 *               created in a directory called "config" in the directory the
+	 *               file that is currently being executed is stored in.<br/>
+	 *               If this is a directory a config file with a default name will
+	 *               be created in this directory.
+	 * @throws FileNotFoundException if the log file exists but is a directory
+	 *                               rather than a regular file, does not exist but
+	 *                               cannot be created, or cannot be opened for any
+	 *                               other reason.
+	 */
+	public static void traceOutput(File config, File log) throws FileNotFoundException {
+		Objects.requireNonNull(log, "Log file can't be null! (log == null)");
+
+		log = log.getAbsoluteFile();
+		if (log.isDirectory()) {
+			throw new FileNotFoundException(
+					String.format("File \"%s\" is a directory. The log file can't be a direcotry!", log.toString()));
+		}
+
+		if (!log.getParentFile().exists()) {
+			log.getParentFile().mkdirs();
+		}
+
+		traceOutput(config, new FileOutputStream(log));
+	}
+
+	/**
 	 * Sets system output {@link PrintStream} to a {@link LoggingPrintStream}
 	 * printing to a {@link Logger} logging to the old {@link PrintStream} and the
-	 * {@link OutputStream}s from additionalStreams.
+	 * given {@link OutputStream}s.
 	 * 
-	 * @param additionalStreams the {@link OutputStream}s to add to System.out
+	 * @param additionalStreams the {@link OutputStream}s to add to
+	 *                          {@link System#out}.
 	 */
 	public static void traceOutput(OutputStream... additionalStreams) {
+		traceOutput(null, additionalStreams);
+	}
+
+	/**
+	 * Sets system output {@link PrintStream} to a {@link LoggingPrintStream}
+	 * printing to a {@link Logger} logging to the old {@link PrintStream} and the
+	 * given {@link OutputStream}s.<br/>
+	 * With a custom location for the {@link TracingFormatter} config file.
+	 * 
+	 * @param config            The config file to use for the
+	 *                          {@link TracingFormatter}.<br/>
+	 *                          If this is null a config file with a default name
+	 *                          will be created in a directory called "config" in
+	 *                          the directory the file that is currently being
+	 *                          executed is stored in.<br/>
+	 *                          If this is a directory a config file with a default
+	 *                          name will be created in this directory.
+	 * @param additionalStreams the {@link OutputStream}s to add to
+	 *                          {@link System#out}.
+	 */
+	public static void traceOutput(File config, OutputStream... additionalStreams) {
 		Logger output = getOutput();
 		for (OutputStream out : additionalStreams) {
-			output.addHandler(new OutputHandler(out, new TracingFormatter()));
+			output.addHandler(new OutputHandler(out, new TracingFormatter(config)));
 		}
 		System.setOut(new LoggingPrintStream(output, Level.INFO));
 	}
@@ -172,8 +353,8 @@ public class LogTracer {
 	}
 
 	/**
-	 * Gets a {@link Logger} that logs {@link java.util.logging.LogRecord LogRecord} with log
-	 * {@link Level} info or below to System.out, and warning and above to
+	 * Gets a {@link Logger} that logs {@link java.util.logging.LogRecord LogRecord}
+	 * with log {@link Level} info or below to System.out, and warning and above to
 	 * System.err, with the give custom name.
 	 * 
 	 * @param name the name of the {@link Logger} to get.
@@ -197,8 +378,8 @@ public class LogTracer {
 	}
 
 	/**
-	 * Gets a {@link Logger} that logs {@link java.util.logging.LogRecord LogRecord} with log
-	 * {@link Level} info or below to System.out, and warning or above to
+	 * Gets a {@link Logger} that logs {@link java.util.logging.LogRecord LogRecord}
+	 * with log {@link Level} info or below to System.out, and warning or above to
 	 * System.err, with the give custom name.
 	 * 
 	 * @return the global logger.

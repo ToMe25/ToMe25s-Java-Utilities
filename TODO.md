@@ -30,3 +30,4 @@ Things to change in the logging module.
 ## Junit Tests
 Improvemets planned for the junit tests.
  * Add a junit test to test log file writing.
+ * Split fast parser test and comparison test to a small and large json version.

@@ -109,7 +109,7 @@ public class TracingFormatter extends Formatter {
 					continue;
 				}
 				caller = trace.getClassName();
-				if (caller != TracingFormatter.class.getName() && caller != LogTracer.class.getName()) {
+				if (!caller.startsWith("com.tome25.utils.logging")) {
 					break;
 				}
 			}

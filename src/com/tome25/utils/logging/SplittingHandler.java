@@ -22,8 +22,8 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
- * A {@link Handler} that splits {@link LogRecord}s into System.out and
- * System.err based on their log {@link java.util.logging.Level Level}.
+ * A {@link Handler} that splits {@link LogRecord}s into {@link System#out} and
+ * {@link System#err} based on their log {@link java.util.logging.Level Level}.
  * 
  * @author ToMe25
  *
@@ -72,7 +72,8 @@ public class SplittingHandler extends Handler {
 	}
 
 	/**
-	 * Publishes the give {@link LogRecord} to all the handlers of the given {@link Logger}.
+	 * Publishes the give {@link LogRecord} to all the handlers of the given
+	 * {@link Logger}.
 	 * 
 	 * @param logger the {@link Logger} to publish the {@link LogRecord} to.
 	 * @param record the {@link LogRecord} to publish to {@link Logger}.

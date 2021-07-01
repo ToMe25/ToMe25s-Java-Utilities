@@ -115,7 +115,7 @@ public class TracingMultiPrintStream extends MultiPrintStream {
 					continue;
 				}
 				caller = trace.getClassName();
-				if (caller != TracingMultiPrintStream.class.getName()) {
+				if (!caller.startsWith("com.tome25.utils.logging")) {
 					break;
 				}
 			}

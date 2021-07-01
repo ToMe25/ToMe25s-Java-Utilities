@@ -30,8 +30,9 @@ import java.util.logging.Logger;
 
 /**
  * 
- * A utility class to improve logging. Used to trace the system outputs, and to
- * get custom {@link Logger}s logging to the system output.
+ * A utility class to improve logging.<br>
+ * Used to trace the system outputs, and to get custom {@link Logger}s logging
+ * to the system output.
  * 
  * @author ToMe25
  *
@@ -42,11 +43,13 @@ public class LogTracer {
 			Formatter.class.getName(), TracingMultiPrintStream.class.getName(), ThreadGroup.class.getName(),
 			Thread.class.getName(), LoggingPrintStream.class.getName() };
 
-	private static Logger global;
-	private static Logger error;
-	private static Logger output;
 	private static final PrintStream DEFAULT_ERR = System.err;
 	private static final PrintStream DEFAULT_OUT = System.out;
+	private static Logger error;
+	private static Logger output;
+	private static Logger global;
+	private static File errorConfig;
+	private static File outputConfig;
 
 	/**
 	 * Sets system output and error {@link PrintStream} to a
@@ -95,7 +98,17 @@ public class LogTracer {
 	 *                  Set to null to disable changing {@link System#out}.
 	 */
 	public static void traceOutputs(File errorLog, File outputLog) {
-		traceOutputs(null, errorLog, outputLog);
+		try {
+			traceError(errorLog);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
+			traceOutput(outputLog);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -103,7 +116,7 @@ public class LogTracer {
 	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
 	 * {@link PrintStream} and a {@link FileOutputStream} to their respective log
 	 * file.<br>
-	 * With a custom location for the {@link TracingFormatter} config file.
+	 * Also sets the {@link TracingFormatter} config file.
 	 * 
 	 * @param config    The config file to use for the {@link TracingFormatter}.<br>
 	 *                  If this is null a config file with a default name will be
@@ -117,17 +130,8 @@ public class LogTracer {
 	 *                  Set to null to disable changing {@link System#out}.
 	 */
 	public static void traceOutputs(File config, File errorLog, File outputLog) {
-		try {
-			traceError(config, errorLog);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			traceOutput(config, outputLog);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		setConfig(config);
+		traceOutputs(errorLog, outputLog);
 	}
 
 	/**
@@ -138,14 +142,15 @@ public class LogTracer {
 	 * @param additionalStreams the {@link OutputStream}s to add to System.out
 	 */
 	public static void traceOutputs(OutputStream... additionalStreams) {
-		traceOutputs(null, additionalStreams);
+		traceError(additionalStreams);
+		traceOutput(additionalStreams);
 	}
 
 	/**
 	 * Sets system output and error {@link PrintStream} to a
 	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
 	 * {@link PrintStream} and the {@link OutputStream}s from additionalStreams.<br>
-	 * With a custom location for the {@link TracingFormatter} config file.
+	 * Also sets the {@link TracingFormatter} config file.
 	 * 
 	 * @param config            The config file to use for the
 	 *                          {@link TracingFormatter}.<br>
@@ -159,8 +164,8 @@ public class LogTracer {
 	 *                          {@link System#out} and {@link System#err}.
 	 */
 	public static void traceOutputs(File config, OutputStream... additionalStreams) {
-		traceError(config, additionalStreams);
-		traceOutput(config, additionalStreams);
+		setConfig(config);
+		traceOutputs(additionalStreams);
 	}
 
 	/**
@@ -176,7 +181,19 @@ public class LogTracer {
 	 *                               other reason.
 	 */
 	public static void traceError(File log) throws FileNotFoundException {
-		traceError(null, log);
+		Objects.requireNonNull(log, "Log file can't be null! (log == null)");
+
+		log = log.getAbsoluteFile();
+		if (log.isDirectory()) {
+			throw new FileNotFoundException(
+					String.format("File \"%s\" is a directory. The log file can't be a direcotry!", log.toString()));
+		}
+
+		if (!log.getParentFile().exists()) {
+			log.getParentFile().mkdirs();
+		}
+
+		traceError(new FileOutputStream(log));
 	}
 
 	/**
@@ -184,7 +201,7 @@ public class LogTracer {
 	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
 	 * {@link PrintStream} and a {@link FileOutputStream} writing to the given log
 	 * file.<br>
-	 * With a custom location for the {@link TracingFormatter} config file.
+	 * Also sets the {@link TracingFormatter} config file.
 	 * 
 	 * @param log    the log file to write the error output to.
 	 * @param config The config file to use for the {@link TracingFormatter}.<br>
@@ -199,19 +216,8 @@ public class LogTracer {
 	 *                               other reason.
 	 */
 	public static void traceError(File config, File log) throws FileNotFoundException {
-		Objects.requireNonNull(log, "Log file can't be null! (log == null)");
-
-		log = log.getAbsoluteFile();
-		if (log.isDirectory()) {
-			throw new FileNotFoundException(
-					String.format("File \"%s\" is a directory. The log file can't be a direcotry!", log.toString()));
-		}
-
-		if (!log.getParentFile().exists()) {
-			log.getParentFile().mkdirs();
-		}
-
-		traceError(config, new FileOutputStream(log));
+		setErrorConfig(config);
+		traceError(log);
 	}
 
 	/**
@@ -223,14 +229,18 @@ public class LogTracer {
 	 *                          {@link System#err}.
 	 */
 	public static void traceError(OutputStream... additionalStreams) {
-		traceError(null, additionalStreams);
+		Logger error = getError();
+		for (OutputStream out : additionalStreams) {
+			error.addHandler(new OutputHandler(out, new TracingFormatter(errorConfig)));
+		}
+		System.setErr(new LoggingPrintStream(error, Level.WARNING));
 	}
 
 	/**
 	 * Sets system error {@link PrintStream} to a {@link LoggingPrintStream}
 	 * printing to a {@link Logger} logging to the old {@link PrintStream} and the
 	 * given {@link OutputStream}s.<br>
-	 * With a custom location for the {@link TracingFormatter} config file.
+	 * Also sets the {@link TracingFormatter} config file.
 	 * 
 	 * @param config            The config file to use for the
 	 *                          {@link TracingFormatter}.<br>
@@ -244,11 +254,8 @@ public class LogTracer {
 	 *                          {@link System#err}.
 	 */
 	public static void traceError(File config, OutputStream... additionalStreams) {
-		Logger error = getError();
-		for (OutputStream out : additionalStreams) {
-			error.addHandler(new OutputHandler(out, new TracingFormatter(config)));
-		}
-		System.setErr(new LoggingPrintStream(error, Level.WARNING));
+		setErrorConfig(config);
+		traceError(additionalStreams);
 	}
 
 	/**
@@ -264,7 +271,19 @@ public class LogTracer {
 	 *                               other reason.
 	 */
 	public static void traceOutput(File log) throws FileNotFoundException {
-		traceOutput(null, log);
+		Objects.requireNonNull(log, "Log file can't be null! (log == null)");
+
+		log = log.getAbsoluteFile();
+		if (log.isDirectory()) {
+			throw new FileNotFoundException(
+					String.format("File \"%s\" is a directory. The log file can't be a direcotry!", log.toString()));
+		}
+
+		if (!log.getParentFile().exists()) {
+			log.getParentFile().mkdirs();
+		}
+
+		traceOutput(new FileOutputStream(log));
 	}
 
 	/**
@@ -272,7 +291,7 @@ public class LogTracer {
 	 * {@link LoggingPrintStream} printing to a {@link Logger} logging to the old
 	 * {@link PrintStream} and a {@link FileOutputStream} writing to the given log
 	 * file.<br>
-	 * With a custom location for the {@link TracingFormatter} config file.
+	 * Also sets the {@link TracingFormatter} config file.
 	 * 
 	 * @param log    the log file to write the standard output to.
 	 * @param config The config file to use for the {@link TracingFormatter}.<br>
@@ -287,19 +306,8 @@ public class LogTracer {
 	 *                               other reason.
 	 */
 	public static void traceOutput(File config, File log) throws FileNotFoundException {
-		Objects.requireNonNull(log, "Log file can't be null! (log == null)");
-
-		log = log.getAbsoluteFile();
-		if (log.isDirectory()) {
-			throw new FileNotFoundException(
-					String.format("File \"%s\" is a directory. The log file can't be a direcotry!", log.toString()));
-		}
-
-		if (!log.getParentFile().exists()) {
-			log.getParentFile().mkdirs();
-		}
-
-		traceOutput(config, new FileOutputStream(log));
+		setOutputConfig(config);
+		traceOutput(log);
 	}
 
 	/**
@@ -311,14 +319,18 @@ public class LogTracer {
 	 *                          {@link System#out}.
 	 */
 	public static void traceOutput(OutputStream... additionalStreams) {
-		traceOutput(null, additionalStreams);
+		Logger output = getOutput();
+		for (OutputStream out : additionalStreams) {
+			output.addHandler(new OutputHandler(out, new TracingFormatter(outputConfig)));
+		}
+		System.setOut(new LoggingPrintStream(output, Level.INFO));
 	}
 
 	/**
 	 * Sets system output {@link PrintStream} to a {@link LoggingPrintStream}
 	 * printing to a {@link Logger} logging to the old {@link PrintStream} and the
 	 * given {@link OutputStream}s.<br>
-	 * With a custom location for the {@link TracingFormatter} config file.
+	 * Also sets the {@link TracingFormatter} config file.
 	 * 
 	 * @param config            The config file to use for the
 	 *                          {@link TracingFormatter}.<br>
@@ -332,11 +344,8 @@ public class LogTracer {
 	 *                          {@link System#out}.
 	 */
 	public static void traceOutput(File config, OutputStream... additionalStreams) {
-		Logger output = getOutput();
-		for (OutputStream out : additionalStreams) {
-			output.addHandler(new OutputHandler(out, new TracingFormatter(config)));
-		}
-		System.setOut(new LoggingPrintStream(output, Level.INFO));
+		setOutputConfig(config);
+		traceOutput(additionalStreams);
 	}
 
 	/**
@@ -351,9 +360,10 @@ public class LogTracer {
 	}
 
 	/**
-	 * Gets a {@link Logger} that logs {@link java.util.logging.LogRecord LogRecord}
-	 * with log {@link Level} info or below to System.out, and warning and above to
-	 * System.err, with the give custom name.
+	 * Gets a {@link Logger} that logs messages with {@link Level log level}
+	 * {@link Level#INFO info} or below to {@link System#out}, and
+	 * {@link Level#WARNING warning} or above to {@link System#err}, with the given
+	 * custom name.
 	 * 
 	 * @param name the name of the {@link Logger} to get.
 	 * @return the {@link Logger} for the given name.
@@ -364,7 +374,7 @@ public class LogTracer {
 		logger.setLevel(Level.ALL);
 		boolean addHandler = true;
 		for (Handler handler : logger.getHandlers()) {
-			if (handler.getFormatter() instanceof TracingFormatter) {
+			if (handler instanceof SplittingHandler) {
 				addHandler = false;
 				break;
 			}
@@ -376,9 +386,9 @@ public class LogTracer {
 	}
 
 	/**
-	 * Gets a {@link Logger} that logs {@link java.util.logging.LogRecord LogRecord}
-	 * with log {@link Level} info or below to System.out, and warning or above to
-	 * System.err, with the give custom name.
+	 * Gets the global {@link Logger} and makes it log messages with {@link Level
+	 * log level} {@link Level#INFO info} or below to {@link System#out}, and
+	 * {@link Level#WARNING warning} or above to {@link System#err}.
 	 * 
 	 * @return the global logger.
 	 */
@@ -391,7 +401,7 @@ public class LogTracer {
 			logger.setLevel(Level.ALL);
 			boolean addHandler = true;
 			for (Handler handler : logger.getHandlers()) {
-				if (handler.getFormatter() instanceof TracingFormatter) {
+				if (handler instanceof SplittingHandler) {
 					addHandler = false;
 					break;
 				}
@@ -424,7 +434,7 @@ public class LogTracer {
 				}
 			}
 			if (addHandler) {
-				logger.addHandler(new OutputHandler(System.err, Level.ALL, new TracingFormatter()));
+				logger.addHandler(new OutputHandler(System.err, Level.ALL, new TracingFormatter(errorConfig)));
 			}
 			error = logger;
 			return logger;
@@ -451,11 +461,57 @@ public class LogTracer {
 				}
 			}
 			if (addHandler) {
-				logger.addHandler(new OutputHandler(System.out, Level.ALL, new TracingFormatter()));
+				logger.addHandler(new OutputHandler(System.out, Level.ALL, new TracingFormatter(outputConfig)));
 			}
 			output = logger;
 			return logger;
 		}
+	}
+
+	/**
+	 * Sets the config file for the system error and output {@link PrintStream}
+	 * {@link TracingFormatter}s.<br>
+	 * If this is null a config file with a default name will be created in a
+	 * directory called "config" in the directory the file that is currently being
+	 * executed is stored in.<br>
+	 * If that file is a directory a config file with a default name will be created
+	 * in this directory.
+	 * 
+	 * @param config the new system error and output config file.
+	 */
+	public static void setConfig(File config) {
+		setErrorConfig(config);
+		setOutputConfig(config);
+	}
+
+	/**
+	 * Sets the config file for the system error {@link PrintStream}
+	 * {@link TracingFormatter}s.<br>
+	 * If this is null a config file with a default name will be created in a
+	 * directory called "config" in the directory the file that is currently being
+	 * executed is stored in.<br>
+	 * If that file is a directory a config file with a default name will be created
+	 * in this directory.
+	 * 
+	 * @param errorConfig the new system error config file.
+	 */
+	public static void setErrorConfig(File errorConfig) {
+		LogTracer.errorConfig = errorConfig;
+	}
+
+	/**
+	 * Sets the config file for the system output {@link PrintStream}
+	 * {@link TracingFormatter}s.<br>
+	 * If this is null a config file with a default name will be created in a
+	 * directory called "config" in the directory the file that is currently being
+	 * executed is stored in.<br>
+	 * If that file is a directory a config file with a default name will be created
+	 * in this directory.
+	 * 
+	 * @param outputConfig the new system output config file.
+	 */
+	public static void setOutputConfig(File outputConfig) {
+		LogTracer.outputConfig = outputConfig;
 	}
 
 	/**

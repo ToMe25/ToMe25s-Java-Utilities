@@ -26,6 +26,7 @@ Todos for the library downloading and including module of this library.
 ## Logging
 Things to change in the logging module.
  * Clean TracingFormatter Thread name cache, either by deleting the entry that wasn't used for the longest time when it gets too big, or by cleaning up no longer running threads.
+ * Cache named loggers?
 
 ## Junit Tests
 Improvemets planned for the junit tests.

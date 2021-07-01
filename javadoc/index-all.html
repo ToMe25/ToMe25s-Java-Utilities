@@ -588,6 +588,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/SplittingHandler.html#error">error</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/SplittingHandler.html" title="class in com.tome25.utils.logging">SplittingHandler</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#errorConfig">errorConfig</a></span> - Static variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/lib/LibraryDownloader.html#executable">executable</a></span> - Variable in class com.tome25.utils.lib.<a href="com/tome25/utils/lib/LibraryDownloader.html" title="class in com.tome25.utils.lib">LibraryDownloader</a></dt>
 <dd>
 <div class="block">Whether the target file should get set to executable after the download
@@ -841,9 +843,8 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#getGlobal--">getGlobal()</a></span> - Static method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
 <dd>
-<div class="block">Gets a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a> that logs <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/LogRecord.html?is-external=true" title="class or interface in java.util.logging"><code>LogRecord</code></a>
- with log <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true" title="class or interface in java.util.logging"><code>Level</code></a> info or below to System.out, and warning or above to
- System.err, with the give custom name.</div>
+<div class="block">Gets the global <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a> and makes it log messages with <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true" title="class or interface in java.util.logging"><code>log level</code></a> <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true#INFO" title="class or interface in java.util.logging"><code>info</code></a> or below to <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html?is-external=true#out" title="class or interface in java.lang"><code>System.out</code></a>, and
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true#WARNING" title="class or interface in java.util.logging"><code>warning</code></a> or above to <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html?is-external=true#err" title="class or interface in java.lang"><code>System.err</code></a>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/ConfigValue.html#getKey--">getKey()</a></span> - Method in class com.tome25.utils.config.<a href="com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config">ConfigValue</a></dt>
 <dd>
@@ -875,9 +876,10 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#getLogger-java.lang.String-">getLogger(String)</a></span> - Static method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
 <dd>
-<div class="block">Gets a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a> that logs <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/LogRecord.html?is-external=true" title="class or interface in java.util.logging"><code>LogRecord</code></a>
- with log <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true" title="class or interface in java.util.logging"><code>Level</code></a> info or below to System.out, and warning and above to
- System.err, with the give custom name.</div>
+<div class="block">Gets a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a> that logs messages with <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true" title="class or interface in java.util.logging"><code>log level</code></a>
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true#INFO" title="class or interface in java.util.logging"><code>info</code></a> or below to <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html?is-external=true#out" title="class or interface in java.lang"><code>System.out</code></a>, and
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true#WARNING" title="class or interface in java.util.logging"><code>warning</code></a> or above to <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html?is-external=true#err" title="class or interface in java.lang"><code>System.err</code></a>, with the given
+ custom name.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LoggingPrintStream.html#getLogLevel--">getLogLevel()</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LoggingPrintStream.html" title="class in com.tome25.utils.logging">LoggingPrintStream</a></dt>
 <dd>
@@ -1383,7 +1385,9 @@
 </dd>
 <dt><a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging"><span class="typeNameLink">LogTracer</span></a> - Class in <a href="com/tome25/utils/logging/package-summary.html">com.tome25.utils.logging</a></dt>
 <dd>
-<div class="block">A utility class to improve logging.</div>
+<div class="block">A utility class to improve logging.<br>
+ Used to trace the system outputs, and to get custom <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a>s logging
+ to the system output.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#LogTracer--">LogTracer()</a></span> - Constructor for class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
 <dd>&nbsp;</dd>
@@ -1433,6 +1437,8 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#output">output</a></span> - Static variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/SplittingHandler.html#output">output</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/SplittingHandler.html" title="class in com.tome25.utils.logging">SplittingHandler</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#outputConfig">outputConfig</a></span> - Static variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/tome25/utils/logging/OutputHandler.html" title="class in com.tome25.utils.logging"><span class="typeNameLink">OutputHandler</span></a> - Class in <a href="com/tome25/utils/logging/package-summary.html">com.tome25.utils.logging</a></dt>
 <dd>
@@ -1618,7 +1624,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/SplittingHandler.html#publish-java.util.logging.Logger-java.util.logging.LogRecord-">publish(Logger, LogRecord)</a></span> - Method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/SplittingHandler.html" title="class in com.tome25.utils.logging">SplittingHandler</a></dt>
 <dd>
-<div class="block">Publishes the give <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/LogRecord.html?is-external=true" title="class or interface in java.util.logging"><code>LogRecord</code></a> to all the handlers of the given <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a>.</div>
+<div class="block">Publishes the give <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/LogRecord.html?is-external=true" title="class or interface in java.util.logging"><code>LogRecord</code></a> to all the handlers of the given
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonArray.html#put-java.lang.Integer-java.lang.Object-">put(Integer, Object)</a></span> - Method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json">JsonArray</a></dt>
 <dd>&nbsp;</dd>
@@ -1816,6 +1823,36 @@
 <dd>
 <div class="block">Sets the config value for the given name the the given value.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#setConfig-java.io.File-">setConfig(File)</a></span> - Static method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
+<dd>
+<div class="block">Sets the config file for the system error and output <a href="https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io"><code>PrintStream</code></a>
+ <a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging"><code>TracingFormatter</code></a>s.<br>
+ If this is null a config file with a default name will be created in a
+ directory called "config" in the directory the file that is currently being
+ executed is stored in.<br>
+ If that file is a directory a config file with a default name will be created
+ in this directory.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#setErrorConfig-java.io.File-">setErrorConfig(File)</a></span> - Static method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
+<dd>
+<div class="block">Sets the config file for the system error <a href="https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io"><code>PrintStream</code></a>
+ <a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging"><code>TracingFormatter</code></a>s.<br>
+ If this is null a config file with a default name will be created in a
+ directory called "config" in the directory the file that is currently being
+ executed is stored in.<br>
+ If that file is a directory a config file with a default name will be created
+ in this directory.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#setOutputConfig-java.io.File-">setOutputConfig(File)</a></span> - Static method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
+<dd>
+<div class="block">Sets the config file for the system output <a href="https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io"><code>PrintStream</code></a>
+ <a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging"><code>TracingFormatter</code></a>s.<br>
+ If this is null a config file with a default name will be created in a
+ directory called "config" in the directory the file that is currently being
+ executed is stored in.<br>
+ If that file is a directory a config file with a default name will be created
+ in this directory.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/ConfigValue.html#setValue-T-">setValue(T)</a></span> - Method in class com.tome25.utils.config.<a href="com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config">ConfigValue</a></dt>
 <dd>
 <div class="block">Sets this ConfigValues value.</div>
@@ -1862,8 +1899,8 @@
 <dd>&nbsp;</dd>
 <dt><a href="com/tome25/utils/logging/SplittingHandler.html" title="class in com.tome25.utils.logging"><span class="typeNameLink">SplittingHandler</span></a> - Class in <a href="com/tome25/utils/logging/package-summary.html">com.tome25.utils.logging</a></dt>
 <dd>
-<div class="block">A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Handler.html?is-external=true" title="class or interface in java.util.logging"><code>Handler</code></a> that splits <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/LogRecord.html?is-external=true" title="class or interface in java.util.logging"><code>LogRecord</code></a>s into System.out and
- System.err based on their log <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true" title="class or interface in java.util.logging"><code>Level</code></a>.</div>
+<div class="block">A <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Handler.html?is-external=true" title="class or interface in java.util.logging"><code>Handler</code></a> that splits <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/LogRecord.html?is-external=true" title="class or interface in java.util.logging"><code>LogRecord</code></a>s into <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html?is-external=true#out" title="class or interface in java.lang"><code>System.out</code></a> and
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html?is-external=true#err" title="class or interface in java.lang"><code>System.err</code></a> based on their log <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true" title="class or interface in java.util.logging"><code>Level</code></a>.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/SplittingHandler.html#SplittingHandler--">SplittingHandler()</a></span> - Constructor for class com.tome25.utils.logging.<a href="com/tome25/utils/logging/SplittingHandler.html" title="class in com.tome25.utils.logging">SplittingHandler</a></dt>
 <dd>
@@ -2000,7 +2037,7 @@
  <a href="com/tome25/utils/logging/LoggingPrintStream.html" title="class in com.tome25.utils.logging"><code>LoggingPrintStream</code></a> printing to a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a> logging to the old
  <a href="https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io"><code>PrintStream</code></a> and a <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileOutputStream.html?is-external=true" title="class or interface in java.io"><code>FileOutputStream</code></a> writing to the given log
  file.<br>
- With a custom location for the <a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging"><code>TracingFormatter</code></a> config file.</div>
+ Also sets the <a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging"><code>TracingFormatter</code></a> config file.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#traceError-java.io.OutputStream...-">traceError(OutputStream...)</a></span> - Static method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
 <dd>
@@ -2013,7 +2050,7 @@
 <div class="block">Sets system error <a href="https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io"><code>PrintStream</code></a> to a <a href="com/tome25/utils/logging/LoggingPrintStream.html" title="class in com.tome25.utils.logging"><code>LoggingPrintStream</code></a>
  printing to a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a> logging to the old <a href="https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io"><code>PrintStream</code></a> and the
  given <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>s.<br>
- With a custom location for the <a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging"><code>TracingFormatter</code></a> config file.</div>
+ Also sets the <a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging"><code>TracingFormatter</code></a> config file.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceFile">traceFile</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
 <dd>
@@ -2052,7 +2089,7 @@
  <a href="com/tome25/utils/logging/LoggingPrintStream.html" title="class in com.tome25.utils.logging"><code>LoggingPrintStream</code></a> printing to a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a> logging to the old
  <a href="https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io"><code>PrintStream</code></a> and a <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileOutputStream.html?is-external=true" title="class or interface in java.io"><code>FileOutputStream</code></a> writing to the given log
  file.<br>
- With a custom location for the <a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging"><code>TracingFormatter</code></a> config file.</div>
+ Also sets the <a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging"><code>TracingFormatter</code></a> config file.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#traceOutput-java.io.OutputStream...-">traceOutput(OutputStream...)</a></span> - Static method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
 <dd>
@@ -2065,7 +2102,7 @@
 <div class="block">Sets system output <a href="https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io"><code>PrintStream</code></a> to a <a href="com/tome25/utils/logging/LoggingPrintStream.html" title="class in com.tome25.utils.logging"><code>LoggingPrintStream</code></a>
  printing to a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a> logging to the old <a href="https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io"><code>PrintStream</code></a> and the
  given <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>s.<br>
- With a custom location for the <a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging"><code>TracingFormatter</code></a> config file.</div>
+ Also sets the <a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging"><code>TracingFormatter</code></a> config file.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#traceOutputs-java.lang.String-">traceOutputs(String)</a></span> - Static method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
 <dd>
@@ -2099,7 +2136,7 @@
  <a href="com/tome25/utils/logging/LoggingPrintStream.html" title="class in com.tome25.utils.logging"><code>LoggingPrintStream</code></a> printing to a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a> logging to the old
  <a href="https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io"><code>PrintStream</code></a> and a <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileOutputStream.html?is-external=true" title="class or interface in java.io"><code>FileOutputStream</code></a> to their respective log
  file.<br>
- With a custom location for the <a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging"><code>TracingFormatter</code></a> config file.</div>
+ Also sets the <a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging"><code>TracingFormatter</code></a> config file.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#traceOutputs-java.io.OutputStream...-">traceOutputs(OutputStream...)</a></span> - Static method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
 <dd>
@@ -2112,7 +2149,7 @@
 <div class="block">Sets system output and error <a href="https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io"><code>PrintStream</code></a> to a
  <a href="com/tome25/utils/logging/LoggingPrintStream.html" title="class in com.tome25.utils.logging"><code>LoggingPrintStream</code></a> printing to a <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a> logging to the old
  <a href="https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io"><code>PrintStream</code></a> and the <a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a>s from additionalStreams.<br>
- With a custom location for the <a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging"><code>TracingFormatter</code></a> config file.</div>
+ Also sets the <a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging"><code>TracingFormatter</code></a> config file.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#traceOutputtingClass">traceOutputtingClass</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
 <dd>

@@ -11,7 +11,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        java: [8, 11, 17]
+        java: [8, 11]
 
     name: Build and Test(java ${{ matrix.java }}, ${{ matrix.os }})
     runs-on: ${{ matrix.os }}

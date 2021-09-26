@@ -28,6 +28,10 @@ Things to change in the logging module.
  * Clean TracingFormatter Thread name cache, either by deleting the entry that wasn't used for the longest time when it gets too big, or by cleaning up no longer running threads.
  * Cache named loggers?
 
+## General
+Todos for the General utility class.
+ * Remove the longest unused entries from the CLONE_METHODS cache.
+
 ## Junit Tests
 Improvemets planned for the junit tests.
  * Add a junit test to test log file writing.

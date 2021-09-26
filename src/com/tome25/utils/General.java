@@ -52,7 +52,7 @@ public abstract class General {
 		if (!CLONE_METHODS.containsKey(clazz)) {
 			Method cln = null;
 			try {
-				cln = clazz.getDeclaredMethod("clone");
+				cln = clazz.getMethod("clone");
 			} catch (NoSuchMethodException e) {
 				e.printStackTrace();
 			} catch (SecurityException e) {

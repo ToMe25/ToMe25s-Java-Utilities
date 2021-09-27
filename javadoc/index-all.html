@@ -235,9 +235,9 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LoggingPrintStream.html#buffer">buffer</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LoggingPrintStream.html" title="class in com.tome25.utils.logging">LoggingPrintStream</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonParser.html#buildOther-java.lang.String-char:A-int-">buildOther(String, char[], int)</a></span> - Static method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonParser.html" title="class in com.tome25.utils.json">JsonParser</a></dt>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonParser.html#buildOther-java.lang.StringBuilder-com.tome25.utils.json.JsonElement-java.lang.StringBuilder-char:A-int-">buildOther(StringBuilder, JsonElement&lt;?&gt;, StringBuilder, char[], int)</a></span> - Static method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonParser.html" title="class in com.tome25.utils.json">JsonParser</a></dt>
 <dd>
-<div class="block">Builds an object of any type that is neither string nor Json.</div>
+<div class="block">Parses and object of any type that is neither string nor json.</div>
 </dd>
 </dl>
 <a name="I:C">
@@ -484,6 +484,11 @@
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/Config.html#createConfig-java.io.File-">createConfig(File)</a></span> - Method in class com.tome25.utils.config.<a href="com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a></dt>
 <dd>
 <div class="block">Writes all <a href="com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config"><code>ConfigValue</code></a>s in the given file to that file.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonParser.html#createParseException-java.lang.String-char:A-int-">createParseException(String, char[], int)</a></span> - Static method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonParser.html" title="class in com.tome25.utils.json">JsonParser</a></dt>
+<dd>
+<div class="block">Creates a <a href="https://docs.oracle.com/javase/8/docs/api/java/text/ParseException.html?is-external=true" title="class or interface in java.text"><code>ParseException</code></a> with the given error message containing the
+ subjson that was currently being parsed.</div>
 </dd>
 </dl>
 <a name="I:D">
@@ -844,6 +849,11 @@
 <dd>
 <div class="block">Gets the global <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html?is-external=true" title="class or interface in java.util.logging"><code>Logger</code></a> and makes it log messages with <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true" title="class or interface in java.util.logging"><code>log level</code></a> <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true#INFO" title="class or interface in java.util.logging"><code>info</code></a> or below to <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html?is-external=true#out" title="class or interface in java.lang"><code>System.out</code></a>, and
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/Level.html?is-external=true#WARNING" title="class or interface in java.util.logging"><code>warning</code></a> or above to <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html?is-external=true#err" title="class or interface in java.lang"><code>System.err</code></a>.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/json/JsonParser.html#getJsonAtPosition-char:A-int-">getJsonAtPosition(char[], int)</a></span> - Static method in class com.tome25.utils.json.<a href="com/tome25/utils/json/JsonParser.html" title="class in com.tome25.utils.json">JsonParser</a></dt>
+<dd>
+<div class="block">Gets the starting position and length of the inner most json at the given
+ position.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/config/ConfigValue.html#getKey--">getKey()</a></span> - Method in class com.tome25.utils.config.<a href="com/tome25/utils/config/ConfigValue.html" title="class in com.tome25.utils.config">ConfigValue</a></dt>
 <dd>

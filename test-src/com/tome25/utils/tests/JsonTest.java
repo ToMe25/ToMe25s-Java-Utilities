@@ -144,6 +144,16 @@ public class JsonTest {
 		jsonString = json.toString();
 		parsedJson = JsonParser.parseString(jsonString);
 		assertEquals(json, parsedJson);
+		// test parsing a string starting and ending with spaces
+		jsonString = "    {\"test\": " + jsonString + "}  ";
+		parsedJson = JsonParser.parseString(jsonString);
+		jsonString = jsonString.replaceAll(": ", ":").replaceAll("  ", "");
+		assertEquals(jsonString, parsedJson.toString());
+		// test parsing empty sub json
+		json.add("emptyTest", new JsonObject());
+		jsonString = json.toString();
+		parsedJson = JsonParser.parseString(jsonString);
+		assertEquals(json, parsedJson);
 		// test basic json array functions
 		String jsonArrayString = "[1,\"test\",531.12,{\"simple\":\"json\"}]";
 		JsonArray jsonArray = new JsonArray(1, "test", 531.12, simpleJson);
@@ -194,11 +204,11 @@ public class JsonTest {
 		assertEquals(((JsonArray) jsonArray).getFirst(), ((JsonArray) parsedJsonArray).getFirst());
 		assertEquals(((JsonArray) jsonArray).get(2), ((JsonArray) parsedJsonArray).get(2));
 		assertEquals(((JsonArray) jsonArray).getLast(), ((JsonArray) parsedJsonArray).getLast());
-		// test parsing a string starting and ending with spaces
-		jsonString = "    {\"test\": " + jsonString + "}  ";
-		parsedJson = JsonParser.parseString(jsonString);
-		jsonString = jsonString.replaceAll(": ", ":").replaceAll("  ", "");
-		assertEquals(jsonString, parsedJson.toString());
+		// test parsing empty sub json array
+		jsonArray.add(new JsonArray());
+		jsonArrayString = jsonArray.toString();
+		parsedJsonArray = (JsonArray) JsonParser.parseString(jsonArrayString);
+		assertEquals(jsonArray, parsedJsonArray);
 	}
 
 	/**
@@ -422,66 +432,106 @@ public class JsonTest {
 		try {
 			JsonParser.parseString("\"test\": \"test\"}");
 		} catch (ParseException e) {
-			assertEquals("Parsing a Json without starting bracket returned invalid error offset!", 0,
-					e.getErrorOffset());
+			assertEquals(String.format(
+					"Parsing a json without starting bracket returned error \"%s\" with invalid error offset!",
+					e.toString(), e.getErrorOffset()), 0, e.getErrorOffset());
 		}
 		// test missing key in a json object
 		try {
+			JsonParser.parseString("{:\"test\"}");
+		} catch (ParseException e) {
+			assertEquals(String.format(
+					"Parsing a json object with a missing key returned error \"%s\" with invalid error offset!",
+					e.toString()), 1, e.getErrorOffset());
+		}
+		// test missing key and missing colon in a json object
+		try {
 			JsonParser.parseString("{123}");
 		} catch (ParseException e) {
-			assertEquals("Parsing a Json Object with a missing key returned invalid error offset!", 1,
-					e.getErrorOffset());
+			assertEquals(String.format(
+					"Parsing a json object with a missing key returned error \"%s\" with invalid error offset!",
+					e.toString()), 1, e.getErrorOffset());
 		}
 		// test a key in a json array
 		try {
 			JsonParser.parseString("[\"testKey\": \"random value\"]");
 		} catch (ParseException e) {
-			assertEquals("Parsing a Json Array with a key value pair returned invalid error offset!", 10,
-					e.getErrorOffset());
+			assertEquals(String.format(
+					"Parsing a json array with a key value pair returned error \"%s\" with invalid error offset!",
+					e.toString()), 10, e.getErrorOffset());
 		}
 		// test json parsing with invalid value type
 		try {
 			JsonParser.parseString("{\"testString\": \"testStr\", \"test\": test}");
 		} catch (ParseException e) {
-			assertEquals("Parsing a Json with unknown value type returned invalid error offset!", 34,
-					e.getErrorOffset());
+			assertEquals(String.format(
+					"Parsing a json object with unknown value type returned error \"%s\" with invalid error offset!",
+					e.toString()), 34, e.getErrorOffset());
+		}
+		// test json object parsing with an empty value
+		try {
+			JsonParser.parseString("{\"testString\": , \"test\": 123}");
+		} catch (ParseException e) {
+			assertEquals(String.format(
+					"Parsing a json object with a missing value returned error \"%s\" with invalid error offset!",
+					e.toString()), 15, e.getErrorOffset());
+		}
+		// test json array parsing with an empty value
+		try {
+			JsonParser.parseString("[\"testString\", \"test\",]");
+		} catch (ParseException e) {
+			assertEquals(String.format(
+					"Parsing a json array with a missing value returned error \"%s\" with invalid error offset!",
+					e.toString()), 22, e.getErrorOffset());
 		}
 		// test missing json object end bracket
 		try {
 			JsonParser.parseString("{\"testInt\": 321, \"testString\": \"test\"");
 		} catch (ParseException e) {
-			assertEquals("Parsing a Json Object without ending bracket returned invalid error offset!", 37,
-					e.getErrorOffset());
+			assertEquals(String.format(
+					"Parsing a json object without ending bracket returned error \"%s\" with invalid error offset!",
+					e.toString()), 37, e.getErrorOffset());
 		}
 		// test missing json array end bracket
 		try {
 			JsonParser.parseString("[123, \"testString\", \"test\"");
 		} catch (ParseException e) {
-			assertEquals("Parsing a Json Array without ending bracket returned invalid error offset!", 26,
-					e.getErrorOffset());
+			assertEquals(String.format(
+					"Parsing a json array without ending bracket returned error \"%s\" with invalid error offset!",
+					e.toString()), 26, e.getErrorOffset());
 		}
 		// test a subjson with a missing end bracket
 		try {
 			JsonParser.parseString(
 					"[\"test\", {\"testString\": \"something\", \"testInt\": 123}, {\"something\": \"or other\"]");
 		} catch (ParseException e) {
-			assertEquals(
-					"Parsing a JsonArray containing a JsonObject with a missing end bracket returned invalid error offset!",
-					24, e.getErrorOffset());
+			assertEquals(String.format(
+					"Parsing a json array containing a json object with a missing end bracket returned error \"%s\" with invalid error offset!",
+					e.toString()), 24, e.getErrorOffset());
 		}
 		// test json object ending with square bracket
 		try {
 			JsonParser.parseString("{\"test\": \"test\"]");
 		} catch (ParseException e) {
-			assertEquals("Parsing a Json without starting bracket returned invalid error offset!", 15,
-					e.getErrorOffset());
+			assertEquals(String.format(
+					"Parsing a json object without ending with a square bracket returned error \"%s\" with invalid error offset!",
+					e.toString()), 15, e.getErrorOffset());
 		}
 		// test json array ending with curly bracket
 		try {
 			JsonParser.parseString("[\"test\", \"test\"}");
 		} catch (ParseException e) {
-			assertEquals("Parsing a Json without starting bracket returned invalid error offset!", 15,
-					e.getErrorOffset());
+			assertEquals(String.format(
+					"Parsing a json array ending with a curly bracket returned error \"%s\" with invalid error offset!",
+					e.toString()), 15, e.getErrorOffset());
+		}
+		// test json value without a key
+		try {
+			JsonParser.parseString("{\"test\": \"string\", {\"key\": \"value\"}}");
+		} catch (ParseException e) {
+			assertEquals(String.format(
+					"Parsing a json containing a json value without a key returned error \"%s\" with invalid error offset!",
+					e.toString()), 19, e.getErrorOffset());
 		}
 	}
 

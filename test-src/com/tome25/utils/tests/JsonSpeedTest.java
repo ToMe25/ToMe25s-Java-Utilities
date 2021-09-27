@@ -167,7 +167,71 @@ public class JsonSpeedTest extends AbstractBenchmark {
 		JsonElement<?> json = null;
 		for (int i = 0; i < 100; i++) {
 			if (json == null) {
-				JsonParser.parseString(jsonString);
+				json = JsonParser.parseString(jsonString);
+			} else {
+				assertEquals("The first parsing result does not match the current one!", json,
+						JsonParser.parseString(jsonString));
+			}
+		}
+	}
+
+	/**
+	 * Tests parsing 100 recursive {@link JsonObject JsonObjects} using
+	 * {@link JsonParser#parseString(String)}.
+	 * 
+	 * @throws ParseException if the parsing fails.
+	 */
+	@Test
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 500)
+	public void recursiveObjectParsingTest() throws ParseException {
+		// Generate a String with 100 of recursive JsonObejcts.
+		final String jsonComponent = "{\"testString\": \"Some Test\", \"testJson\": ";
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < 100; i++) {
+			builder.append(jsonComponent);
+		}
+		builder.append("\"test\"");
+		for (int i = 0; i < 100; i++) {
+			builder.append('}');
+		}
+		String jsonString = builder.toString();
+		// Parse the generated json string 100 times.
+		JsonElement<?> json = null;
+		for (int i = 0; i < 100; i++) {
+			if (json == null) {
+				json = JsonParser.parseString(jsonString);
+			} else {
+				assertEquals("The first parsing result does not match the current one!", json,
+						JsonParser.parseString(jsonString));
+			}
+		}
+	}
+
+	/**
+	 * Tests parsing 100 recursive {@link JsonArray JsonArrays} using
+	 * {@link JsonParser#parseString(String)}.
+	 * 
+	 * @throws ParseException if the parsing fails.
+	 */
+	@Test
+	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 500)
+	public void recursiveArrayParsingTest() throws ParseException {
+		// Generate a String with 100 of recursive JsonArrays.
+		final String jsonComponent = "[\"testString\", \"Some Test\", \"testJson\", ";
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < 100; i++) {
+			builder.append(jsonComponent);
+		}
+		builder.append("\"test\"");
+		for (int i = 0; i < 100; i++) {
+			builder.append(']');
+		}
+		String jsonString = builder.toString();
+		// Parse the generated json string 100 times.
+		JsonElement<?> json = null;
+		for (int i = 0; i < 100; i++) {
+			if (json == null) {
+				json = JsonParser.parseString(jsonString);
 			} else {
 				assertEquals("The first parsing result does not match the current one!", json,
 						JsonParser.parseString(jsonString));
@@ -551,8 +615,9 @@ public class JsonSpeedTest extends AbstractBenchmark {
 				}
 			} else if (i % 4 == 1) {
 				json2.add("value" + (i * 2));
-				if (i >= 50) {// FIXME this is a workaround to make this test work while the changes method
-								// isn't working correctly.
+				// FIXME this is a workaround to make this test work while the changes method
+				// isn't working correctly.
+				if (i >= 50) {
 					changes.add(
 							new JsonObject("val", "value" + (i * 2), "after", (int) Math.max(0, (i - 52) / 2 + 39)));
 				}

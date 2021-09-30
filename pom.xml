@@ -23,12 +23,6 @@
       <version>4.13.1</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>com.carrotsearch</groupId>
-      <artifactId>junit-benchmarks</artifactId>
-      <version>0.7.2</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <distributionManagement>
@@ -40,11 +34,6 @@
   </distributionManagement>
 
   <build>
-    <sourceDirectory>${project.basedir}/src</sourceDirectory>
-    <testSourceDirectory>${project.basedir}/test-src</testSourceDirectory>
-    <directory>${project.basedir}/target</directory>
-    <outputDirectory>${basedir}/target/classes</outputDirectory>
-    <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->

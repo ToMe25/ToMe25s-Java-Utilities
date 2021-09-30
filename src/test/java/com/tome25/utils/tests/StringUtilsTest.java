@@ -21,11 +21,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.carrotsearch.junitbenchmarks.AbstractBenchmark;
-import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import com.tome25.utils.StringUtils;
 
-public class StringUtilsTest extends AbstractBenchmark {
+public class StringUtilsTest {
 
 	/**
 	 * Test the functionality of {@link StringUtils#toEscapedString(Object)} and
@@ -53,23 +51,6 @@ public class StringUtilsTest extends AbstractBenchmark {
 	}
 
 	/**
-	 * Tests the speed of
-	 * {@link StringUtils#toEscapedString(StringBuilder, Object)}.<br/>
-	 * Runs 1000 times, to make the initialization time irrelevant.
-	 */
-	@Test
-	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
-	public void toEscapedStringSpeedTest() {
-		String toEscape = "This string should be escaped: \"//Test\\\"";
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < 1000; i++) {
-			StringUtils.toEscapedString(builder, toEscape);
-			assertEquals("\"This string should be escaped: \\\"//Test\\\\\\\"\"", builder.toString());
-			builder.setLength(0);
-		}
-	}
-
-	/**
 	 * Tests the functionality of
 	 * {@link StringUtils#arrayToString(Object[], String)} and
 	 * {@link StringUtils#arrayToString(StringBuilder, Object[], String)}.
@@ -89,23 +70,6 @@ public class StringUtilsTest extends AbstractBenchmark {
 		StringBuilder builder = new StringBuilder();
 		StringUtils.arrayToString(builder, new Object[] { "Some", 736, 514.43, 264.234f, 'a', "String" }, ", ");
 		assertEquals("Some, 736, 514.43, 264.234, a, String", builder.toString());
-	}
-
-	/**
-	 * Tests the speed of
-	 * {@link StringUtils#arrayToString(StringBuilder, Object[], String)}.<br/>
-	 * Runs 1000 times, to make the initialization time irrelevant.
-	 */
-	@Test
-	@BenchmarkOptions(warmupRounds = 100, benchmarkRounds = 5000)
-	public void arrayToStringSpeedTest() {
-		String[] array = new String[] { "Some", "Random", "Test", "String", "Array", "!" };
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < 1000; i++) {
-			StringUtils.arrayToString(builder, array, " ");
-			assertEquals("Some Random Test String Array !", builder.toString());
-			builder.setLength(0);
-		}
 	}
 
 }

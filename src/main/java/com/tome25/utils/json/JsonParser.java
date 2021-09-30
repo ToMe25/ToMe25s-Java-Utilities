@@ -60,7 +60,7 @@ public class JsonParser {
 					index += s.length();
 					if (s.contains(":")) {
 						int sep = s.indexOf(':');
-						String key = s.substring(1, sep - 1);
+						String key = s.substring(s.indexOf('"') + 1, s.lastIndexOf('"', sep));
 						String value = s.substring(sep + 1).trim();
 
 						if (value.charAt(0) == '"') {
@@ -502,7 +502,7 @@ public class JsonParser {
 	 *                contain one string placeholder to be replaced with the
 	 *                subjson.
 	 * @param charArr the full character array to be parsed.
-	 * @param offset  the offset where the error occured.
+	 * @param offset  the offset where the error occurred.
 	 * @return the newly created exception.
 	 */
 	private static ParseException createParseException(String error, char[] charArr, int offset) {

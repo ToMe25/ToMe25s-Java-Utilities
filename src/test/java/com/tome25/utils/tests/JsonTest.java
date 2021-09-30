@@ -78,6 +78,13 @@ public class JsonTest {
 		jsonString = json.toString();
 		parsedJson = JsonParser.parseStringFast(jsonString);
 		assertEquals(json, parsedJson);
+		// test some useless spaces
+		jsonString = jsonString.substring(0, jsonString.length() - 1)
+				+ ", \"spaceTest\" : \" spaceValue \" , \"spaceTest1\" : \" spaceValue1 \" }";
+		json.add("spaceTest", " spaceValue ");
+		json.add("spaceTest1", " spaceValue1 ");
+		parsedJson = JsonParser.parseStringFast(jsonString);
+		assertEquals(json, parsedJson);
 		// test basic json array parsing
 		jsonString = "[\"Test String\", \"Another Test String\"]";
 		JsonArray jsonArray = new JsonArray("Test String", "Another Test String");
@@ -91,6 +98,11 @@ public class JsonTest {
 		// test special characters in a json array
 		jsonArray.add("Test String:\\'[]{}\"^");
 		jsonString = jsonArray.toString();
+		parsedJson = JsonParser.parseStringFast(jsonString);
+		assertEquals(jsonArray, parsedJson);
+		// test some useless spaces in a json array
+		jsonString = jsonString.substring(0, jsonString.length() - 1) + ", \"spaceTest\" , \" spaceTest1 \" ]";
+		jsonArray.addAll("spaceTest", " spaceTest1 ");
 		parsedJson = JsonParser.parseStringFast(jsonString);
 		assertEquals(jsonArray, parsedJson);
 	}

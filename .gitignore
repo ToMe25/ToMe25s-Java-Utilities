@@ -25,13 +25,13 @@ hs_err_pid*
 /bin/
 .classpath
 .project
-/.settings/
+.settings/
 
 # dolphin
 .directory
 
 # maven
-/target/
+target/
 settings.xml
 
 # Config file

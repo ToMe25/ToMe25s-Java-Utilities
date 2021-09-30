@@ -22,11 +22,9 @@ import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
-import com.carrotsearch.junitbenchmarks.AbstractBenchmark;
-import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import com.tome25.utils.General;
 
-public class GeneralTest extends AbstractBenchmark {
+public class GeneralTest {
 
 	/**
 	 * Tests the general functionality of
@@ -38,20 +36,6 @@ public class GeneralTest extends AbstractBenchmark {
 		Cloneable clone = General.reflectiveClone(original);
 		assertFalse("Reference to original and clone is the same.", original == clone);
 		assertEquals(original, clone);
-	}
-
-	/**
-	 * Tests the performance of {@link General#reflectiveClone(Cloneable)}.
-	 */
-	@Test
-	@BenchmarkOptions(benchmarkRounds = 100000, warmupRounds = 100)
-	public void reflectiveCloneSpeedTest() {
-		Cloneable original = new CloneTest(123);
-		Cloneable clone;
-		for (int i = 0; i < 1000; i++) {
-			clone = General.reflectiveClone(original);
-			assertEquals(original, clone);
-		}
 	}
 
 	/**
@@ -84,6 +68,11 @@ public class GeneralTest extends AbstractBenchmark {
 		@Override
 		public boolean equals(Object obj) {
 			return test == ((CloneTest) obj).test;
+		}
+
+		@Override
+		public String toString() {
+			return String.format("CloneTest{%d}", test);
 		}
 
 	}

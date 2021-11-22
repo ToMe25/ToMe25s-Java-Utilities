@@ -40,41 +40,61 @@ import com.tome25.utils.lib.LibraryLoader;
  */
 public class TracingFormatter extends Formatter {
 
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
 	private static final Map<Integer, String> THREAD_NAMES = new HashMap<Integer, String>();
 
 	/**
-	 * Whether a timestamp of the creation of the message should be added to the
+	 * Whether a time stamp of the creation of the message should be added to the
 	 * output.
 	 */
 	private boolean traceTimestamp = true;
+
+	/**
+	 * Whether seconds should be a part of the time stamp added to the output.
+	 */
+	private boolean traceSeconds = true;
+
+	/**
+	 * Whether milliseconds should be a part of the time stamp added to the output.
+	 */
+	private boolean traceMilliSeconds = false;
+
 	/**
 	 * Whether the name of the thread printing the message should be added to the
 	 * output.
 	 */
 	private boolean traceThread = true;
+
 	/**
 	 * Whether the name of the class printing the message should be added to the
 	 * output.
 	 */
 	private boolean traceClass = true;
+
 	/**
 	 * Whether the traced class name should be the simple class name(without
 	 * package).
 	 */
 	private boolean traceSimpleClassName = true;
+
+	/**
+	 * Whether the name of the method printing the message should be added to the
+	 * output.
+	 */
 	private boolean traceMethod = true;
 	private boolean traceLogger = true;
 	private boolean traceLevel = true;
+
 	/**
 	 * Whether the line the message got caused in should be added to the output.
 	 */
 	private boolean traceLine = false;
+
 	/**
 	 * Whether the name of the file that caused the message should be added to the
 	 * output.
 	 */
 	private boolean traceFile = false;
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 	private Config cfg;
 
 	/**
@@ -124,7 +144,7 @@ public class TracingFormatter extends Formatter {
 				cfg.watch(cfg -> readConfig());
 			}
 
-		}, 200);
+		}, 100);
 	}
 
 	@Override
@@ -181,7 +201,7 @@ public class TracingFormatter extends Formatter {
 	private String getTrace(LogRecord record) {
 		StringBuffer buffer = new StringBuffer(75);
 		if (traceTimestamp) {
-			buffer.append(String.format("[%s] ", DATE_FORMAT.format(new Date(record.getMillis()))));
+			buffer.append(String.format("[%s] ", dateFormat.format(new Date(record.getMillis()))));
 		}
 		if (traceThread) {
 			buffer.append(String.format("[%s] ", getThreadNameForId(record.getThreadID())));
@@ -265,6 +285,12 @@ public class TracingFormatter extends Formatter {
 
 		cfg.addConfig(cfgFile, "traceTimestamp", traceTimestamp,
 				"Whether the beginning of every line of output should contain a timestamp.");
+		cfg.addConfig(cfgFile, "traceSeconds", traceSeconds,
+				"Wehther the beginning of every line of output should contain the second it was written in"
+						+ " as part of the timestamp.");
+		cfg.addConfig(cfgFile, "traceMilliSeconds", traceMilliSeconds,
+				"Wehther the beginning of every line of output should contain the millisecond it was written in"
+						+ " as part of the timestamp.");
 		cfg.addConfig(cfgFile, "traceThread", traceThread,
 				"Whether the beginning of every line of output should contain the name of the Thread writing it.");
 		cfg.addConfig(cfgFile, "traceOutputtingClass", traceClass,
@@ -292,6 +318,8 @@ public class TracingFormatter extends Formatter {
 	 */
 	private void readConfig() {
 		traceTimestamp = (boolean) cfg.getConfig("traceTimestamp");
+		traceSeconds = (boolean) cfg.getConfig("traceSeconds");
+		traceMilliSeconds = (boolean) cfg.getConfig("traceMilliSeconds");
 		traceThread = (boolean) cfg.getConfig("traceThread");
 		traceClass = (boolean) cfg.getConfig("traceOutputtingClass");
 		traceSimpleClassName = (boolean) cfg.getConfig("traceSimpleClassName");
@@ -300,6 +328,15 @@ public class TracingFormatter extends Formatter {
 		traceLevel = (boolean) cfg.getConfig("traceLevel");
 		traceLine = (boolean) cfg.getConfig("traceLineNumber");
 		traceFile = (boolean) cfg.getConfig("traceFileName");
+
+		String timestampPattern = "HH:mm";
+		if (traceSeconds) {
+			timestampPattern += ":ss";
+		}
+		if (traceMilliSeconds) {
+			timestampPattern += ".SS";
+		}
+		dateFormat = new SimpleDateFormat(timestampPattern);
 	}
 
 	@Override

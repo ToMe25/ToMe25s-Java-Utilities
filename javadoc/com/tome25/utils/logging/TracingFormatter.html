@@ -144,8 +144,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#cfg">cfg</a></span></code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>private static <a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html?is-external=true" title="class or interface in java.text">SimpleDateFormat</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#DATE_FORMAT">DATE_FORMAT</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>private <a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html?is-external=true" title="class or interface in java.text">SimpleDateFormat</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#dateFormat">dateFormat</a></span></code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
@@ -181,7 +181,22 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceMethod">traceMethod</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceMethod">traceMethod</a></span></code>
+<div class="block">Whether the name of the method printing the message should be added to the
+ output.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceMilliSeconds">traceMilliSeconds</a></span></code>
+<div class="block">Whether milliseconds should be a part of the time stamp added to the output.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceSeconds">traceSeconds</a></span></code>
+<div class="block">Whether seconds should be a part of the time stamp added to the output.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private boolean</code></td>
@@ -200,7 +215,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 <tr class="rowColor">
 <td class="colFirst"><code>private boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingFormatter.html#traceTimestamp">traceTimestamp</a></span></code>
-<div class="block">Whether a timestamp of the creation of the message should be added to the
+<div class="block">Whether a time stamp of the creation of the message should be added to the
  output.</div>
 </td>
 </tr>
@@ -316,15 +331,6 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a name="DATE_FORMAT">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>DATE_FORMAT</h4>
-<pre>private static final&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html?is-external=true" title="class or interface in java.text">SimpleDateFormat</a> DATE_FORMAT</pre>
-</li>
-</ul>
 <a name="THREAD_NAMES">
 <!--   -->
 </a>
@@ -341,8 +347,28 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 <li class="blockList">
 <h4>traceTimestamp</h4>
 <pre>private&nbsp;boolean traceTimestamp</pre>
-<div class="block">Whether a timestamp of the creation of the message should be added to the
+<div class="block">Whether a time stamp of the creation of the message should be added to the
  output.</div>
+</li>
+</ul>
+<a name="traceSeconds">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>traceSeconds</h4>
+<pre>private&nbsp;boolean traceSeconds</pre>
+<div class="block">Whether seconds should be a part of the time stamp added to the output.</div>
+</li>
+</ul>
+<a name="traceMilliSeconds">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>traceMilliSeconds</h4>
+<pre>private&nbsp;boolean traceMilliSeconds</pre>
+<div class="block">Whether milliseconds should be a part of the time stamp added to the output.</div>
 </li>
 </ul>
 <a name="traceThread">
@@ -385,6 +411,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 <li class="blockList">
 <h4>traceMethod</h4>
 <pre>private&nbsp;boolean traceMethod</pre>
+<div class="block">Whether the name of the method printing the message should be added to the
+ output.</div>
 </li>
 </ul>
 <a name="traceLogger">
@@ -424,6 +452,15 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/logging/For
 <pre>private&nbsp;boolean traceFile</pre>
 <div class="block">Whether the name of the file that caused the message should be added to the
  output.</div>
+</li>
+</ul>
+<a name="dateFormat">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>dateFormat</h4>
+<pre>private&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html?is-external=true" title="class or interface in java.text">SimpleDateFormat</a> dateFormat</pre>
 </li>
 </ul>
 <a name="cfg">

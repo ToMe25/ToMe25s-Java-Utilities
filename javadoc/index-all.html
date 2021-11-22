@@ -496,9 +496,9 @@
 </a>
 <h2 class="title">D</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#DATE_FORMAT">DATE_FORMAT</a></span> - Static variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#dateFormat">dateFormat</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#DATE_FORMAT">DATE_FORMAT</a></span> - Static variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#dateFormat">dateFormat</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#DEFAULT_ERR">DEFAULT_ERR</a></span> - Static variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
 <dd>&nbsp;</dd>
@@ -2084,7 +2084,18 @@
  message.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceMethod">traceMethod</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Whether the name of the method printing the message should be added to the
+ output.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceMilliSeconds">traceMilliSeconds</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
+<dd>
+<div class="block">Whether milliseconds should be a part of the time stamp added to the output.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#traceMilliSeconds">traceMilliSeconds</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
+<dd>
+<div class="block">Whether milliseconds should be a part of the time stamp added to the output.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/LogTracer.html#traceOutput-java.io.File-">traceOutput(File)</a></span> - Static method in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/LogTracer.html" title="class in com.tome25.utils.logging">LogTracer</a></dt>
 <dd>
 <div class="block">Sets system output <a href="https://docs.oracle.com/javase/8/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io"><code>PrintStream</code></a>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html?is-external=true#out" title="class or interface in java.lang"><code>System.out</code></a>) to a
@@ -2166,7 +2177,18 @@
  output.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#traceOutputtingMethod">traceOutputtingMethod</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Whether the name of the method printing the message should be added to the
+ output.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceSeconds">traceSeconds</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
+<dd>
+<div class="block">Whether seconds should be a part of the time stamp added to the output.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#traceSeconds">traceSeconds</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>
+<dd>
+<div class="block">Whether seconds should be a part of the time stamp added to the output.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceSimpleClassName">traceSimpleClassName</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
 <dd>
 <div class="block">Whether the traced class name should be the simple class name(without
@@ -2197,7 +2219,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingFormatter.html#traceTimestamp">traceTimestamp</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingFormatter.html" title="class in com.tome25.utils.logging">TracingFormatter</a></dt>
 <dd>
-<div class="block">Whether a timestamp of the creation of the message should be added to the
+<div class="block">Whether a time stamp of the creation of the message should be added to the
  output.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/tome25/utils/logging/TracingMultiPrintStream.html#traceTimestamp">traceTimestamp</a></span> - Variable in class com.tome25.utils.logging.<a href="com/tome25/utils/logging/TracingMultiPrintStream.html" title="class in com.tome25.utils.logging">TracingMultiPrintStream</a></dt>

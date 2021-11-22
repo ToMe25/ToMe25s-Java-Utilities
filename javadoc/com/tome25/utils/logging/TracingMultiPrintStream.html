@@ -164,8 +164,8 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#cfg">cfg</a></span></code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>private static <a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html?is-external=true" title="class or interface in java.text">SimpleDateFormat</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#DATE_FORMAT">DATE_FORMAT</a></span></code>&nbsp;</td>
+<td class="colFirst"><code>private <a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html?is-external=true" title="class or interface in java.text">SimpleDateFormat</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#dateFormat">dateFormat</a></span></code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private boolean</code></td>
@@ -183,14 +183,29 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#traceMilliSeconds">traceMilliSeconds</a></span></code>
+<div class="block">Whether milliseconds should be a part of the time stamp added to the output.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#traceOutputtingClass">traceOutputtingClass</a></span></code>
 <div class="block">Whether the name of the class printing the message should be added to the
  output.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#traceOutputtingMethod">traceOutputtingMethod</a></span></code>
+<div class="block">Whether the name of the method printing the message should be added to the
+ output.</div>
+</td>
+</tr>
 <tr class="altColor">
 <td class="colFirst"><code>private boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#traceOutputtingMethod">traceOutputtingMethod</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/tome25/utils/logging/TracingMultiPrintStream.html#traceSeconds">traceSeconds</a></span></code>
+<div class="block">Whether seconds should be a part of the time stamp added to the output.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private boolean</code></td>
@@ -487,6 +502,15 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <!--   -->
 </a>
 <h3>Field Detail</h3>
+<a name="LINE_SEPARATOR">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>LINE_SEPARATOR</h4>
+<pre>private static final&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> LINE_SEPARATOR</pre>
+</li>
+</ul>
 <a name="traceTimestamp">
 <!--   -->
 </a>
@@ -496,6 +520,26 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <pre>private&nbsp;boolean traceTimestamp</pre>
 <div class="block">Whether a timestamp of the creation of the message should be added to the
  output.</div>
+</li>
+</ul>
+<a name="traceSeconds">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>traceSeconds</h4>
+<pre>private&nbsp;boolean traceSeconds</pre>
+<div class="block">Whether seconds should be a part of the time stamp added to the output.</div>
+</li>
+</ul>
+<a name="traceMilliSeconds">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>traceMilliSeconds</h4>
+<pre>private&nbsp;boolean traceMilliSeconds</pre>
+<div class="block">Whether milliseconds should be a part of the time stamp added to the output.</div>
 </li>
 </ul>
 <a name="traceThread">
@@ -548,6 +592,8 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <li class="blockList">
 <h4>traceOutputtingMethod</h4>
 <pre>private&nbsp;boolean traceOutputtingMethod</pre>
+<div class="block">Whether the name of the method printing the message should be added to the
+ output.</div>
 </li>
 </ul>
 <a name="traceSystemClassMethods">
@@ -587,31 +633,22 @@ extends <a href="../../../../com/tome25/utils/logging/MultiPrintStream.html" tit
 <pre>private&nbsp;boolean endLineSeperator</pre>
 </li>
 </ul>
+<a name="dateFormat">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>dateFormat</h4>
+<pre>private&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html?is-external=true" title="class or interface in java.text">SimpleDateFormat</a> dateFormat</pre>
+</li>
+</ul>
 <a name="cfg">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>cfg</h4>
-<pre>private&nbsp;<a href="../../../../com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a> cfg</pre>
-</li>
-</ul>
-<a name="LINE_SEPARATOR">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>LINE_SEPARATOR</h4>
-<pre>private static final&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> LINE_SEPARATOR</pre>
-</li>
-</ul>
-<a name="DATE_FORMAT">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>DATE_FORMAT</h4>
-<pre>private static final&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html?is-external=true" title="class or interface in java.text">SimpleDateFormat</a> DATE_FORMAT</pre>
+<h4>cfg</h4>
+<pre>private&nbsp;<a href="../../../../com/tome25/utils/config/Config.html" title="class in com.tome25.utils.config">Config</a> cfg</pre>
 </li>
 </ul>
 </li>

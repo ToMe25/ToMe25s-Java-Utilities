@@ -561,8 +561,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <dd><code>key</code> - whether the object is key or value.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></code> - if the key type doesn't match the key type for
-                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObjects</code></a>,
-                              Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArrays</code></a>).</dd>
+                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObjects</code></a>, Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArrays</code></a>).</dd>
 </dl>
 </li>
 </ul>
@@ -582,8 +581,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <dd>the value for the given key.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></code> - if the key type doesn't match the key type for
-                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObjects</code></a>,
-                              Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArrays</code></a>).</dd>
+                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObjects</code></a>, Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArrays</code></a>).</dd>
 </dl>
 </li>
 </ul>
@@ -658,13 +656,17 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.ht
 <ul class="blockList">
 <li class="blockList">
 <h4>containsKey</h4>
-<pre>boolean&nbsp;containsKey(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<pre>boolean&nbsp;containsKey(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)
+             throws <a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></pre>
 <div class="block">Returns true if this Json contains the given key.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>key</code> - the key to look for.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>whether this Json contains the given key.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></code> - if the key type doesn't match the key type for
+                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObjects</code></a>, Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArrays</code></a>).</dd>
 </dl>
 </li>
 </ul>

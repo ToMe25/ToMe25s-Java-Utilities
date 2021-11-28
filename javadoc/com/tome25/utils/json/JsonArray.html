@@ -831,7 +831,8 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;get(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;get(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)
+           throws <a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html#get-java.lang.Object-">JsonElement</a></code></span></div>
 <div class="block">Gets the value for the given key.</div>
 <dl>
@@ -841,6 +842,9 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <dd><code>key</code> - the key to look for.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the value for the given key.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></code> - if the key type doesn't match the key type for
+                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObjects</code></a>, Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArrays</code></a>).</dd>
 </dl>
 </li>
 </ul>
@@ -911,7 +915,8 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <ul class="blockList">
 <li class="blockList">
 <h4>containsKey</h4>
-<pre>public&nbsp;boolean&nbsp;containsKey(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<pre>public&nbsp;boolean&nbsp;containsKey(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)
+                    throws <a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../com/tome25/utils/json/JsonElement.html#containsKey-java.lang.Object-">JsonElement</a></code></span></div>
 <div class="block">Returns true if this Json contains the given key.</div>
 <dl>
@@ -921,6 +926,9 @@ implements <a href="../../../../com/tome25/utils/json/JsonElement.html" title="i
 <dd><code>key</code> - the key to look for.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>whether this Json contains the given key.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../com/tome25/utils/exception/InvalidTypeException.html" title="class in com.tome25.utils.exception">InvalidTypeException</a></code> - if the key type doesn't match the key type for
+                              this object(String for <a href="../../../../com/tome25/utils/json/JsonObject.html" title="class in com.tome25.utils.json"><code>JsonObjects</code></a>, Integer for <a href="../../../../com/tome25/utils/json/JsonArray.html" title="class in com.tome25.utils.json"><code>JsonArrays</code></a>).</dd>
 </dl>
 </li>
 </ul>

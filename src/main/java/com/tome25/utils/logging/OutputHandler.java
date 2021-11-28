@@ -56,11 +56,6 @@ public class OutputHandler extends StreamHandler {
 	}
 
 	@Override
-	public void close() {
-		flush();
-	}
-
-	@Override
 	public void publish(LogRecord record) {
 		super.publish(record);
 		flush();

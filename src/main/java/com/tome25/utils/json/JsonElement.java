@@ -92,8 +92,9 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	 * @param o   the object to remove.
 	 * @param key whether the object is key or value.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for {@link JsonObject JsonObjects},
-	 *                              Integer for {@link JsonArray JsonArrays}).
+	 *                              this object(String for {@link JsonObject
+	 *                              JsonObjects}, Integer for {@link JsonArray
+	 *                              JsonArrays}).
 	 */
 	public void remove(Object o, boolean key) throws InvalidTypeException;
 
@@ -102,8 +103,9 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	 * 
 	 * @param key the key to look for.
 	 * @throws InvalidTypeException if the key type doesn't match the key type for
-	 *                              this object(String for {@link JsonObject JsonObjects},
-	 *                              Integer for {@link JsonArray JsonArrays}).
+	 *                              this object(String for {@link JsonObject
+	 *                              JsonObjects}, Integer for {@link JsonArray
+	 *                              JsonArrays}).
 	 * @return the value for the given key.
 	 */
 	public Object get(Object key) throws InvalidTypeException;
@@ -148,8 +150,12 @@ public interface JsonElement<K> extends Iterable<Object>, Externalizable, Compar
 	 * 
 	 * @param key the key to look for.
 	 * @return whether this Json contains the given key.
+	 * @throws InvalidTypeException if the key type doesn't match the key type for
+	 *                              this object(String for {@link JsonObject
+	 *                              JsonObjects}, Integer for {@link JsonArray
+	 *                              JsonArrays}).
 	 */
-	public boolean containsKey(Object key);
+	public boolean containsKey(Object key) throws InvalidTypeException;
 
 	/**
 	 * Returns true if this Json contains the given value.

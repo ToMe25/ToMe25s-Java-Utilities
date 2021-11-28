@@ -27,6 +27,8 @@ Todos for the library downloading and including module of this library.
 Things to change in the logging module.
  * Clean TracingFormatter Thread name cache, either by deleting the entry that wasn't used for the longest time when it gets too big, or by cleaning up no longer running threads.
  * Cache named loggers?
+ * Add LoggerOuputStream, an OutputStream implementation that writes to a given Logger, as a replacement for LoggingPrintStream.
+    * Deprecate LoggingPrintStrem and make it use LoggerOutputStream.
 
 ## General
 Todos for the General utility class.

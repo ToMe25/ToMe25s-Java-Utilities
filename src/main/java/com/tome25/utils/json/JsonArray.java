@@ -155,7 +155,7 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 	}
 
 	@Override
-	public Object get(Object key) {
+	public Object get(Object key) throws InvalidTypeException {
 		if (key instanceof Integer) {
 			return content.get((int) key);
 		} else {
@@ -190,7 +190,7 @@ public class JsonArray implements JsonElement<Integer>, List<Object>, Cloneable 
 	}
 
 	@Override
-	public boolean containsKey(Object key) {
+	public boolean containsKey(Object key) throws InvalidTypeException {
 		if (key instanceof Integer) {
 			return size() > (int) key;
 		} else {

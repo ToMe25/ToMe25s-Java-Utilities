@@ -153,12 +153,13 @@ public class TracingFormatter extends Formatter {
 		StringBuffer buffer = new StringBuffer(200);
 		String message = formatMessage(record);
 		buffer.append(traceMessage(message, trace));
+
 		Throwable throwable = record.getThrown();
 		if (throwable != null) {
 			StringWriter sink = new StringWriter();
-			PrintWriter printer = new PrintWriter(sink, true);
-			throwable.printStackTrace(printer);
-			printer.close();
+			try (PrintWriter printer = new PrintWriter(sink, true)) {
+				throwable.printStackTrace(printer);
+			}
 			buffer.append(traceMessage(sink.toString(), trace));
 		}
 		return buffer.toString();

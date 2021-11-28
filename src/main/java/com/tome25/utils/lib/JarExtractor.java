@@ -243,41 +243,45 @@ public class JarExtractor {
 		if (!outputDir.exists()) {
 			outputDir.mkdirs();
 		}
+
 		if (!outputDir.isDirectory()) {
 			throw new NotDirectoryException(outputDir.toString());
 		}
-		JarFile jar = new JarFile(jarFile);
-		Enumeration<JarEntry> entries = jar.entries();
-		while (entries.hasMoreElements()) {
-			JarEntry entry = entries.nextElement();
-			if (entry.isDirectory()) {
-				continue;
-			}
-			if (extract.test(entry.getName())) {
-				String name = subDir ? entry.getName()
-						: entry.getName().substring(entry.getName().lastIndexOf(File.separatorChar) + 1);
-				File output = new File(outputDir, extractedName.apply(name));
-				if (!output.toPath().normalize().startsWith(outputDir.toPath())) {
-					jar.close();
-					throw new InvalidPathException(output.toPath().normalize().toString(),
-							"A bad zip entry would result in a file getting extracted to this location.");
+
+		try (JarFile jar = new JarFile(jarFile)) {
+			Enumeration<JarEntry> entries = jar.entries();
+			while (entries.hasMoreElements()) {
+				JarEntry entry = entries.nextElement();
+				if (entry.isDirectory()) {
+					continue;
 				}
-				if (!output.getParentFile().exists()) {
-					output.getParentFile().mkdirs();
+
+				if (extract.test(entry.getName())) {
+					String name = subDir ? entry.getName()
+							: entry.getName().substring(entry.getName().lastIndexOf(File.separatorChar) + 1);
+					File output = new File(outputDir, extractedName.apply(name));
+					if (!output.toPath().normalize().startsWith(outputDir.toPath())) {
+						throw new InvalidPathException(output.toPath().normalize().toString(),
+								"A bad zip entry would result in a file getting extracted to this location.");
+					}
+
+					if (!output.getParentFile().exists()) {
+						output.getParentFile().mkdirs();
+					}
+
+					if (!output.getParentFile().isDirectory()) {
+						throw new NotDirectoryException(output.getParent());
+					}
+
+					try (FileOutputStream fiout = new FileOutputStream(output)) {
+						InputStream jarin = jar.getInputStream(entry);
+						while (jarin.available() > 0) {
+							fiout.write(jarin.read());
+						}
+					}
 				}
-				if (!output.getParentFile().isDirectory()) {
-					jar.close();
-					throw new NotDirectoryException(output.getParent());
-				}
-				FileOutputStream fiout = new FileOutputStream(output);
-				InputStream jarin = jar.getInputStream(entry);
-				while (jarin.available() > 0) {
-					fiout.write(jarin.read());
-				}
-				fiout.close();
 			}
 		}
-		jar.close();
 	}
 
 	/**

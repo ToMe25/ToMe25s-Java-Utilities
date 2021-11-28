@@ -426,16 +426,17 @@ public class LibraryDownloader {
 			}
 			downloadedFrom = url;
 			size = connection.getContentLength();
-			BufferedInputStream bin = new BufferedInputStream(connection.getInputStream());
-			BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(target));
-			byte[] buffer = new byte[1024];
-			int buffered;
-			while ((buffered = bin.read(buffer)) >= 0) {
-				downloaded += buffered;
-				bout.write(buffer, 0, buffered);
+
+			try (BufferedInputStream bin = new BufferedInputStream(connection.getInputStream());
+					BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(target))) {
+				byte[] buffer = new byte[1024];
+				int buffered;
+				while ((buffered = bin.read(buffer)) >= 0) {
+					downloaded += buffered;
+					bout.write(buffer, 0, buffered);
+				}
 			}
-			bin.close();
-			bout.close();
+
 			if (executable) {
 				target.setExecutable(true);
 			}
@@ -548,14 +549,13 @@ public class LibraryDownloader {
 			if (!urlStorage.getAbsoluteFile().getParentFile().exists()) {
 				urlStorage.getParentFile().mkdirs();
 			}
-			try {
-				FileOutputStream fiout = new FileOutputStream(urlStorage);
+			try (FileOutputStream fiout = new FileOutputStream(urlStorage)) {
 				fiout.write(defaultUrlStorage.getBytes());
-				fiout.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+
 		if (urlStorage.exists()) {
 			try {
 				String file = "";

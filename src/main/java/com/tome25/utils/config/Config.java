@@ -21,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -348,22 +349,25 @@ public class Config {
 	 */
 	public boolean readConfigFile(File file) {
 		boolean changed = false;
-		try {
-			if (!sortedConfig.containsKey(file)) {
-				return false;
-			}
-			if (!fileLocks.containsKey(file.getAbsoluteFile())) {
-				fileLocks.put(file.getAbsoluteFile(), new ReentrantLock(true));
-			}
-			ReentrantLock lock = fileLocks.get(file.getAbsoluteFile());
-			lock.lock();
-			if (!file.exists()) {
-				createConfig(file);
-			}
-			if (file.length() < 5) {
-				createConfig(file);
-			}
-			BufferedReader reader = new BufferedReader(new FileReader(file));
+		if (!sortedConfig.containsKey(file)) {
+			return false;
+		}
+
+		if (!fileLocks.containsKey(file.getAbsoluteFile())) {
+			fileLocks.put(file.getAbsoluteFile(), new ReentrantLock(true));
+		}
+
+		ReentrantLock lock = fileLocks.get(file.getAbsoluteFile());
+		lock.lock();
+		if (!file.exists()) {
+			createConfig(file);
+		}
+
+		if (file.length() < 5) {
+			createConfig(file);
+		}
+
+		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 			List<ConfigValue<?>> missing = new ArrayList<ConfigValue<?>>(sortedConfig.get(file));
 			boolean error = false;
 			String line = reader.readLine();
@@ -375,6 +379,7 @@ public class Config {
 							while (value.startsWith(" ")) {
 								value = value.substring(1);
 							}
+
 							Object oldValue = c.getValue();
 							c.setValue(value);
 							changed = changed || !oldValue.equals(c.getValue());
@@ -386,20 +391,23 @@ public class Config {
 				}
 				line = reader.readLine();
 			}
-			reader.close();
+
 			if (error) {
 				createConfig(file);
 			} else if (!missing.isEmpty()) {
-				FileOutputStream fiout = new FileOutputStream(file, true);
-				for (ConfigValue<?> c : missing) {
-					c.writeToConfig(fiout);
+				try (FileOutputStream fiout = new FileOutputStream(file, true)) {
+					for (ConfigValue<?> c : missing) {
+						c.writeToConfig(fiout);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-				fiout.close();
 			}
-			lock.unlock();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		lock.unlock();
 		return changed;
 	}
 
@@ -409,23 +417,27 @@ public class Config {
 	 * @param config the file to write.
 	 */
 	private void createConfig(File config) {
+		config = config.getAbsoluteFile();
+		if (!fileLocks.containsKey(config.getAbsoluteFile())) {
+			fileLocks.put(config.getAbsoluteFile(), new ReentrantLock(true));
+		}
+		ReentrantLock lock = fileLocks.get(config.getAbsoluteFile());
+		lock.lock();
+
 		try {
-			config = config.getAbsoluteFile();
-			if (!fileLocks.containsKey(config.getAbsoluteFile())) {
-				fileLocks.put(config.getAbsoluteFile(), new ReentrantLock(true));
-			}
-			ReentrantLock lock = fileLocks.get(config.getAbsoluteFile());
-			lock.lock();
 			File dir = config.getParentFile();
 			if (!dir.exists() || !dir.isDirectory()) {
 				dir.mkdirs();
 			}
+
 			if (config.exists() && !config.isFile()) {
 				config.delete();
 			}
+
 			if (!config.exists()) {
 				config.createNewFile();
 			}
+
 			config.setReadable(true, true);
 			config.setWritable(true, true);
 			try {
@@ -435,31 +447,35 @@ public class Config {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
 			if (sortedConfig == null) {
 				sortConfig();
 			}
+
 			if (sortedConfig.isEmpty()) {
 				sortConfig();
 			}
+
 			if (sortedConfig.containsKey(config)) {
-				FileOutputStream fiout = new FileOutputStream(config);
-				fiout.write(String
-						.format("# The %s Configuration for %s.%n",
-								config.getName().substring(0, config.getName().lastIndexOf('.')), softwareName)
-						.getBytes());
-				fiout.flush();
-				List<ConfigValue<?>> configCopy = new ArrayList<ConfigValue<?>>(sortedConfig.get(config));
-				for (ConfigValue<?> c : configCopy) {
-					c.writeToConfig(fiout);
-					fiout.write(System.lineSeparator().getBytes());
+				try (FileOutputStream fiout = new FileOutputStream(config)) {
+					fiout.write(String
+							.format("# The %s Configuration for %s.%n",
+									config.getName().substring(0, config.getName().lastIndexOf('.')), softwareName)
+							.getBytes());
 					fiout.flush();
+
+					List<ConfigValue<?>> configCopy = new ArrayList<ConfigValue<?>>(sortedConfig.get(config));
+					for (ConfigValue<?> c : configCopy) {
+						c.writeToConfig(fiout);
+						fiout.write(System.lineSeparator().getBytes());
+						fiout.flush();
+					}
 				}
-				fiout.close();
 			}
-			lock.unlock();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		lock.unlock();
 	}
 
 	/**

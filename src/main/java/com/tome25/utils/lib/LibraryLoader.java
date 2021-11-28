@@ -191,6 +191,7 @@ public class LibraryLoader {
 				restart();
 			}
 		}
+
 		try {
 			com.tome25.utils.logging.LogTracer.traceOutputs(outputLogFile, errorLogFile);// importing this would cause
 																							// it to crash on loading.
@@ -227,20 +228,22 @@ public class LibraryLoader {
 						"This programs Code Source isn't a file, most likely this is run before being packaged "
 								+ "into a jar, but this can't work then!");
 			}
+
 			file.setReadable(true);
 			file.setWritable(true);
 			file.setExecutable(true);
-			JarFile jar = new JarFile(file);
-			if (jar.getManifest().getMainAttributes().get(new Attributes.Name("Premain-Class")) == null) {
-				jar.getManifest().getMainAttributes().put(new Attributes.Name("Premain-Class"),
-						this.getClass().getName());
-				File tempFile = new File(file.getParent(), "tmp.jar");
-				tempFile.deleteOnExit();
-				copyJar(file, tempFile, jar.getManifest());
-				copyJar(tempFile, file);
-				jar.close();
-				tempFile.delete();
+			try (JarFile jar = new JarFile(file)) {
+				if (jar.getManifest().getMainAttributes().get(new Attributes.Name("Premain-Class")) == null) {
+					jar.getManifest().getMainAttributes().put(new Attributes.Name("Premain-Class"),
+							this.getClass().getName());
+					File tempFile = new File(file.getParent(), "tmp.jar");
+					tempFile.deleteOnExit();
+					copyJar(file, tempFile, jar.getManifest());
+					copyJar(tempFile, file);
+					tempFile.delete();
+				}
 			}
+
 			ProcessBuilder pb = new ProcessBuilder("java", "-javaagent:" + file.getAbsolutePath(), "-jar",
 					file.getAbsolutePath(),
 					stringArrayToString(
@@ -743,14 +746,14 @@ public class LibraryLoader {
 	 *                 from the input file.
 	 */
 	public static void copyJar(File input, File output, Manifest manifest) {
-		try {
-			JarFile jar = new JarFile(input);
+		try (JarFile jar = new JarFile(input);
+				FileOutputStream fiout = new FileOutputStream(output);
+				JarOutputStream jarOut = new JarOutputStream(fiout, manifest)) {
+
 			if (manifest == null) {
 				manifest = jar.getManifest();
 			}
 
-			FileOutputStream fiout = new FileOutputStream(output);
-			JarOutputStream jarOut = new JarOutputStream(fiout, manifest);
 			Enumeration<JarEntry> entries = jar.entries();
 			while (entries.hasMoreElements()) {
 				JarEntry entry = entries.nextElement();
@@ -758,16 +761,14 @@ public class LibraryLoader {
 					continue;
 				}
 				jarOut.putNextEntry(entry);
-				InputStream jarIn = jar.getInputStream(entry);
-				while (jarIn.available() > 0) {
-					jarOut.write(jarIn.read());
+				try (InputStream jarIn = jar.getInputStream(entry)) {
+					while (jarIn.available() > 0) {
+						jarOut.write(jarIn.read());
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-				jarIn.close();
 			}
-
-			jarOut.close();
-			jar.close();
-			fiout.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

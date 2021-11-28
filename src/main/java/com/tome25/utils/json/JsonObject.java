@@ -97,7 +97,7 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 	}
 
 	@Override
-	public Object add(String key, Object value) {
+	public Object add(String key, Object value) throws InvalidKeyException {
 		if (content.containsKey(key)) {
 			throw new InvalidKeyException(String.valueOf(key), "it exists already!");
 		} else {
@@ -145,7 +145,7 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 	 *         mapping for key.
 	 */
 	@Override
-	public Object remove(Object key) {
+	public Object remove(Object key) throws InvalidTypeException {
 		if (key instanceof String) {
 			return content.remove(key);
 		} else {
@@ -171,7 +171,7 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 	 * @return the value for the given key.
 	 */
 	@Override
-	public Object get(Object key) {
+	public Object get(Object key) throws InvalidTypeException {
 		if (key instanceof String) {
 			return content.get(key);
 		} else {
@@ -211,7 +211,7 @@ public class JsonObject implements JsonElement<String>, Map<String, Object>, Clo
 	 *                              this object(String for JsonObjects).
 	 */
 	@Override
-	public boolean containsKey(Object key) {
+	public boolean containsKey(Object key) throws InvalidTypeException {
 		if (key instanceof String) {
 			return content.containsKey(key);
 		} else {

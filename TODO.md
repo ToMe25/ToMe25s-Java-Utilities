@@ -22,6 +22,7 @@ Todos for the library downloading and including module of this library.
  * Add an update checker using the version json from above to check for new releases, ideally extendible to allow other software to use this as well.
  * Make the startup library loading only download libraries if there is a newer version available.
  * Consider using maven for the library downloads. This might also be able to handle version checking.
+ * Only restart program if any library was updated. Use file hash if redownloading already up to date files.
 
 ## Logging
 Things to change in the logging module.
